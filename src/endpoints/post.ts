@@ -4,7 +4,9 @@ import { runHook } from '../run-hook';
 
 export async function postEndpoint(request: Request, response: Response) {
 	// Run model hook
-	runHook(request, response, 'post', request.body);
+	if (!await runHook(request, response, 'post', request.body)) {
+		return;
+	}
 
 	// Delete undefined members
 	for (const key in request.body) {
@@ -14,10 +16,12 @@ export async function postEndpoint(request: Request, response: Response) {
 	}
 
 	// Validate
-	const errors = await validate(request.body);
+	const errors = await validate(request.body).catch((error) =>
+		response.error(error, response)
+	);
 
 	// Check
-	if (errors.length) {
+	if (errors && errors.length) {
 		return response.validationResponder(errors, response);
 	}
 

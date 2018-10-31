@@ -11,7 +11,9 @@ export async function deleteEndpoint(request: Request, response: Response) {
 	// Check response
 	if (request.payload && request.payload instanceof BaseModel) {
 		// Run model hook
-		runHook(request, response, 'delete', request.params);
+		if (!await runHook(request, response, 'delete', request.params)) {
+			return;
+		}
 
 		// Delete
 		await request.repository

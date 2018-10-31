@@ -10,7 +10,9 @@ export async function loginEndpoint(
 	next: NextFunction
 ) {
 	// Run model hook
-	runHook(request, response, 'login', request.body);
+	if (!await runHook(request, response, 'login', request.body)) {
+		return;
+	}
 
 	// Delete undefined members
 	for (const key in request.body) {
