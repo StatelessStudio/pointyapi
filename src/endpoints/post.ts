@@ -1,11 +1,10 @@
 import { Request, Response } from 'express';
 import { validate } from 'class-validator';
+import { runHook } from '../run-hook';
 
 export async function postEndpoint(request: Request, response: Response) {
 	// Run model hook
-	if ('post' in request.body) {
-		request.body.post(request, response);
-	}
+	runHook(request, response, 'post', request.body);
 
 	// Delete undefined members
 	for (const key in request.body) {

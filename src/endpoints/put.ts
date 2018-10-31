@@ -1,13 +1,11 @@
 import { Request, Response } from 'express';
 import { validate } from 'class-validator';
 
-import { getIdentifierValue } from '../';
+import { runHook } from '../run-hook';
 
 export async function putEndpoint(request: Request, response: Response) {
 	// Run model hook
-	if ('put' in request.body) {
-		request.body.put(request, response);
-	}
+	runHook(request, response, 'put', request.params);
 
 	// Delete undefined members
 	for (const key in request.body) {

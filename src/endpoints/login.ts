@@ -2,12 +2,16 @@ import { Request, Response, NextFunction } from 'express';
 import { compareSync } from 'bcryptjs';
 
 import { jwtBearer } from '../jwt-bearer';
+import { runHook } from '../run-hook';
 
 export async function loginEndpoint(
 	request: Request,
 	response: Response,
 	next: NextFunction
 ) {
+	// Run model hook
+	runHook(request, response, 'login', request.body);
+
 	// Delete undefined members
 	for (const key in request.body) {
 		if (request.body[key] === undefined) {

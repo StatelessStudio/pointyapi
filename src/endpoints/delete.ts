@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { BaseModel } from '../models/base-model';
+import { runHook } from '../run-hook';
 
 /**
  * Delete the object represent by the url key/value
@@ -7,13 +8,11 @@ import { BaseModel } from '../models/base-model';
  * @param response Response object to call responder with
  */
 export async function deleteEndpoint(request: Request, response: Response) {
-	// Run model hook
-	if ('delete' in request.params) {
-		request.params.delete(request, response);
-	}
-
 	// Check response
-	if (request.params && request.params instanceof BaseModel) {
+	if (request.payload && request.payload instanceof BaseModel) {
+		// Run model hook
+		runHook(request, response, 'delete', request.params);
+
 		// Delete
 		await request.repository
 			.remove(request.params)

@@ -54,3 +54,4 @@ export { getIdentifierValue } from './get-identifier-value';
 export { jwtBearer } from './jwt-bearer';
 export { listen } from './listen';
 export { setModel } from './set-model';
+export { runHook } from './run-hook';
