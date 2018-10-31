@@ -15,7 +15,9 @@ export async function getEndpoint(request: Request, response: Response) {
 			request.payload instanceof BaseModel)
 	) {
 		// Run model hook
-		runHook(request, response, 'get', request.payload);
+		if (!await runHook(request, response, 'get', request.payload)) {
+			return;
+		}
 
 		response.getResponder(request.payload, response);
 	}

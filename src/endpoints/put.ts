@@ -5,7 +5,9 @@ import { runHook } from '../run-hook';
 
 export async function putEndpoint(request: Request, response: Response) {
 	// Run model hook
-	runHook(request, response, 'put', request.params);
+	if (!await runHook(request, response, 'put', request.params)) {
+		return;
+	}
 
 	// Delete undefined members
 	for (const key in request.body) {
