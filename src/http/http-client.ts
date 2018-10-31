@@ -11,7 +11,7 @@
  *
  * 	The path URL path to connect to
  *
- * - data: Object
+ * - data: object (NOT ON DELETE)
  *
  *  Data as query/body to pass with the request
  *
@@ -39,7 +39,7 @@ export class HttpClient {
 
 	public post(
 		path: string,
-		data: Object,
+		data: object,
 		expect: number[] = [ 200 ],
 		bearer: boolean | string = false
 	): Promise<HttpClientResponse> {
@@ -106,7 +106,7 @@ export class HttpClient {
 
 	public put(
 		path: string,
-		data: Object,
+		data: object,
 		expect: number[] = [ 204 ],
 		bearer: boolean | string = false
 	): Promise<HttpClientResponse> {
