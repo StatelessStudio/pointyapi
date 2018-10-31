@@ -36,7 +36,7 @@ import { Request, Response } from 'express';
 import { BaseModelInterface } from './models';
 import { getRepository } from 'typeorm';
 
-export async function setModel(
+export function setModel(
 	request: Request,
 	response: Response,
 	model: BaseModelInterface,
@@ -45,7 +45,7 @@ export async function setModel(
 	request.identifier = identifier;
 	request.payloadType = model;
 	request.payload = new model();
-	request.repository = await getRepository(request.payloadType);
+	request.repository = getRepository(request.payloadType);
 
 	if (request.params && request.params instanceof Object) {
 		request.params = Object.assign(request.payload, request.params);
@@ -57,26 +57,5 @@ export async function setModel(
 
 	if (request.body && request.body instanceof Object) {
 		request.body = Object.assign(request.payload, request.body);
-	}
-
-	if (request.method === 'PUT') {
-		// Pull object
-		this.payload = await request.repository
-			.findOne(request.params)
-			.catch((error) => response.error(error, response));
-
-		if (!this.payload) {
-			response.goneResponder('could not load object', response);
-		}
-	}
-	else if (request.method === 'DELETE') {
-		// Pull object
-		this.payload = await request.repository
-			.findOne(request.params)
-			.catch((error) => response.error(error, response));
-
-		if (!this.payload) {
-			response.goneResponder('could not load object', response);
-		}
 	}
 }
