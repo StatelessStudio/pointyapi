@@ -3,7 +3,7 @@ import { getRepository } from 'typeorm';
 
 import { setModel } from '../../../../src';
 import { BaseUser } from '../../../../src/models';
-import { getEndpoint } from '../../../../src/endpoints';
+import { getQuery } from '../../../../src/middleware';
 
 async function createMockup() {
 	const request = mockRequest();
@@ -12,13 +12,12 @@ async function createMockup() {
 
 	const response = mockResponse();
 	response.error = (error) => fail(error);
-	response.getResponder = (error) => fail('Got: ' + JSON.stringify(error));
 
 	return { request, response };
 }
 
-describe('[Endpoints] Get', () => {
-	it('returns the payload', async () => {
+describe('[Endpoints] GetQuery', () => {
+	it('can search', async () => {
 		const { request, response } = await createMockup();
 
 		request.query.search = 'tom';
@@ -37,15 +36,15 @@ describe('[Endpoints] Get', () => {
 		user2.password = 'password123';
 		user2.email = 'get2@example.com';
 
+		const result = await getRepository(BaseUser)
+			.save([ user1, user2 ])
+			.catch((error) => fail(error));
+
 		setModel(request, response, BaseUser);
 
-		request.payload = [ user1, user2 ];
+		await getQuery(request, response).catch((error) => fail(error));
 
-		response.getResponder = () => {
-			expect(request.payload).toEqual(jasmine.any(Array));
-			expect(request.payload.length).toBeGreaterThanOrEqual(2);
-		};
-
-		await getEndpoint(request, response).catch((error) => fail(error));
+		expect(request.payload).toEqual(jasmine.any(Array));
+		expect(request.payload.length).toBeGreaterThanOrEqual(2);
 	});
 });
