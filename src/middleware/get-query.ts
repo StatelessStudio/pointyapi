@@ -29,7 +29,9 @@ export async function getQuery(
 	next?: NextFunction
 ) {
 	// Run model hook
-	runHook(request, response, 'getQuery', request.query);
+	if (!await runHook(request, response, 'getQuery', request.query)) {
+		return;
+	}
 
 	// Delete undefined members
 	for (const key in request.query) {
