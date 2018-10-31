@@ -9,7 +9,7 @@
 			"request": "launch",
 			"name": "Launch Program",
 			"runtimeArgs": ["-r", "ts-node/register"],
-			"args": ["${workspaceFolder}/test/examples/chat/server.ts"],
+			"args": ["${workspaceFolder}/test/examples/basic/server.ts"],
 			"preLaunchTask": "npm: build:spec"
 		}
 	]
