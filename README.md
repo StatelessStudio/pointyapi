@@ -5,7 +5,7 @@ Opinionated Restful Server Architecture
 
 ```
 npm init
-npm i StatelessStudio/pointy#v0.0.1 express @types/node @types/express
+npm i StatelessStudio/pointy express @types/node @types/express
 ```
 
 ## Typescript setup
