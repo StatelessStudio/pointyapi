@@ -16,6 +16,9 @@ export async function putEndpoint(request: Request, response: Response) {
 		}
 	}
 
+	// Merge payload and request body
+	request.body = Object.assign(request.payload, request.body);
+
 	// Validate
 	const errors = await validate(request.body);
 
