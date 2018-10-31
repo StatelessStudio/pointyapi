@@ -21,7 +21,7 @@ export class PointyPostgres extends BaseDb {
 		return this;
 	}
 
-	public async connect(options: string | Object) {
+	public async connect(options: string | Object): Promise<any> {
 		let pgOptions: any;
 
 		if (process.env.DATABASE_URL) {
