@@ -8,6 +8,7 @@ import { postEndpoint } from '../../../../src/endpoints';
 async function createMockup() {
 	const request = mockRequest();
 	request.repository = await getRepository(BaseUser);
+	request.method = 'POST';
 
 	const response = mockResponse();
 	response.error = (error) => fail(error);

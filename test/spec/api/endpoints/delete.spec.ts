@@ -8,6 +8,7 @@ import { getRepository } from 'typeorm';
 async function createMockup() {
 	const request = mockRequest();
 	request.repository = await getRepository(BaseUser);
+	request.method = 'DELETE';
 
 	const response = mockResponse();
 	response.error = (error) => fail(error);
@@ -50,6 +51,8 @@ describe('[Endpoints] Delete', () => {
 		};
 
 		setModel(request, response, BaseUser);
+
+		request.payload = undefined;
 
 		response.goneResponder = () => {};
 		await deleteEndpoint(request, response).catch((error) => fail(error));
