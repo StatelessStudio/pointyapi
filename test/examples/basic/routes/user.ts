@@ -9,6 +9,7 @@ import {
 import { BaseUser } from '../../../../src/models/base-user';
 
 import { setModel } from '../../../../src/';
+import { loadEntity, getQuery } from '../../../../src/middleware';
 
 const router: Router = Router();
 
@@ -19,8 +20,8 @@ router.use((request, response, next) => {
 
 // Create
 router.post('/', postEndpoint);
-router.get('/', getEndpoint);
-router.put(`/:id`, putEndpoint);
-router.delete(`/:id`, deleteEndpoint);
+router.get('/', getQuery, getEndpoint);
+router.put(`/:id`, loadEntity, putEndpoint);
+router.delete(`/:id`, loadEntity, deleteEndpoint);
 
 export const userRouter: Router = router;
