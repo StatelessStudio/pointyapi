@@ -5,7 +5,6 @@ const ROOT_PATH = require('app-root-path').toString();
 
 // Routes
 import { userRouter } from './routes/user';
-import { authRouter } from './routes/auth';
 
 // Setup
 pointy.before = async (app) => {
@@ -17,7 +16,6 @@ pointy.before = async (app) => {
 
 	// Routes
 	app.use('/api/v1/user', userRouter);
-	app.use('/api/v1/auth', authRouter);
 
 	// Database
 	await pointy.db
