@@ -17,4 +17,6 @@ export async function runHook(
 			return result;
 		}
 	}
+
+	return true;
 }
