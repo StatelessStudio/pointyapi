@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
 
 import { jwtBearer } from '../jwt-bearer';
+import { BaseUser } from '../models';
 
 export async function loadUser(
 	request: Request,
@@ -25,7 +26,7 @@ export async function loadUser(
 				response.error({ message: `Could not load user` }, response)
 			);
 
-		if (result) {
+		if (result && result instanceof BaseUser) {
 			request.user = result;
 			next();
 		}
