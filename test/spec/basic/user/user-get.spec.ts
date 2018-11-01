@@ -66,4 +66,16 @@ describe('User API Read', () => {
 			)
 			.catch((error) => fail(error));
 	});
+
+	it('can search', async () => {
+		await http
+			.get('/api/v1/user', {
+				search: 'getUser1'
+			})
+			.then((result) => {
+				expect(result.body).toEqual(jasmine.any(Array));
+				expect(result.body['length']).toEqual(1);
+			})
+			.catch((error) => fail(error));
+	});
 });
