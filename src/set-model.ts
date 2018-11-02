@@ -54,4 +54,6 @@ export async function setModel(
 	else if (request.method === 'PUT' || request.method === 'DELETE') {
 		await loadEntity(request, response);
 	}
+
+	return !response.headersSent;
 }
