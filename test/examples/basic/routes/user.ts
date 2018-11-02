@@ -9,19 +9,18 @@ import {
 import { BaseUser } from '../../../../src/models/base-user';
 
 import { setModel } from '../../../../src/';
-import { loadEntity, getQuery } from '../../../../src/middleware';
 
 const router: Router = Router();
 
-router.use((request, response, next) => {
-	setModel(request, response, BaseUser, 'id');
+async function loader(request, response, next) {
+	await setModel(request, response, BaseUser, 'id');
 	next();
-});
+}
 
 // Create
-router.post('/', postEndpoint);
-router.get('/', getQuery, getEndpoint);
-router.put(`/:id`, loadEntity, putEndpoint);
-router.delete(`/:id`, loadEntity, deleteEndpoint);
+router.post('/', loader, postEndpoint);
+router.get('/', loader, getEndpoint);
+router.put(`/:id`, loader, putEndpoint);
+router.delete(`/:id`, loader, deleteEndpoint);
 
 export const userRouter: Router = router;
