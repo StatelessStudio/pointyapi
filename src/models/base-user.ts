@@ -150,7 +150,7 @@ export class BaseUser extends BaseModel {
 	public thumbnail: string = undefined;
 
 	// Post hook
-	public post(request: Request, response: Response) {
+	public onBeforePost(request: Request, response: Response) {
 		const user = request.body;
 
 		// Check if user has some sort of password
@@ -176,7 +176,7 @@ export class BaseUser extends BaseModel {
 	}
 
 	// Put hook
-	public put(request: Request, response: Response) {
+	public onBeforePut(request: Request, response: Response) {
 		const user = request.body;
 
 		// Temp password

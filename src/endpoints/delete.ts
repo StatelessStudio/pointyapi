@@ -9,27 +9,21 @@ import { runHook } from '../run-hook';
  */
 export async function deleteEndpoint(request: Request, response: Response) {
 	// Check response
-	if (request.params && request.params instanceof BaseModel) {
+	if (request.payload && request.payload instanceof BaseModel) {
 		// Convert to model
-		request.params = Object.assign(
+		request.payload = Object.assign(
 			new request.payloadType(),
-			request.params
+			request.payload
 		);
 
-		for (const key in request.params) {
-			if (request.params[key] === undefined) {
-				delete request.params[key];
-			}
-		}
-
 		// Run model hook
-		if (!await runHook(request, response, 'delete', request.params)) {
+		if (!runHook(request, response, 'onBeforeDelete', request.payload)) {
 			return;
 		}
 
 		// Delete
 		await request.repository
-			.remove(request.params)
+			.remove(request.payload)
 			.then((result) => response.deleteResponder(result, response))
 			.catch((error) => response.error(error, response));
 	}
