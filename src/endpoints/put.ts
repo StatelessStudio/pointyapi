@@ -8,7 +8,7 @@ export async function putEndpoint(request: Request, response: Response) {
 	request.body = Object.assign(request.payload, request.body);
 
 	// Run model hook
-	if (!await runHook(request, response, 'put', request.body)) {
+	if (!runHook(request, response, 'onBeforePut', request.body)) {
 		return;
 	}
 
