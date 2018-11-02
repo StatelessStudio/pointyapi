@@ -32,7 +32,7 @@ describe('[Endpoints] Post', () => {
 
 		request.body = user;
 
-		setModel(request, response, BaseUser);
+		await setModel(request, response, BaseUser);
 
 		response.postResponder = () => {};
 		await postEndpoint(request, response).catch((error) => fail(error));
@@ -50,7 +50,7 @@ describe('[Endpoints] Post', () => {
 
 		request.body = user;
 
-		setModel(request, response, BaseUser);
+		await setModel(request, response, BaseUser);
 
 		response.validationResponder = () => {};
 		await postEndpoint(request, response).catch((error) => fail(error));

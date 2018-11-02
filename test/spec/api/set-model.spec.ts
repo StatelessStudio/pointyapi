@@ -20,26 +20,4 @@ describe('setModel', () => {
 
 		expect(request.identifier).toEqual('username');
 	});
-
-	it('sets the query', async () => {
-		const request = mockRequest();
-		const response = mockResponse();
-
-		request.query = { id: 1 };
-
-		await setModel(request, response, BaseUser);
-
-		expect(request.query).toEqual(jasmine.any(BaseUser));
-	});
-
-	it('sets the body', async () => {
-		const request = mockRequest();
-		const response = mockResponse();
-
-		request.body = { id: 1 };
-
-		await setModel(request, response, BaseUser);
-
-		expect(request.body).toEqual(jasmine.any(BaseUser));
-	});
 });

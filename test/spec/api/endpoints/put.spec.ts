@@ -30,9 +30,12 @@ describe('[Endpoints] Put', () => {
 		user.password = 'password123';
 		user.email = 'put@example.com';
 
-		request.body = user;
+		await request.repository.save(user).catch((error) => fail(error));
 
-		setModel(request, response, BaseUser);
+		request.body = user;
+		request.identifier = 'id';
+		request.params.id = user.id;
+		await setModel(request, response, BaseUser);
 
 		response.putResponder = () => {};
 		await putEndpoint(request, response).catch((error) => fail(error));
@@ -48,9 +51,12 @@ describe('[Endpoints] Put', () => {
 		user.password = 'password123';
 		user.email = 'testy';
 
-		request.body = user;
+		await request.repository.save(user).catch((error) => fail(error));
 
-		setModel(request, response, BaseUser);
+		request.body = user;
+		request.identifier = 'id';
+		request.params.id = user.id;
+		await setModel(request, response, BaseUser);
 
 		response.validationResponder = () => {};
 		await putEndpoint(request, response).catch((error) => fail(error));
