@@ -1,0 +1,10 @@
+language: node_js
+node_js:
+  - "8.11.4"
+before_script:
+  - psql -c 'create database testdb;' -U postgres
+  - cp local.config.travis.json local.config.json
+install:
+  - npm install --ignore-scripts
+services:
+  - postgresql 
