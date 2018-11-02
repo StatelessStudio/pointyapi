@@ -1,4 +1,7 @@
 # pointy
+
+[![Build Status](https://travis-ci.org/StatelessStudio/pointyapi.svg?branch=master)](https://travis-ci.org/StatelessStudio/pointyapi)
+
 Opinionated Restful Server Architecture
 
 ## Installation
