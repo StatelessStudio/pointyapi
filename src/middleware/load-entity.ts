@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { getRepository } from 'typeorm';
+import { getIdentifierValue } from '../get-identifier-value';
 
 export async function loadEntity(
 	request: Request,
@@ -8,7 +9,7 @@ export async function loadEntity(
 ) {
 	if (request.identifier) {
 		const result = await request.repository
-			.findOne(request.params)
+			.findOne(getIdentifierValue(request))
 			.catch(() =>
 				response.error({ message: `Could not load entity` }, response)
 			);
@@ -24,13 +25,15 @@ export async function loadEntity(
 			}
 		}
 		else {
-			return response.goneResponder(`Couldn't load entity`, response);
+			response.goneResponder(`Couldn't load entity`, response);
+			return false;
 		}
 	}
 	else {
-		return response.error(
+		response.error(
 			'Could not load entity on a route without a parameter',
 			response
 		);
+		return false;
 	}
 }
