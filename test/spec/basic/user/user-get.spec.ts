@@ -31,8 +31,8 @@ describe('User API Read', () => {
 			.catch((error) => fail(error));
 	});
 
-	it('can read many', async () => {
-		await http
+	it('can read many', () => {
+		http
 			.get('/api/v1/user', {
 				lname: 'getUser'
 			})
