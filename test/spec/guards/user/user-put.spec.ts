@@ -109,14 +109,17 @@ describe('[Guards] User API Update', () => {
 				email: 'userPut2@test.com'
 			})
 			.then((result) => {
-				http.put(
-					`/api/v1/user/${result.body['id']}`,
-					{
-						fname: 'noToken'
-					},
-					[ 401 ]
-				);
-			});
+				http
+					.put(
+						`/api/v1/user/${result.body['id']}`,
+						{
+							fname: 'noToken'
+						},
+						[ 401 ]
+					)
+					.catch((error) => fail(error));
+			})
+			.catch((error) => fail(error));
 	});
 
 	it('does not allow user to update with wrong token', async () => {
@@ -133,26 +136,30 @@ describe('[Guards] User API Update', () => {
 			);
 
 		if (user && this.token) {
-			await http.put(
-				`/api/v1/user/${user.body['id']}`,
-				{
-					fname: 'wrongToken'
-				},
-				[ 401 ],
-				this.token.body.token
-			);
+			await http
+				.put(
+					`/api/v1/user/${user.body['id']}`,
+					{
+						fname: 'wrongToken'
+					},
+					[ 401 ],
+					this.token.body.token
+				)
+				.catch((error) => fail(error));
 		}
 	});
 
 	it('does not allow basic/tutor users to change their role', async () => {
-		await http.put(
-			`/api/v1/user/${this.user.body.id}`,
-			{
-				role: UserRole.Admin
-			},
-			[ 403 ],
-			this.token.body.token
-		);
+		await http
+			.put(
+				`/api/v1/user/${this.user.body.id}`,
+				{
+					role: UserRole.Admin
+				},
+				[ 403 ],
+				this.token.body.token
+			)
+			.catch((error) => fail(error));
 	});
 
 	it('allows for admin to update users', async () => {
@@ -162,7 +169,7 @@ describe('[Guards] User API Update', () => {
 				{
 					fname: 'adminUpdate'
 				},
-				[ 200 ],
+				[ 204 ],
 				this.adminToken.body.token
 			)
 			.then((result) => {

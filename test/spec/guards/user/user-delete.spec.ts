@@ -140,7 +140,7 @@ describe('[Guards] User API Delete', () => {
 				http
 					.delete(
 						`/api/v1/user/${result.body['id']}`,
-						[ 200 ],
+						[ 204 ],
 						this.adminToken
 					)
 					.then(done)
