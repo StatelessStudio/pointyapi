@@ -8,7 +8,7 @@ describe('User Bodyguard Update', () => {
 			.post('/api/v1/user', {
 				fname: 'userAdmin',
 				lname: 'userAdmin',
-				username: 'userAdmin',
+				username: 'adminGuardPut1',
 				password: 'password123',
 				email: 'userAdmin@test.com'
 			})
@@ -16,9 +16,9 @@ describe('User Bodyguard Update', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.userAdminToken = await http
+		this.adminToken = await http
 			.post('/api/v1/auth', {
-				user: 'userAdmin1',
+				user: 'adminGuardPut1',
 				password: 'password123'
 			})
 			.catch((error) => {
@@ -170,7 +170,7 @@ describe('User Bodyguard Update', () => {
 					fname: 'adminUpdate'
 				},
 				[ 200 ],
-				this.userAdmin.body.token
+				this.adminToken.body.token
 			)
 			.then((result) => {
 				http

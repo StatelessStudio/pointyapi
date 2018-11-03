@@ -11,9 +11,9 @@ describe('User Bodyguard Delete', () => {
 			.post('/api/v1/user', {
 				fname: 'userAdmin',
 				lname: 'userAdmin',
-				username: 'userAdmin1',
+				username: 'adminGuardDel1',
 				password: 'password123',
-				email: 'userAdmin1@test.com'
+				email: 'adminGuardDel1@test.com'
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
@@ -21,7 +21,7 @@ describe('User Bodyguard Delete', () => {
 
 		this.adminToken = await http
 			.post('/api/v1/auth', {
-				user: 'userAdmin1',
+				user: 'adminGuardDel1',
 				password: 'password123'
 			})
 			.catch((error) => {
@@ -29,17 +29,17 @@ describe('User Bodyguard Delete', () => {
 				fail(error);
 			});
 
-		upgradeUserRole('userAdmin1', BaseUser, UserRole.Admin);
+		upgradeUserRole('adminGuardDel1', BaseUser, UserRole.Admin);
 	});
 
 	it('can delete', async () => {
-		await http
+		const deleteUser = await http
 			.post('/api/v1/user', {
 				fname: 'deleteUser',
 				lname: 'deleteUser',
-				username: 'deleteUser1',
+				username: 'guardUserDel1',
 				password: 'password123',
-				email: 'deleteUser1@test.com'
+				email: 'guardUserDel1@test.com'
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
@@ -47,7 +47,7 @@ describe('User Bodyguard Delete', () => {
 
 		const deleteUserToken = await http
 			.post('/api/v1/auth', {
-				user: 'deleteUser1',
+				user: 'guardUserDel1',
 				password: 'password123'
 			})
 			.catch((error) => {
@@ -69,9 +69,9 @@ describe('User Bodyguard Delete', () => {
 			.post('/api/v1/user', {
 				fname: 'deleteUser',
 				lname: 'deleteUser',
-				username: 'deleteUser2',
+				username: 'guardUserDel2',
 				password: 'password123',
-				email: 'deleteUser2@test.com'
+				email: 'guardUserDel2@test.com'
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
@@ -86,9 +86,9 @@ describe('User Bodyguard Delete', () => {
 			.post('/api/v1/user', {
 				fname: 'deleteUser',
 				lname: 'deleteUser',
-				username: 'deleteUser3',
+				username: 'guardUserDel3',
 				password: 'password123',
-				email: 'deleteUser3@test.com'
+				email: 'guardUserDel3@test.com'
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
@@ -98,9 +98,9 @@ describe('User Bodyguard Delete', () => {
 			.post('/api/v1/user', {
 				fname: 'deleteUser',
 				lname: 'deleteUser',
-				username: 'deleteUser4',
+				username: 'guardUserDel4',
 				password: 'password123',
-				email: 'deleteUser4@test.com'
+				email: 'guardUserDel4@test.com'
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
@@ -108,7 +108,7 @@ describe('User Bodyguard Delete', () => {
 
 		const deleteUser3Token = await http
 			.post('/api/v1/auth', {
-				user: 'deleteUser3',
+				user: 'guardUserDel3',
 				password: 'password123'
 			})
 			.catch((error) => {
@@ -130,9 +130,9 @@ describe('User Bodyguard Delete', () => {
 			.post('/api/v1/user', {
 				fname: 'deleteUser',
 				lname: 'deleteUser',
-				username: 'deleteUser5',
+				username: 'guardUserDel5',
 				password: 'password123',
-				email: 'deleteUser5@test.com'
+				email: 'guardUserDel5@test.com'
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))

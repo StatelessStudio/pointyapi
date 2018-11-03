@@ -11,9 +11,9 @@ describe('User Bodyguard Read', () => {
 			.post('/api/v1/user', {
 				fname: 'getUser1',
 				lname: 'getUser1',
-				username: 'getUser1',
+				username: 'guardUserGet1',
 				password: 'password123',
-				email: 'getUser1@test.com'
+				email: 'guardUserGet1@test.com'
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
@@ -21,7 +21,7 @@ describe('User Bodyguard Read', () => {
 
 		this.getUser1Token = await http
 			.post('/api/v1/auth', {
-				user: 'getUser1',
+				user: 'guardUserGet1',
 				password: 'password123'
 			})
 			.catch((error) => {
@@ -33,9 +33,9 @@ describe('User Bodyguard Read', () => {
 			.post('/api/v1/user', {
 				fname: 'getUser2',
 				lname: 'getUser2',
-				username: 'getUser2',
+				username: 'guardUserGet2',
 				password: 'password123',
-				email: 'getUser2@test.com'
+				email: 'guardUserGet2@test.com'
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
@@ -45,17 +45,17 @@ describe('User Bodyguard Read', () => {
 			.post('/api/v1/user', {
 				fname: 'userAdmin',
 				lname: 'userAdmin',
-				username: 'userAdmin1',
+				username: 'adminGuardGet1',
 				password: 'password123',
-				email: 'userAdmin1@test.com'
+				email: 'adminGuardGet1@test.com'
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.userAdminToken = await http
+		this.adminToken = await http
 			.post('/api/v1/auth', {
-				user: 'userAdmin1',
+				user: 'adminGuardGet1',
 				password: 'password123'
 			})
 			.catch((error) => {
@@ -63,7 +63,7 @@ describe('User Bodyguard Read', () => {
 				fail(error);
 			});
 
-		upgradeUserRole('userAdmin1', BaseUser, UserRole.Admin);
+		upgradeUserRole('adminGuardGet1', BaseUser, UserRole.Admin);
 	});
 
 	it('can read all', async () => {
@@ -81,7 +81,7 @@ describe('User Bodyguard Read', () => {
 			.get(
 				'/api/v1/user',
 				{
-					id: this.user2.body.id
+					id: this.getUser2.body.id
 				},
 				this.getUser1Token.body.token
 			)

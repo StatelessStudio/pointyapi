@@ -7,9 +7,9 @@ describe('User API Create', () => {
 			.post('/api/v1/user', {
 				fname: 'post1',
 				lname: 'post1',
-				username: 'postUser1',
+				username: 'basicPostUser1',
 				password: 'password123',
-				email: 'postUser1@test.com'
+				email: 'basicPostUser1@test.com'
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
@@ -32,7 +32,7 @@ describe('User API Create', () => {
 				{
 					fname: 'post1',
 					lname: 'post1',
-					username: 'postUser1',
+					username: 'basicPostUser1',
 					password: 'password123',
 					email: 'dupeUserTest1@test.com'
 				},
@@ -48,9 +48,9 @@ describe('User API Create', () => {
 				{
 					fname: 'post1',
 					lname: 'post1',
-					username: 'postUser1',
+					username: 'basicPostUser3',
 					password: 'password123',
-					email: 'postUser1@test.com'
+					email: 'basicPostUser1@test.com'
 				},
 				[ 409 ]
 			)

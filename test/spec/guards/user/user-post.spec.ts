@@ -10,7 +10,7 @@ describe('User Bodyguard Create', () => {
 			.post('/api/v1/user', {
 				fname: 'userAdmin1',
 				lname: 'userAdmin1',
-				username: 'userAdmin1',
+				username: 'adminGuardPost1',
 				password: 'password123',
 				email: 'userAdmin1@test.com'
 			})
@@ -18,10 +18,10 @@ describe('User Bodyguard Create', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		upgradeUserRole('userAdmin1', BaseUser, UserRole.Admin);
+		upgradeUserRole('adminGuardPost1', BaseUser, UserRole.Admin);
 
 		this.adminToken = await http.post('/api/v1/auth', {
-			user: 'userAdmin1',
+			user: 'adminGuardPost1',
 			password: 'password123'
 		});
 	});

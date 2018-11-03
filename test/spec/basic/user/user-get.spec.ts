@@ -7,9 +7,9 @@ describe('User API Read', () => {
 			.post('/api/v1/user', {
 				fname: 'getUser1',
 				lname: 'getUser',
-				username: 'getUser1',
+				username: 'basicGetUser1',
 				password: 'password123',
-				email: 'getUser1@get.com'
+				email: 'basicGetUser1@get.com'
 			})
 			.catch((error) => fail(error));
 
@@ -17,9 +17,9 @@ describe('User API Read', () => {
 			.post('/api/v1/user', {
 				fname: 'getUser2',
 				lname: 'getUser',
-				username: 'getUser2',
+				username: 'basicGetUser2',
 				password: 'password123',
-				email: 'getUser2@get.com'
+				email: 'basicGetUser2@get.com'
 			})
 			.catch((error) => fail(error));
 	});
@@ -68,7 +68,7 @@ describe('User API Read', () => {
 	});
 
 	it('can search', async () => {
-		const user = await http
+		await http
 			.post('/api/v1/user', {
 				fname: 'searchTester',
 				lname: 'getUser',
