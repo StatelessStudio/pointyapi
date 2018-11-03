@@ -25,8 +25,7 @@ describe('[Guards] User API Read', () => {
 				password: 'password123'
 			})
 			.catch((error) => {
-				fail('Could not create User API Token');
-				fail(error);
+				fail('Could not create User API Token' + JSON.stringify(error));
 			});
 
 		this.getUser2 = await http

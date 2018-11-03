@@ -97,6 +97,9 @@ describe('[Guards] User API Update', () => {
 				})
 				.catch((error) => fail(error));
 		}
+		else {
+			fail();
+		}
 	});
 
 	it('does not allow user to update without token', () => {
@@ -146,6 +149,9 @@ describe('[Guards] User API Update', () => {
 					this.token.body.token
 				)
 				.catch((error) => fail(error));
+		}
+		else {
+			fail();
 		}
 	});
 

@@ -62,9 +62,12 @@ describe('[Guards] User API Delete', () => {
 				)
 				.catch((error) => fail(error));
 		}
+		else {
+			fail();
+		}
 	});
 
-	it('cannot delete w/o token', (done) => {
+	it('cannot delete w/o token', () => {
 		http
 			.post('/api/v1/user', {
 				fname: 'deleteUser',
@@ -76,7 +79,6 @@ describe('[Guards] User API Delete', () => {
 			.then((result) => {
 				http
 					.delete(`/api/v1/user/${result.body['id']}`, [ 401 ])
-					.then(done)
 					.catch((error) => fail(error));
 			})
 			.catch((error) => fail(error));
@@ -125,10 +127,13 @@ describe('[Guards] User API Delete', () => {
 				)
 				.catch((error) => fail(error));
 		}
+		else {
+			fail();
+		}
 	});
 
-	it('Admin can delete', (done) => {
-		http
+	it('Admin can delete', async () => {
+		await http
 			.post('/api/v1/user', {
 				fname: 'deleteUser',
 				lname: 'deleteUser',
@@ -136,14 +141,13 @@ describe('[Guards] User API Delete', () => {
 				password: 'password123',
 				email: 'guardUserDel5@test.com'
 			})
-			.then((result) => {
-				http
+			.then(async (result) => {
+				await http
 					.delete(
 						`/api/v1/user/${result.body['id']}`,
 						[ 204 ],
 						this.adminToken
 					)
-					.then(done)
 					.catch((error) => fail(error));
 			})
 			.catch((error) => fail(error));
