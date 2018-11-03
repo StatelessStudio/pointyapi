@@ -25,8 +25,7 @@ describe('[Guards] User API Delete', () => {
 				password: 'password123'
 			})
 			.catch((error) => {
-				fail('Could not create User API Token');
-				fail(error);
+				fail('Could not create User API Token' + JSON.stringify(error));
 			});
 
 		upgradeUserRole('adminGuardDel1', BaseUser, UserRole.Admin);
@@ -50,10 +49,9 @@ describe('[Guards] User API Delete', () => {
 				user: 'guardUserDel1',
 				password: 'password123'
 			})
-			.catch((error) => {
-				fail('Could not create User API Token');
-				fail(error);
-			});
+			.catch((error) =>
+				fail('Could not create User API Token' + JSON.stringify(error))
+			);
 
 		if (deleteUser && deleteUserToken) {
 			await http
@@ -114,10 +112,9 @@ describe('[Guards] User API Delete', () => {
 				user: 'guardUserDel3',
 				password: 'password123'
 			})
-			.catch((error) => {
-				fail('Could not create User API Token');
-				fail(error);
-			});
+			.catch((error) =>
+				fail('Could not create User API Token' + JSON.stringify(error))
+			);
 
 		if (deleteUser4 && deleteUser3Token) {
 			await http

@@ -21,10 +21,9 @@ describe('[Guards] User API Update', () => {
 				user: 'adminGuardPut1',
 				password: 'password123'
 			})
-			.catch((error) => {
-				fail('Could not create User API Token');
-				fail(error);
-			});
+			.catch((error) =>
+				fail('Could not create User API Token' + JSON.stringify(error))
+			);
 
 		this.user = await http
 			.post('/api/v1/user', {
@@ -43,10 +42,9 @@ describe('[Guards] User API Update', () => {
 				user: 'userPut4',
 				password: 'password123'
 			})
-			.catch((error) => {
-				fail('Could not create User API Token');
-				fail(error);
-			});
+			.catch((error) =>
+				fail('Could not create User API Token' + JSON.stringify(error))
+			);
 	});
 
 	it('allows users to update', async () => {
@@ -67,10 +65,9 @@ describe('[Guards] User API Update', () => {
 				user: 'userPut1',
 				password: 'password123'
 			})
-			.catch((error) => {
-				fail('Could not create User API Token');
-				fail(error);
-			});
+			.catch((error) =>
+				fail('Could not create User API Token' + JSON.stringify(error))
+			);
 
 		if (user && token) {
 			await http
