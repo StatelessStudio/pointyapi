@@ -20,10 +20,12 @@ describe('[Guards] User API Create', () => {
 
 		upgradeUserRole('adminGuardPost1', BaseUser, UserRole.Admin);
 
-		this.adminToken = await http.post('/api/v1/auth', {
-			user: 'adminGuardPost1',
-			password: 'password123'
-		});
+		this.adminToken = await http
+			.post('/api/v1/auth', {
+				user: 'adminGuardPost1',
+				password: 'password123'
+			})
+			.catch((error) => fail(error));
 	});
 
 	it('works', () => {

@@ -2,7 +2,7 @@ import { pointy } from '../../../../src';
 const http = pointy.http;
 
 describe('User API Delete', () => {
-	it('can delete', (done) => {
+	it('can delete', () => {
 		http
 			.post('/api/v1/user', {
 				fname: 'User',
@@ -14,7 +14,6 @@ describe('User API Delete', () => {
 			.then((result) => {
 				http
 					.delete(`/api/v1/user/${result.body['id']}`, [ 204 ])
-					.then(done)
 					.catch((error) => fail(error));
 			})
 			.catch((error) => fail(error));

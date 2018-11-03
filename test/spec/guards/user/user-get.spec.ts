@@ -5,7 +5,7 @@ import { UserRole } from '../../../../src/enums/user-role';
 
 const http = pointy.http;
 
-describe('[Guards] User API  Read', () => {
+describe('[Guards] User API Read', () => {
 	beforeAll(async () => {
 		this.getUser1 = await http
 			.post('/api/v1/user', {
@@ -25,8 +25,7 @@ describe('[Guards] User API  Read', () => {
 				password: 'password123'
 			})
 			.catch((error) => {
-				fail('Could not create User API Token');
-				fail(error);
+				fail('Could not create User API Token' + JSON.stringify(error));
 			});
 
 		this.getUser2 = await http
@@ -58,10 +57,9 @@ describe('[Guards] User API  Read', () => {
 				user: 'adminGuardGet1',
 				password: 'password123'
 			})
-			.catch((error) => {
-				fail('Could not create User API Token');
-				fail(error);
-			});
+			.catch((error) =>
+				fail('Could not create User API Token' + +JSON.stringify(error))
+			);
 
 		upgradeUserRole('adminGuardGet1', BaseUser, UserRole.Admin);
 	});
@@ -83,6 +81,7 @@ describe('[Guards] User API  Read', () => {
 				{
 					id: this.getUser2.body.id
 				},
+				[ 200 ],
 				this.getUser1Token.body.token
 			)
 			.then((result) => {

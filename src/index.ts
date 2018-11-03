@@ -24,7 +24,7 @@ declare global {
 	namespace Express {
 		export interface Request {
 			identifier?: string;
-			user?: BaseUser;
+			user?: any;
 			userType?: BaseUserInterface;
 			payload?: BaseModel | BaseModel[];
 			payloadType?: BaseModelInterface;
