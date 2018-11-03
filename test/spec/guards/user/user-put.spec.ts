@@ -2,7 +2,7 @@ import { pointy } from '../../../../src';
 import { UserRole } from '../../../../src/enums/user-role';
 const http = pointy.http;
 
-describe('User Bodyguard Update', () => {
+describe('[Guards] User API Update', () => {
 	beforeAll(async () => {
 		this.userAdmin = await http
 			.post('/api/v1/user', {
@@ -26,7 +26,7 @@ describe('User Bodyguard Update', () => {
 				fail(error);
 			});
 
-		this.userPut4 = await http
+		this.user = await http
 			.post('/api/v1/user', {
 				fname: 'userPut4',
 				lname: 'userPut4',
@@ -38,7 +38,7 @@ describe('User Bodyguard Update', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.userPut4Token = await http
+		this.token = await http
 			.post('/api/v1/auth', {
 				user: 'userPut4',
 				password: 'password123'
@@ -50,7 +50,7 @@ describe('User Bodyguard Update', () => {
 	});
 
 	it('allows users to update', async () => {
-		const userPut1 = await http
+		const user = await http
 			.post('/api/v1/user', {
 				fname: 'userPut1',
 				lname: 'userPut1',
@@ -62,7 +62,7 @@ describe('User Bodyguard Update', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		const userPut1Token = await http
+		const token = await http
 			.post('/api/v1/auth', {
 				user: 'userPut1',
 				password: 'password123'
@@ -71,34 +71,39 @@ describe('User Bodyguard Update', () => {
 				fail('Could not create User API Token');
 				fail(error);
 			});
-		await http
-			.put(
-				`/api/v1/user/${this.result.body.id}`,
-				{
-					fname: 'updatedName'
-				},
-				[ 204 ],
-				this.userPut1Token.body.token
-			)
-			.then((result) => {
-				http
-					.get(
-						`/api/v1/user`,
-						{
-							id: this.userPut1.body.id
-						},
-						[ 200 ]
-					)
-					.then((getResult) =>
-						expect(getResult.body['fname']).toEqual('updatedName')
-					)
-					.catch((error) => fail(error));
-			})
-			.catch((error) => fail(error));
+
+		if (user && token) {
+			await http
+				.put(
+					`/api/v1/user/${user.body['id']}`,
+					{
+						fname: 'updatedName'
+					},
+					[ 204 ],
+					token.body['token']
+				)
+				.then(() => {
+					http
+						.get(
+							`/api/v1/user`,
+							{
+								id: user.body['id']
+							},
+							[ 200 ]
+						)
+						.then((getResult) =>
+							expect(getResult.body['fname']).toEqual(
+								'updatedName'
+							)
+						)
+						.catch((error) => fail(error));
+				})
+				.catch((error) => fail(error));
+		}
 	});
 
-	it('does not allow user to udpate without token', async () => {
-		const userPut2 = await http
+	it('does not allow user to update without token', () => {
+		http
 			.post('/api/v1/user', {
 				fname: 'userPut2',
 				lname: 'userPut2',
@@ -106,66 +111,57 @@ describe('User Bodyguard Update', () => {
 				password: 'password123',
 				email: 'userPut2@test.com'
 			})
-			.catch((error) =>
-				fail('Could not create base user: ' + JSON.stringify(error))
-			);
-
-		await http.put(
-			`/api/v1/user/${this.userPut2.body.id}`,
-			{
-				fname: 'noToken'
-			},
-			[ 401 ]
-		);
+			.then((result) => {
+				http.put(
+					`/api/v1/user/${result.body['id']}`,
+					{
+						fname: 'noToken'
+					},
+					[ 401 ]
+				);
+			});
 	});
 
 	it('does not allow user to update with wrong token', async () => {
-		const userPut3 = await http
+		const user = await http
 			.post('/api/v1/user', {
-				fname: 'userPut3',
-				lname: 'userPut3',
-				username: 'userPut3',
+				fname: 'user',
+				lname: 'user',
+				username: 'userPost123',
 				password: 'password123',
-				email: 'userPut3@test.com'
+				email: 'user@test.com'
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		const userPut3Token = await http
-			.post('/api/v1/auth', {
-				user: 'userPut3',
-				password: 'password123'
-			})
-			.catch((error) => {
-				fail('Could not create User API Token');
-				fail(error);
-			});
-
-		await http.put(
-			`/api/v1/user/${this.userPut3.body.id}`,
-			{
-				fname: 'wrongToken'
-			},
-			[ 401 ],
-			this.userPut4Token.body.token
-		);
+		if (user && this.token) {
+			await http.put(
+				`/api/v1/user/${user.body['id']}`,
+				{
+					fname: 'wrongToken'
+				},
+				[ 401 ],
+				this.token.body.token
+			);
+		}
 	});
 
 	it('does not allow basic/tutor users to change their role', async () => {
 		await http.put(
-			`/api/v1/user/${this.userPut4.body.id}`,
+			`/api/v1/user/${this.user.body.id}`,
 			{
 				role: UserRole.Admin
 			},
 			[ 403 ],
-			this.userPut4Token.body.token
+			this.token.body.token
 		);
 	});
+
 	it('allows for admin to update users', async () => {
 		await http
 			.put(
-				`/api/v1/user/${this.userPut4.body.id}`,
+				`/api/v1/user/${this.user.body.id}`,
 				{
 					fname: 'adminUpdate'
 				},
@@ -177,7 +173,7 @@ describe('User Bodyguard Update', () => {
 					.get(
 						`/api/v1/user`,
 						{
-							id: this.userPut4.body.id
+							id: this.user.body.id
 						},
 						[ 200 ]
 					)
