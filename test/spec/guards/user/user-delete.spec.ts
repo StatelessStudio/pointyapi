@@ -32,7 +32,7 @@ describe('[Guards] User API Delete', () => {
 	});
 
 	it('can delete', async () => {
-		const deleteUser = await http
+		const user = await http
 			.post('/api/v1/user', {
 				fname: 'deleteUser',
 				lname: 'deleteUser',
@@ -44,7 +44,7 @@ describe('[Guards] User API Delete', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		const deleteUserToken = await http
+		const token = await http
 			.post('/api/v1/auth', {
 				user: 'guardUserDel1',
 				password: 'password123'
@@ -53,12 +53,12 @@ describe('[Guards] User API Delete', () => {
 				fail('Could not create User API Token' + JSON.stringify(error))
 			);
 
-		if (deleteUser && deleteUserToken) {
+		if (user && token) {
 			await http
 				.delete(
-					`/api/v1/user/${deleteUser.body['id']}`,
+					`/api/v1/user/${user.body['id']}`,
 					[ 204 ],
-					deleteUserToken.body['token']
+					token.body['token']
 				)
 				.catch((error) => fail(error));
 		}
@@ -95,7 +95,7 @@ describe('[Guards] User API Delete', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		const deleteUser4 = await http
+		const user = await http
 			.post('/api/v1/user', {
 				fname: 'deleteUser',
 				lname: 'deleteUser',
@@ -107,7 +107,7 @@ describe('[Guards] User API Delete', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		const deleteUser3Token = await http
+		const token = await http
 			.post('/api/v1/auth', {
 				user: 'guardUserDel3',
 				password: 'password123'
@@ -116,12 +116,12 @@ describe('[Guards] User API Delete', () => {
 				fail('Could not create User API Token' + JSON.stringify(error))
 			);
 
-		if (deleteUser4 && deleteUser3Token) {
+		if (user && token) {
 			await http
 				.delete(
-					`/api/v1/user/${deleteUser4.body['id']}`,
+					`/api/v1/user/${user.body['id']}`,
 					[ 401 ],
-					deleteUser3Token.body['token']
+					token.body['token']
 				)
 				.catch((error) => fail(error));
 		}
