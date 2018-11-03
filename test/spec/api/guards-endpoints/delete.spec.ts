@@ -4,7 +4,7 @@ import { setModel } from '../../../../src/';
 import { BaseUser } from '../../../../src/models';
 import { deleteEndpoint } from '../../../../src/endpoints';
 import { getRepository } from 'typeorm';
-import { deleteGuard } from '../../../../src/guards';
+import { deleteFilter } from '../../../../src/guards';
 
 async function createMockup() {
 	const request = mockRequest();
@@ -25,7 +25,7 @@ describe('[Guards] Endpoint', () => {
 
 		let result = false;
 
-		deleteGuard(request, response, () => {
+		deleteFilter(request, response, () => {
 			result = true;
 		});
 	});
