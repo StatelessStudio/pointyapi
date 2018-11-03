@@ -7,9 +7,9 @@ describe('User API Read', () => {
 			.post('/api/v1/user', {
 				fname: 'getUser1',
 				lname: 'getUser',
-				username: 'getUser1',
+				username: 'basicGetUser1',
 				password: 'password123',
-				email: 'getUser1@get.com'
+				email: 'basicGetUser1@get.com'
 			})
 			.catch((error) => fail(error));
 
@@ -17,9 +17,9 @@ describe('User API Read', () => {
 			.post('/api/v1/user', {
 				fname: 'getUser2',
 				lname: 'getUser',
-				username: 'getUser2',
+				username: 'basicGetUser2',
 				password: 'password123',
-				email: 'getUser2@get.com'
+				email: 'basicGetUser2@get.com'
 			})
 			.catch((error) => fail(error));
 	});
@@ -64,6 +64,28 @@ describe('User API Read', () => {
 				},
 				[ 410 ]
 			)
+			.catch((error) => fail(error));
+	});
+
+	it('can search', async () => {
+		await http
+			.post('/api/v1/user', {
+				fname: 'searchTester',
+				lname: 'getUser',
+				username: 'searchTester',
+				password: 'password123',
+				email: 'searchTester@get.com'
+			})
+			.catch((error) => fail(error));
+
+		await http
+			.get('/api/v1/user', {
+				search: 'searchTester'
+			})
+			.then((result) => {
+				expect(result.body).toEqual(jasmine.any(Array));
+				expect(result.body['length']).toEqual(1);
+			})
 			.catch((error) => fail(error));
 	});
 });

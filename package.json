@@ -11,6 +11,8 @@
 		"test": "npm run build:spec && npm run test:jasmine-api && npm run test:jasmine-basic",
 		"test:jasmine-api": "npm run db:drop && jasmine --config=test/jasmine.api.json",
 		"test:jasmine-basic": "npm run db:drop && jasmine --config=test/jasmine.basic.json",
+		"test:jasmine-guards": "npm run db:drop && jasmine --config=test/jasmine.guards.json",
+		"test:jasmine-chat": "npm run db:drop && jasmine --config=test/jasmine.chat.json",
 		"db:drop": "typeorm schema:drop -f orm-cli",
 		"doc": "typedoc --out docs src --excludeNotExported"
 	},

@@ -7,9 +7,9 @@ describe('User API Update', () => {
 			.post('/api/v1/user', {
 				fname: 'userPut',
 				lname: 'userPut',
-				username: 'userPut1',
+				username: 'basicUserPut1',
 				password: 'password123',
-				email: 'userPut1@test.com'
+				email: 'basicUserPut1@test.com'
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
@@ -62,7 +62,7 @@ describe('User API Update', () => {
 					)
 					.then((getResult) =>
 						expect(getResult.body['email']).toEqual(
-							'userPut1@test.com'
+							'basicUserPut1@test.com'
 						)
 					)
 					.catch((error) => fail(error));

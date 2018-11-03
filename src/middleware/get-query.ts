@@ -33,13 +33,6 @@ export async function getQuery(
 		return;
 	}
 
-	// Delete undefined members
-	for (const key in request.query) {
-		if (request.query[key] === undefined) {
-			delete request.query[key];
-		}
-	}
-
 	if (
 		'query' in request &&
 		'search' in request.query &&
@@ -48,7 +41,7 @@ export async function getQuery(
 		// Search
 		await request.repository
 			.createQueryBuilder('obj')
-			.where(createQueryString(request.body))
+			.where(createQueryString(request.payload))
 			.setParameters({ name: `%${request.query.search}%` })
 			.getMany()
 			.then((result) => {
