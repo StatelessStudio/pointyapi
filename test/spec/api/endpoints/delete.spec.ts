@@ -36,7 +36,7 @@ describe('[Endpoints] Delete', () => {
 		request.identifier = 'id';
 		request.params = result;
 
-		setModel(request, response, BaseUser);
+		await setModel(request, response, BaseUser);
 
 		response.deleteResponder = () => {};
 		await deleteEndpoint(request, response).catch((error) => fail(error));
@@ -50,11 +50,11 @@ describe('[Endpoints] Delete', () => {
 			id: 12345
 		};
 
-		setModel(request, response, BaseUser);
+		response.goneResponder = () => {};
+		await setModel(request, response, BaseUser);
 
 		request.payload = undefined;
 
-		response.goneResponder = () => {};
 		await deleteEndpoint(request, response).catch((error) => fail(error));
 	});
 });

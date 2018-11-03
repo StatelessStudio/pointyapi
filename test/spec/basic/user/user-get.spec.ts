@@ -31,8 +31,8 @@ describe('User API Read', () => {
 			.catch((error) => fail(error));
 	});
 
-	it('can read many', async () => {
-		await http
+	it('can read many', () => {
+		http
 			.get('/api/v1/user', {
 				lname: 'getUser'
 			})
@@ -68,9 +68,19 @@ describe('User API Read', () => {
 	});
 
 	it('can search', async () => {
+		const user = await http
+			.post('/api/v1/user', {
+				fname: 'searchTester',
+				lname: 'getUser',
+				username: 'searchTester',
+				password: 'password123',
+				email: 'searchTester@get.com'
+			})
+			.catch((error) => fail(error));
+
 		await http
 			.get('/api/v1/user', {
-				search: 'getUser1'
+				search: 'searchTester'
 			})
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Array));

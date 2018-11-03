@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-export async function runHook(
+export function runHook(
 	request: Request,
 	response: Response,
 	name: string,
@@ -8,14 +8,7 @@ export async function runHook(
 ) {
 	// Run model hook
 	if (name in obj) {
-		const result = obj[name](request, response);
-
-		if (result instanceof Promise) {
-			return await result;
-		}
-		else {
-			return result;
-		}
+		return obj[name](request, response);
 	}
 
 	return true;

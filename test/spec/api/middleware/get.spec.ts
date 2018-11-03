@@ -40,7 +40,7 @@ describe('[Endpoints] GetQuery', () => {
 			.save([ user1, user2 ])
 			.catch((error) => fail(error));
 
-		setModel(request, response, BaseUser);
+		await setModel(request, response, BaseUser);
 
 		await getQuery(request, response).catch((error) => fail(error));
 

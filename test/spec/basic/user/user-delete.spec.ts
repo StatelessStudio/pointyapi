@@ -2,19 +2,21 @@ import { pointy } from '../../../../src';
 const http = pointy.http;
 
 describe('User API Delete', () => {
-	it('can delete', async () => {
-		this.result = await http
+	it('can delete', (done) => {
+		http
 			.post('/api/v1/user', {
-				fname: 'UserDelete1',
-				lname: 'UserDelete1',
-				username: 'User12345',
+				fname: 'User',
+				lname: 'Delete',
+				username: 'DeleteUser12345',
 				password: 'password123',
 				email: 'UserDelete1@test.com'
 			})
-			.catch((error) => fail(error));
-
-		await http
-			.delete(`/api/v1/user/${this.result.body.id}`, [ 204 ])
+			.then((result) => {
+				http
+					.delete(`/api/v1/user/${result.body['id']}`, [ 204 ])
+					.then(done)
+					.catch((error) => fail(error));
+			})
 			.catch((error) => fail(error));
 	});
 });

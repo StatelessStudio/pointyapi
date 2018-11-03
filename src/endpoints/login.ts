@@ -10,7 +10,7 @@ export async function loginEndpoint(
 	next: NextFunction
 ) {
 	// Run model hook
-	if (!await runHook(request, response, 'login', request.body)) {
+	if (!runHook(request, response, 'onBeforeLogin', request.body)) {
 		return;
 	}
 

@@ -29,15 +29,8 @@ export async function getQuery(
 	next?: NextFunction
 ) {
 	// Run model hook
-	if (!await runHook(request, response, 'getQuery', request.query)) {
+	if (!runHook(request, response, 'onGetQuery', request.query)) {
 		return;
-	}
-
-	// Delete undefined members
-	for (const key in request.query) {
-		if (request.query[key] === undefined) {
-			delete request.query[key];
-		}
 	}
 
 	if (
@@ -48,7 +41,7 @@ export async function getQuery(
 		// Search
 		await request.repository
 			.createQueryBuilder('obj')
-			.where(createQueryString(request.body))
+			.where(createQueryString(request.payload))
 			.setParameters({ name: `%${request.query.search}%` })
 			.getMany()
 			.then((result) => {

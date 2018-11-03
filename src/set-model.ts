@@ -10,7 +10,7 @@
  * import { BaseUser } from 'pointyapi/models';
  *
  * router.use((request, response, next) => {
- *		setModel(request, BaseUser, 'id');
+ *		await setModel(request,BaseUser, 'id');
  * 		next();
  * });
  *
@@ -35,27 +35,25 @@
 import { Request, Response } from 'express';
 import { BaseModelInterface } from './models';
 import { getRepository } from 'typeorm';
+import { getQuery, loadEntity } from './middleware';
 
-export function setModel(
+export async function setModel(
 	request: Request,
 	response: Response,
 	model: BaseModelInterface,
-	identifier?: string
+	identifier: string = 'id'
 ) {
 	request.identifier = identifier;
 	request.payloadType = model;
 	request.payload = new model();
 	request.repository = getRepository(request.payloadType);
 
-	if (request.params && request.params instanceof Object) {
-		request.params = Object.assign(request.payload, request.params);
+	if (request.method === 'GET') {
+		await getQuery(request, response);
+	}
+	else if (request.method === 'PUT' || request.method === 'DELETE') {
+		await loadEntity(request, response);
 	}
 
-	if (request.query && request.query instanceof Object) {
-		request.query = Object.assign(request.payload, request.query);
-	}
-
-	if (request.body && request.body instanceof Object) {
-		request.body = Object.assign(request.payload, request.body);
-	}
+	return !response.headersSent;
 }
