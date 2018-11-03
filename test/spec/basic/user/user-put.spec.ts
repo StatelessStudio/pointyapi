@@ -62,7 +62,7 @@ describe('User API Update', () => {
 					)
 					.then((getResult) =>
 						expect(getResult.body['email']).toEqual(
-							'userPut1@test.com'
+							'basicUserPut1@test.com'
 						)
 					)
 					.catch((error) => fail(error));
