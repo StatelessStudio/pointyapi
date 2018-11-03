@@ -5,7 +5,7 @@ import { UserRole } from '../../../../src/enums/user-role';
 
 const http = pointy.http;
 
-describe('[Guards] User API  Read', () => {
+describe('[Guards] User API Read', () => {
 	beforeAll(async () => {
 		this.getUser1 = await http
 			.post('/api/v1/user', {
