@@ -5,7 +5,7 @@ import { UserRole } from '../../../../src/enums/user-role';
 
 const http = pointy.http;
 
-describe('User Bodyguard Delete', () => {
+describe('[Guards] User API Delete', () => {
 	beforeAll(async () => {
 		this.userAdmin = await http
 			.post('/api/v1/user', {

@@ -4,7 +4,7 @@ import { upgradeUserRole } from '../../../../src/upgrade-user-role';
 import { BaseUser } from '../../../../src/models';
 const http = pointy.http;
 
-describe('User Bodyguard Create', () => {
+describe('[Guards] User API Create', () => {
 	beforeAll(async () => {
 		this.userAdmin = await http
 			.post('/api/v1/user', {
