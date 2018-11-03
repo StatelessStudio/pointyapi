@@ -31,7 +31,7 @@ describe('User Bodyguard Create', () => {
 	});
 
 	it('cannot set the role to admin', async () => {
-		this.postUser1 = await http
+		await http
 			.post(
 				'/api/v1/user',
 				{
@@ -48,7 +48,7 @@ describe('User Bodyguard Create', () => {
 	});
 
 	it('cannot set the role to member', async () => {
-		this.postUser2 = await http
+		await http
 			.post(
 				'/api/v1/user',
 				{
@@ -65,7 +65,7 @@ describe('User Bodyguard Create', () => {
 	});
 
 	it('cannot set the role to Developer', async () => {
-		this.postUser3 = await http
+		await http
 			.post(
 				'/api/v1/user',
 				{

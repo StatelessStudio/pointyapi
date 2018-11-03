@@ -33,7 +33,7 @@ describe('User Bodyguard Delete', () => {
 	});
 
 	it('can delete', async () => {
-		this.deleteUser = await http
+		await http
 			.post('/api/v1/user', {
 				fname: 'deleteUser',
 				lname: 'deleteUser',
@@ -45,7 +45,7 @@ describe('User Bodyguard Delete', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.deleteUserToken = await http
+		const deleteUserToken = await http
 			.post('/api/v1/auth', {
 				user: 'deleteUser1',
 				password: 'password123'
@@ -65,7 +65,7 @@ describe('User Bodyguard Delete', () => {
 	});
 
 	it(`can't delete w/o token`, async () => {
-		this.deleteUser2 = await http
+		const deleteUser2 = await http
 			.post('/api/v1/user', {
 				fname: 'deleteUser',
 				lname: 'deleteUser',
@@ -82,7 +82,7 @@ describe('User Bodyguard Delete', () => {
 	});
 
 	it(`can\'t delete with the wrong token`, async () => {
-		this.deleteUser3 = await http
+		await http
 			.post('/api/v1/user', {
 				fname: 'deleteUser',
 				lname: 'deleteUser',
@@ -94,7 +94,7 @@ describe('User Bodyguard Delete', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.deleteUser4 = await http
+		const deleteUser4 = await http
 			.post('/api/v1/user', {
 				fname: 'deleteUser',
 				lname: 'deleteUser',
@@ -106,7 +106,7 @@ describe('User Bodyguard Delete', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.deleteUser3Token = await http
+		const deleteUser3Token = await http
 			.post('/api/v1/auth', {
 				user: 'deleteUser3',
 				password: 'password123'
@@ -126,7 +126,7 @@ describe('User Bodyguard Delete', () => {
 	});
 
 	it('Admin can delete', async () => {
-		this.deleteUser5 = await http
+		const deletUser5 = await http
 			.post('/api/v1/user', {
 				fname: 'deleteUser',
 				lname: 'deleteUser',
