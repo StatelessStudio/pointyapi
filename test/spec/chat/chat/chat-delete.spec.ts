@@ -94,7 +94,7 @@ describe('[Chat] Chat API Delete', () => {
 					[ 204 ],
 					this.token.body.token
 				)
-				.catch((error) => fail(error));
+				.catch((error) => fail(JSON.stringify(error)));
 		}
 		else {
 			fail('Could not authenticate user');
@@ -115,9 +115,9 @@ describe('[Chat] Chat API Delete', () => {
 			.then(async (result) => {
 				await http
 					.delete(`/api/v1/chat/${result.body['id']}`, [ 401 ])
-					.catch((error) => fail(error));
+					.catch((error) => fail(JSON.stringify(error)));
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('cannot delete with the wrong token', async () => {
@@ -167,7 +167,7 @@ describe('[Chat] Chat API Delete', () => {
 					[ 401 ],
 					wrongToken.body['token']
 				)
-				.catch((error) => fail(error));
+				.catch((error) => fail(JSON.stringify(error)));
 		}
 		else {
 			fail('Could not authenticate user');
@@ -192,8 +192,8 @@ describe('[Chat] Chat API Delete', () => {
 						[ 204 ],
 						this.adminToken.body.token
 					)
-					.catch((error) => fail(error));
+					.catch((error) => fail(JSON.stringify(error)));
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 });

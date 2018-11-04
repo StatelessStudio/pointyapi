@@ -14,8 +14,8 @@ describe('User API Delete', () => {
 			.then(async (result) => {
 				await http
 					.delete(`/api/v1/user/${result.body['id']}`, [ 204 ])
-					.catch((error) => fail(error));
+					.catch((error) => fail(JSON.stringify(error)));
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 });

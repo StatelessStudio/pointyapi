@@ -12,7 +12,7 @@ async function createMockup() {
 	request.baseUrl = '/api/v1/user';
 
 	const response = mockResponse();
-	response.error = (error) => fail(error);
+	response.error = (error) => fail(JSON.stringify(error));
 	response.validationResponder = (msg) =>
 		fail('Validation: ' + JSON.stringify(msg));
 	response.putResponder = (msg) => fail('Deleted: ' + JSON.stringify(msg));
@@ -31,7 +31,9 @@ describe('[Endpoints] Put', () => {
 		user.password = 'password123';
 		user.email = 'put@example.com';
 
-		await request.repository.save(user).catch((error) => fail(error));
+		await request.repository
+			.save(user)
+			.catch((error) => fail(JSON.stringify(error)));
 
 		request.body = user;
 		request.identifier = 'id';
@@ -39,7 +41,9 @@ describe('[Endpoints] Put', () => {
 		await setModel(request, response, BaseUser);
 
 		response.putResponder = () => {};
-		await putEndpoint(request, response).catch((error) => fail(error));
+		await putEndpoint(request, response).catch((error) =>
+			fail(JSON.stringify(error))
+		);
 	});
 
 	it('calls validationResponder for a bad request', async () => {
@@ -52,7 +56,9 @@ describe('[Endpoints] Put', () => {
 		user.password = 'password123';
 		user.email = 'testy';
 
-		await request.repository.save(user).catch((error) => fail(error));
+		await request.repository
+			.save(user)
+			.catch((error) => fail(JSON.stringify(error)));
 
 		request.body = user;
 		request.identifier = 'id';
@@ -60,6 +66,8 @@ describe('[Endpoints] Put', () => {
 		await setModel(request, response, BaseUser);
 
 		response.validationResponder = () => {};
-		await putEndpoint(request, response).catch((error) => fail(error));
+		await putEndpoint(request, response).catch((error) =>
+			fail(JSON.stringify(error))
+		);
 	});
 });

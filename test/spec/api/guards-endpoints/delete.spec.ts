@@ -13,7 +13,7 @@ async function createMockup() {
 	request.baseUrl = '/api/v1/user';
 
 	const response = mockResponse();
-	response.error = (error) => fail(error);
+	response.error = (error) => fail(JSON.stringify(error));
 	response.goneResponder = (error) => fail('Gone: ' + JSON.stringify(error));
 	response.deleteResponder = (msg) => fail('Deleted: ' + JSON.stringify(msg));
 

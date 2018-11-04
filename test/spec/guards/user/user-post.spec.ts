@@ -25,7 +25,7 @@ describe('[Guards] User API Create', () => {
 				user: 'adminGuardPost1',
 				password: 'password123'
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('works', () => {
@@ -46,6 +46,6 @@ describe('[Guards] User API Create', () => {
 				},
 				[ 403 ]
 			)
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 });

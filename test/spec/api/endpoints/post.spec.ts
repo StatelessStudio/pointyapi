@@ -12,7 +12,7 @@ async function createMockup() {
 	request.baseUrl = '/api/v1/user';
 
 	const response = mockResponse();
-	response.error = (error) => fail(error);
+	response.error = (error) => fail(JSON.stringify(error));
 	response.validationResponder = (msg) =>
 		fail('Validation: ' + JSON.stringify(msg));
 	response.postResponder = (msg) => fail('Deleted: ' + JSON.stringify(msg));
@@ -36,7 +36,9 @@ describe('[Endpoints] Post', () => {
 		await setModel(request, response, BaseUser);
 
 		response.postResponder = () => {};
-		await postEndpoint(request, response).catch((error) => fail(error));
+		await postEndpoint(request, response).catch((error) =>
+			fail(JSON.stringify(error))
+		);
 	});
 
 	it('calls validationResponder for a bad request', async () => {
@@ -54,6 +56,8 @@ describe('[Endpoints] Post', () => {
 		await setModel(request, response, BaseUser);
 
 		response.validationResponder = () => {};
-		await postEndpoint(request, response).catch((error) => fail(error));
+		await postEndpoint(request, response).catch((error) =>
+			fail(JSON.stringify(error))
+		);
 	});
 });

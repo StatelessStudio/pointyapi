@@ -98,9 +98,9 @@ describe('[Guards] User API Update', () => {
 								'updatedName'
 							)
 						)
-						.catch((error) => fail(error));
+						.catch((error) => fail(JSON.stringify(error)));
 				})
-				.catch((error) => fail(error));
+				.catch((error) => fail(JSON.stringify(error)));
 		}
 		else {
 			fail();
@@ -125,9 +125,9 @@ describe('[Guards] User API Update', () => {
 						},
 						[ 401 ]
 					)
-					.catch((error) => fail(error));
+					.catch((error) => fail(JSON.stringify(error)));
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('does not allow user to update with wrong token', async () => {
@@ -153,7 +153,7 @@ describe('[Guards] User API Update', () => {
 					[ 401 ],
 					this.token.body.token
 				)
-				.catch((error) => fail(error));
+				.catch((error) => fail(JSON.stringify(error)));
 		}
 		else {
 			fail();
@@ -170,7 +170,7 @@ describe('[Guards] User API Update', () => {
 				[ 403 ],
 				this.token.body.token
 			)
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('allows for admin to update users', async () => {
@@ -196,8 +196,8 @@ describe('[Guards] User API Update', () => {
 					.then((getResult) =>
 						expect(getResult.body['fname']).toEqual('adminUpdate')
 					)
-					.catch((error) => fail(error));
+					.catch((error) => fail(JSON.stringify(error)));
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 });

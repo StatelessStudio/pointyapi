@@ -60,7 +60,7 @@ describe('[Guards] User API Delete', () => {
 					[ 204 ],
 					token.body['token']
 				)
-				.catch((error) => fail(error));
+				.catch((error) => fail(JSON.stringify(error)));
 		}
 		else {
 			fail();
@@ -79,9 +79,9 @@ describe('[Guards] User API Delete', () => {
 			.then(async (result) => {
 				await http
 					.delete(`/api/v1/user/${result.body['id']}`, [ 401 ])
-					.catch((error) => fail(error));
+					.catch((error) => fail(JSON.stringify(error)));
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it(`can\'t delete with the wrong token`, async () => {
@@ -125,7 +125,7 @@ describe('[Guards] User API Delete', () => {
 					[ 401 ],
 					token.body['token']
 				)
-				.catch((error) => fail(error));
+				.catch((error) => fail(JSON.stringify(error)));
 		}
 		else {
 			fail();
@@ -148,8 +148,8 @@ describe('[Guards] User API Delete', () => {
 						[ 204 ],
 						this.adminToken.body.token
 					)
-					.catch((error) => fail(error));
+					.catch((error) => fail(JSON.stringify(error)));
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 });

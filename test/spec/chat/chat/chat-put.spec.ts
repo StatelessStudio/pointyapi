@@ -70,9 +70,9 @@ describe('[Chat] Chat API Put', () => {
 						[ 204 ],
 						this.token.body.token
 					)
-					.catch((error) => fail(error));
+					.catch((error) => fail(JSON.stringify(error)));
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('Cannot update chat with the wrong token', async () => {
@@ -121,7 +121,7 @@ describe('[Chat] Chat API Put', () => {
 					[ 401 ],
 					wrongToken.body['token']
 				)
-				.catch((error) => fail(error));
+				.catch((error) => fail(JSON.stringify(error)));
 		}
 		else {
 			fail('Could not authenticate user');

@@ -37,9 +37,9 @@ describe('User API Update', () => {
 					.then((getResult) =>
 						expect(getResult.body['lname']).toEqual('testLast')
 					)
-					.catch((error) => fail(error));
+					.catch((error) => fail(JSON.stringify(error)));
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('maintains other fields on update', () => {
@@ -65,9 +65,9 @@ describe('User API Update', () => {
 							'basicUserPut1@test.com'
 						)
 					)
-					.catch((error) => fail(error));
+					.catch((error) => fail(JSON.stringify(error)));
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('cannot accept a nonsense username', async () => {
@@ -79,7 +79,7 @@ describe('User API Update', () => {
 				},
 				[ 400 ]
 			)
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('cannot accept a nonsense email', async () => {
@@ -91,6 +91,6 @@ describe('User API Update', () => {
 				},
 				[ 400 ]
 			)
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 });

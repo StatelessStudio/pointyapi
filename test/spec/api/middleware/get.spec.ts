@@ -12,7 +12,7 @@ async function createMockup() {
 	request.baseUrl = '/api/v1/user';
 
 	const response = mockResponse();
-	response.error = (error) => fail(error);
+	response.error = (error) => fail(JSON.stringify(error));
 
 	return { request, response };
 }
@@ -39,11 +39,13 @@ describe('[Endpoints] GetQuery', () => {
 
 		const result = await getRepository(BaseUser)
 			.save([ user1, user2 ])
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 
 		await setModel(request, response, BaseUser);
 
-		await getQuery(request, response).catch((error) => fail(error));
+		await getQuery(request, response).catch((error) =>
+			fail(JSON.stringify(error))
+		);
 
 		expect(request.payload).toEqual(jasmine.any(Array));
 		expect(request.payload.length).toBeGreaterThanOrEqual(2);

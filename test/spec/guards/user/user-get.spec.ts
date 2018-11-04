@@ -71,7 +71,7 @@ describe('[Guards] User API Read', () => {
 				expect(result.body).toEqual(jasmine.any(Array));
 				expect(result.body['length']).toBeGreaterThanOrEqual(2);
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('can read one', async () => {
@@ -88,7 +88,7 @@ describe('[Guards] User API Read', () => {
 				expect(result.body).toEqual(jasmine.any(Object));
 				expect(result.body['fname']).toEqual('getUser2');
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it(`cannot reveal sensitive information (one)`, async () => {
@@ -112,7 +112,7 @@ describe('[Guards] User API Read', () => {
 					fail();
 				}
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it(`cannot reveal sensitive information (all)`, async () => {
@@ -136,6 +136,6 @@ describe('[Guards] User API Read', () => {
 					fail();
 				}
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 });

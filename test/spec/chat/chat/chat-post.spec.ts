@@ -61,7 +61,7 @@ describe('[Chat] Chat API Post', () => {
 				expect(result.body).toEqual(jasmine.any(Object));
 				expect(result.body['body']).toEqual('test');
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('cannot post without a token', async () => {
