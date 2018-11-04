@@ -8,29 +8,31 @@ import { getCanRead, isSelf, isAdmin } from '../bodyguard';
  * @param user User object to check against
  * @return Returns the filtered obj
  */
-export function responseFilter(obj: any, user: BaseUser) {
+export function responseFilter(obj: any, user: BaseUser, objType, userType) {
 	if (obj instanceof Array) {
 		for (let i = 0; i < obj.length; i++) {
-			obj[i] = responseFilter(obj[i], user);
+			obj[i] = responseFilter(obj[i], user, objType, userType);
 		}
 	}
 	else if (obj instanceof Object) {
-		const isSelfResult = isSelf(obj, user);
+		const isSelfResult = isSelf(obj, user, objType, userType);
 		const isAdminResult = isAdmin(user);
 
 		// Loop through object members
 		for (const member in obj) {
-			const canRead = getCanRead(obj, member);
+			if (!(obj[member] instanceof Function)) {
+				const canRead = getCanRead(obj, member);
 
-			if (canRead === undefined) {
-				delete obj[member];
-			}
-			else if (
-				canRead !== '__anyone__' &&
-				((canRead === '__self__' && !isSelfResult) ||
-					(canRead === '__admin__' && !isAdminResult))
-			) {
-				delete obj[member];
+				if (canRead === undefined) {
+					delete obj[member];
+				}
+				else if (
+					canRead !== '__anyone__' &&
+					((canRead === '__self__' && !isSelfResult) ||
+						(canRead === '__admin__' && !isAdminResult))
+				) {
+					delete obj[member];
+				}
 			}
 		}
 	}
