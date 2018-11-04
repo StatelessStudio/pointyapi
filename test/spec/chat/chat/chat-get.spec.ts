@@ -51,7 +51,7 @@ describe('[Chat] Chat API Get', async () => {
 			.post(
 				'/api/v1/chat',
 				{
-					to: this.user2.body,
+					to: { id: this.user2.body.id },
 					body: 'test'
 				},
 				[ 200 ],
@@ -65,7 +65,7 @@ describe('[Chat] Chat API Get', async () => {
 			.post(
 				'/api/v1/chat',
 				{
-					to: this.user.body,
+					to: { id: this.user.body.id },
 					body: 'test2'
 				},
 				[ 200 ],

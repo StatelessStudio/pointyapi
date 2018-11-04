@@ -51,7 +51,7 @@ describe('[Chat] Chat API Post', () => {
 			.post(
 				'/api/v1/chat',
 				{
-					to: this.user2.body,
+					to: { id: this.user2.body.id },
 					body: 'test'
 				},
 				[ 200 ],
@@ -59,7 +59,6 @@ describe('[Chat] Chat API Post', () => {
 			)
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Object));
-				expect(result).toBeGreaterThanOrEqual(1);
 				expect(result.body['body']).toEqual('test');
 			})
 			.catch((error) => fail(error));
@@ -70,7 +69,7 @@ describe('[Chat] Chat API Post', () => {
 			.post(
 				'/api/v1/chat',
 				{
-					to: this.user2.body,
+					to: { id: this.user2.body.id },
 					body: 'test'
 				},
 				[ 401 ]

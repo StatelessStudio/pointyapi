@@ -1,5 +1,7 @@
 import { pointy } from '../../../../src';
 import { ChatStatus } from '../../../examples/chat/enums/chat-status';
+import { stringify } from 'querystring';
+import { log } from 'util';
 
 const http = pointy.http;
 describe('[Chat] Chat API Put', () => {
@@ -47,12 +49,12 @@ describe('[Chat] Chat API Put', () => {
 			});
 	});
 
-	it('updates message if read by user', async () => {
+	it('can change the status', async () => {
 		await http
 			.post(
 				'/api/v1/chat',
 				{
-					to: this.user2.body,
+					to: { id: this.user2.body.id },
 					body: 'test'
 				},
 				[ 200 ],
@@ -99,7 +101,7 @@ describe('[Chat] Chat API Put', () => {
 			.post(
 				'/api/v1/chat',
 				{
-					to: this.user2.body,
+					to: { id: this.user2.body.id },
 					body: 'test'
 				},
 				[ 200 ],

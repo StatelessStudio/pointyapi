@@ -77,7 +77,7 @@ describe('[Chat] Chat API Delete', () => {
 			.post(
 				'/api/v1/chat',
 				{
-					to: this.user2.body,
+					to: { id: this.user2.body.id },
 					body: 'test'
 				},
 				[ 200 ],
@@ -92,7 +92,7 @@ describe('[Chat] Chat API Delete', () => {
 				.delete(
 					`/api/v1/chat/${chat.body['id']}`,
 					[ 204 ],
-					this.token.body['token']
+					this.token.body.token
 				)
 				.catch((error) => fail(error));
 		}
@@ -106,7 +106,7 @@ describe('[Chat] Chat API Delete', () => {
 			.post(
 				'/api/v1/chat',
 				{
-					to: this.user2.body,
+					to: { id: this.user2.body.id },
 					body: 'test'
 				},
 				[ 200 ],
@@ -149,7 +149,7 @@ describe('[Chat] Chat API Delete', () => {
 			.post(
 				'/api/v1/chat',
 				{
-					to: this.user2.body,
+					to: { id: this.user2.body.id },
 					body: 'test'
 				},
 				[ 200 ],
@@ -179,7 +179,7 @@ describe('[Chat] Chat API Delete', () => {
 			.post(
 				'/api/v1/chat',
 				{
-					to: this.user2.body,
+					to: { id: this.user2.body.id },
 					body: 'test'
 				},
 				[ 200 ],
