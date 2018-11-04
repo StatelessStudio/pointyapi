@@ -104,9 +104,6 @@ describe('[Guards] User API Read', () => {
 					('tempPassword' in result.body &&
 						result.body['tempPassword']) ||
 					('tempEmail' in result.body && result.body['tempEmail']) ||
-					('role' in result.body && result.body['role']) ||
-					('status' in result.body && result.body['status']) ||
-					('location' in result.body && result.body['location']) ||
 					('token' in result.body && result.body['token'])
 				) {
 					fail();
@@ -128,9 +125,6 @@ describe('[Guards] User API Read', () => {
 						result.body['tempPassword']) ||
 					('tempEmail' in result.body[0] &&
 						result.body['tempEmail']) ||
-					('role' in result.body[0] && result.body['role']) ||
-					('status' in result.body[0] && result.body['status']) ||
-					('location' in result.body[0] && result.body['location']) ||
 					('token' in result.body[0] && result.body['token'])
 				) {
 					fail();
