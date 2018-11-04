@@ -146,7 +146,7 @@ describe('[Guards] User API Delete', () => {
 					.delete(
 						`/api/v1/user/${result.body['id']}`,
 						[ 204 ],
-						this.adminToken
+						this.adminToken.body.token
 					)
 					.catch((error) => fail(error));
 			})
