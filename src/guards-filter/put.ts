@@ -22,6 +22,4 @@ export function putFilter(
 			response
 		);
 	}
-
-	next();
 }
