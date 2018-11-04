@@ -130,7 +130,7 @@ describe('[Guards] User API Update', () => {
 			.catch((error) => fail(error));
 	});
 
-	fit('does not allow user to update with wrong token', async () => {
+	it('does not allow user to update with wrong token', async () => {
 		const user = await http
 			.post('/api/v1/user', {
 				fname: 'user',
