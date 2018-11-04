@@ -1,1 +1,1 @@
-export { deleteGuard } from './guards-endpoints/delete';
+export { deleteFilter } from './guards-filter/delete';
