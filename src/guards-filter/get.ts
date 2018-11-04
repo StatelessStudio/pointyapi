@@ -22,17 +22,19 @@ export function getFilter(
 
 		// Loop through object members
 		for (const member in request.query) {
-			const canRead = getCanRead(new request.payloadType(), member);
+			if (!(request.query[member] instanceof Function)) {
+				const canRead = getCanRead(new request.payloadType(), member);
 
-			if (canRead === undefined) {
-				denied = member;
-			}
-			else if (
-				canRead !== '__anyone__' &&
-				((canRead === '__self__' && !isSelfResult) ||
-					(canRead === '__admin__' && !isAdminResult))
-			) {
-				denied = member;
+				if (canRead === undefined) {
+					denied = member;
+				}
+				else if (
+					canRead !== '__anyone__' &&
+					((canRead === '__self__' && !isSelfResult) ||
+						(canRead === '__admin__' && !isAdminResult))
+				) {
+					denied = member;
+				}
 			}
 		}
 	}
