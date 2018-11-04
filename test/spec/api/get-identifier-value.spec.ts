@@ -8,6 +8,7 @@ describe('getIdentifierValue', () => {
 			username: 'tom'
 		};
 		request.identifier = 'username';
+		request.baseUrl = '/api/v1/user';
 
 		expect(getIdentifierValue(request)).toEqual('tom');
 	});
@@ -17,6 +18,7 @@ describe('getIdentifierValue', () => {
 		request.params = {
 			id: 1
 		};
+		request.baseUrl = '/api/v1/user';
 
 		expect(getIdentifierValue(request)).toEqual(1);
 	});

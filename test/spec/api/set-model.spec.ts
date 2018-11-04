@@ -6,6 +6,8 @@ import { BaseUser } from '../../../src/models';
 describe('setModel', () => {
 	it('sets the payload', async () => {
 		const request = mockRequest();
+		request.baseUrl = '/api/v1/user';
+
 		const response = mockResponse();
 
 		await setModel(request, response, BaseUser);
@@ -14,6 +16,8 @@ describe('setModel', () => {
 
 	it('sets the identifier', async () => {
 		const request = mockRequest();
+		request.baseUrl = '/api/v1/user';
+
 		const response = mockResponse();
 
 		await setModel(request, response, BaseUser, 'username');
