@@ -34,7 +34,10 @@ export class ChatMessage extends BaseModel {
 	public id: number = undefined;
 
 	// From User
-	@ManyToOne((type) => User, (user) => user.outbox, { onDelete: 'CASCADE' })
+	@ManyToOne((type) => User, (user) => user.outbox, {
+		onDelete: 'CASCADE',
+		eager: true
+	})
 	@JoinColumn()
 	@BodyguardKey()
 	@OnlySelfCanRead()
@@ -42,7 +45,10 @@ export class ChatMessage extends BaseModel {
 	public from: User = undefined;
 
 	// To User
-	@ManyToOne((type) => User, (user) => user.inbox, { onDelete: 'CASCADE' })
+	@ManyToOne((type) => User, (user) => user.inbox, {
+		onDelete: 'CASCADE',
+		eager: true
+	})
 	@JoinColumn()
 	@BodyguardKey()
 	@OnlySelfCanRead()
@@ -65,6 +71,7 @@ export class ChatMessage extends BaseModel {
 
 	// Message body
 	// TODO: Validate
+
 	@Column({ type: 'text' })
 	@OnlySelfCanRead()
 	@OnlySelfCanWrite()
@@ -87,9 +94,16 @@ export class ChatMessage extends BaseModel {
 	@OnlySelfCanWrite()
 	public toStatus: ChatStatus = undefined;
 
-	public onBeforePost(request: Request, response: Response) {
+	public beforeLoadPost(request: Request, response: Response) {
 		if (request.user) {
-			this.from = request.user;
+			this.from = new User();
+			this.from.id = request.user.id;
+
+			for (const key in this.from) {
+				if (this.from[key] === undefined) {
+					delete this.from[key];
+				}
+			}
 
 			return true;
 		}
