@@ -1,5 +1,3 @@
-import { Request, Response } from 'express';
-import { hashSync } from 'bcryptjs';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { ChatMessage } from './chat-message';
 
