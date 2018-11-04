@@ -22,7 +22,7 @@ export function getFilter(
 
 		// Loop through object members
 		for (const member in request.query) {
-			const canRead = getCanRead(request.query, member);
+			const canRead = getCanRead(new request.payloadType(), member);
 
 			if (canRead === undefined) {
 				denied = member;
