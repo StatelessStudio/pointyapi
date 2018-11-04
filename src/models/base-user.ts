@@ -156,7 +156,7 @@ export class BaseUser extends BaseModel {
 			const user = request.body;
 
 			// Check if user has some sort of password
-			if (!user.password && !user.tempPassword) {
+			if (!user.password) {
 				response.validationResponder(
 					{
 						message: 'Must supply a password'
@@ -166,17 +166,10 @@ export class BaseUser extends BaseModel {
 				return false;
 			}
 
-			// Temp password
+			// Hash password
 			if ('password' in user && user.password) {
-				// TODO: Deep copy, not letter-by-letter
-				for (let i = 0; i < user.password.length; i++) {
-					user.tempPassword += user.password[i];
-				}
-
-				user.tempPassword = hashSync(user.tempPassword, 12);
+				user.password = hashSync(user.password, 12);
 			}
-
-			delete user.password;
 		}
 
 		return true;
