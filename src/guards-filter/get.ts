@@ -1,4 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
+
+import { getCanRead, isSelf, isAdmin } from '../bodyguard';
 import { responseFilter } from '../bodyguard/response-filter';
 
 export function getFilter(
@@ -6,7 +8,47 @@ export function getFilter(
 	response: Response,
 	next: NextFunction
 ) {
-	request.payload = responseFilter(request.payload, request.user);
+	let denied: boolean | string = false;
 
-	next();
+	// Check incoming
+	if (request.payload instanceof request.payloadType) {
+		const isSelfResult = isSelf(
+			request.query,
+			request.user,
+			request.payloadType,
+			request.userType
+		);
+		const isAdminResult = isAdmin(request.user);
+
+		// Loop through object members
+		for (const member in request.query) {
+			const canRead = getCanRead(request.query, member);
+
+			if (canRead === undefined) {
+				denied = member;
+			}
+			else if (
+				canRead !== '__anyone__' &&
+				((canRead === '__self__' && !isSelfResult) ||
+					(canRead === '__admin__' && !isAdminResult))
+			) {
+				denied = member;
+			}
+		}
+	}
+
+	if (denied) {
+		response.forbiddenResponder('Cannot get by member ' + denied, response);
+	}
+	else {
+		// Filter outgoing
+		request.payload = responseFilter(
+			request.payload,
+			request.user,
+			request.payloadType,
+			request.userType
+		);
+
+		next();
+	}
 }
