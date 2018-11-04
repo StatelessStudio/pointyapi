@@ -25,7 +25,7 @@ export function writeFilter(
 		// Loop through object members
 		for (const member in obj) {
 			if (!(obj[member] instanceof Function)) {
-				const canWrite = getCanWrite(obj, member);
+				const canWrite = getCanWrite(new objType(), member);
 
 				if (canWrite === undefined) {
 					return member;

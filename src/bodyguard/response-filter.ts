@@ -21,7 +21,7 @@ export function responseFilter(obj: any, user: BaseUser, objType, userType) {
 		// Loop through object members
 		for (const member in obj) {
 			if (!(obj[member] instanceof Function)) {
-				const canRead = getCanRead(obj, member);
+				const canRead = getCanRead(new objType(), member);
 
 				if (canRead === undefined) {
 					delete obj[member];
