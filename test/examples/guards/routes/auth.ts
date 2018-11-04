@@ -7,12 +7,13 @@ import { setModel } from '../../../../src/';
 
 const router: Router = Router();
 
-router.use(async (request, response, next) => {
-	await setModel(request, response, BaseUser);
-	next();
-});
+async function loader(request, response, next) {
+	if (await setModel(request, response, BaseUser, 'id')) {
+		next();
+	}
+}
 
 // Create
-router.post('/', loginEndpoint);
-router.delete('/', logoutEndpoint);
+router.post('/', loader, loginEndpoint);
+router.delete('/', loader, logoutEndpoint);
 export const authRouter: Router = router;
