@@ -8,16 +8,23 @@ import { compareNestedBodyguards } from './compare-nested';
  * @param obj Object to check
  * @param user User to check for matching BodyguardKey
  */
-export function isSelf(obj: BaseModel, user: BaseUser) {
+export function isSelf(
+	obj: BaseModel,
+	user: BaseUser,
+	objBodyguardKeys?: string[],
+	userBodyguardKeys?: string[],
+	objType?,
+	userType?
+) {
 	if (!user) {
 		return false;
 	}
 
-	const objBodyguardKeys = getBodyguardKeys(obj);
-	const userBodyguardKeys = getBodyguardKeys(user);
+	objBodyguardKeys = objBodyguardKeys || getBodyguardKeys(obj);
+	userBodyguardKeys = userBodyguardKeys || getBodyguardKeys(user);
 
-	const objConstructor = Object.getPrototypeOf(obj).constructor;
-	const userConstructor = Object.getPrototypeOf(user).constructor;
+	const objConstructor = objType || Object.getPrototypeOf(obj).constructor;
+	const userConstructor = userType || Object.getPrototypeOf(user).constructor;
 
 	if (user) {
 		if (user.role === UserRole.Admin) {

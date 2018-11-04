@@ -32,7 +32,7 @@ describe('[Guards] User API Create', () => {
 		expect(this.userAdmin.body).toEqual(jasmine.any(Object));
 	});
 
-	it('cannot set the role to admin', async () => {
+	it('cannot set role', async () => {
 		await http
 			.post(
 				'/api/v1/user',
@@ -43,40 +43,6 @@ describe('[Guards] User API Create', () => {
 					password: 'password123',
 					email: 'postUser1@test.com',
 					role: UserRole.Admin
-				},
-				[ 403 ]
-			)
-			.catch((error) => fail(error));
-	});
-
-	it('cannot set the role to member', async () => {
-		await http
-			.post(
-				'/api/v1/user',
-				{
-					fname: 'postUser2',
-					lname: 'postUser2',
-					username: 'postUser2',
-					password: 'password123',
-					email: 'postUser2@test.com',
-					role: UserRole.Member
-				},
-				[ 403 ]
-			)
-			.catch((error) => fail(error));
-	});
-
-	it('cannot set the role to Developer', async () => {
-		await http
-			.post(
-				'/api/v1/user',
-				{
-					fname: 'postUser3',
-					lname: 'postUser3',
-					username: 'postUser3',
-					password: 'password123',
-					email: 'postUser3@test.com',
-					role: UserRole.Developer
 				},
 				[ 403 ]
 			)
