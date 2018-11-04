@@ -1,24 +1,41 @@
 import { Request, Response, NextFunction } from 'express';
-import { writeFilter } from '../bodyguard/write-filter';
+import { writeFilter, isSelf } from '../bodyguard';
+import { BaseModel } from '../models';
 
 export function putFilter(
 	request: Request,
 	response: Response,
 	next: NextFunction
 ) {
-	const writeFilterResult = writeFilter(
-		request.body,
-		request.user,
-		request.payloadType,
-		request.userType
-	);
+	if (request.payload instanceof BaseModel) {
+		const isSelfResult = isSelf(
+			request.payload,
+			request.user,
+			request.payloadType,
+			request.userType
+		);
 
-	if (writeFilterResult === true) {
-		next();
+		const writeFilterResult = writeFilter(
+			request.body,
+			request.user,
+			request.payloadType,
+			request.userType,
+			isSelfResult
+		);
+
+		if (writeFilterResult === true) {
+			next();
+		}
+		else {
+			response.forbiddenResponder(
+				'Cannot write member ' + writeFilterResult,
+				response
+			);
+		}
 	}
 	else {
-		response.forbiddenResponder(
-			'Cannot write member ' + writeFilterResult,
+		response.validationResponder(
+			'bad request: payload is not of type BaseModel',
 			response
 		);
 	}
