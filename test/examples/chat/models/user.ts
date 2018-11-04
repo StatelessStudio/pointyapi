@@ -98,6 +98,7 @@ export class User extends BaseUser {
 	@Column({ nullable: true })
 	@Length(1, 250)
 	@IsOptional()
+	@OnlySelfCanWrite()
 	public password: string = undefined;
 
 	// Password (temporary)
