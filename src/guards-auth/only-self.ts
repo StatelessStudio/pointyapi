@@ -28,8 +28,8 @@ export async function onlySelf(
 				authorized = isSelf(
 					request.body,
 					request.user,
-					userKeys,
-					bodyKeys
+					bodyKeys,
+					userKeys
 				);
 			}
 			else if (request.method === 'GET') {
@@ -42,8 +42,8 @@ export async function onlySelf(
 					authorized = isSelf(
 						request.payload,
 						request.user,
-						userKeys,
-						bodyKeys
+						bodyKeys,
+						userKeys
 					);
 				}
 			}
@@ -55,8 +55,8 @@ export async function onlySelf(
 				authorized = isSelf(
 					request.payload,
 					request.user,
-					userKeys,
-					bodyKeys
+					bodyKeys,
+					userKeys
 				);
 			}
 			else if (
@@ -67,8 +67,8 @@ export async function onlySelf(
 				authorized = isSelf(
 					request.payload,
 					request.user,
-					userKeys,
-					bodyKeys
+					bodyKeys,
+					userKeys
 				);
 			}
 		}
