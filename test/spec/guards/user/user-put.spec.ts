@@ -111,8 +111,8 @@ describe('[Guards] User API Update', () => {
 				password: 'password123',
 				email: 'userPut2@test.com'
 			})
-			.then((result) => {
-				http
+			.then(async (result) => {
+				await http
 					.put(
 						`/api/v1/user/${result.body['id']}`,
 						{
