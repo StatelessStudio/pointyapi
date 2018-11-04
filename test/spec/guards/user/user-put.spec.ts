@@ -130,7 +130,7 @@ describe('[Guards] User API Update', () => {
 			.catch((error) => fail(error));
 	});
 
-	it('does not allow user to update with wrong token', async () => {
+	fit('does not allow user to update with wrong token', async () => {
 		const user = await http
 			.post('/api/v1/user', {
 				fname: 'user',
@@ -160,7 +160,7 @@ describe('[Guards] User API Update', () => {
 		}
 	});
 
-	it('does not allow basic/tutor users to change their role', async () => {
+	it('does not allow users to change their role', async () => {
 		await http
 			.put(
 				`/api/v1/user/${this.user.body.id}`,
