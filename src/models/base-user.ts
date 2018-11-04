@@ -150,7 +150,7 @@ export class BaseUser extends BaseModel {
 	public thumbnail: string = undefined;
 
 	// Post hook
-	public beforePost(request: Request, response: Response) {
+	public beforeLoadPost(request: Request, response: Response) {
 		// User route
 		if (request.baseUrl.includes('/v1/user')) {
 			const user = request.body;
@@ -183,7 +183,7 @@ export class BaseUser extends BaseModel {
 	}
 
 	// Put hook
-	public beforePut(request: Request, response: Response) {
+	public beforeLoadPut(request: Request, response: Response) {
 		// User route
 		if (request.baseUrl.includes('/v1/user')) {
 			const user = request.body;
