@@ -151,25 +151,32 @@ export class BaseUser extends BaseModel {
 
 	// Post hook
 	public beforePost(request: Request, response: Response) {
-		const user = request.body;
+		// User route
+		if (request.baseUrl.includes('/v1/user')) {
+			const user = request.body;
 
-		// Check if user has some sort of password
-		if (!user.password && !user.tempPassword) {
-			response.validationResponder(
-				{
-					message: 'Must supply a password'
-				},
-				response
-			);
-			return false;
-		}
+			// Check if user has some sort of password
+			if (!user.password && !user.tempPassword) {
+				response.validationResponder(
+					{
+						message: 'Must supply a password'
+					},
+					response
+				);
+				return false;
+			}
 
-		// Temp password
-		if ('password' in user && user.password) {
-			user.tempPassword = user.password;
-			user.password = undefined;
+			// Temp password
+			if ('password' in user && user.password) {
+				// TODO: Deep copy, not letter-by-letter
+				for (let i = 0; i < user.password.length; i++) {
+					user.tempPassword += user.password[i];
+				}
 
-			user.tempPassword = hashSync(user.tempPassword, 12);
+				user.tempPassword = hashSync(user.tempPassword, 12);
+			}
+
+			delete user.password;
 		}
 
 		return true;
@@ -177,14 +184,21 @@ export class BaseUser extends BaseModel {
 
 	// Put hook
 	public beforePut(request: Request, response: Response) {
-		const user = request.body;
+		// User route
+		if (request.baseUrl.includes('/v1/user')) {
+			const user = request.body;
 
-		// Temp password
-		if ('password' in user && user.password) {
-			user.tempPassword = user.password;
-			user.password = undefined;
+			// Temp password
+			if ('password' in user && user.password) {
+				// TODO: Deep copy, not letter-by-letter
+				for (let i = 0; i < user.password.length; i++) {
+					user.tempPassword += user.password[i];
+				}
 
-			user.tempPassword = hashSync(user.tempPassword, 12);
+				user.tempPassword = hashSync(user.tempPassword, 12);
+			}
+
+			delete user.password;
 		}
 
 		return true;
