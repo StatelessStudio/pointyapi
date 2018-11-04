@@ -76,8 +76,8 @@ describe('[Guards] User API Delete', () => {
 				password: 'password123',
 				email: 'guardUserDel2@test.com'
 			})
-			.then((result) => {
-				http
+			.then(async (result) => {
+				await http
 					.delete(`/api/v1/user/${result.body['id']}`, [ 401 ])
 					.catch((error) => fail(error));
 			})
