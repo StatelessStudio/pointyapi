@@ -46,7 +46,7 @@ export class HttpClient {
 		const options = {
 			method: 'POST',
 			url: `${this.url}:${this.port}${path}`,
-			form: data
+			body: JSON.stringify(data)
 		};
 
 		if (bearer) {
@@ -113,7 +113,7 @@ export class HttpClient {
 		const options = {
 			method: 'PUT',
 			url: `${this.url}:${this.port}${path}`,
-			form: data
+			body: JSON.stringify(data)
 		};
 
 		if (bearer) {
