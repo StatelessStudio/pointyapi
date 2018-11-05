@@ -1,5 +1,50 @@
 # PointyApi Changelog
 
+## [0.1.0] Nov-04-2014 - Guards & Filters
+
+Created guards and filters to assist in authentication/authorization, as well as many bugfixes and minor enhancements.
+
+### Additions
+
+ - Created guards:
+	- onlyActive
+	- onlyAdmin
+	- onlyMember
+	- onlySelf
+	- onlyUser
+ - Created filters:
+	- deleteFilter
+	- getFilter
+	- postFilter
+	- putFilter
+ - Created examples:
+	- Guards
+	- Chat
+ - Created hooks:
+	- beforeLoadPost
+	- beforeLoadGet
+	- beforeLoadPut
+	- beforeLoadDelete
+	- beforeLogin
+	- beforePost
+	- beforeGet
+	- beforePut
+	- beforeDelete
+ - Created endpoint:
+	- logout
+ - Created bodyguard functions:
+	- writeFilter()
+	- responseFilter()
+ - setModel() automatically loads request.payload
+
+### Fixes
+
+ - Fixed issues causing wrong or multiple response headers
+ - Addressed canRead, canWrite, isSelf object type issues
+ - Async/Await upgradeUserRole()
+ - JSON.stringify() test-suite errors for verbose logging
+ - Fixed and cleaned up test suites
+
 ## [0.0.2] Nov-01-2018 - Auto-Load
 
 SetModel automatically runs getQuery or loadEntity.
