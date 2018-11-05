@@ -150,13 +150,9 @@ export class User extends BaseUser {
 
 	// Chat Message (Sent)
 	@OneToMany((type) => ChatMessage, (chat) => chat.from)
-	@OnlySelfCanRead()
-	@OnlySelfCanWrite()
 	public outbox: ChatMessage[] = undefined;
 
 	// Chat Message (Received)
 	@OneToMany((type) => ChatMessage, (chat) => chat.to)
-	@OnlySelfCanRead()
-	@OnlySelfCanWrite()
 	public inbox: ChatMessage[] = undefined;
 }
