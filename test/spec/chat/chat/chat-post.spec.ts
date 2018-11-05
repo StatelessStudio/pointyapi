@@ -78,20 +78,4 @@ describe('[Chat] Chat API Post', () => {
 				fail('Could not create chat: ' + JSON.stringify(error))
 			);
 	});
-
-	xit('will not allow cross-site scripting', async () => {
-		await http
-			.post(
-				'/api/v1/chat',
-				{
-					to: { id: this.user2.body.id },
-					body: '<script>alert("hacked");</script>'
-				},
-				[ 400 ],
-				this.token.body.token
-			)
-			.catch((error) =>
-				fail('Could not create chat: ' + JSON.stringify(error))
-			);
-	});
 });
