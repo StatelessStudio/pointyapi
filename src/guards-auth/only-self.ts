@@ -30,8 +30,8 @@ export async function onlySelf(
 					request.user,
 					request.payloadType,
 					request.userType,
-					userKeys,
-					bodyKeys
+					bodyKeys,
+					userKeys
 				);
 			}
 			else if (request.method === 'GET') {
@@ -46,8 +46,8 @@ export async function onlySelf(
 						request.user,
 						request.payloadType,
 						request.userType,
-						userKeys,
-						bodyKeys
+						bodyKeys,
+						userKeys
 					);
 				}
 			}
@@ -61,8 +61,8 @@ export async function onlySelf(
 					request.user,
 					request.payloadType,
 					request.userType,
-					userKeys,
-					bodyKeys
+					bodyKeys,
+					userKeys
 				);
 			}
 			else if (
@@ -75,8 +75,8 @@ export async function onlySelf(
 					request.user,
 					request.payloadType,
 					request.userType,
-					userKeys,
-					bodyKeys
+					bodyKeys,
+					userKeys
 				);
 			}
 		}
