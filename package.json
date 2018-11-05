@@ -8,7 +8,7 @@
 		"build": "tsc --p tsconfig.json",
 		"build:spec": "tsc --p tsconfig.json && tsc --p tsconfig.spec.json",
 		"postinstall": "tsc --p tsconfig.dist.json",
-		"test": "npm run build:spec && npm run test:jasmine-api && npm run test:jasmine-basic && npm run test:jasmine-guards",
+		"test": "npm run build:spec && npm run test:jasmine-api && npm run test:jasmine-basic && npm run test:jasmine-guards && npm run test:jasmine-chat",
 		"test:jasmine-api": "npm run db:drop && jasmine --config=test/jasmine.api.json",
 		"test:jasmine-basic": "npm run db:drop && jasmine --config=test/jasmine.basic.json",
 		"test:jasmine-guards": "npm run db:drop && jasmine --config=test/jasmine.guards.json",
