@@ -1,3 +1,5 @@
+import { Request, Response } from 'express';
+
 // Typeorm Columns
 import {
 	Entity,
@@ -24,7 +26,6 @@ import {
 import { BaseModel } from '../../../../src/models';
 import { User } from './user';
 import { ChatStatus } from '../enums/chat-status';
-import { Request, Response } from 'express';
 
 @Entity('ChatMessage')
 export class ChatMessage extends BaseModel {
