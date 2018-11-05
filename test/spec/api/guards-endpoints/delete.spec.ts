@@ -4,15 +4,16 @@ import { setModel } from '../../../../src/';
 import { BaseUser } from '../../../../src/models';
 import { deleteEndpoint } from '../../../../src/endpoints';
 import { getRepository } from 'typeorm';
-import { deleteGuard } from '../../../../src/guards';
+import { deleteFilter } from '../../../../src/guards';
 
 async function createMockup() {
 	const request = mockRequest();
 	request.repository = await getRepository(BaseUser);
 	request.method = 'DELETE';
+	request.baseUrl = '/api/v1/user';
 
 	const response = mockResponse();
-	response.error = (error) => fail(error);
+	response.error = (error) => fail(JSON.stringify(error));
 	response.goneResponder = (error) => fail('Gone: ' + JSON.stringify(error));
 	response.deleteResponder = (msg) => fail('Deleted: ' + JSON.stringify(msg));
 
@@ -25,7 +26,7 @@ describe('[Guards] Endpoint', () => {
 
 		let result = false;
 
-		deleteGuard(request, response, () => {
+		deleteFilter(request, response, () => {
 			result = true;
 		});
 	});

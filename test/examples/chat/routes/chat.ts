@@ -1,13 +1,12 @@
 import { Router } from 'express';
 
-// TODO: Add guards
-/* import {
-	onlySelf,
-	deleteGuard,
-	getGuard,
-	postGuard,
-	putGuard
-} from 'pointyapi/guards'; */
+import {
+	postFilter,
+	getFilter,
+	putFilter,
+	deleteFilter,
+	onlySelf
+} from '../../../../src/guards';
 
 import {
 	postEndpoint,
@@ -18,7 +17,6 @@ import {
 
 import { setModel } from '../../../../src/';
 import { ChatMessage } from '../models/chat-message';
-
 const router: Router = Router();
 
 async function loader(request, response, next) {
@@ -28,9 +26,9 @@ async function loader(request, response, next) {
 }
 
 // Create
-router.post('/', loader, postEndpoint);
-router.get('/', loader, getEndpoint);
-router.put(`/:id`, loader, putEndpoint);
-router.delete(`/:id`, loader, deleteEndpoint);
+router.post('/', loader, onlySelf, postFilter, postEndpoint);
+router.get('/', loader, onlySelf, getFilter, getEndpoint);
+router.put(`/:id`, loader, onlySelf, putFilter, putEndpoint);
+router.delete(`/:id`, loader, onlySelf, deleteFilter, deleteEndpoint);
 
 export const chatRouter: Router = router;

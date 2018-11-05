@@ -9,9 +9,10 @@ async function createMockup() {
 	const request = mockRequest();
 	request.repository = await getRepository(BaseUser);
 	request.method = 'DELETE';
+	request.baseUrl = '/api/v1/user';
 
 	const response = mockResponse();
-	response.error = (error) => fail(error);
+	response.error = (error) => fail(JSON.stringify(error));
 	response.goneResponder = (error) => fail('Gone: ' + JSON.stringify(error));
 	response.deleteResponder = (msg) => fail('Deleted: ' + JSON.stringify(msg));
 
@@ -31,7 +32,7 @@ describe('[Endpoints] Delete', () => {
 
 		const result = await getRepository(BaseUser)
 			.save(user)
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 
 		request.identifier = 'id';
 		request.params = result;
@@ -39,7 +40,9 @@ describe('[Endpoints] Delete', () => {
 		await setModel(request, response, BaseUser);
 
 		response.deleteResponder = () => {};
-		await deleteEndpoint(request, response).catch((error) => fail(error));
+		await deleteEndpoint(request, response).catch((error) =>
+			fail(JSON.stringify(error))
+		);
 	});
 
 	it('calls response.goneResponder() if object not found', async () => {
@@ -55,6 +58,8 @@ describe('[Endpoints] Delete', () => {
 
 		request.payload = undefined;
 
-		await deleteEndpoint(request, response).catch((error) => fail(error));
+		await deleteEndpoint(request, response).catch((error) =>
+			fail(JSON.stringify(error))
+		);
 	});
 });

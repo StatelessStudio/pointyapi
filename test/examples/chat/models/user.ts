@@ -1,5 +1,3 @@
-import { Request, Response } from 'express';
-import { hashSync } from 'bcryptjs';
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { ChatMessage } from './chat-message';
 
@@ -100,6 +98,7 @@ export class User extends BaseUser {
 	@Column({ nullable: true })
 	@Length(1, 250)
 	@IsOptional()
+	@OnlySelfCanWrite()
 	public password: string = undefined;
 
 	// Password (temporary)
@@ -151,13 +150,9 @@ export class User extends BaseUser {
 
 	// Chat Message (Sent)
 	@OneToMany((type) => ChatMessage, (chat) => chat.from)
-	@OnlySelfCanRead()
-	@OnlySelfCanWrite()
 	public outbox: ChatMessage[] = undefined;
 
 	// Chat Message (Received)
 	@OneToMany((type) => ChatMessage, (chat) => chat.to)
-	@OnlySelfCanRead()
-	@OnlySelfCanWrite()
 	public inbox: ChatMessage[] = undefined;
 }

@@ -67,3 +67,4 @@ export { getEndpoint } from './endpoints/get';
 export { postEndpoint } from './endpoints/post';
 export { putEndpoint } from './endpoints/put';
 export { loginEndpoint } from './endpoints/login';
+export { logoutEndpoint } from './endpoints/logout';

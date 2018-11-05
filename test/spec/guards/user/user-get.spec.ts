@@ -61,7 +61,13 @@ describe('[Guards] User API Read', () => {
 				fail('Could not create User API Token' + +JSON.stringify(error))
 			);
 
-		upgradeUserRole('adminGuardGet1', BaseUser, UserRole.Admin);
+		await upgradeUserRole(
+			'adminGuardGet1',
+			BaseUser,
+			UserRole.Admin
+		).catch((error) =>
+			fail('Could not upgrade user role' + JSON.stringify(error))
+		);
 	});
 
 	it('can read all', async () => {
@@ -71,7 +77,7 @@ describe('[Guards] User API Read', () => {
 				expect(result.body).toEqual(jasmine.any(Array));
 				expect(result.body['length']).toBeGreaterThanOrEqual(2);
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('can read one', async () => {
@@ -88,7 +94,7 @@ describe('[Guards] User API Read', () => {
 				expect(result.body).toEqual(jasmine.any(Object));
 				expect(result.body['fname']).toEqual('getUser2');
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it(`cannot reveal sensitive information (one)`, async () => {
@@ -104,15 +110,12 @@ describe('[Guards] User API Read', () => {
 					('tempPassword' in result.body &&
 						result.body['tempPassword']) ||
 					('tempEmail' in result.body && result.body['tempEmail']) ||
-					('role' in result.body && result.body['role']) ||
-					('status' in result.body && result.body['status']) ||
-					('location' in result.body && result.body['location']) ||
 					('token' in result.body && result.body['token'])
 				) {
 					fail();
 				}
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it(`cannot reveal sensitive information (all)`, async () => {
@@ -128,14 +131,11 @@ describe('[Guards] User API Read', () => {
 						result.body['tempPassword']) ||
 					('tempEmail' in result.body[0] &&
 						result.body['tempEmail']) ||
-					('role' in result.body[0] && result.body['role']) ||
-					('status' in result.body[0] && result.body['status']) ||
-					('location' in result.body[0] && result.body['location']) ||
 					('token' in result.body[0] && result.body['token'])
 				) {
 					fail();
 				}
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 });

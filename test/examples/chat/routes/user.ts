@@ -9,7 +9,13 @@ import {
 import { User } from '../models/user';
 
 import { setModel } from '../../../../src/';
-import { loadEntity, getQuery } from '../../../../src/middleware';
+import {
+	postFilter,
+	getFilter,
+	putFilter,
+	deleteFilter,
+	onlySelf
+} from '../../../../src/guards';
 
 const router: Router = Router();
 
@@ -20,9 +26,9 @@ async function loader(request, response, next) {
 }
 
 // Create
-router.post('/', loader, postEndpoint);
-router.get('/', loader, getEndpoint);
-router.put(`/:id`, loader, putEndpoint);
-router.delete(`/:id`, loader, deleteEndpoint);
+router.post('/', loader, postFilter, postEndpoint);
+router.get('/', loader, getFilter, getEndpoint);
+router.put(`/:id`, loader, onlySelf, putFilter, putEndpoint);
+router.delete(`/:id`, loader, onlySelf, deleteFilter, deleteEndpoint);
 
 export const userRouter: Router = router;

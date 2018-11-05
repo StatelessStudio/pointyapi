@@ -1,6 +1,7 @@
 import { Router } from 'express';
 
-import { loginEndpoint } from '../../../../src/endpoints';
+import { loginEndpoint, logoutEndpoint } from '../../../../src/endpoints';
+
 import { User } from '../models/user';
 
 import { setModel } from '../../../../src/';
@@ -15,5 +16,6 @@ async function loader(request, response, next) {
 
 // Create
 router.post('/', loader, loginEndpoint);
+router.delete('/', loader, logoutEndpoint);
 
 export const authRouter: Router = router;

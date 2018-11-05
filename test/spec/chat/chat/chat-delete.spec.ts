@@ -69,7 +69,13 @@ describe('[Chat] Chat API Delete', () => {
 				fail('Could not create User API Token' + JSON.stringify(error))
 			);
 
-		upgradeUserRole('chatAdmin1', User, UserRole.Admin);
+		await upgradeUserRole(
+			'chatAdmin1',
+			User,
+			UserRole.Admin
+		).catch((error) =>
+			fail('Could not upgrade user role' + JSON.stringify(error))
+		);
 	});
 
 	it('can delete', async () => {
@@ -77,7 +83,7 @@ describe('[Chat] Chat API Delete', () => {
 			.post(
 				'/api/v1/chat',
 				{
-					to: this.user2.body,
+					to: { id: this.user2.body.id },
 					body: 'test'
 				},
 				[ 200 ],
@@ -92,9 +98,9 @@ describe('[Chat] Chat API Delete', () => {
 				.delete(
 					`/api/v1/chat/${chat.body['id']}`,
 					[ 204 ],
-					this.token.body['token']
+					this.token.body.token
 				)
-				.catch((error) => fail(error));
+				.catch((error) => fail(JSON.stringify(error)));
 		}
 		else {
 			fail('Could not authenticate user');
@@ -106,7 +112,7 @@ describe('[Chat] Chat API Delete', () => {
 			.post(
 				'/api/v1/chat',
 				{
-					to: this.user2.body,
+					to: { id: this.user2.body.id },
 					body: 'test'
 				},
 				[ 200 ],
@@ -115,9 +121,9 @@ describe('[Chat] Chat API Delete', () => {
 			.then(async (result) => {
 				await http
 					.delete(`/api/v1/chat/${result.body['id']}`, [ 401 ])
-					.catch((error) => fail(error));
+					.catch((error) => fail(JSON.stringify(error)));
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('cannot delete with the wrong token', async () => {
@@ -149,7 +155,7 @@ describe('[Chat] Chat API Delete', () => {
 			.post(
 				'/api/v1/chat',
 				{
-					to: this.user2.body,
+					to: { id: this.user2.body.id },
 					body: 'test'
 				},
 				[ 200 ],
@@ -167,7 +173,7 @@ describe('[Chat] Chat API Delete', () => {
 					[ 401 ],
 					wrongToken.body['token']
 				)
-				.catch((error) => fail(error));
+				.catch((error) => fail(JSON.stringify(error)));
 		}
 		else {
 			fail('Could not authenticate user');
@@ -179,7 +185,7 @@ describe('[Chat] Chat API Delete', () => {
 			.post(
 				'/api/v1/chat',
 				{
-					to: this.user2.body,
+					to: { id: this.user2.body.id },
 					body: 'test'
 				},
 				[ 200 ],
@@ -192,8 +198,8 @@ describe('[Chat] Chat API Delete', () => {
 						[ 204 ],
 						this.adminToken.body.token
 					)
-					.catch((error) => fail(error));
+					.catch((error) => fail(JSON.stringify(error)));
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 });

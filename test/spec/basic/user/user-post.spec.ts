@@ -38,7 +38,7 @@ describe('User API Create', () => {
 				},
 				[ 409 ]
 			)
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('cannot create duplicate emails', async () => {
@@ -54,7 +54,7 @@ describe('User API Create', () => {
 				},
 				[ 409 ]
 			)
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('requires a username', async () => {
@@ -69,7 +69,7 @@ describe('User API Create', () => {
 				},
 				[ 400 ]
 			)
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('requires a password', async () => {
@@ -84,7 +84,7 @@ describe('User API Create', () => {
 				},
 				[ 400 ]
 			)
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('cannot accept a nonsense username', async () => {
@@ -100,7 +100,7 @@ describe('User API Create', () => {
 				},
 				[ 400 ]
 			)
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('cannot accept a nonsense email', async () => {
@@ -116,6 +116,6 @@ describe('User API Create', () => {
 				},
 				[ 400 ]
 			)
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 });

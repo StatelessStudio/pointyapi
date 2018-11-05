@@ -28,7 +28,13 @@ describe('[Guards] User API Delete', () => {
 				fail('Could not create User API Token' + JSON.stringify(error));
 			});
 
-		upgradeUserRole('adminGuardDel1', BaseUser, UserRole.Admin);
+		await upgradeUserRole(
+			'adminGuardDel1',
+			BaseUser,
+			UserRole.Admin
+		).catch((error) =>
+			fail('Could not upgrade user role' + JSON.stringify(error))
+		);
 	});
 
 	it('can delete', async () => {
@@ -60,7 +66,7 @@ describe('[Guards] User API Delete', () => {
 					[ 204 ],
 					token.body['token']
 				)
-				.catch((error) => fail(error));
+				.catch((error) => fail(JSON.stringify(error)));
 		}
 		else {
 			fail();
@@ -76,12 +82,12 @@ describe('[Guards] User API Delete', () => {
 				password: 'password123',
 				email: 'guardUserDel2@test.com'
 			})
-			.then((result) => {
-				http
+			.then(async (result) => {
+				await http
 					.delete(`/api/v1/user/${result.body['id']}`, [ 401 ])
-					.catch((error) => fail(error));
+					.catch((error) => fail(JSON.stringify(error)));
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it(`can\'t delete with the wrong token`, async () => {
@@ -125,7 +131,7 @@ describe('[Guards] User API Delete', () => {
 					[ 401 ],
 					token.body['token']
 				)
-				.catch((error) => fail(error));
+				.catch((error) => fail(JSON.stringify(error)));
 		}
 		else {
 			fail();
@@ -146,10 +152,10 @@ describe('[Guards] User API Delete', () => {
 					.delete(
 						`/api/v1/user/${result.body['id']}`,
 						[ 204 ],
-						this.adminToken
+						this.adminToken.body.token
 					)
-					.catch((error) => fail(error));
+					.catch((error) => fail(JSON.stringify(error)));
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 });

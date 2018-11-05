@@ -18,21 +18,27 @@ describe('[Guards] User API Create', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		upgradeUserRole('adminGuardPost1', BaseUser, UserRole.Admin);
+		await upgradeUserRole(
+			'adminGuardPost1',
+			BaseUser,
+			UserRole.Admin
+		).catch((error) =>
+			fail('Could not upgrade user role' + JSON.stringify(error))
+		);
 
 		this.adminToken = await http
 			.post('/api/v1/auth', {
 				user: 'adminGuardPost1',
 				password: 'password123'
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('works', () => {
 		expect(this.userAdmin.body).toEqual(jasmine.any(Object));
 	});
 
-	it('cannot set the role to admin', async () => {
+	it('cannot set role', async () => {
 		await http
 			.post(
 				'/api/v1/user',
@@ -46,40 +52,6 @@ describe('[Guards] User API Create', () => {
 				},
 				[ 403 ]
 			)
-			.catch((error) => fail(error));
-	});
-
-	it('cannot set the role to member', async () => {
-		await http
-			.post(
-				'/api/v1/user',
-				{
-					fname: 'postUser2',
-					lname: 'postUser2',
-					username: 'postUser2',
-					password: 'password123',
-					email: 'postUser2@test.com',
-					role: UserRole.Member
-				},
-				[ 403 ]
-			)
-			.catch((error) => fail(error));
-	});
-
-	it('cannot set the role to Developer', async () => {
-		await http
-			.post(
-				'/api/v1/user',
-				{
-					fname: 'postUser3',
-					lname: 'postUser3',
-					username: 'postUser3',
-					password: 'password123',
-					email: 'postUser3@test.com',
-					role: UserRole.Developer
-				},
-				[ 403 ]
-			)
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 });

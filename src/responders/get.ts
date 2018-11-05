@@ -5,9 +5,6 @@ export function getResponder(result: any, response: Response) {
 		response.goneResponder(result, response);
 	}
 	else {
-		// Sanitize sensitive fields
-		// TODO: Sanitize sensitive data with responseFilter()
-
 		if (result) {
 			// Send response
 			response.json(result);
