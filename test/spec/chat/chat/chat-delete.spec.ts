@@ -69,7 +69,13 @@ describe('[Chat] Chat API Delete', () => {
 				fail('Could not create User API Token' + JSON.stringify(error))
 			);
 
-		upgradeUserRole('chatAdmin1', User, UserRole.Admin);
+		await upgradeUserRole(
+			'chatAdmin1',
+			User,
+			UserRole.Admin
+		).catch((error) =>
+			fail('Could not upgrade user role' + JSON.stringify(error))
+		);
 	});
 
 	it('can delete', async () => {

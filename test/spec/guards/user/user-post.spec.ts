@@ -18,7 +18,13 @@ describe('[Guards] User API Create', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		upgradeUserRole('adminGuardPost1', BaseUser, UserRole.Admin);
+		await upgradeUserRole(
+			'adminGuardPost1',
+			BaseUser,
+			UserRole.Admin
+		).catch((error) =>
+			fail('Could not upgrade user role' + JSON.stringify(error))
+		);
 
 		this.adminToken = await http
 			.post('/api/v1/auth', {

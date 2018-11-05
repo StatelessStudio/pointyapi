@@ -61,7 +61,13 @@ describe('[Guards] User API Read', () => {
 				fail('Could not create User API Token' + +JSON.stringify(error))
 			);
 
-		upgradeUserRole('adminGuardGet1', BaseUser, UserRole.Admin);
+		await upgradeUserRole(
+			'adminGuardGet1',
+			BaseUser,
+			UserRole.Admin
+		).catch((error) =>
+			fail('Could not upgrade user role' + JSON.stringify(error))
+		);
 	});
 
 	it('can read all', async () => {

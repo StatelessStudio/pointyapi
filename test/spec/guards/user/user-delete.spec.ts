@@ -28,7 +28,13 @@ describe('[Guards] User API Delete', () => {
 				fail('Could not create User API Token' + JSON.stringify(error));
 			});
 
-		upgradeUserRole('adminGuardDel1', BaseUser, UserRole.Admin);
+		await upgradeUserRole(
+			'adminGuardDel1',
+			BaseUser,
+			UserRole.Admin
+		).catch((error) =>
+			fail('Could not upgrade user role' + JSON.stringify(error))
+		);
 	});
 
 	it('can delete', async () => {
