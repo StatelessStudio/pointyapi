@@ -16,17 +16,23 @@ describe('upgradeAdmin()', () => {
 
 		this.user = await getRepository(BaseUser)
 			.save(this.user)
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('can upgrade user', async () => {
 		// Upgrade role to admin
-		await upgradeUserRole('baseUserUpgrade', BaseUser, UserRole.Admin);
+		await upgradeUserRole(
+			'baseUserUpgrade',
+			BaseUser,
+			UserRole.Admin
+		).catch((error) =>
+			fail('Could not upgrade user role' + JSON.stringify(error))
+		);
 
 		// Pull user back from database
 		this.user = await getRepository(BaseUser)
 			.findOne(this.user.id)
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 
 		// Check value
 		expect(this.user.role).toEqual(UserRole.Admin);

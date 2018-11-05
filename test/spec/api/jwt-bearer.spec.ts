@@ -21,6 +21,7 @@ describe('[JWT]', () => {
 		request.header = () => {
 			return 'Bearer ' + jwtString;
 		};
+		request.baseUrl = '/api/v1/user';
 
 		expect(jwtBearer.getToken(request)).toEqual(jasmine.any(String));
 	});

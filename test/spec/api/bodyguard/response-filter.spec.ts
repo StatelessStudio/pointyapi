@@ -23,7 +23,7 @@ describe('[Bodyguard] responseFilter', () => {
 		user.id = 1;
 		user.email = 'test@example.com';
 
-		user = responseFilter(user, new BaseUser());
+		user = responseFilter(user, new BaseUser(), BaseUser, BaseUser);
 
 		expect(user.role).toEqual(undefined);
 	});
@@ -33,7 +33,7 @@ describe('[Bodyguard] responseFilter', () => {
 		user.id = 1;
 		user.email = 'test@example.com';
 
-		user = responseFilter(user, user);
+		user = responseFilter(user, user, BaseUser, BaseUser);
 
 		expect(user.email).toEqual('test@example.com');
 	});
@@ -48,7 +48,7 @@ describe('[Bodyguard] responseFilter', () => {
 		user2.role = UserRole.Basic;
 		user2.email = 'test@example.com';
 
-		user2 = responseFilter(user2, user1);
+		user2 = responseFilter(user2, user1, BaseUser, BaseUser);
 
 		expect(user2.email).toEqual('test@example.com');
 	});
@@ -70,7 +70,7 @@ describe('[Bodyguard] responseFilter', () => {
 
 		let results = [ test1, test2 ];
 
-		results = responseFilter(results, new BaseUser());
+		results = responseFilter(results, new BaseUser(), BaseUser, BaseUser);
 
 		expect(results).toEqual(jasmine.any(Array));
 		expect(results.length).toEqual(2);

@@ -51,7 +51,7 @@ describe('[Chat] Chat API Get', async () => {
 			.post(
 				'/api/v1/chat',
 				{
-					to: this.user2.body,
+					to: { id: this.user2.body.id },
 					body: 'test'
 				},
 				[ 200 ],
@@ -65,7 +65,7 @@ describe('[Chat] Chat API Get', async () => {
 			.post(
 				'/api/v1/chat',
 				{
-					to: this.user.body,
+					to: { id: this.user.body.id },
 					body: 'test2'
 				},
 				[ 200 ],
@@ -90,7 +90,7 @@ describe('[Chat] Chat API Get', async () => {
 				expect(result.body).toEqual(jasmine.any(Object));
 				expect(result.body['body']).toEqual('test');
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('allows a user to view their message(received)', async () => {
@@ -107,7 +107,7 @@ describe('[Chat] Chat API Get', async () => {
 				expect(result.body).toEqual(jasmine.any(Object));
 				expect(result.body['body']).toEqual('test2');
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('Cannot view chat w/o  a token', async () => {
@@ -154,7 +154,7 @@ describe('[Chat] Chat API Get', async () => {
 					[ 401 ],
 					wrongToken.body['token']
 				)
-				.catch((error) => fail(error));
+				.catch((error) => fail(JSON.stringify(error)));
 		}
 		else {
 			fail('Could not authenticate user');

@@ -14,7 +14,7 @@ export async function postEndpoint(request: Request, response: Response) {
 	}
 
 	// Run model hook
-	if (!runHook(request, response, 'onBeforePost', request.body)) {
+	if (!runHook(request, response, 'beforePost', request.body)) {
 		return;
 	}
 

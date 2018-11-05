@@ -8,16 +8,22 @@ import { compareNestedBodyguards } from './compare-nested';
  * @param obj Object to check
  * @param user User to check for matching BodyguardKey
  */
-export function isSelf(obj: BaseModel, user: BaseUser) {
+export function isSelf(
+	obj: BaseModel,
+	user: BaseUser,
+	objType,
+	userType,
+	objBodyguardKeys?: string[],
+	userBodyguardKeys?: string[]
+) {
+	if (objBodyguardKeys === undefined) {
+		objBodyguardKeys = getBodyguardKeys(new objType());
+		userBodyguardKeys = getBodyguardKeys(new userType());
+	}
+
 	if (!user) {
 		return false;
 	}
-
-	const objBodyguardKeys = getBodyguardKeys(obj);
-	const userBodyguardKeys = getBodyguardKeys(user);
-
-	const objConstructor = Object.getPrototypeOf(obj).constructor;
-	const userConstructor = Object.getPrototypeOf(user).constructor;
 
 	if (user) {
 		if (user.role === UserRole.Admin) {
@@ -25,7 +31,7 @@ export function isSelf(obj: BaseModel, user: BaseUser) {
 		}
 
 		// Check if obj is of user type
-		if (objConstructor === userConstructor) {
+		if (objType === userType) {
 			// Object is of type user
 			for (const key of userBodyguardKeys) {
 				if (

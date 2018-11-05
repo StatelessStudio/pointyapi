@@ -1,5 +1,8 @@
 import { pointy } from '../../../../src';
 import { UserRole } from '../../../../src/enums/user-role';
+import { upgradeUserRole } from '../../../../src/upgrade-user-role';
+import { BaseUser } from '../../../../src/models';
+
 const http = pointy.http;
 
 describe('[Guards] User API Update', () => {
@@ -15,6 +18,8 @@ describe('[Guards] User API Update', () => {
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
+
+		await upgradeUserRole('adminGuardPut1', BaseUser, UserRole.Admin);
 
 		this.adminToken = await http
 			.post('/api/v1/auth', {
@@ -93,9 +98,9 @@ describe('[Guards] User API Update', () => {
 								'updatedName'
 							)
 						)
-						.catch((error) => fail(error));
+						.catch((error) => fail(JSON.stringify(error)));
 				})
-				.catch((error) => fail(error));
+				.catch((error) => fail(JSON.stringify(error)));
 		}
 		else {
 			fail();
@@ -111,8 +116,8 @@ describe('[Guards] User API Update', () => {
 				password: 'password123',
 				email: 'userPut2@test.com'
 			})
-			.then((result) => {
-				http
+			.then(async (result) => {
+				await http
 					.put(
 						`/api/v1/user/${result.body['id']}`,
 						{
@@ -120,9 +125,9 @@ describe('[Guards] User API Update', () => {
 						},
 						[ 401 ]
 					)
-					.catch((error) => fail(error));
+					.catch((error) => fail(JSON.stringify(error)));
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('does not allow user to update with wrong token', async () => {
@@ -148,14 +153,14 @@ describe('[Guards] User API Update', () => {
 					[ 401 ],
 					this.token.body.token
 				)
-				.catch((error) => fail(error));
+				.catch((error) => fail(JSON.stringify(error)));
 		}
 		else {
 			fail();
 		}
 	});
 
-	it('does not allow basic/tutor users to change their role', async () => {
+	it('does not allow users to change their role', async () => {
 		await http
 			.put(
 				`/api/v1/user/${this.user.body.id}`,
@@ -165,7 +170,7 @@ describe('[Guards] User API Update', () => {
 				[ 403 ],
 				this.token.body.token
 			)
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('allows for admin to update users', async () => {
@@ -185,13 +190,14 @@ describe('[Guards] User API Update', () => {
 						{
 							id: this.user.body.id
 						},
-						[ 200 ]
+						[ 200 ],
+						this.token.body.token
 					)
 					.then((getResult) =>
 						expect(getResult.body['fname']).toEqual('adminUpdate')
 					)
-					.catch((error) => fail(error));
+					.catch((error) => fail(JSON.stringify(error)));
 			})
-			.catch((error) => fail(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 });

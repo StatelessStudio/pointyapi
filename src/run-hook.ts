@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { error } from 'util';
 
 export function runHook(
 	request: Request,

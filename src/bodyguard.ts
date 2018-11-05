@@ -205,4 +205,6 @@ export { compareNestedBodyguards } from './bodyguard/compare-nested';
 export { compareIdToUser } from './bodyguard/compare-id-to-user';
 export { getBodyguardKeys } from './bodyguard/get-bodyguard-keys';
 export { getSearchableFields } from './bodyguard/get-searchable-fields';
+
 export { responseFilter } from './bodyguard/response-filter';
+export { writeFilter } from './bodyguard/write-filter';

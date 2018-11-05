@@ -9,9 +9,10 @@ async function createMockup() {
 	const request = mockRequest();
 	request.repository = await getRepository(BaseUser);
 	request.method = 'GET';
+	request.baseUrl = '/api/v1/user';
 
 	const response = mockResponse();
-	response.error = (error) => fail(error);
+	response.error = (error) => fail(JSON.stringify(error));
 	response.getResponder = (error) => fail('Got: ' + JSON.stringify(error));
 
 	return { request, response };
@@ -46,6 +47,8 @@ describe('[Endpoints] Get', () => {
 			expect(request.payload.length).toBeGreaterThanOrEqual(2);
 		};
 
-		await getEndpoint(request, response).catch((error) => fail(error));
+		await getEndpoint(request, response).catch((error) =>
+			fail(JSON.stringify(error))
+		);
 	});
 });

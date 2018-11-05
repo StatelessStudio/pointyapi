@@ -6,13 +6,13 @@ describe('[Bodyguard] isSelf', () => {
 		const user = new BaseUser();
 		user.id = 2;
 
-		expect(isSelf(user, user)).toBe(true);
+		expect(isSelf(user, user, BaseUser, BaseUser)).toBe(true);
 	});
 
 	it('returns false if the user does not match the result', () => {
 		const user = new BaseUser();
 		user.id = 2;
 
-		expect(isSelf(user, new BaseUser())).toBe(false);
+		expect(isSelf(user, new BaseUser(), BaseUser, BaseUser)).toBe(false);
 	});
 });
