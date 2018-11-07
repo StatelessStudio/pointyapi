@@ -33,7 +33,7 @@ export class BaseUser extends BaseModel {
 	@PrimaryGeneratedColumn()
 	@BodyguardKey()
 	@AnyoneCanRead()
-	public id: number = undefined;
+	public id: any = undefined;
 
 	// Time created
 	@Column({ type: 'timestamp', default: new Date() })
