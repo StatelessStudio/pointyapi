@@ -1,5 +1,16 @@
 # PointyApi Changelog
 
+## [0.1.1] Nov-09-2014 - HttpClient & BaseModel Bugfixes
+
+Fixed HttpClient stringizing bodies, and added constrcutor to BaseModel to set ID
+
+### Fixes
+
+- Added constructor to BaseModel class to set id
+- Removed strict-type from BaseModel id
+- [HttpClient] Use body instead of encoded form
+- [HttpClient] Set post/put content-type to JSON
+
 ## [0.1.0] Nov-04-2014 - Guards & Filters
 
 Created guards and filters to assist in authentication/authorization, as well as many bugfixes and minor enhancements.
