@@ -1,7 +1,11 @@
 import { Request, Response } from 'express';
 
 export class BaseModel {
-	public id?: number = undefined;
+	public id?: any = undefined;
+
+	constructor(id?) {
+		this.id = id;
+	}
 }
 
 export interface BaseModelInterface {
