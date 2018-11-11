@@ -28,7 +28,9 @@ export function writeFilter(
 				const canWrite = getCanWrite(new objType(), member);
 
 				if (canWrite === undefined) {
-					return member;
+					if (member.indexOf('__') !== 0) {
+						return member;
+					}
 				}
 				else if (
 					canWrite !== '__anyone__' &&
