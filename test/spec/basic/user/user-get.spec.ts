@@ -80,7 +80,7 @@ describe('User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				search: 'searchTester'
+				__search: 'searchTester'
 			})
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Array));

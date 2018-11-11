@@ -22,7 +22,7 @@ describe('[Endpoints] Get', () => {
 	it('returns the payload', async () => {
 		const { request, response } = await createMockup();
 
-		request.query.search = 'tom';
+		request.query.__search = 'tom';
 
 		const user1 = new BaseUser();
 		user1.fname = 'Get';
