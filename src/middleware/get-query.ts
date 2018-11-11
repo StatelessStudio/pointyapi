@@ -35,14 +35,14 @@ export async function getQuery(
 
 	if (
 		'query' in request &&
-		'search' in request.query &&
-		request.query.search.length
+		'__search' in request.query &&
+		request.query.__search.length
 	) {
 		// Search
 		await request.repository
 			.createQueryBuilder('obj')
 			.where(createQueryString(request.payload))
-			.setParameters({ name: `%${request.query.search}%` })
+			.setParameters({ name: `%${request.query.__search}%` })
 			.getMany()
 			.then((result) => {
 				request.payload = result;

@@ -21,7 +21,7 @@ describe('[Endpoints] GetQuery', () => {
 	it('can search', async () => {
 		const { request, response } = await createMockup();
 
-		request.query.search = 'tom';
+		request.query.__search = 'tom';
 
 		const user1 = new BaseUser();
 		user1.fname = 'Get';
