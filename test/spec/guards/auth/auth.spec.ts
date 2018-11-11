@@ -17,7 +17,7 @@ describe('[Guards] User Api Login/Logout', () => {
 
 		this.token = await http
 			.post('/api/v1/auth', {
-				user: 'userAuth1',
+				__user: 'userAuth1',
 				password: 'password123'
 			})
 			.catch((error) => fail(JSON.stringify(error)));
@@ -33,7 +33,7 @@ describe('[Guards] User Api Login/Logout', () => {
 			.post(
 				'/api/v1/auth',
 				{
-					user: 'userAuth1',
+					__user: 'userAuth1',
 					password: 'invalid'
 				},
 				[ 401 ]

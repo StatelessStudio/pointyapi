@@ -25,7 +25,7 @@ export async function loginEndpoint(
 	const foundUsers = await request.repository
 		.createQueryBuilder('user')
 		.where('user.username=:name OR user.email=:name')
-		.setParameters({ name: request.body.user })
+		.setParameters({ name: request.body.__user })
 		.getMany()
 		.catch((error) => response.error(error, response));
 

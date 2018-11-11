@@ -44,7 +44,7 @@ describe('[Chat] Chat API Delete', () => {
 
 		this.token = await http
 			.post('/api/v1/auth', {
-				user: 'chatUser1',
+				__user: 'chatUser1',
 				password: 'password123'
 			})
 			.catch((error) =>
@@ -53,7 +53,7 @@ describe('[Chat] Chat API Delete', () => {
 
 		this.token2 = await http
 			.post('/api/v1/auth', {
-				user: 'chatUser2',
+				__user: 'chatUser2',
 				password: 'password123'
 			})
 			.catch((error) =>
@@ -62,7 +62,7 @@ describe('[Chat] Chat API Delete', () => {
 
 		this.adminToken = await http
 			.post('/api/v1/auth', {
-				user: 'chatAdmin1',
+				__user: 'chatAdmin1',
 				password: 'password123'
 			})
 			.catch((error) =>
@@ -143,7 +143,7 @@ describe('[Chat] Chat API Delete', () => {
 		// Authenticate
 		const wrongToken = await http
 			.post('/api/v1/auth', {
-				user: 'chatDelete1',
+				__user: 'chatDelete1',
 				password: 'password123'
 			})
 			.catch((error) => {

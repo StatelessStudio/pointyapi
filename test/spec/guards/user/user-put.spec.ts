@@ -23,7 +23,7 @@ describe('[Guards] User API Update', () => {
 
 		this.adminToken = await http
 			.post('/api/v1/auth', {
-				user: 'adminGuardPut1',
+				__user: 'adminGuardPut1',
 				password: 'password123'
 			})
 			.catch((error) =>
@@ -44,7 +44,7 @@ describe('[Guards] User API Update', () => {
 
 		this.token = await http
 			.post('/api/v1/auth', {
-				user: 'userPut4',
+				__user: 'userPut4',
 				password: 'password123'
 			})
 			.catch((error) =>
@@ -67,7 +67,7 @@ describe('[Guards] User API Update', () => {
 
 		const token = await http
 			.post('/api/v1/auth', {
-				user: 'userPut1',
+				__user: 'userPut1',
 				password: 'password123'
 			})
 			.catch((error) =>

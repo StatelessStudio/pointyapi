@@ -28,7 +28,7 @@ describe('[Guards] User API Create', () => {
 
 		this.adminToken = await http
 			.post('/api/v1/auth', {
-				user: 'adminGuardPost1',
+				__user: 'adminGuardPost1',
 				password: 'password123'
 			})
 			.catch((error) => fail(JSON.stringify(error)));

@@ -29,7 +29,7 @@ describe('[Chat] Chat API Get', async () => {
 
 		this.token = await http
 			.post('/api/v1/auth', {
-				user: 'chatGet1',
+				__user: 'chatGet1',
 				password: 'password123'
 			})
 			.catch((error) =>
@@ -38,7 +38,7 @@ describe('[Chat] Chat API Get', async () => {
 
 		this.token2 = await http
 			.post('/api/v1/auth', {
-				user: 'chatGet2',
+				__user: 'chatGet2',
 				password: 'password123'
 			})
 			.catch((error) =>
@@ -139,7 +139,7 @@ describe('[Chat] Chat API Get', async () => {
 
 		const wrongToken = await http
 			.post('/api/v1/auth', {
-				user: 'chatGet3',
+				__user: 'chatGet3',
 				password: 'password123'
 			})
 			.catch((error) =>
