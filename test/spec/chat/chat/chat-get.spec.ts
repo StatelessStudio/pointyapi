@@ -160,4 +160,25 @@ describe('[Chat] Chat API Get', async () => {
 			fail('Could not authenticate user');
 		}
 	});
+
+	it('filters nested objects', async () => {
+		await http
+			.get(
+				'/api/v1/chat',
+				{
+					id: this.chat.body.id
+				},
+				[ 200 ],
+				this.token.body.token
+			)
+			.then((result) => {
+				expect(result.body).toEqual(jasmine.any(Object));
+				expect(result.body['to']).toEqual(jasmine.any(Object));
+				expect(result.body['to']['username']).toEqual(
+					jasmine.any(String)
+				);
+				expect(result.body['to']['password']).toEqual(undefined);
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
 });
