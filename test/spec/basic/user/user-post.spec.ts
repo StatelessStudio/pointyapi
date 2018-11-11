@@ -118,4 +118,21 @@ describe('User API Create', () => {
 			)
 			.catch((error) => fail(JSON.stringify(error)));
 	});
+
+	it('responds with 400 if member does not exist', async () => {
+		await http
+			.post(
+				'/api/v1/user',
+				{
+					fname: 'post400',
+					lname: 'post400',
+					username: 'basicPost400',
+					password: 'password123',
+					email: 'basicPost400@test.com',
+					memberThatDoesNotExist: 'fail'
+				},
+				[ 400 ]
+			)
+			.catch((error) => fail(JSON.stringify(error)));
+	});
 });
