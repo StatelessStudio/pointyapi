@@ -84,8 +84,8 @@ describe('[Guards] User API Update', () => {
 					[ 204 ],
 					token.body['token']
 				)
-				.then(() => {
-					http
+				.then(async () => {
+					await http
 						.get(
 							`/api/v1/user`,
 							{
@@ -183,8 +183,8 @@ describe('[Guards] User API Update', () => {
 				[ 204 ],
 				this.adminToken.body.token
 			)
-			.then((result) => {
-				http
+			.then(async (result) => {
+				await http
 					.get(
 						`/api/v1/user`,
 						{
