@@ -205,4 +205,28 @@ describe('[Chat] Chat API Get', async () => {
 			})
 			.catch((error) => fail(JSON.stringify(error)));
 	});
+
+	it('can search by to or from', async () => {
+		await http
+			.get(
+				'/api/v1/chat',
+				{
+					__search: 'test',
+					__whereAnyOf: {
+						to: +this.user.body.id,
+						from: +this.user.body.id
+					}
+				},
+				[ 200 ],
+				this.token.body.token
+			)
+			.then((result) => {
+				expect(result.body['length']).toEqual(2);
+				expect(result.body[0]).toEqual(jasmine.any(Object));
+				expect(result.body[0].id).toBeGreaterThanOrEqual(1);
+				expect(result.body[0].from).toEqual(jasmine.any(Object));
+				expect(result.body[0].from.id).toBeGreaterThanOrEqual(1);
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
 });
