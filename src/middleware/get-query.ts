@@ -55,6 +55,21 @@ function createSearchQuery(payloadType, obj: Object, objKey: string = 'obj') {
 				// Append parameter to queryParams
 				queryParams[field] = `${obj[field]}`;
 			}
+			else if (field && field === '__whereAnyOf') {
+				queryString += '(';
+
+				// Loop through any of keys
+				for (const anyOfKey in obj['__whereAnyOf']) {
+					// Append key to queryString
+					queryString += `${objKey}.${anyOfKey}=:${anyOfKey} OR `;
+
+					// Append parameter to queryParams
+					queryParams[anyOfKey] = `${obj['__whereAnyOf'][anyOfKey]}`;
+				}
+
+				queryString = queryString.replace(/ OR +$/, '');
+				queryString += ') AND ';
+			}
 		}
 
 		queryString = queryString.replace(/ AND +$/, '');
