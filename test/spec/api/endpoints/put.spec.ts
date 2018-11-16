@@ -11,6 +11,7 @@ async function createMockup() {
 	request.method = 'PUT';
 	request.baseUrl = '/api/v1/user';
 	request.userType = BaseUser;
+	request.joinMembers = [];
 
 	const response = mockResponse();
 	response.error = (error) => fail(JSON.stringify(error));
