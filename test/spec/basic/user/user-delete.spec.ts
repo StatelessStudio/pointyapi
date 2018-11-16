@@ -2,8 +2,8 @@ import { pointy } from '../../../../src';
 const http = pointy.http;
 
 describe('User API Delete', () => {
-	it('can delete', () => {
-		http
+	it('can delete', async () => {
+		await http
 			.post('/api/v1/user', {
 				fname: 'User',
 				lname: 'Delete',
