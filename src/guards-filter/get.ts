@@ -45,7 +45,8 @@ export function getFilter(
 			request.payload,
 			request.user,
 			request.payloadType,
-			request.userType
+			request.userType,
+			request.joinMembers
 		);
 
 		next();
