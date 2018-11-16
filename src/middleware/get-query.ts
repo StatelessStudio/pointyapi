@@ -46,7 +46,7 @@ function createSearchQuery(payloadType, obj: Object, objKey: string = 'obj') {
 		for (const field in obj) {
 			if (
 				field &&
-				field !== '__search' &&
+				field.indexOf('__') !== 0 &&
 				!(obj[field] instanceof Function)
 			) {
 				// Append key to queryString
@@ -90,7 +90,15 @@ export async function getQuery(
 		request.query.__search.length
 	) {
 		const objMnemonic = 'obj';
-		let join = [];
+
+		// Join __join query keys
+		if ('__join' in request.query) {
+			request.query.__join.forEach((key) => {
+				request.joinMembers.push(key);
+			});
+
+			delete request.query.__join;
+		}
 
 		// Search
 		const { queryString, queryParams } = createSearchQuery(
@@ -107,7 +115,9 @@ export async function getQuery(
 
 		// Join bodyguard keys, unless this is the User
 		if (request.payloadType !== request.userType) {
-			join = getBodyguardKeys(new request.payloadType());
+			getBodyguardKeys(new request.payloadType()).forEach((key) => {
+				request.joinMembers.push(key);
+			});
 		}
 
 		// Create selection
@@ -116,7 +126,7 @@ export async function getQuery(
 			.select(readableFields);
 
 		// Loop through join tables
-		for (const table of join) {
+		for (const table of request.joinMembers) {
 			selection = await selection.leftJoinAndSelect(
 				`${objMnemonic}.${table}`,
 				table
