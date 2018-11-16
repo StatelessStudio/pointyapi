@@ -29,6 +29,7 @@ declare global {
 			payload?: BaseModel | BaseModel[];
 			payloadType?: BaseModelInterface;
 			repository?: Repository<BaseModel>;
+			joinMembers?: string[];
 		}
 
 		export interface Response {
