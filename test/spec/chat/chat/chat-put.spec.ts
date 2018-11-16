@@ -50,7 +50,7 @@ describe('[Chat] Chat API Put', () => {
 	});
 
 	it('can change the status', async () => {
-		await http
+		const result = await http
 			.post(
 				'/api/v1/chat',
 				{
@@ -60,19 +60,20 @@ describe('[Chat] Chat API Put', () => {
 				[ 200 ],
 				this.token.body.token
 			)
-			.then(async (result) => {
-				await http
-					.put(
-						`/api/v1/chat/${result.body['id']}`,
-						{
-							fromStatus: ChatStatus.Read
-						},
-						[ 204 ],
-						this.token.body.token
-					)
-					.catch((error) => fail(JSON.stringify(error)));
-			})
 			.catch((error) => fail(JSON.stringify(error)));
+
+		if (result) {
+			await http
+				.put(
+					`/api/v1/chat/${result.body['id']}`,
+					{
+						fromStatus: ChatStatus.Read
+					},
+					[ 204 ],
+					this.token.body.token
+				)
+				.catch((error) => fail(JSON.stringify(error)));
+		}
 	});
 
 	it('Cannot update chat with the wrong token', async () => {
