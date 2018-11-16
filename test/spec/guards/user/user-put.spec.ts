@@ -107,8 +107,8 @@ describe('[Guards] User API Update', () => {
 		}
 	});
 
-	it('does not allow user to update without token', () => {
-		http
+	it('does not allow user to update without token', async () => {
+		await http
 			.post('/api/v1/user', {
 				fname: 'userPut2',
 				lname: 'userPut2',

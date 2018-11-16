@@ -23,7 +23,7 @@ describe('[Guards] User Api Login/Logout', () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
-	it('should log in', async () => {
+	it('should log in', () => {
 		expect(this.token.body.token).toEqual(jasmine.any(String));
 		expect(this.token.body.token.length).toBeGreaterThanOrEqual(16);
 	});

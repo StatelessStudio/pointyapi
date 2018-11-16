@@ -16,8 +16,8 @@ describe('User API Update', () => {
 			);
 	});
 
-	it('can update', () => {
-		http
+	it('can update', async () => {
+		await http
 			.put(
 				`/api/v1/user/${this.user1.body.id}`,
 				{
@@ -42,8 +42,8 @@ describe('User API Update', () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
-	it('maintains other fields on update', () => {
-		http
+	it('maintains other fields on update', async () => {
+		await http
 			.put(
 				`/api/v1/user/${this.user1.body.id}`,
 				{
