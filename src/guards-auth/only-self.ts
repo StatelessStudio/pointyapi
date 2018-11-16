@@ -50,6 +50,9 @@ export async function onlySelf(
 						userKeys
 					);
 				}
+				else {
+					authorized = true;
+				}
 			}
 			else if (
 				(request.method === 'PUT' || request.method === 'PATCH') &&
@@ -86,6 +89,6 @@ export async function onlySelf(
 		return next();
 	}
 	else {
-		return response.unauthorizedResponder('not self', response);
+		return response.unauthorizedResponder('[onlySelf] not self', response);
 	}
 }
