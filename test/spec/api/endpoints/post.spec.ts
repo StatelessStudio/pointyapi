@@ -10,6 +10,7 @@ async function createMockup() {
 	request.repository = await getRepository(BaseUser);
 	request.method = 'POST';
 	request.baseUrl = '/api/v1/user';
+	request.userType = BaseUser;
 
 	const response = mockResponse();
 	response.error = (error) => fail(JSON.stringify(error));

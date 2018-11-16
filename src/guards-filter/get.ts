@@ -11,18 +11,15 @@ export function getFilter(
 	let denied: boolean | string = false;
 
 	// Check incoming
-	if (request.payload instanceof request.payloadType) {
-		const isSelfResult = isSelf(
-			request.query,
-			request.user,
-			request.payloadType,
-			request.userType
-		);
+	if (request.query) {
 		const isAdminResult = isAdmin(request.user);
 
 		// Loop through object members
 		for (const member in request.query) {
-			if (!(request.query[member] instanceof Function)) {
+			if (
+				!(request.query[member] instanceof Function) &&
+				member.indexOf('__') !== 0
+			) {
 				const canRead = getCanRead(new request.payloadType(), member);
 
 				if (canRead === undefined) {
@@ -30,7 +27,7 @@ export function getFilter(
 				}
 				else if (
 					canRead !== '__anyone__' &&
-					((canRead === '__self__' && !isSelfResult) ||
+					((canRead === '__self__' && !request.user) ||
 						(canRead === '__admin__' && !isAdminResult))
 				) {
 					denied = member;

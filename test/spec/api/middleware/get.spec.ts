@@ -10,6 +10,7 @@ async function createMockup() {
 	request.repository = await getRepository(BaseUser);
 	request.method = 'GET';
 	request.baseUrl = '/api/v1/user';
+	request.userType = BaseUser;
 
 	const response = mockResponse();
 	response.error = (error) => fail(JSON.stringify(error));
@@ -17,11 +18,11 @@ async function createMockup() {
 	return { request, response };
 }
 
-describe('[Endpoints] GetQuery', () => {
+describe('[Middleware] GetQuery', () => {
 	it('can search', async () => {
 		const { request, response } = await createMockup();
 
-		request.query.__search = 'tom';
+		request.query.__search = 'Get';
 
 		const user1 = new BaseUser();
 		user1.fname = 'Get';
@@ -37,7 +38,7 @@ describe('[Endpoints] GetQuery', () => {
 		user2.password = 'password123';
 		user2.email = 'get2@example.com';
 
-		const result = await getRepository(BaseUser)
+		await getRepository(BaseUser)
 			.save([ user1, user2 ])
 			.catch((error) => fail(JSON.stringify(error)));
 
