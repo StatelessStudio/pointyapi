@@ -108,7 +108,7 @@ describe('[Chat] Chat API Delete', () => {
 	});
 
 	it('cannot delete w/o token', async () => {
-		await http
+		const result = await http
 			.post(
 				'/api/v1/chat',
 				{
@@ -118,12 +118,13 @@ describe('[Chat] Chat API Delete', () => {
 				[ 200 ],
 				this.token.body.token
 			)
-			.then(async (result) => {
-				await http
-					.delete(`/api/v1/chat/${result.body['id']}`, [ 401 ])
-					.catch((error) => fail(JSON.stringify(error)));
-			})
 			.catch((error) => fail(JSON.stringify(error)));
+
+		if (result) {
+			await http
+				.delete(`/api/v1/chat/${result.body['id']}`, [ 401 ])
+				.catch((error) => fail(JSON.stringify(error)));
+		}
 	});
 
 	it('cannot delete with the wrong token', async () => {
@@ -181,7 +182,7 @@ describe('[Chat] Chat API Delete', () => {
 	});
 
 	it('allows admin to delete chat messages', async () => {
-		await http
+		const result = await http
 			.post(
 				'/api/v1/chat',
 				{
@@ -191,15 +192,16 @@ describe('[Chat] Chat API Delete', () => {
 				[ 200 ],
 				this.token.body.token
 			)
-			.then(async (result) => {
-				await http
-					.delete(
-						`/api/v1/chat/${result.body['id']}`,
-						[ 204 ],
-						this.adminToken.body.token
-					)
-					.catch((error) => fail(JSON.stringify(error)));
-			})
 			.catch((error) => fail(JSON.stringify(error)));
+
+		if (result) {
+			await http
+				.delete(
+					`/api/v1/chat/${result.body['id']}`,
+					[ 204 ],
+					this.adminToken.body.token
+				)
+				.catch((error) => fail(JSON.stringify(error)));
+		}
 	});
 });
