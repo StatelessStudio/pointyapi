@@ -1,21 +1,72 @@
 import { Request, Response, NextFunction } from 'express';
-import { getSearchableFields } from '../bodyguard';
+import {
+	getSearchableFields,
+	getReadableFields,
+	getBodyguardKeys
+} from '../bodyguard';
 import { runHook } from '../run-hook';
 
-function createQueryString(
-	payloadType,
-	objKey: string = 'obj',
-	paramKey: string = 'name',
-	comparator: string = 'like'
-) {
+function createSearchQuery(payloadType, obj: Object, objKey: string = 'obj') {
 	const searchableFields = getSearchableFields(payloadType);
-	let query = '';
+	let queryString = '';
+	const queryParams = {};
+	const hasSearchable = searchableFields.length;
+	const hasAdditional = Object.keys(obj).length > 1;
 
-	searchableFields.forEach((field) => {
-		query += `${objKey}.${field} ${comparator} :${paramKey} OR `;
-	});
+	// Join strings
+	if (hasSearchable && hasAdditional) {
+		queryString += '(';
+	}
 
-	return query.replace(/ OR +$/, '');
+	// Searchable strings
+	if (hasSearchable) {
+		queryString += '(';
+		searchableFields.forEach((field) => {
+			// Append searchable key to queryString
+			queryString += `${objKey}.${field} LIKE :__search OR `;
+
+			// Append parameter to queryParams (with wildcards)
+			const value = obj['__search'].replace(/[\s]+/, '%');
+			queryParams['__search'] = `%${value}%`;
+		});
+
+		queryString = queryString.replace(/ OR +$/, '');
+		queryString += ')';
+	}
+
+	// Join strings
+	if (hasSearchable && hasAdditional) {
+		queryString += ' AND ';
+	}
+
+	// Additional parameters
+	if (hasAdditional) {
+		queryString += '(';
+
+		for (const field in obj) {
+			if (
+				field &&
+				field !== '__search' &&
+				!(obj[field] instanceof Function)
+			) {
+				// Append key to queryString
+				queryString += `${objKey}.${field}=:${field} AND `;
+
+				// Append parameter to queryParams
+				queryParams[field] = `${obj[field]}`;
+			}
+		}
+
+		queryString = queryString.replace(/ AND +$/, '');
+		queryString += ')';
+	}
+
+	// Join strings
+	if (hasSearchable && hasAdditional) {
+		queryString += ')';
+	}
+
+	return { queryString, queryParams };
 }
 
 /**
@@ -38,11 +89,44 @@ export async function getQuery(
 		'__search' in request.query &&
 		request.query.__search.length
 	) {
+		const objMnemonic = 'obj';
+		let join = [];
+
 		// Search
-		await request.repository
-			.createQueryBuilder('obj')
-			.where(createQueryString(request.payload))
-			.setParameters({ name: `%${request.query.__search}%` })
+		const { queryString, queryParams } = createSearchQuery(
+			new request.payloadType(),
+			request.query
+		);
+
+		// Readable keys
+		const readableFields = getReadableFields(
+			new request.payloadType(),
+			request.user,
+			objMnemonic
+		);
+
+		// Join bodyguard keys, unless this is the User
+		if (request.payloadType !== request.userType) {
+			join = getBodyguardKeys(new request.payloadType());
+		}
+
+		// Create selection
+		let selection = await request.repository
+			.createQueryBuilder(objMnemonic)
+			.select(readableFields);
+
+		// Loop through join tables
+		for (const table of join) {
+			selection = await selection.leftJoinAndSelect(
+				`${objMnemonic}.${table}`,
+				table
+			);
+		}
+
+		// Complete selection
+		await selection
+			.where(queryString)
+			.setParameters(queryParams)
 			.getMany()
 			.then((result) => {
 				request.payload = result;
@@ -64,7 +148,7 @@ export async function getQuery(
 			})
 			.catch((error) => response.error(error, response));
 	}
-	else if ('query' in request && Array(request.query).length) {
+	else if ('query' in request && Object.keys(request.query).length) {
 		// Read many
 		await request.repository
 			.find(request.query)
