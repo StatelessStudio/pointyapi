@@ -73,8 +73,8 @@ describe('[Guards] User API Delete', () => {
 		}
 	});
 
-	it('cannot delete w/o token', () => {
-		http
+	it('cannot delete w/o token', async () => {
+		const result = await http
 			.post('/api/v1/user', {
 				fname: 'deleteUser',
 				lname: 'deleteUser',
@@ -82,12 +82,13 @@ describe('[Guards] User API Delete', () => {
 				password: 'password123',
 				email: 'guardUserDel2@test.com'
 			})
-			.then(async (result) => {
-				await http
-					.delete(`/api/v1/user/${result.body['id']}`, [ 401 ])
-					.catch((error) => fail(JSON.stringify(error)));
-			})
 			.catch((error) => fail(JSON.stringify(error)));
+
+		if (result) {
+			await http
+				.delete(`/api/v1/user/${result.body['id']}`, [ 401 ])
+				.catch((error) => fail(JSON.stringify(error)));
+		}
 	});
 
 	it(`can\'t delete with the wrong token`, async () => {
@@ -139,7 +140,7 @@ describe('[Guards] User API Delete', () => {
 	});
 
 	it('Admin can delete', async () => {
-		await http
+		const result = await http
 			.post('/api/v1/user', {
 				fname: 'deleteUser',
 				lname: 'deleteUser',
@@ -147,15 +148,16 @@ describe('[Guards] User API Delete', () => {
 				password: 'password123',
 				email: 'guardUserDel5@test.com'
 			})
-			.then(async (result) => {
-				await http
-					.delete(
-						`/api/v1/user/${result.body['id']}`,
-						[ 204 ],
-						this.adminToken.body.token
-					)
-					.catch((error) => fail(JSON.stringify(error)));
-			})
 			.catch((error) => fail(JSON.stringify(error)));
+
+		if (result) {
+			await http
+				.delete(
+					`/api/v1/user/${result.body['id']}`,
+					[ 204 ],
+					this.adminToken.body.token
+				)
+				.catch((error) => fail(JSON.stringify(error)));
+		}
 	});
 });
