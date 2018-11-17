@@ -1,5 +1,43 @@
 # PointyApi Changelog
 
+## [0.2.0] Nov-17-2018 - Joins, Search, Security, & Bugfixes
+
+- Node update
+- Added `__search` to Get query
+- Added `__join` to Get query
+- Added `__whereAnyOf` to Get query
+- Added ISO time functions
+- Added test probe middleware
+	- coreTestProbe
+	- userTestProbe
+	- requestTestProbe
+- Created `getReadableFields()`
+- Changed timeAccessed to timeUpdated
+- Bugfixes
+
+### Additions
+
+- [Issue #16] Create UpdateTimestamp key to automate timeAccessed / timeUpdated
+- [Issue #21] Add `__join` special key to GET
+- [Issue #24] Get Query should allow `__search` with other parameters
+- [Issue #25] Update to Node 10
+- [Issue #27] Add TestProbe middleware
+- [Issue #28] Add special key `__whereAnOf` to GET query for OR instead of AND
+- Created getReadableFields()
+- Created getISOTime()
+
+### Fixes
+- [Issue #17] GET Endpoint filter doesn't filter nested objects
+- [Issue #19] - Should return 400 instead of 403 if member key does not exist
+- [Issue #20] - Change "search" query key to "__search"
+- [Issue #22] - Change login endpoint "user" key to special key "__user"
+- [Issue #23] POST / PUT forbidden when underscored member has no read/write keys
+- [Issue #26] Check that request.payload is not being used in Object context
+- [Issue #30] [Jasmine] Cannot read 'statusCode' of undefined
+- GET query without identifier should pass onlySelf()
+- Updated timeAccesed to timeUpdated
+- Added request.userType to createMockup()
+
 ## [0.1.1] Nov-09-2018 - HttpClient & BaseModel Bugfixes
 
 Fixed HttpClient stringizing bodies, and added constrcutor to BaseModel to set ID
