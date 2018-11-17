@@ -47,6 +47,18 @@ export function responseFilter(
 				) {
 					delete obj[member];
 				}
+				else if (
+					obj[member] instanceof Object &&
+					!(obj[member] instanceof Date)
+				) {
+					const subObjTpye = obj[member].constructor;
+					obj[member] = responseFilter(
+						obj[member],
+						user,
+						subObjTpye,
+						userType
+					);
+				}
 			}
 		}
 	}
