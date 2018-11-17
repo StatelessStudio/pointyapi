@@ -1,6 +1,20 @@
 import { Request, Response, NextFunction } from 'express';
 const ROOT_PATH = require('app-root-path').toString();
-const pkg = require(ROOT_PATH + '/node_modules/pointyapi/package.json');
+
+let pkg = {
+	version: '',
+	dependencies: {
+		typescript: '',
+		express: '',
+		typeorm: ''
+	}
+};
+
+try {
+	pkg = require(ROOT_PATH + '/node_modules/pointyapi/package.json');
+} catch (ex) {
+	pkg = require(ROOT_PATH + '/package.json');
+}
 
 export function coreTestProbe(
 	request: Request,
