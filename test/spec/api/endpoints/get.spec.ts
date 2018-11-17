@@ -10,6 +10,8 @@ async function createMockup() {
 	request.repository = await getRepository(BaseUser);
 	request.method = 'GET';
 	request.baseUrl = '/api/v1/user';
+	request.userType = BaseUser;
+	request.joinMembers = [];
 
 	const response = mockResponse();
 	response.error = (error) => fail(JSON.stringify(error));
@@ -22,7 +24,7 @@ describe('[Endpoints] Get', () => {
 	it('returns the payload', async () => {
 		const { request, response } = await createMockup();
 
-		request.query.__search = 'tom';
+		request.query.__search = 'Get';
 
 		const user1 = new BaseUser();
 		user1.fname = 'Get';

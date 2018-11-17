@@ -16,7 +16,7 @@ describe('User API Create', () => {
 			);
 	});
 
-	it('can create a user', async () => {
+	it('can create a user', () => {
 		expect(this.user.body).toEqual(jasmine.any(Object));
 		expect(this.user.body['fname']).toEqual('post1');
 	});

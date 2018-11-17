@@ -74,6 +74,7 @@ export class PointyApi {
 		this.app.use(
 			(request: Request, response: Response, next: NextFunction) => {
 				request.userType = this.userType;
+				request.joinMembers = [];
 
 				response.error = this.error;
 				response.log = this.log;

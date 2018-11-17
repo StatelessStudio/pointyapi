@@ -75,7 +75,7 @@ describe('[Guards] User API Update', () => {
 			);
 
 		if (user && token) {
-			await http
+			const result = await http
 				.put(
 					`/api/v1/user/${user.body['id']}`,
 					{
@@ -84,31 +84,29 @@ describe('[Guards] User API Update', () => {
 					[ 204 ],
 					token.body['token']
 				)
-				.then(() => {
-					http
-						.get(
-							`/api/v1/user`,
-							{
-								id: user.body['id']
-							},
-							[ 200 ]
-						)
-						.then((getResult) =>
-							expect(getResult.body['fname']).toEqual(
-								'updatedName'
-							)
-						)
-						.catch((error) => fail(JSON.stringify(error)));
-				})
 				.catch((error) => fail(JSON.stringify(error)));
+
+			const getResult = await http
+				.get(
+					`/api/v1/user`,
+					{
+						id: user.body['id']
+					},
+					[ 200 ]
+				)
+				.catch((error) => fail(JSON.stringify(error)));
+
+			if (result && getResult) {
+				expect(getResult.body['fname']).toEqual('updatedName');
+			}
 		}
 		else {
 			fail();
 		}
 	});
 
-	it('does not allow user to update without token', () => {
-		http
+	it('does not allow user to update without token', async () => {
+		const result = await http
 			.post('/api/v1/user', {
 				fname: 'userPut2',
 				lname: 'userPut2',
@@ -116,18 +114,19 @@ describe('[Guards] User API Update', () => {
 				password: 'password123',
 				email: 'userPut2@test.com'
 			})
-			.then(async (result) => {
-				await http
-					.put(
-						`/api/v1/user/${result.body['id']}`,
-						{
-							fname: 'noToken'
-						},
-						[ 401 ]
-					)
-					.catch((error) => fail(JSON.stringify(error)));
-			})
 			.catch((error) => fail(JSON.stringify(error)));
+
+		if (result) {
+			await http
+				.put(
+					`/api/v1/user/${result.body['id']}`,
+					{
+						fname: 'noToken'
+					},
+					[ 401 ]
+				)
+				.catch((error) => fail(JSON.stringify(error)));
+		}
 	});
 
 	it('does not allow user to update with wrong token', async () => {
@@ -174,7 +173,7 @@ describe('[Guards] User API Update', () => {
 	});
 
 	it('allows for admin to update users', async () => {
-		await http
+		const result = await http
 			.put(
 				`/api/v1/user/${this.user.body.id}`,
 				{
@@ -183,21 +182,21 @@ describe('[Guards] User API Update', () => {
 				[ 204 ],
 				this.adminToken.body.token
 			)
-			.then((result) => {
-				http
-					.get(
-						`/api/v1/user`,
-						{
-							id: this.user.body.id
-						},
-						[ 200 ],
-						this.token.body.token
-					)
-					.then((getResult) =>
-						expect(getResult.body['fname']).toEqual('adminUpdate')
-					)
-					.catch((error) => fail(JSON.stringify(error)));
-			})
 			.catch((error) => fail(JSON.stringify(error)));
+
+		const getResult = await http
+			.get(
+				`/api/v1/user`,
+				{
+					id: this.user.body.id
+				},
+				[ 200 ],
+				this.token.body.token
+			)
+			.catch((error) => fail(JSON.stringify(error)));
+
+		if (result && getResult) {
+			expect(getResult.body['fname']).toEqual('adminUpdate');
+		}
 	});
 });
