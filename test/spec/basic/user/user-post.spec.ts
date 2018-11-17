@@ -16,7 +16,7 @@ describe('User API Create', () => {
 			);
 	});
 
-	it('can create a user', async () => {
+	it('can create a user', () => {
 		expect(this.user.body).toEqual(jasmine.any(Object));
 		expect(this.user.body['fname']).toEqual('post1');
 	});
@@ -113,6 +113,23 @@ describe('User API Create', () => {
 					username: 'invalidEmail1',
 					password: 'password123',
 					email: 'drew3test.com'
+				},
+				[ 400 ]
+			)
+			.catch((error) => fail(JSON.stringify(error)));
+	});
+
+	it('responds with 400 if member does not exist', async () => {
+		await http
+			.post(
+				'/api/v1/user',
+				{
+					fname: 'post400',
+					lname: 'post400',
+					username: 'basicPost400',
+					password: 'password123',
+					email: 'basicPost400@test.com',
+					memberThatDoesNotExist: 'fail'
 				},
 				[ 400 ]
 			)

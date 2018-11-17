@@ -78,9 +78,9 @@
  *		@AnyoneCanRead()
  *		public timeCreated: Date = undefined;
  *
- *		// Time last accessed
+ *		// Time last updated
  *		@AnyoneCanRead()
- *		public timeAccessed: Date = undefined;
+ *		public timeUpdated: Date = undefined;
  *
  *		// Access token (jwt)
  *		// NO BODYGUARD, NO READ/WRITE
@@ -113,9 +113,9 @@
  *		@OnlySelfCanRead()
  *		public timeCreated: Date = undefined;
  *
- *		// Time last accessed
+ *		// Time last updated
  *		@OnlySelfCanRead()
- *		public timeAccessed: Date = undefined;
+ *		public timeUpdated: Date = undefined;
  *
  * 		// From User
  * 		@BodyguardKey() // Determine who can read/write from here
@@ -205,6 +205,7 @@ export { compareNestedBodyguards } from './bodyguard/compare-nested';
 export { compareIdToUser } from './bodyguard/compare-id-to-user';
 export { getBodyguardKeys } from './bodyguard/get-bodyguard-keys';
 export { getSearchableFields } from './bodyguard/get-searchable-fields';
+export { getReadableFields } from './bodyguard/get-readable-fields';
 
 export { responseFilter } from './bodyguard/response-filter';
 export { writeFilter } from './bodyguard/write-filter';

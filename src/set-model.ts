@@ -39,6 +39,18 @@ import { getQuery, loadEntity } from './middleware';
 import { log } from 'util';
 import { runHook } from './run-hook';
 
+function isKeyInModel(key, model, response) {
+	if (!(key in model) && key.indexOf('__') !== 0) {
+		response.validationResponder(
+			'Member key "' + key + '" does not exist in model.',
+			response
+		);
+	}
+	else {
+		return true;
+	}
+}
+
 export async function setModel(
 	request: Request,
 	response: Response,
@@ -57,6 +69,10 @@ export async function setModel(
 			if (request.body[key] === undefined) {
 				delete request.body[key];
 			}
+
+			if (!isKeyInModel(key, request.payload, response)) {
+				return false;
+			}
 		}
 
 		// Run model hook
@@ -71,6 +87,10 @@ export async function setModel(
 			if (request.query[key] === undefined) {
 				delete request.query[key];
 			}
+
+			if (!isKeyInModel(key, request.payload, response)) {
+				return false;
+			}
 		}
 
 		// Run model hook
@@ -81,6 +101,12 @@ export async function setModel(
 		await getQuery(request, response);
 	}
 	else if (request.method === 'PUT') {
+		for (const key in request.body) {
+			if (!isKeyInModel(key, request.payload, response)) {
+				return false;
+			}
+		}
+
 		// Run model hook
 		if (!runHook(request, response, 'beforeLoadPut', request.payload)) {
 			return;

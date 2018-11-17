@@ -29,7 +29,7 @@ describe('[Chat] Chat API Post', () => {
 
 		this.token = await http
 			.post('/api/v1/auth', {
-				user: 'chatPost1',
+				__user: 'chatPost1',
 				password: 'password123'
 			})
 			.catch((error) =>
@@ -38,7 +38,7 @@ describe('[Chat] Chat API Post', () => {
 
 		this.token2 = await http
 			.post('/api/v1/auth', {
-				user: 'chatPost2',
+				__user: 'chatPost2',
 				password: 'password123'
 			})
 			.catch((error) =>

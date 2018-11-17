@@ -31,8 +31,8 @@ describe('User API Read', () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
-	it('can read many', () => {
-		http
+	it('can read many', async () => {
+		await http
 			.get('/api/v1/user', {
 				lname: 'getUser'
 			})
@@ -43,8 +43,8 @@ describe('User API Read', () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
-	it('can read one', () => {
-		http
+	it('can read one', async () => {
+		await http
 			.get('/api/v1/user', {
 				id: this.user1.body.id
 			})
@@ -80,7 +80,7 @@ describe('User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				search: 'searchTester'
+				__search: 'searchTester'
 			})
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Array));

@@ -28,7 +28,7 @@ describe('[Guards] User API Create', () => {
 
 		this.adminToken = await http
 			.post('/api/v1/auth', {
-				user: 'adminGuardPost1',
+				__user: 'adminGuardPost1',
 				password: 'password123'
 			})
 			.catch((error) => fail(JSON.stringify(error)));
@@ -51,6 +51,24 @@ describe('[Guards] User API Create', () => {
 					role: UserRole.Admin
 				},
 				[ 403 ]
+			)
+			.catch((error) => fail(JSON.stringify(error)));
+	});
+
+	it('can write underscored keys', async () => {
+		await http
+			.post(
+				'/api/v1/user',
+				{
+					fname: 'postUser1',
+					lname: 'postUser1',
+					username: 'postUser1',
+					password: 'password123',
+					email: 'postUser1@test.com',
+					__ignore: 'test',
+					___ignore: 'test'
+				},
+				[ 200 ]
 			)
 			.catch((error) => fail(JSON.stringify(error)));
 	});

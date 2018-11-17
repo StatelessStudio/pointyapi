@@ -21,7 +21,7 @@ describe('[Guards] User API Read', () => {
 
 		this.getUser1Token = await http
 			.post('/api/v1/auth', {
-				user: 'guardUserGet1',
+				__user: 'guardUserGet1',
 				password: 'password123'
 			})
 			.catch((error) => {
@@ -54,7 +54,7 @@ describe('[Guards] User API Read', () => {
 
 		this.adminToken = await http
 			.post('/api/v1/auth', {
-				user: 'adminGuardGet1',
+				__user: 'adminGuardGet1',
 				password: 'password123'
 			})
 			.catch((error) =>
