@@ -42,12 +42,12 @@ export class BaseUser extends BaseModel {
 	@AnyoneCanRead()
 	public timeCreated: Date = undefined;
 
-	// Time last accessed
+	// Time last updated
 	@Column({ type: 'timestamp', default: new Date() })
 	@IsDate()
 	@IsOptional()
 	@AnyoneCanRead()
-	public timeAccessed: Date = undefined;
+	public timeUpdated: Date = undefined;
 
 	// Access token (jwt)
 	@Column({ nullable: true })

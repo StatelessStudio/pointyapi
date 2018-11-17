@@ -10,3 +10,7 @@
  */
 export { BaseModel, BaseModelInterface } from './models/base-model';
 export { BaseUser, BaseUserInterface } from './models/base-user';
+
+export function getISOTime() {
+	return new Date(Date.now()).toISOString();
+}

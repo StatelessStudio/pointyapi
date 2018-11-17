@@ -63,12 +63,12 @@ export class ChatMessage extends BaseModel {
 	@OnlySelfCanRead()
 	public timeCreated: Date = undefined;
 
-	// Time last accessed
+	// Time last updated
 	@Column({ type: 'timestamp', default: new Date() })
 	@IsDate()
 	@IsOptional()
 	@OnlySelfCanRead()
-	public timeAccessed: Date = undefined;
+	public timeUpdated: Date = undefined;
 
 	// Message body
 	// TODO: Validate
