@@ -55,6 +55,8 @@ export class BaseUser extends BaseModel {
 
 	// Username
 	@Column({ unique: true })
+	@Length(4, 16)
+	@IsAlphanumeric()
 	@AnyoneCanRead()
 	@OnlySelfCanWrite()
 	@CanSearch()
