@@ -3,6 +3,7 @@ import { compareSync } from 'bcryptjs';
 
 import { jwtBearer } from '../jwt-bearer';
 import { runHook } from '../run-hook';
+import { responseFilter } from '../bodyguard/response-filter';
 
 export async function loginEndpoint(
 	request: Request,
@@ -73,7 +74,17 @@ export async function loginEndpoint(
 				.catch((error) => response.error(error, response));
 
 			// Send response
-			response.json({ token: token, userId: match.id });
+			match = responseFilter(
+				match,
+				request.user,
+				request.payloadType,
+				request.userType,
+				request.joinMembers
+			);
+
+			match['token'] = token;
+
+			response.json(match);
 		}
 		else {
 			// Couldn't create status

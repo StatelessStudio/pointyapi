@@ -26,6 +26,7 @@ describe('[Guards] User Api Login/Logout', () => {
 	it('should log in', () => {
 		expect(this.token.body.token).toEqual(jasmine.any(String));
 		expect(this.token.body.token.length).toBeGreaterThanOrEqual(16);
+		expect(this.token.body.password).toBeUndefined();
 	});
 
 	it('should not log in with the wrong password', async () => {
