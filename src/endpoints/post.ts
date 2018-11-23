@@ -1,37 +1,117 @@
 import { Request, Response } from 'express';
 import { validate } from 'class-validator';
 import { runHook } from '../run-hook';
+import { responseFilter } from '../bodyguard/response-filter';
 
-export async function postEndpoint(request: Request, response: Response) {
-	// Set model type
-	request.body = Object.assign(new request.payloadType(), request.body);
+function setModelType(type, obj) {
+	return Object.assign(new type(), obj);
+}
 
-	// Delete undefined members
-	for (const key in request.body) {
-		if (request.body[key] === undefined) {
-			delete request.body[key];
+function deleteUndefinedMembers(obj) {
+	for (const key in obj) {
+		if (obj[key] === undefined) {
+			delete obj[key];
 		}
 	}
 
-	// Run model hook
-	if (!runHook(request, response, 'beforePost', request.body)) {
-		return;
-	}
+	return obj;
+}
 
-	// Validate
-	const errors = await validate(request.body).catch((error) =>
-		response.error(error, response)
-	);
+export async function postEndpoint(request: Request, response: Response) {
+	if (request.body instanceof Array) {
+		let shouldSave = true;
 
-	// Check
-	if (errors && errors.length) {
-		response.validationResponder(errors, response);
+		for (let i = 0; i < request.body.length; i++) {
+			// Set model type
+			request.body[i] = setModelType(
+				request.payloadType,
+				request.body[i]
+			);
+
+			// Delete undefined members
+			request.body[i] = deleteUndefinedMembers(request.body[i]);
+
+			// Run model hook
+			if (!runHook(request, response, 'beforePost', request.body[i])) {
+				return;
+			}
+
+			// Validate
+			const errors = await validate(request.body[i]).catch((error) =>
+				response.error(error, response)
+			);
+
+			// Check
+			if (errors && errors.length) {
+				response.validationResponder(errors, response);
+				shouldSave = false;
+				return;
+			}
+		}
+
+		if (shouldSave && request.body.length) {
+			// Send
+			const repo = await request.repository;
+
+			let results = [];
+			for (let i = 0; i < request.body.length; i++) {
+				results.push(
+					await repo
+						.save(request.body[i])
+						.catch((error) => response.error(error, response))
+				);
+			}
+
+			if (results) {
+				results = responseFilter(
+					results,
+					request.user,
+					request.payloadType,
+					request.userType,
+					request.joinMembers
+				);
+
+				response.postResponder(results, response);
+			}
+		}
 	}
 	else {
-		// Send
-		const result = await request.repository
-			.save(request.body)
-			.then((found) => response.postResponder(found, response))
-			.catch((error) => response.error(error, response));
+		// Set model type
+		request.body = setModelType(request.payloadType, request.body);
+
+		// Delete undefined members
+		request.body = deleteUndefinedMembers(request.body);
+
+		// Run model hook
+		if (!runHook(request, response, 'beforePost', request.body)) {
+			return;
+		}
+
+		// Validate
+		const errors = await validate(request.body).catch((error) =>
+			response.error(error, response)
+		);
+
+		// Check
+		if (errors && errors.length) {
+			response.validationResponder(errors, response);
+		}
+		else {
+			// Send
+			await request.repository
+				.save(request.body)
+				.then((result) => {
+					result = responseFilter(
+						result,
+						request.user,
+						request.payloadType,
+						request.userType,
+						request.joinMembers
+					);
+
+					response.postResponder(result, response);
+				})
+				.catch((error) => response.error(error, response));
+		}
 	}
 }

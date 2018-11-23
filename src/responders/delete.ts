@@ -1,8 +1,7 @@
 import { Response } from 'express';
 
 export function deleteResponder(result: any, response: Response) {
-	// Result should have ID
-	if ('id' in result) {
+	if (result instanceof Object) {
 		// Send response
 		response.sendStatus(204);
 	}

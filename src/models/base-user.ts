@@ -64,8 +64,6 @@ export class BaseUser extends BaseModel {
 
 	// First name
 	@Column({ nullable: true })
-	@Length(1, 250)
-	@IsOptional()
 	@AnyoneCanRead()
 	@OnlySelfCanWrite()
 	@CanSearch()
@@ -73,8 +71,6 @@ export class BaseUser extends BaseModel {
 
 	// Last name
 	@Column({ nullable: true })
-	@Length(1, 250)
-	@IsOptional()
 	@AnyoneCanRead()
 	@OnlySelfCanWrite()
 	@CanSearch()
@@ -98,30 +94,22 @@ export class BaseUser extends BaseModel {
 
 	// Password
 	@Column({ nullable: true })
-	@Length(1, 250)
-	@IsOptional()
 	@OnlySelfCanWrite()
 	public password: string = undefined;
 
 	// Password (temporary)
 	@Column({ nullable: true })
-	@Length(1, 250)
-	@IsOptional()
 	@OnlySelfCanWrite()
 	public tempPassword: string = undefined;
 
 	// BaseUser Role
 	@Column({ default: UserRole.Basic })
-	@Length(1, 250)
-	@IsOptional()
 	@AnyoneCanRead()
 	@OnlyAdminCanWrite()
 	public role: UserRole = undefined;
 
 	// BaseUser Status
 	@Column({ default: UserStatus.Pending })
-	@Length(1, 250)
-	@IsOptional()
 	@AnyoneCanRead()
 	@OnlyAdminCanWrite()
 	public status: UserStatus = undefined;
@@ -129,23 +117,18 @@ export class BaseUser extends BaseModel {
 	// Biography
 	// TODO: Validate
 	@Column({ type: 'text', nullable: true })
-	@IsOptional()
 	@AnyoneCanRead()
 	@OnlySelfCanWrite()
 	public biography: string = undefined;
 
 	// Geographical Location
 	@Column({ nullable: true })
-	@Length(1, 250)
-	@IsOptional()
 	@AnyoneCanRead()
 	@OnlySelfCanWrite()
 	public location: string = undefined;
 
 	// Thumbnail image
 	@Column({ nullable: true })
-	@IsUrl({ allow_protocol_relative_urls: true })
-	@IsOptional()
 	@AnyoneCanRead()
 	@OnlySelfCanWrite()
 	public thumbnail: string = undefined;

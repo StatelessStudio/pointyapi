@@ -64,6 +64,31 @@ describe('[Chat] Chat API Post', () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
+	it('can post an array of chat messages', async () => {
+		await http
+			.post(
+				'/api/v1/chat',
+				[
+					{
+						to: { id: this.user2.body.id },
+						body: 'test array 1'
+					},
+					{
+						to: { id: this.user2.body.id },
+						body: 'test array 2'
+					}
+				],
+				[ 200 ],
+				this.token.body.token
+			)
+			.then((result) => {
+				expect(result.body).toEqual(jasmine.any(Array));
+				expect(result.body[0]['body']).toEqual('test array 1');
+				expect(result.body[0]['to']['password']).toBeUndefined();
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
+
 	it('cannot post without a token', async () => {
 		await http
 			.post(
@@ -74,6 +99,37 @@ describe('[Chat] Chat API Post', () => {
 				},
 				[ 401 ]
 			)
+			.catch((error) =>
+				fail('Could not create chat: ' + JSON.stringify(error))
+			);
+	});
+
+	it('cannot reveal sensitive user fields', async () => {
+		await http
+			.post(
+				'/api/v1/chat',
+				{
+					to: { id: this.user2.body.id },
+					body: 'test'
+				},
+				[ 200 ],
+				this.token.body.token
+			)
+			.then((result) => {
+				expect(result.body['id']).toBeGreaterThanOrEqual(1);
+
+				if (
+					('password' in result.body['to'] &&
+						result.body['to']['password']) ||
+					('tempPassword' in result.body['to'] &&
+						result.body['to']['tempPassword']) ||
+					('tempEmail' in result.body['to'] &&
+						result.body['to']['tempEmail']) ||
+					('token' in result.body['to'] && result.body['to']['token'])
+				) {
+					fail();
+				}
+			})
 			.catch((error) =>
 				fail('Could not create chat: ' + JSON.stringify(error))
 			);

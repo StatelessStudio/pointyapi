@@ -63,24 +63,59 @@ export async function setModel(
 	request.repository = getRepository(request.payloadType);
 
 	if (request.method === 'POST') {
-		request.body = Object.assign(new request.payloadType(), request.body);
+		if (request.body instanceof Array) {
+			for (let i = 0; i < request.body.length; i++) {
+				request.body[i] = Object.assign(
+					new request.payloadType(),
+					request.body[i]
+				);
 
-		for (const key in request.body) {
-			if (request.body[key] === undefined) {
-				delete request.body[key];
-			}
+				for (const key in request.body[i]) {
+					if (request.body[i][key] === undefined) {
+						delete request.body[i][key];
+					}
 
-			if (!isKeyInModel(key, request.payload, response)) {
-				return false;
+					if (!isKeyInModel(key, request.payload, response)) {
+						return false;
+					}
+				}
+
+				// Run model hook
+				if (
+					!runHook(
+						request,
+						response,
+						'beforeLoadPost',
+						request.body[i]
+					)
+				) {
+					return;
+				}
 			}
 		}
+		else {
+			request.body = Object.assign(
+				new request.payloadType(),
+				request.body
+			);
 
-		// Run model hook
-		if (!runHook(request, response, 'beforeLoadPost', request.body)) {
-			return;
+			for (const key in request.body) {
+				if (request.body[key] === undefined) {
+					delete request.body[key];
+				}
+
+				if (!isKeyInModel(key, request.payload, response)) {
+					return false;
+				}
+			}
+
+			// Run model hook
+			if (!runHook(request, response, 'beforeLoadPost', request.body)) {
+				return;
+			}
 		}
 	}
-	if (request.method === 'GET') {
+	else if (request.method === 'GET') {
 		request.query = Object.assign(new request.payloadType(), request.query);
 
 		for (const key in request.query) {

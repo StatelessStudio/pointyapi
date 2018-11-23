@@ -72,4 +72,35 @@ describe('[Guards] User API Create', () => {
 			)
 			.catch((error) => fail(JSON.stringify(error)));
 	});
+
+	it('cannot reveal sensitve fields', async () => {
+		await http
+			.post(
+				'/api/v1/user',
+				{
+					fname: 'sensitveUser1',
+					lname: 'sensitveUser1',
+					username: 'sensitveUser1',
+					password: 'password123',
+					email: 'sensitveUser1@test.com',
+					__ignore: 'test',
+					___ignore: 'test'
+				},
+				[ 200 ]
+			)
+			.then((result) => {
+				expect(result.body['username']).toEqual(jasmine.any(String));
+
+				if (
+					('password' in result.body && result.body['password']) ||
+					('tempPassword' in result.body &&
+						result.body['tempPassword']) ||
+					('tempEmail' in result.body && result.body['tempEmail']) ||
+					('token' in result.body && result.body['token'])
+				) {
+					fail();
+				}
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
 });
