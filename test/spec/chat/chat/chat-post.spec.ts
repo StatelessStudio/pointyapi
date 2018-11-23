@@ -78,4 +78,35 @@ describe('[Chat] Chat API Post', () => {
 				fail('Could not create chat: ' + JSON.stringify(error))
 			);
 	});
+
+	it('cannot reveal sensitive user fields', async () => {
+		await http
+			.post(
+				'/api/v1/chat',
+				{
+					to: { id: this.user2.body.id },
+					body: 'test'
+				},
+				[ 200 ],
+				this.token.body.token
+			)
+			.then((result) => {
+				expect(result.body['id']).toBeGreaterThanOrEqual(1);
+
+				if (
+					('password' in result.body['to'] &&
+						result.body['to']['password']) ||
+					('tempPassword' in result.body['to'] &&
+						result.body['to']['tempPassword']) ||
+					('tempEmail' in result.body['to'] &&
+						result.body['to']['tempEmail']) ||
+					('token' in result.body['to'] && result.body['to']['token'])
+				) {
+					fail();
+				}
+			})
+			.catch((error) =>
+				fail('Could not create chat: ' + JSON.stringify(error))
+			);
+	});
 });

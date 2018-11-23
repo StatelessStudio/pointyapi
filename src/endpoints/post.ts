@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { validate } from 'class-validator';
 import { runHook } from '../run-hook';
+import { responseFilter } from '../bodyguard/response-filter';
 
 export async function postEndpoint(request: Request, response: Response) {
 	// Set model type
@@ -29,9 +30,19 @@ export async function postEndpoint(request: Request, response: Response) {
 	}
 	else {
 		// Send
-		const result = await request.repository
+		await request.repository
 			.save(request.body)
-			.then((found) => response.postResponder(found, response))
+			.then((result) => {
+				result = responseFilter(
+					result,
+					request.user,
+					request.payloadType,
+					request.userType,
+					request.joinMembers
+				);
+
+				response.postResponder(result, response);
+			})
 			.catch((error) => response.error(error, response));
 	}
 }
