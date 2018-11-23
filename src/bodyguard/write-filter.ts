@@ -15,7 +15,21 @@ export function writeFilter(
 	userType,
 	isSelfResult?
 ) {
-	if (obj instanceof Object) {
+	if (obj instanceof Array) {
+		for (let i = 0; i < obj.length; i++) {
+			const result = writeFilter(
+				obj[i],
+				user,
+				objType,
+				userType,
+				isSelfResult
+			);
+			if (result !== true) {
+				return `[#${i}]${result}`;
+			}
+		}
+	}
+	else if (obj instanceof Object) {
 		if (isSelfResult === undefined) {
 			isSelfResult = isSelf(obj, user, objType, userType);
 		}
