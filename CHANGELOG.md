@@ -1,5 +1,13 @@
 # PointyApi Changelog
 
+## [0.2.1] Nov-23-2018 - POST update
+
+### Fixes
+- [Issue #41] getBodyguardKeys() should not fail on error
+- [Issue #39] POST endpoint should return the entire object, through responseFilter()
+- [Issue #18] Accept array on POST instead of requiring multiple requests
+- [Issue #40] loginEndpoint should return filtered user object
+
 ## [0.2.0] Nov-17-2018 - Joins, Search, Security, & Bugfixes
 
 - Node update
