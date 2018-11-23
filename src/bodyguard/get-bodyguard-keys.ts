@@ -14,9 +14,5 @@ export function getBodyguardKeys(obj: BaseModel): string[] {
 		}
 	}
 
-	if (!ownerKeys.length) {
-		throw new Error('Object has no bodyguard keys');
-	}
-
 	return ownerKeys;
 }
