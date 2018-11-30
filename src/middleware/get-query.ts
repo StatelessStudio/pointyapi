@@ -99,11 +99,7 @@ export async function getQuery(
 		return;
 	}
 
-	if (
-		'query' in request &&
-		'__search' in request.query &&
-		request.query.__search.length
-	) {
+	if ('query' in request && '__search' in request.query) {
 		const objMnemonic = 'obj';
 
 		// Join __join query keys
