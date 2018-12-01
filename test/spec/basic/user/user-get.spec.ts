@@ -88,4 +88,35 @@ describe('User API Read', () => {
 			})
 			.catch((error) => fail(JSON.stringify(error)));
 	});
+
+	it('can group by', async () => {
+		await http
+			.post('/api/v1/user', {
+				fname: 'groupTester',
+				lname: 'groupBy',
+				username: 'groupTester1',
+				password: 'password123',
+				email: 'groupTester1@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+		await http
+			.post('/api/v1/user', {
+				fname: 'groupTester',
+				lname: 'groupBy',
+				username: 'groupTester2',
+				password: 'password123',
+				email: 'groupTester2@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+
+		await http
+			.get('/api/v1/user', {
+				__search: '',
+				__groupBy: [ 'lname', 'id' ]
+			})
+			.then((result) => {
+				expect(result.body[0].id).toBeGreaterThanOrEqual(3);
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
 });

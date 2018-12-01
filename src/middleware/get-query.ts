@@ -102,13 +102,23 @@ export async function getQuery(
 	if ('query' in request && '__search' in request.query) {
 		const objMnemonic = 'obj';
 
-		// Join __join query keys
+		// Extract Join __join query keys
 		if ('__join' in request.query) {
 			request.query.__join.forEach((key) => {
 				request.joinMembers.push(key);
 			});
 
 			delete request.query.__join;
+		}
+
+		// Extract Group By query keys
+		const groupByKeys = [];
+		if ('__groupBy' in request.query) {
+			request.query.__groupBy.forEach((key) => {
+				groupByKeys.push(key);
+			});
+
+			delete request.query.__groupBy;
 		}
 
 		// Search
@@ -145,9 +155,14 @@ export async function getQuery(
 		}
 
 		// Complete selection
-		await selection
-			.where(queryString)
-			.setParameters(queryParams)
+		const query = selection.where(queryString).setParameters(queryParams);
+
+		// Add group by keys
+		for (const key of groupByKeys) {
+			query.addGroupBy(key);
+		}
+
+		await query
 			.getMany()
 			.then((result) => {
 				request.payload = result;
