@@ -31,25 +31,11 @@ export function responseFilter(
 		const isAdminResult = isAdmin(user);
 		// Loop through object members
 		for (const member in obj) {
-			if (
-				!(obj[member] instanceof Function) &&
-				(!joinMembers || !joinMembers.includes(member))
-			) {
-				const canRead = getCanRead(new objType(), member);
-
-				if (canRead === undefined) {
-					delete obj[member];
-				}
-				else if (
-					canRead !== '__anyone__' &&
-					((canRead === '__self__' && !isSelfResult) ||
-						(canRead === '__admin__' && !isAdminResult))
-				) {
-					delete obj[member];
-				}
-				else if (
-					obj[member] instanceof Object &&
-					!(obj[member] instanceof Date)
+			if (!(obj[member] instanceof Function)) {
+				if (
+					obj[member] instanceof Array ||
+					(obj[member] instanceof Object &&
+						!(obj[member] instanceof Date))
 				) {
 					const subObjTpye = obj[member].constructor;
 					obj[member] = responseFilter(
@@ -58,6 +44,20 @@ export function responseFilter(
 						subObjTpye,
 						userType
 					);
+				}
+				else if (member !== 'id') {
+					const canRead = getCanRead(new objType(), member);
+
+					if (canRead === undefined) {
+						delete obj[member];
+					}
+					else if (
+						canRead !== '__anyone__' &&
+						((canRead === '__self__' && !isSelfResult) ||
+							(canRead === '__admin__' && !isAdminResult))
+					) {
+						delete obj[member];
+					}
 				}
 			}
 		}
