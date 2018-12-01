@@ -308,4 +308,56 @@ describe('User API Read', () => {
 			})
 			.catch((error) => fail(JSON.stringify(error)));
 	});
+
+	it('can search by not', async () => {
+		const user = await http
+			.post('/api/v1/user', {
+				fname: 'searchNot',
+				lname: 'searchNot',
+				username: 'searchNot',
+				password: 'password123',
+				email: 'searchNot@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+
+		if (user) {
+			await http
+				.get('/api/v1/user', {
+					__search: '',
+					__not: {
+						id: user.body['id']
+					}
+				})
+				.then((result) => {
+					if (result.body instanceof Array) {
+						for (const res of result.body) {
+							expect(res['fname']).not.toBe('searchNot');
+						}
+					}
+					else {
+						fail('Result is not an array');
+					}
+				})
+				.catch((error) => fail(JSON.stringify(error)));
+
+			await http
+				.get('/api/v1/user', {
+					__search: '',
+					__not: {
+						fname: 'searchNot'
+					}
+				})
+				.then((result) => {
+					if (result.body instanceof Array) {
+						for (const res of result.body) {
+							expect(res['fname']).not.toBe('searchNot');
+						}
+					}
+					else {
+						fail('Result is not an array');
+					}
+				})
+				.catch((error) => fail(JSON.stringify(error)));
+		}
+	});
 });

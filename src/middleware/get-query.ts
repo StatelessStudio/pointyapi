@@ -141,6 +141,15 @@ function createSearchQuery(payloadType, obj: Object, objKey: string = 'obj') {
 					][greaterThanOrEqualKey]}`;
 				}
 			}
+			else if (field && field === '__not') {
+				for (const notKey in obj['__not']) {
+					// Append key to queryString
+					queryString += `${objKey}.${notKey}!=:${notKey} AND `;
+
+					// Append parameter to queryParams
+					queryParams[notKey] = `${obj['__not'][notKey]}`;
+				}
+			}
 		}
 
 		queryString = queryString.replace(/ AND +$/, '');
