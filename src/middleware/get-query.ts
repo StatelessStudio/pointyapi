@@ -91,6 +91,56 @@ function createSearchQuery(payloadType, obj: Object, objKey: string = 'obj') {
 					}
 				}
 			}
+			else if (field && field === '__lessThan') {
+				for (const lessThanKey in obj['__lessThan']) {
+					// Append key to queryString
+					queryString += `${objKey}.${lessThanKey} < :${lessThanKey} AND `;
+
+					// Append parameter to queryParams
+					queryParams[lessThanKey] = `${obj['__lessThan'][
+						lessThanKey
+					]}`;
+				}
+			}
+			else if (field && field === '__greaterThan') {
+				for (const greaterThanKey in obj['__greaterThan']) {
+					// Append key to queryString
+					queryString += `${objKey}.${greaterThanKey} > :${greaterThanKey} AND `;
+
+					// Append parameter to queryParams
+					queryParams[greaterThanKey] = `${obj['__greaterThan'][
+						greaterThanKey
+					]}`;
+				}
+			}
+			else if (field && field === '__lessThanOrEqual') {
+				for (const lessThanOrEqualKey in obj['__lessThanOrEqual']) {
+					// Append key to queryString
+					queryString +=
+						`${objKey}.${lessThanOrEqualKey} <= ` +
+						`:${lessThanOrEqualKey} AND `;
+
+					// Append parameter to queryParams
+					queryParams[lessThanOrEqualKey] = `${obj[
+						'__lessThanOrEqual'
+					][lessThanOrEqualKey]}`;
+				}
+			}
+			else if (field && field === '__greaterThanOrEqual') {
+				for (const greaterThanOrEqualKey in obj[
+					'__greaterThanOrEqual'
+				]) {
+					// Append key to queryString
+					queryString +=
+						`${objKey}.${greaterThanOrEqualKey} >= ` +
+						`:${greaterThanOrEqualKey} AND `;
+
+					// Append parameter to queryParams
+					queryParams[greaterThanOrEqualKey] = `${obj[
+						'__greaterThanOrEqual'
+					][greaterThanOrEqualKey]}`;
+				}
+			}
 		}
 
 		queryString = queryString.replace(/ AND +$/, '');
