@@ -186,4 +186,30 @@ describe('User API Read', () => {
 			})
 			.catch((error) => fail(JSON.stringify(error)));
 	});
+
+	it('can search by range', async () => {
+		const user = await http
+			.post('/api/v1/user', {
+				fname: 'rangeTest',
+				lname: 'rangeTest',
+				username: 'rangeTest',
+				password: 'password123',
+				email: 'rangeTest@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+
+		if (user) {
+			await http
+				.get('/api/v1/user', {
+					__search: '',
+					__between: {
+						id: [ user.body['id'], user.body['id'] ]
+					}
+				})
+				.then((result) => {
+					expect(result.body[0].lname).toEqual('rangeTest');
+				})
+				.catch((error) => fail(JSON.stringify(error)));
+		}
+	});
 });

@@ -70,6 +70,27 @@ function createSearchQuery(payloadType, obj: Object, objKey: string = 'obj') {
 				queryString = queryString.replace(/ OR +$/, '');
 				queryString += ') AND ';
 			}
+			else if (field && field === '__between') {
+				for (const betweenKey in obj['__between']) {
+					const range = obj['__between'][betweenKey];
+
+					// Range should be an array of two
+					if ('length' in range && range.length === 2) {
+						// Range should be int
+						range.map((val) => {
+							return parseInt(val, 10);
+						});
+
+						// Append key to queryString
+						queryString +=
+							`(${objKey}.${betweenKey} BETWEEN ` +
+							range[0] +
+							' AND ' +
+							range[1] +
+							') AND ';
+					}
+				}
+			}
 		}
 
 		queryString = queryString.replace(/ AND +$/, '');
