@@ -119,4 +119,37 @@ describe('User API Read', () => {
 			})
 			.catch((error) => fail(JSON.stringify(error)));
 	});
+
+	it('can order by', async () => {
+		await http
+			.post('/api/v1/user', {
+				fname: 'orderTester',
+				lname: 'zorderBy',
+				username: 'orderTester1',
+				password: 'password123',
+				email: 'orderTester1@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+		await http
+			.post('/api/v1/user', {
+				fname: 'orderTester',
+				lname: 'zorderBy',
+				username: 'orderTester2',
+				password: 'password123',
+				email: 'orderTester2@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+
+		await http
+			.get('/api/v1/user', {
+				__search: '',
+				__orderBy: {
+					lname: 'DESC'
+				}
+			})
+			.then((result) => {
+				expect(result.body[0].lname).toEqual('zorderBy');
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
 });

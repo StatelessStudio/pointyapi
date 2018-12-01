@@ -126,6 +126,20 @@ export async function getQuery(
 			delete request.query.__groupBy;
 		}
 
+		// Extract order By query keys
+		const orderByKeys = [];
+		const orderByOrders = [];
+		if ('__orderBy' in request.query) {
+			for (const key in request.query.__orderBy) {
+				orderByKeys.push(key);
+				orderByOrders.push(
+					request.query.__orderBy[key] === 'DESC' ? 'DESC' : 'ASC'
+				);
+			}
+
+			delete request.query.__orderBy;
+		}
+
 		// Search
 		const { queryString, queryParams } = createSearchQuery(
 			new request.payloadType(),
@@ -165,6 +179,11 @@ export async function getQuery(
 		// Add group by keys
 		for (const key of groupByKeys) {
 			query.addGroupBy(key);
+		}
+
+		// Add order by keys
+		for (let i = 0; i < orderByKeys.length; i++) {
+			query.addOrderBy(orderByKeys[i], orderByOrders[i]);
 		}
 
 		await query
