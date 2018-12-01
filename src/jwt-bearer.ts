@@ -27,6 +27,10 @@ class JwtBearer {
 		}
 	}
 
+	public getExpiration() {
+		return Date.now() + parseInt(process.env.JWT_TTL, 10) * 1000;
+	}
+
 	public sign(user: BaseUser) {
 		return btoa(
 			JWT.sign({ id: user.id }, this.key, {
