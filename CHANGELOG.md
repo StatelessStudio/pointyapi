@@ -1,5 +1,27 @@
 # PointyApi Changelog
 
+## [0.3.0] Dec-01-2018 - Search Update
+
+Added options to GET search, fixed filters, and return expiration with token.
+
+### Additions
+- [Issue #54] Add "not" special key
+- [Issue #53] Add less than/greater than operator special keys
+- [Issue #52] Add groupBy special key
+- [Issue #49] Add "offset" special key
+- [Issue #48] Add "limit" special key"
+- [Issue #47] Add "between" special key
+- [Issue #46] Add "order by" speial key
+- [Issue #45] loginEndpoint should return token expiration
+- Created JwtBearer()::getExpiration()
+- Created getReadbleFields() test spec
+
+### Fixes
+- Changed default token expiration to 4 hours
+- [Issue #51] isSelf() must check objBodyguardKeys and userBodyguardKeys seperately
+- [Issue #50] __search should not check length of search string
+- [Issue #17] - GET Endpoint filter doesn't filter nested objects
+
 ## [0.2.1] Nov-23-2018 - POST update
 
 ### Fixes
