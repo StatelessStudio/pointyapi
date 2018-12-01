@@ -64,6 +64,7 @@ export async function loginEndpoint(
 	// Check matching user
 	if (match) {
 		// Create token
+		const expiration = jwtBearer.getExpiration();
 		const token = jwtBearer.sign(match);
 
 		if (token) {
@@ -82,6 +83,7 @@ export async function loginEndpoint(
 				request.joinMembers
 			);
 
+			match['expiration'] = expiration;
 			match['token'] = token;
 
 			response.json(match);
