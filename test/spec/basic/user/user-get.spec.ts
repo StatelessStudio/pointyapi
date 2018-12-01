@@ -93,7 +93,7 @@ describe('User API Read', () => {
 		await http
 			.post('/api/v1/user', {
 				fname: 'groupTester',
-				lname: 'groupBy',
+				lname: 'agroupBy',
 				username: 'groupTester1',
 				password: 'password123',
 				email: 'groupTester1@get.com'
@@ -102,7 +102,7 @@ describe('User API Read', () => {
 		await http
 			.post('/api/v1/user', {
 				fname: 'groupTester',
-				lname: 'groupBy',
+				lname: 'agroupBy',
 				username: 'groupTester2',
 				password: 'password123',
 				email: 'groupTester2@get.com'
