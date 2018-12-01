@@ -164,4 +164,26 @@ describe('User API Read', () => {
 			})
 			.catch((error) => fail(JSON.stringify(error)));
 	});
+
+	it('can offset', async () => {
+		await http
+			.post('/api/v1/user', {
+				fname: 'offsetTest',
+				lname: 'offsetTest',
+				username: 'offsetTest',
+				password: 'password123',
+				email: 'offsetTest@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+
+		await http
+			.get('/api/v1/user', {
+				__search: '',
+				__offset: 2
+			})
+			.then((result) => {
+				expect(result.body[0].id).toBeGreaterThanOrEqual(3);
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
 });

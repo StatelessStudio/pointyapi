@@ -148,6 +148,14 @@ export async function getQuery(
 			delete request.query.__limit;
 		}
 
+		// Extract offset
+		let offset;
+		if ('__offset' in request.query) {
+			offset = request.query.__offset;
+
+			delete request.query.__offset;
+		}
+
 		// Search
 		const { queryString, queryParams } = createSearchQuery(
 			new request.payloadType(),
@@ -197,6 +205,11 @@ export async function getQuery(
 		// Add limit
 		if (limit) {
 			query.take(limit);
+		}
+
+		// Add offset
+		if (offset) {
+			query.skip(offset);
 		}
 
 		await query
