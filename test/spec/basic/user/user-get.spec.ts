@@ -112,7 +112,7 @@ describe('User API Read', () => {
 		await http
 			.get('/api/v1/user', {
 				__search: '',
-				__groupBy: [ 'lname', 'id' ]
+				__groupBy: [ 'lname' ]
 			})
 			.then((result) => {
 				expect(result.body[0].id).toBeGreaterThanOrEqual(3);

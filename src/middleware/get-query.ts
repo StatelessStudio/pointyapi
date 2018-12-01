@@ -118,6 +118,11 @@ export async function getQuery(
 				groupByKeys.push(key);
 			});
 
+			// Add 'id' to array if not already
+			if (!('id' in request.query.__groupBy)) {
+				groupByKeys.push('id');
+			}
+
 			delete request.query.__groupBy;
 		}
 
