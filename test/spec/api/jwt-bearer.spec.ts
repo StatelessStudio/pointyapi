@@ -14,6 +14,10 @@ describe('[JWT]', () => {
 		expect(jwtBearer.dryVerify(jwtString)).not.toEqual(false);
 	});
 
+	it('can get an expiration date/time', () => {
+		expect(jwtBearer.getExpiration()).toBeGreaterThan(Date.now());
+	});
+
 	it('can get a token from request headers', () => {
 		const jwtString = jwtBearer.sign(new BaseUser());
 

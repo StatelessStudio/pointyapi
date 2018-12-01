@@ -70,6 +70,86 @@ function createSearchQuery(payloadType, obj: Object, objKey: string = 'obj') {
 				queryString = queryString.replace(/ OR +$/, '');
 				queryString += ') AND ';
 			}
+			else if (field && field === '__between') {
+				for (const betweenKey in obj['__between']) {
+					const range = obj['__between'][betweenKey];
+
+					// Range should be an array of two
+					if ('length' in range && range.length === 2) {
+						// Range should be int
+						range.map((val) => {
+							return parseInt(val, 10);
+						});
+
+						// Append key to queryString
+						queryString +=
+							`(${objKey}.${betweenKey} BETWEEN ` +
+							range[0] +
+							' AND ' +
+							range[1] +
+							') AND ';
+					}
+				}
+			}
+			else if (field && field === '__lessThan') {
+				for (const lessThanKey in obj['__lessThan']) {
+					// Append key to queryString
+					queryString += `${objKey}.${lessThanKey} < :${lessThanKey} AND `;
+
+					// Append parameter to queryParams
+					queryParams[lessThanKey] = `${obj['__lessThan'][
+						lessThanKey
+					]}`;
+				}
+			}
+			else if (field && field === '__greaterThan') {
+				for (const greaterThanKey in obj['__greaterThan']) {
+					// Append key to queryString
+					queryString += `${objKey}.${greaterThanKey} > :${greaterThanKey} AND `;
+
+					// Append parameter to queryParams
+					queryParams[greaterThanKey] = `${obj['__greaterThan'][
+						greaterThanKey
+					]}`;
+				}
+			}
+			else if (field && field === '__lessThanOrEqual') {
+				for (const lessThanOrEqualKey in obj['__lessThanOrEqual']) {
+					// Append key to queryString
+					queryString +=
+						`${objKey}.${lessThanOrEqualKey} <= ` +
+						`:${lessThanOrEqualKey} AND `;
+
+					// Append parameter to queryParams
+					queryParams[lessThanOrEqualKey] = `${obj[
+						'__lessThanOrEqual'
+					][lessThanOrEqualKey]}`;
+				}
+			}
+			else if (field && field === '__greaterThanOrEqual') {
+				for (const greaterThanOrEqualKey in obj[
+					'__greaterThanOrEqual'
+				]) {
+					// Append key to queryString
+					queryString +=
+						`${objKey}.${greaterThanOrEqualKey} >= ` +
+						`:${greaterThanOrEqualKey} AND `;
+
+					// Append parameter to queryParams
+					queryParams[greaterThanOrEqualKey] = `${obj[
+						'__greaterThanOrEqual'
+					][greaterThanOrEqualKey]}`;
+				}
+			}
+			else if (field && field === '__not') {
+				for (const notKey in obj['__not']) {
+					// Append key to queryString
+					queryString += `${objKey}.${notKey}!=:${notKey} AND `;
+
+					// Append parameter to queryParams
+					queryParams[notKey] = `${obj['__not'][notKey]}`;
+				}
+			}
 		}
 
 		queryString = queryString.replace(/ AND +$/, '');
@@ -99,20 +179,61 @@ export async function getQuery(
 		return;
 	}
 
-	if (
-		'query' in request &&
-		'__search' in request.query &&
-		request.query.__search.length
-	) {
+	if ('query' in request && '__search' in request.query) {
 		const objMnemonic = 'obj';
 
-		// Join __join query keys
+		// Extract Join __join query keys
 		if ('__join' in request.query) {
 			request.query.__join.forEach((key) => {
 				request.joinMembers.push(key);
 			});
 
 			delete request.query.__join;
+		}
+
+		// Extract Group By query keys
+		const groupByKeys = [];
+		if ('__groupBy' in request.query) {
+			request.query.__groupBy.forEach((key) => {
+				groupByKeys.push(key);
+			});
+
+			// Add 'id' to array if not already
+			if (!('id' in request.query.__groupBy)) {
+				groupByKeys.push('id');
+			}
+
+			delete request.query.__groupBy;
+		}
+
+		// Extract order By query keys
+		const orderByKeys = [];
+		const orderByOrders = [];
+		if ('__orderBy' in request.query) {
+			for (const key in request.query.__orderBy) {
+				orderByKeys.push(key);
+				orderByOrders.push(
+					request.query.__orderBy[key] === 'DESC' ? 'DESC' : 'ASC'
+				);
+			}
+
+			delete request.query.__orderBy;
+		}
+
+		// Extract limit
+		let limit;
+		if ('__limit' in request.query) {
+			limit = request.query.__limit;
+
+			delete request.query.__limit;
+		}
+
+		// Extract offset
+		let offset;
+		if ('__offset' in request.query) {
+			offset = request.query.__offset;
+
+			delete request.query.__offset;
 		}
 
 		// Search
@@ -149,9 +270,29 @@ export async function getQuery(
 		}
 
 		// Complete selection
-		await selection
-			.where(queryString)
-			.setParameters(queryParams)
+		const query = selection.where(queryString).setParameters(queryParams);
+
+		// Add group by keys
+		for (const key of groupByKeys) {
+			query.addGroupBy(key);
+		}
+
+		// Add order by keys
+		for (let i = 0; i < orderByKeys.length; i++) {
+			query.addOrderBy(orderByKeys[i], orderByOrders[i]);
+		}
+
+		// Add limit
+		if (limit) {
+			query.take(limit);
+		}
+
+		// Add offset
+		if (offset) {
+			query.skip(offset);
+		}
+
+		await query
 			.getMany()
 			.then((result) => {
 				request.payload = result;

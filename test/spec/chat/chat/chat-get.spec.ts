@@ -229,4 +229,35 @@ describe('[Chat] Chat API Get', async () => {
 			})
 			.catch((error) => fail(JSON.stringify(error)));
 	});
+
+	it('filters nested objects', async () => {
+		await http
+			.get(
+				'/api/v1/chat',
+				{
+					__search: '',
+					__whereAnyOf: {
+						to: this.user.body.id,
+						from: this.user.body.id
+					}
+				},
+				[ 200 ],
+				this.token.body.token
+			)
+			.then((result) => {
+				expect(result.body['length']).toBeGreaterThanOrEqual(1);
+
+				for (let i = 0; i < result.body['length']; i++) {
+					expect(result.body[i]).toEqual(jasmine.any(Object));
+					expect(result.body[i].id).toBeGreaterThanOrEqual(1);
+					expect(result.body[i].from).toEqual(jasmine.any(Object));
+					expect(result.body[i].from.id).toBeGreaterThanOrEqual(1);
+					expect(result.body[i].from.password).toBeUndefined();
+					expect(result.body[i].to).toEqual(jasmine.any(Object));
+					expect(result.body[i].to.id).toBeGreaterThanOrEqual(1);
+					expect(result.body[i].to.password).toBeUndefined();
+				}
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
 });

@@ -88,4 +88,276 @@ describe('User API Read', () => {
 			})
 			.catch((error) => fail(JSON.stringify(error)));
 	});
+
+	it('can group by', async () => {
+		await http
+			.post('/api/v1/user', {
+				fname: 'groupTester',
+				lname: 'agroupBy',
+				username: 'groupTester1',
+				password: 'password123',
+				email: 'groupTester1@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+		await http
+			.post('/api/v1/user', {
+				fname: 'groupTester',
+				lname: 'agroupBy',
+				username: 'groupTester2',
+				password: 'password123',
+				email: 'groupTester2@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+
+		await http
+			.get('/api/v1/user', {
+				__search: '',
+				__groupBy: [ 'lname' ]
+			})
+			.then((result) => {
+				expect(result.body[0].id).toBeGreaterThanOrEqual(3);
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
+
+	it('can order by', async () => {
+		await http
+			.post('/api/v1/user', {
+				fname: 'orderTester',
+				lname: 'zorderBy',
+				username: 'orderTester1',
+				password: 'password123',
+				email: 'orderTester1@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+		await http
+			.post('/api/v1/user', {
+				fname: 'orderTester',
+				lname: 'zorderBy',
+				username: 'orderTester2',
+				password: 'password123',
+				email: 'orderTester2@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+
+		await http
+			.get('/api/v1/user', {
+				__search: '',
+				__orderBy: {
+					lname: 'DESC'
+				}
+			})
+			.then((result) => {
+				expect(result.body[0].lname).toEqual('zorderBy');
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
+
+	it('can limit', async () => {
+		await http
+			.get('/api/v1/user', {
+				__search: '',
+				__limit: 1
+			})
+			.then((result) => {
+				expect(result.body['length']).toBe(1);
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
+
+	it('can offset', async () => {
+		await http
+			.post('/api/v1/user', {
+				fname: 'offsetTest',
+				lname: 'offsetTest',
+				username: 'offsetTest',
+				password: 'password123',
+				email: 'offsetTest@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+
+		await http
+			.get('/api/v1/user', {
+				__search: '',
+				__offset: 2
+			})
+			.then((result) => {
+				expect(result.body[0].id).toBeGreaterThanOrEqual(3);
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
+
+	it('can search by range', async () => {
+		const user = await http
+			.post('/api/v1/user', {
+				fname: 'rangeTest',
+				lname: 'rangeTest',
+				username: 'rangeTest',
+				password: 'password123',
+				email: 'rangeTest@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+
+		if (user) {
+			await http
+				.get('/api/v1/user', {
+					__search: '',
+					__between: {
+						id: [ user.body['id'], user.body['id'] ]
+					}
+				})
+				.then((result) => {
+					expect(result.body[0].lname).toEqual('rangeTest');
+				})
+				.catch((error) => fail(JSON.stringify(error)));
+		}
+	});
+
+	it('can search by less than', async () => {
+		await http
+			.post('/api/v1/user', {
+				fname: 'lessThanTest',
+				lname: 'lessThanTest',
+				username: 'lessThanTest',
+				password: 'password123',
+				email: 'lessThanTest@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+
+		await http
+			.get('/api/v1/user', {
+				__search: '',
+				__lessThan: {
+					id: 1
+				}
+			})
+			.then((result) => {
+				expect(result.body['length']).toBe(0);
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
+
+	it('can search by greater than', async () => {
+		await http
+			.post('/api/v1/user', {
+				fname: 'greaterThanTest',
+				lname: 'greaterThanTest',
+				username: 'greaterThanTest',
+				password: 'password123',
+				email: 'greaterThanTest@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+
+		await http
+			.get('/api/v1/user', {
+				__search: '',
+				__greaterThan: {
+					id: 1
+				}
+			})
+			.then((result) => {
+				expect(result.body['length']).toBeGreaterThanOrEqual(1);
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
+
+	it('can search by less than or equal to', async () => {
+		await http
+			.post('/api/v1/user', {
+				fname: 'lessThanOrEqual',
+				lname: 'lessThanOrEqual',
+				username: 'lessThanOrEqual',
+				password: 'password123',
+				email: 'lessThanOrEqual@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+
+		await http
+			.get('/api/v1/user', {
+				__search: '',
+				__lessThanOrEqual: {
+					id: 1
+				}
+			})
+			.then((result) => {
+				expect(result.body['length']).toBeLessThanOrEqual(1);
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
+
+	it('can search by less than or equal to', async () => {
+		await http
+			.post('/api/v1/user', {
+				fname: 'greaterThanOrEqual',
+				lname: 'greaterThanOrEqual',
+				username: 'greaterOrEqual',
+				password: 'password123',
+				email: 'greaterThanOrEqual@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+
+		await http
+			.get('/api/v1/user', {
+				__search: '',
+				__greaterThanOrEqual: {
+					id: 1
+				}
+			})
+			.then((result) => {
+				expect(result.body['length']).toBeGreaterThanOrEqual(1);
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
+
+	it('can search by not', async () => {
+		const user = await http
+			.post('/api/v1/user', {
+				fname: 'searchNot',
+				lname: 'searchNot',
+				username: 'searchNot',
+				password: 'password123',
+				email: 'searchNot@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+
+		if (user) {
+			await http
+				.get('/api/v1/user', {
+					__search: '',
+					__not: {
+						id: user.body['id']
+					}
+				})
+				.then((result) => {
+					if (result.body instanceof Array) {
+						for (const res of result.body) {
+							expect(res['fname']).not.toBe('searchNot');
+						}
+					}
+					else {
+						fail('Result is not an array');
+					}
+				})
+				.catch((error) => fail(JSON.stringify(error)));
+
+			await http
+				.get('/api/v1/user', {
+					__search: '',
+					__not: {
+						fname: 'searchNot'
+					}
+				})
+				.then((result) => {
+					if (result.body instanceof Array) {
+						for (const res of result.body) {
+							expect(res['fname']).not.toBe('searchNot');
+						}
+					}
+					else {
+						fail('Result is not an array');
+					}
+				})
+				.catch((error) => fail(JSON.stringify(error)));
+		}
+	});
 });

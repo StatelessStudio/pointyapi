@@ -37,6 +37,9 @@ export function isSelf(
 	else {
 		if (objBodyguardKeys === undefined) {
 			objBodyguardKeys = getBodyguardKeys(new objType());
+		}
+
+		if (userBodyguardKeys === undefined) {
 			userBodyguardKeys = getBodyguardKeys(new userType());
 		}
 
