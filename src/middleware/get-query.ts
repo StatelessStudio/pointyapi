@@ -140,6 +140,14 @@ export async function getQuery(
 			delete request.query.__orderBy;
 		}
 
+		// Extract limit
+		let limit;
+		if ('__limit' in request.query) {
+			limit = request.query.__limit;
+
+			delete request.query.__limit;
+		}
+
 		// Search
 		const { queryString, queryParams } = createSearchQuery(
 			new request.payloadType(),
@@ -184,6 +192,11 @@ export async function getQuery(
 		// Add order by keys
 		for (let i = 0; i < orderByKeys.length; i++) {
 			query.addOrderBy(orderByKeys[i], orderByOrders[i]);
+		}
+
+		// Add limit
+		if (limit) {
+			query.take(limit);
 		}
 
 		await query

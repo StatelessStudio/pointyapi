@@ -152,4 +152,16 @@ describe('User API Read', () => {
 			})
 			.catch((error) => fail(JSON.stringify(error)));
 	});
+
+	it('can limit', async () => {
+		await http
+			.get('/api/v1/user', {
+				__search: '',
+				__limit: 1
+			})
+			.then((result) => {
+				expect(result.body['length']).toBe(1);
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
 });
