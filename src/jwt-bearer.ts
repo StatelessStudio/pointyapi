@@ -34,7 +34,7 @@ class JwtBearer {
 	public sign(user: BaseUser) {
 		return btoa(
 			JWT.sign({ id: user.id }, this.key, {
-				expiresIn: process.env.JWT_TTL
+				expiresIn: parseInt(process.env.JWT_TTL, 10)
 			})
 		);
 	}
