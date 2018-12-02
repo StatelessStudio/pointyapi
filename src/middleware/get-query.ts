@@ -211,7 +211,7 @@ export async function getQuery(
 		const orderByOrders = [];
 		if ('__orderBy' in request.query) {
 			for (const key in request.query.__orderBy) {
-				orderByKeys.push(key);
+				orderByKeys.push(objMnemonic + '.' + key);
 				orderByOrders.push(
 					request.query.__orderBy[key] === 'DESC' ? 'DESC' : 'ASC'
 				);
