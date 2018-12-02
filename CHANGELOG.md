@@ -1,5 +1,13 @@
 # PointyApi Changelog
 
+## [0.3.1] Dec-02-2018 - Minor Bugfixes
+
+Fixed JWT Token expiration & __orderBy
+
+### Fixes
+- [Issue #57] __orderBy should prepend 'obj' to column name
+- [Issue #56] JWT Expiration is in milliseconds rather than seconds
+
 ## [0.3.0] Dec-01-2018 - Search Update
 
 Added options to GET search, fixed filters, and return expiration with token.
