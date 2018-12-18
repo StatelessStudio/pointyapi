@@ -312,13 +312,10 @@ export async function getQuery(
 		let getQueryResult;
 		if (shouldCount) {
 			getQueryResult = query.getRawOne();
+			request.query.__count = true;
 		}
 		else {
 			getQueryResult = query.getMany();
-		}
-
-		if (shouldCount) {
-			request.query.__count = true;
 		}
 
 		await getQueryResult
