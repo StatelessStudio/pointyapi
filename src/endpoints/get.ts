@@ -8,6 +8,18 @@ import { runHook } from '../run-hook';
  * @param response Response object to call responder with
  */
 export async function getEndpoint(request: Request, response: Response) {
+	// Is this a count request?
+	if ('__count' in request.query && 'count' in request.payload) {
+		response.getResponder(
+			{
+				count: +request.payload['count']
+			},
+			response
+		);
+
+		return;
+	}
+
 	// Check response
 	if (
 		request.payload &&
