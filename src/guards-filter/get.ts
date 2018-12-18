@@ -10,6 +10,18 @@ export function getFilter(
 ) {
 	let denied: boolean | string = false;
 
+	// Is this a count request?
+	if ('__count' in request.query && 'count' in request.payload) {
+		response.getResponder(
+			{
+				count: +request.payload['count']
+			},
+			response
+		);
+
+		return;
+	}
+
 	// Check incoming
 	if (request.query) {
 		const isAdminResult = isAdmin(request.user);
