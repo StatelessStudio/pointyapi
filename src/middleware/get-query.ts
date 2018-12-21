@@ -236,6 +236,14 @@ export async function getQuery(
 			delete request.query.__offset;
 		}
 
+		// Exctract count
+		let shouldCount = false;
+		if ('__count' in request.query && request.query.__count) {
+			shouldCount = true;
+
+			delete request.query.__count;
+		}
+
 		// Search
 		const { queryString, queryParams } = createSearchQuery(
 			new request.payloadType(),
@@ -257,9 +265,16 @@ export async function getQuery(
 		}
 
 		// Create selection
-		let selection = await request.repository
-			.createQueryBuilder(objMnemonic)
-			.select(readableFields);
+		let selection = await request.repository.createQueryBuilder(
+			objMnemonic
+		);
+
+		if (shouldCount) {
+			selection = selection.select('COUNT(*)');
+		}
+		else {
+			selection = selection.select(readableFields);
+		}
 
 		// Loop through join tables
 		for (const table of request.joinMembers) {
@@ -269,7 +284,7 @@ export async function getQuery(
 			);
 		}
 
-		// Complete selection
+		// Create typeorm query
 		const query = selection.where(queryString).setParameters(queryParams);
 
 		// Add group by keys
@@ -277,23 +292,33 @@ export async function getQuery(
 			query.addGroupBy(key);
 		}
 
-		// Add order by keys
-		for (let i = 0; i < orderByKeys.length; i++) {
-			query.addOrderBy(orderByKeys[i], orderByOrders[i]);
+		if (!shouldCount) {
+			// Add order by keys
+			for (let i = 0; i < orderByKeys.length; i++) {
+				query.addOrderBy(orderByKeys[i], orderByOrders[i]);
+			}
+
+			// Add limit
+			if (limit) {
+				query.take(limit);
+			}
+
+			// Add offset
+			if (offset) {
+				query.skip(offset);
+			}
 		}
 
-		// Add limit
-		if (limit) {
-			query.take(limit);
+		let getQueryResult;
+		if (shouldCount) {
+			getQueryResult = query.getRawOne();
+			request.query.__count = true;
+		}
+		else {
+			getQueryResult = query.getMany();
 		}
 
-		// Add offset
-		if (offset) {
-			query.skip(offset);
-		}
-
-		await query
-			.getMany()
+		await getQueryResult
 			.then((result) => {
 				request.payload = result;
 				if (next) {

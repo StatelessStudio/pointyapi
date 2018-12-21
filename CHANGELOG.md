@@ -1,5 +1,16 @@
 # PointyApi Changelog
 
+## [0.4.0] Dec-21-2018
+
+Added `__count` key and issue 409 on foreign key violation
+
+### Additions
+- Added handler for foreign key violations
+- Added `__count` key
+
+### Fixes
+- [Issue #59] - Bodyguard cannot read property 'id' of null
+
 ## [0.3.1] Dec-02-2018 - Minor Bugfixes
 
 Fixed JWT Token expiration & __orderBy

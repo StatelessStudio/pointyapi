@@ -1,5 +1,9 @@
 import { BaseModel, BaseUser } from '../models';
 
+function isDefined(a) {
+	return a !== undefined && a !== null;
+}
+
 /**
  * Compare a model with nested User models against the user
  * 	for ownership
@@ -18,8 +22,8 @@ export function compareNestedBodyguards(
 	for (const objKey of objBodyguardKeys) {
 		for (const userKey of userBodyguardKeys) {
 			if (
-				obj[objKey] !== undefined &&
-				obj[objKey][userKey] !== undefined &&
+				isDefined(obj[objKey]) &&
+				isDefined(obj[objKey][userKey]) &&
 				`${obj[objKey][userKey]}` === `${user[userKey]}`
 			) {
 				return true;

@@ -138,4 +138,37 @@ describe('[Guards] User API Read', () => {
 			})
 			.catch((error) => fail(JSON.stringify(error)));
 	});
+
+	it('can count', async () => {
+		await http
+			.get('/api/v1/user', {
+				__search: '',
+				__count: true
+			})
+			.then((result) => {
+				expect(result.body['count']).toBeGreaterThanOrEqual(3);
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+
+		await http
+			.get('/api/v1/user', {
+				__search: 'guardUserGet1',
+				__count: true
+			})
+			.then((result) => {
+				expect(result.body['count']).toEqual(1);
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+
+		await http
+			.get('/api/v1/user', {
+				__search: '',
+				__count: true,
+				username: 'guardUserGet1'
+			})
+			.then((result) => {
+				expect(result.body['count']).toEqual(1);
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
 });
