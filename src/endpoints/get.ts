@@ -20,7 +20,11 @@ export async function getEndpoint(request: Request, response: Response) {
 		}
 
 		// Is this a count request?
-		if ('__count' in request.query && request.payload instanceof Array) {
+		if (
+			'__count' in request.query &&
+			request.query.__count &&
+			request.payload instanceof Array
+		) {
 			response.getResponder(
 				{
 					count: +request.payload.length
