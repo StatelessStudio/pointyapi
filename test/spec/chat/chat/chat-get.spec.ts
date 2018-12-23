@@ -260,4 +260,25 @@ describe('[Chat] Chat API Get', async () => {
 			})
 			.catch((error) => fail(JSON.stringify(error)));
 	});
+
+	it('can count', async () => {
+		await http
+			.get(
+				'/api/v1/chat',
+				{
+					__search: '',
+					__count: true,
+					__whereAnyOf: {
+						to: this.user.body.id,
+						from: this.user.body.id
+					}
+				},
+				[ 200 ],
+				this.token.body.token
+			)
+			.then((result) => {
+				expect(result.body['count']).toBeGreaterThanOrEqual(2);
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
 });

@@ -236,7 +236,7 @@ export async function getQuery(
 			delete request.query.__offset;
 		}
 
-		// Exctract count
+		// Extract count
 		let shouldCount = false;
 		if ('__count' in request.query && request.query.__count) {
 			shouldCount = true;
@@ -265,16 +265,9 @@ export async function getQuery(
 		}
 
 		// Create selection
-		let selection = await request.repository.createQueryBuilder(
-			objMnemonic
-		);
-
-		if (shouldCount) {
-			selection = selection.select('COUNT(*)');
-		}
-		else {
-			selection = selection.select(readableFields);
-		}
+		let selection = await request.repository
+			.createQueryBuilder(objMnemonic)
+			.select(readableFields);
 
 		// Loop through join tables
 		for (const table of request.joinMembers) {
@@ -284,15 +277,15 @@ export async function getQuery(
 			);
 		}
 
-		// Create typeorm query
+		// Complete selection
 		const query = selection.where(queryString).setParameters(queryParams);
 
-		// Add group by keys
-		for (const key of groupByKeys) {
-			query.addGroupBy(key);
-		}
-
 		if (!shouldCount) {
+			// Add group by keys
+			for (const key of groupByKeys) {
+				query.addGroupBy(key);
+			}
+
 			// Add order by keys
 			for (let i = 0; i < orderByKeys.length; i++) {
 				query.addOrderBy(orderByKeys[i], orderByOrders[i]);
@@ -309,16 +302,12 @@ export async function getQuery(
 			}
 		}
 
-		let getQueryResult;
 		if (shouldCount) {
-			getQueryResult = query.getRawOne();
 			request.query.__count = true;
 		}
-		else {
-			getQueryResult = query.getMany();
-		}
 
-		await getQueryResult
+		await query
+			.getMany()
 			.then((result) => {
 				request.payload = result;
 				if (next) {
