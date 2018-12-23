@@ -1,5 +1,12 @@
 # PointyApi Changelog
 
+## [0.4.1] Dec-23-2018
+
+Fixed count parameter
+
+### Fixes
+- Fixed Count parameter to work with joins and filters
+
 ## [0.4.0] Dec-21-2018
 
 Added `__count` key and issue 409 on foreign key violation
