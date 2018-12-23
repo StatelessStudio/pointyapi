@@ -8,30 +8,29 @@ import { runHook } from '../run-hook';
  * @param response Response object to call responder with
  */
 export async function getEndpoint(request: Request, response: Response) {
-	// Is this a count request?
-	if ('__count' in request.query && 'count' in request.payload) {
-		response.getResponder(
-			{
-				count: +request.payload['count']
-			},
-			response
-		);
-
-		return;
-	}
-
-	// Check response
 	if (
 		request.payload &&
 		(request.payload instanceof Array ||
 			request.payload instanceof BaseModel)
 	) {
+		// Check response
 		// Run model hook
 		if (!runHook(request, response, 'beforeGet', request.payload)) {
 			return;
 		}
 
-		response.getResponder(request.payload, response);
+		// Is this a count request?
+		if ('__count' in request.query && request.payload instanceof Array) {
+			response.getResponder(
+				{
+					count: +request.payload.length
+				},
+				response
+			);
+		}
+		else {
+			response.getResponder(request.payload, response);
+		}
 	}
 	else {
 		// No payload
