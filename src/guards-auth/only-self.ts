@@ -50,6 +50,21 @@ export async function onlySelf(
 						userKeys
 					);
 				}
+				else if (request.payload instanceof Array) {
+					// Filter payload
+					request.payload = request.payload.filter((result) => {
+						return isSelf(
+							result,
+							request.user,
+							request.payloadType,
+							request.userType,
+							bodyKeys,
+							userKeys
+						);
+					});
+
+					authorized = true;
+				}
 				else {
 					authorized = true;
 				}

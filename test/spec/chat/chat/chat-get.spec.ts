@@ -261,6 +261,49 @@ describe('[Chat] Chat API Get', async () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
+	it(`does not return chats the user does not own`, async () => {
+		const user = await http
+			.post('/api/v1/user', {
+				fname: 'Chat',
+				lname: 'Hacker',
+				username: 'chatHacker',
+				password: 'password123',
+				email: 'chatHacker@test.com'
+			})
+			.catch((error) =>
+				fail('Could not create base user: ' + JSON.stringify(error))
+			);
+
+		const token = await http
+			.post('/api/v1/auth', {
+				__user: 'chatHacker',
+				password: 'password123'
+			})
+			.catch((error) =>
+				fail('Could not create User API Token' + JSON.stringify(error))
+			);
+
+		if (token) {
+			await http
+				.get(
+					'/api/v1/chat',
+					{
+						__search: '',
+						__whereAnyOf: {
+							to: this.user.body.id,
+							from: this.user.body.id
+						}
+					},
+					[ 200 ],
+					token.body['token']
+				)
+				.then((result) => {
+					expect(result.body['length']).toBe(0);
+				})
+				.catch((error) => fail(JSON.stringify(error)));
+		}
+	});
+
 	it('can count', async () => {
 		await http
 			.get(
