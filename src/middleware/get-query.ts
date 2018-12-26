@@ -245,7 +245,8 @@ export async function getQuery(
 		}
 
 		// Search
-		const { queryString, queryParams } = createSearchQuery(
+		// tslint:disable-next-line:prefer-const
+		let { queryString, queryParams } = createSearchQuery(
 			new request.payloadType(),
 			request.query
 		);
@@ -259,9 +260,25 @@ export async function getQuery(
 
 		// Join bodyguard keys, unless this is the User
 		if (request.payloadType !== request.userType) {
-			getBodyguardKeys(new request.payloadType()).forEach((key) => {
+			// Append to join array
+			const bodyguardKeys = getBodyguardKeys(new request.payloadType());
+
+			bodyguardKeys.forEach((key) => {
 				request.joinMembers.push(key);
 			});
+
+			// Append to where clause
+			if (bodyguardKeys) {
+				queryString += ` AND (`;
+				bodyguardKeys.forEach((key) => {
+					queryString += `obj.${key}=:bodyGuard${key} OR `;
+
+					queryParams['bodyGuard' + key] = request.user.id;
+				});
+
+				queryString = queryString.replace(/ OR +$/, '');
+				queryString += `)`;
+			}
 		}
 
 		// Create selection
