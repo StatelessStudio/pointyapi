@@ -1,5 +1,13 @@
 # PointyApi Changelog
 
+## [0.4.2] Dec-26-2018
+
+Fixed onlySelf() on GET
+
+### Fixes
+- onlySelf() on GET should not be authorized by default
+- onlySelf() should filter GET arrays
+
 ## [0.4.1] Dec-23-2018
 
 Fixed count parameter
