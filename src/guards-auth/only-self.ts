@@ -65,9 +65,6 @@ export async function onlySelf(
 
 					authorized = true;
 				}
-				else {
-					authorized = true;
-				}
 			}
 			else if (
 				(request.method === 'PUT' || request.method === 'PATCH') &&
