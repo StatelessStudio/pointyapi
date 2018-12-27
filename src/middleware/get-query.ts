@@ -5,6 +5,7 @@ import {
 	getBodyguardKeys
 } from '../bodyguard';
 import { runHook } from '../run-hook';
+import { UserRole } from '../enums/user-role';
 
 function createSearchQuery(payloadType, obj: Object, objKey: string = 'obj') {
 	const searchableFields = getSearchableFields(payloadType);
@@ -268,7 +269,7 @@ export async function getQuery(
 			});
 
 			// Append to where clause
-			if (bodyguardKeys) {
+			if (bodyguardKeys && request.user.role !== UserRole.Admin) {
 				queryString += ` AND (`;
 				bodyguardKeys.forEach((key) => {
 					queryString += `obj.${key}=:bodyGuard${key} OR `;
