@@ -269,7 +269,11 @@ export async function getQuery(
 			});
 
 			// Append to where clause
-			if (bodyguardKeys && request.user.role !== UserRole.Admin) {
+			if (
+				bodyguardKeys &&
+				request.user &&
+				request.user.role !== UserRole.Admin
+			) {
 				queryString += ` AND (`;
 				bodyguardKeys.forEach((key) => {
 					queryString += `obj.${key}=:bodyGuard${key} OR `;
