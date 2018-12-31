@@ -276,7 +276,7 @@ export async function getQuery(
 			) {
 				queryString += ` AND (`;
 				bodyguardKeys.forEach((key) => {
-					queryString += `obj.${key}=:bodyGuard${key} OR `;
+					queryString += `${objMnemonic}.${key}=:bodyGuard${key} OR `;
 
 					queryParams['bodyGuard' + key] = request.user.id;
 				});
