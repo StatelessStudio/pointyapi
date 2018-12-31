@@ -303,7 +303,6 @@ export async function getQuery(
 			.select(readableFields);
 
 		// Loop through join tables
-		const hasJoinMembers = request.joinMembers.length > 0;
 		for (const table of request.joinMembers) {
 			selection = await selection.leftJoinAndSelect(
 				`${objMnemonic}.${table}`,
@@ -326,7 +325,7 @@ export async function getQuery(
 
 				// Object alias must be prepended if join tables exist,
 				// but this field isn't from a join
-				if (hasJoinMembers && !key.includes('.')) {
+				if (!key.includes('.')) {
 					key = 'obj.' + key;
 				}
 
