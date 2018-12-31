@@ -1,13 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 import {
 	getSearchableFields,
+	getSearchableRelations,
 	getReadableFields,
 	getBodyguardKeys
 } from '../bodyguard';
 import { runHook } from '../run-hook';
+import { UserRole } from '../enums/user-role';
 
 function createSearchQuery(payloadType, obj: Object, objKey: string = 'obj') {
 	const searchableFields = getSearchableFields(payloadType);
+	const searchableRelations = getSearchableRelations(payloadType);
 	let queryString = '';
 	const queryParams = {};
 	const hasSearchable = searchableFields.length;
@@ -24,6 +27,15 @@ function createSearchQuery(payloadType, obj: Object, objKey: string = 'obj') {
 		searchableFields.forEach((field) => {
 			// Append searchable key to queryString
 			queryString += `${objKey}.${field} LIKE :__search OR `;
+
+			// Append parameter to queryParams (with wildcards)
+			const value = obj['__search'].replace(/[\s]+/, '%');
+			queryParams['__search'] = `%${value}%`;
+		});
+
+		searchableRelations.forEach((field) => {
+			// Append searchable key to queryString
+			queryString += `${field} LIKE :__search OR `;
 
 			// Append parameter to queryParams (with wildcards)
 			const value = obj['__search'].replace(/[\s]+/, '%');
@@ -211,7 +223,7 @@ export async function getQuery(
 		const orderByOrders = [];
 		if ('__orderBy' in request.query) {
 			for (const key in request.query.__orderBy) {
-				orderByKeys.push(objMnemonic + '.' + key);
+				orderByKeys.push(key);
 				orderByOrders.push(
 					request.query.__orderBy[key] === 'DESC' ? 'DESC' : 'ASC'
 				);
@@ -245,7 +257,8 @@ export async function getQuery(
 		}
 
 		// Search
-		const { queryString, queryParams } = createSearchQuery(
+		// tslint:disable-next-line:prefer-const
+		let { queryString, queryParams } = createSearchQuery(
 			new request.payloadType(),
 			request.query
 		);
@@ -259,9 +272,29 @@ export async function getQuery(
 
 		// Join bodyguard keys, unless this is the User
 		if (request.payloadType !== request.userType) {
-			getBodyguardKeys(new request.payloadType()).forEach((key) => {
+			// Append to join array
+			const bodyguardKeys = getBodyguardKeys(new request.payloadType());
+
+			bodyguardKeys.forEach((key) => {
 				request.joinMembers.push(key);
 			});
+
+			// Append to where clause
+			if (
+				bodyguardKeys &&
+				request.user &&
+				request.user.role !== UserRole.Admin
+			) {
+				queryString += ` AND (`;
+				bodyguardKeys.forEach((key) => {
+					queryString += `${objMnemonic}.${key}=:bodyGuard${key} OR `;
+
+					queryParams['bodyGuard' + key] = request.user.id;
+				});
+
+				queryString = queryString.replace(/ OR +$/, '');
+				queryString += `)`;
+			}
 		}
 
 		// Create selection

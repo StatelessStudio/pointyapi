@@ -1,5 +1,16 @@
 # PointyApi Changelog
 
+## [0.5.0] Dec-31-2018
+
+Created `CanSearchRelation()` decorator and fixed relation search bugs
+
+### Additions
+- Created `CanSearchRelation()` ([Issue #68] Must be able to search by joined columns)
+
+### Fixes
+- [Issue #67] GET query fails on order by joined column
+- [Issue #66] GET query must query by bodyguard keys, unless user is admin
+
 ## [0.4.2] Dec-26-2018
 
 Fixed onlySelf() on GET
