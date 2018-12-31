@@ -19,7 +19,9 @@ import {
 	OnlySelfCanWrite,
 	OnlyAdminCanWrite,
 	BodyguardKey,
-	CanSearch
+	CanSearch,
+	CanSearchRelation,
+	getSearchableFields
 } from '../../../../src/bodyguard';
 
 // Models
@@ -43,6 +45,10 @@ export class ChatMessage extends BaseModel {
 	@BodyguardKey()
 	@OnlySelfCanRead()
 	@OnlySelfCanWrite()
+	@CanSearchRelation({
+		who: '__self__',
+		fields: [ 'username', 'fname', 'lname' ]
+	})
 	public from: User = undefined;
 
 	// To User
@@ -54,6 +60,10 @@ export class ChatMessage extends BaseModel {
 	@BodyguardKey()
 	@OnlySelfCanRead()
 	@OnlySelfCanWrite()
+	@CanSearchRelation({
+		who: '__self__',
+		fields: [ 'username', 'fname', 'lname' ]
+	})
 	public to: User = undefined;
 
 	// Time created
