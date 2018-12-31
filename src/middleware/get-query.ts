@@ -303,6 +303,7 @@ export async function getQuery(
 			.select(readableFields);
 
 		// Loop through join tables
+		const hasJoinMembers = request.joinMembers.length > 0;
 		for (const table of request.joinMembers) {
 			selection = await selection.leftJoinAndSelect(
 				`${objMnemonic}.${table}`,
@@ -321,7 +322,15 @@ export async function getQuery(
 
 			// Add order by keys
 			for (let i = 0; i < orderByKeys.length; i++) {
-				query.addOrderBy(orderByKeys[i], orderByOrders[i]);
+				let key = orderByKeys[i];
+
+				// Object alias must be prepended if join tables exist,
+				// but this field isn't from a join
+				if (hasJoinMembers && !key.includes('.')) {
+					key = 'obj.' + key;
+				}
+
+				query.addOrderBy(key, orderByOrders[i]);
 			}
 
 			// Add limit
