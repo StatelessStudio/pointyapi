@@ -1,6 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import {
 	getSearchableFields,
+	getSearchableRelations,
 	getReadableFields,
 	getBodyguardKeys
 } from '../bodyguard';
@@ -9,6 +10,7 @@ import { UserRole } from '../enums/user-role';
 
 function createSearchQuery(payloadType, obj: Object, objKey: string = 'obj') {
 	const searchableFields = getSearchableFields(payloadType);
+	const searchableRelations = getSearchableRelations(payloadType);
 	let queryString = '';
 	const queryParams = {};
 	const hasSearchable = searchableFields.length;
@@ -25,6 +27,15 @@ function createSearchQuery(payloadType, obj: Object, objKey: string = 'obj') {
 		searchableFields.forEach((field) => {
 			// Append searchable key to queryString
 			queryString += `${objKey}.${field} LIKE :__search OR `;
+
+			// Append parameter to queryParams (with wildcards)
+			const value = obj['__search'].replace(/[\s]+/, '%');
+			queryParams['__search'] = `%${value}%`;
+		});
+
+		searchableRelations.forEach((field) => {
+			// Append searchable key to queryString
+			queryString += `${field} LIKE :__search OR `;
 
 			// Append parameter to queryParams (with wildcards)
 			const value = obj['__search'].replace(/[\s]+/, '%');
