@@ -431,4 +431,28 @@ describe('[Chat] Chat API Get', async () => {
 			})
 			.catch((error) => fail(JSON.stringify(error)));
 	});
+
+	it('can sort by member when a join column is included', async () => {
+		await http
+			.get(
+				'/api/v1/chat',
+				{
+					__search: '',
+					__orderBy: {
+						id: 'ASC'
+					}
+				},
+				[ 200 ],
+				this.token.body.token
+			)
+			.then((result) => {
+				if (result.body instanceof Array) {
+					expect(result.body.length).toBeGreaterThanOrEqual(2);
+				}
+				else {
+					fail('Result is not an array');
+				}
+			})
+			.catch((error) => JSON.stringify(error));
+	});
 });
