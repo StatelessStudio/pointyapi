@@ -393,4 +393,42 @@ describe('[Chat] Chat API Get', async () => {
 			fail('Could not create base user =and/or chat');
 		}
 	});
+
+	it('can sort by nested objects', async () => {
+		await http
+			.get(
+				'/api/v1/chat',
+				{
+					__search: '',
+					__orderBy: {
+						'from.username': 'DESC'
+					}
+				},
+				[ 200 ],
+				this.token.body.token
+			)
+			.then((result) => {
+				if (result.body instanceof Array) {
+					expect(result.body.length).toBeGreaterThanOrEqual(2);
+
+					let firstId;
+					let secondId;
+
+					result.body.forEach((chat, i) => {
+						if (i === 0) {
+							firstId = chat.from.id;
+						}
+						else if (i === 1) {
+							secondId = chat.from.id;
+						}
+					});
+
+					expect(firstId).toBeGreaterThan(secondId);
+				}
+				else {
+					fail('Result is not an array');
+				}
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
 });
