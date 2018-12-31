@@ -1,5 +1,10 @@
 # PointyApi Changelog
 
+## [0.5.2] Dec-31-2018
+
+### Fixes
+- [Issue #73] Object alias should be prepended to order by key regardless of joins
+
 ## [0.5.1] Dec-31-2018
 
 ### Fixes
