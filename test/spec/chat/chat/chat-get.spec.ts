@@ -324,4 +324,73 @@ describe('[Chat] Chat API Get', async () => {
 			})
 			.catch((error) => fail(JSON.stringify(error)));
 	});
+
+	it('can search by nested objects', async () => {
+		const user = await http
+			.post('/api/v1/user', {
+				fname: 'Nested',
+				lname: 'Tester',
+				username: 'nestedGet1',
+				password: 'password123',
+				email: 'nestedGet1@test.com'
+			})
+			.catch((error) =>
+				fail('Could not create base user: ' + JSON.stringify(error))
+			);
+
+		const token = await http
+			.post('/api/v1/auth', {
+				__user: 'nestedGet1',
+				password: 'password123'
+			})
+			.catch((error) =>
+				fail('Could not create User API Token' + JSON.stringify(error))
+			);
+
+		if (user && token) {
+			const chat = await http
+				.post(
+					'/api/v1/chat',
+					{
+						to: { id: user.body['id'] },
+						body: 'test'
+					},
+					[ 200 ],
+					token.body['token']
+				)
+				.catch((error) =>
+					fail(
+						'Could not create chat-message: ' +
+							JSON.stringify(error)
+					)
+				);
+
+			await http
+				.get(
+					'/api/v1/chat',
+					{
+						__search: 'nestedGet1'
+					},
+					[ 200 ],
+					token.body['token']
+				)
+				.then((result) => {
+					if (result.body instanceof Array) {
+						expect(result.body['length']).toEqual(1);
+						result.body.forEach((chatResult) => {
+							expect(chatResult.from.username).toEqual(
+								'nestedGet1'
+							);
+						});
+					}
+					else {
+						fail('Result is not an array.');
+					}
+				})
+				.catch((error) => fail(JSON.stringify(error)));
+		}
+		else {
+			fail('Could not create base user =and/or chat');
+		}
+	});
 });
