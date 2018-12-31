@@ -1,5 +1,10 @@
 # PointyApi Changelog
 
+## [0.5.1] Dec-31-2018
+
+### Fixes
+- [Issue #71] Object alias (mnemonic) must be prepended if join tables exist, but this field isn't from a join
+
 ## [0.5.0] Dec-31-2018
 
 Created `CanSearchRelation()` decorator and fixed relation search bugs
