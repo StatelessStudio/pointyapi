@@ -42,6 +42,49 @@ describe('User API Update', () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
+	it('can clear a field that has already been set', async () => {
+		const user = await http
+			.post('/api/v1/user', {
+				fname: 'userPut',
+				lname: 'userPut',
+				username: 'basicUserPut2',
+				password: 'password123',
+				email: 'basicUserPut2@test.com'
+			})
+			.catch((error) =>
+				fail('Could not create base user: ' + JSON.stringify(error))
+			);
+
+		if (user) {
+			await http
+				.put(
+					`/api/v1/user/${user.body['id']}`,
+					{
+						email: ''
+					},
+					[ 204 ]
+				)
+				.then((result) => {
+					http
+						.get(
+							`/api/v1/user`,
+							{
+								id: user.body['id']
+							},
+							[ 200 ]
+						)
+						.then((getResult) =>
+							expect(getResult.body['email']).toEqual(null)
+						)
+						.catch((error) => fail(JSON.stringify(error)));
+				})
+				.catch((error) => fail(JSON.stringify(error)));
+		}
+		else {
+			fail('Could not create base user');
+		}
+	});
+
 	it('maintains other fields on update', async () => {
 		await http
 			.put(
