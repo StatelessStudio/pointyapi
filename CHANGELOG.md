@@ -1,5 +1,11 @@
 # PointyApi Changelog
 
+## [0.5.3] Jan-02-2018
+
+### Fixes
+- [Issue #75] Login endpoint should run responseFilter() as newly logged in user
+- [Issue #76] Validation filter fails when trying to clear an existing field with empty string
+
 ## [0.5.2] Dec-31-2018
 
 ### Fixes

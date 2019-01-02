@@ -74,6 +74,9 @@ export async function loginEndpoint(
 				.save(match)
 				.catch((error) => response.error(error, response));
 
+			// Set request user
+			request.user = match;
+
 			// Send response
 			match = responseFilter(
 				match,
