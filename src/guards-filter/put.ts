@@ -28,15 +28,13 @@ export function putFilter(
 		}
 		else {
 			response.forbiddenResponder(
-				'Cannot write member ' + writeFilterResult,
-				response
+				'Cannot write member ' + writeFilterResult
 			);
 		}
 	}
 	else {
 		response.validationResponder(
-			'bad request: payload is not of type BaseModel',
-			response
+			'bad request: payload is not of type BaseModel'
 		);
 	}
 }

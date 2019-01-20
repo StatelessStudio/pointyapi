@@ -37,7 +37,7 @@ export function getFilter(
 	}
 
 	if (denied) {
-		response.forbiddenResponder('Cannot get by member ' + denied, response);
+		response.forbiddenResponder('Cannot get by member ' + denied);
 	}
 	else {
 		// Filter outgoing

@@ -20,17 +20,14 @@ export async function logoutEndpoint(
 
 		await request.repository
 			.save(request.user)
-			.then((result) => response.deleteResponder(result, response))
-			.catch((error) => response.error(error, response));
+			.then((result) => response.deleteResponder(result))
+			.catch((error) => response.error(error));
 
 		request.user = undefined;
 	}
 	else {
-		response.unauthorizedResponder(
-			{
-				message: 'Could not authenticate user'
-			},
-			response
-		);
+		response.unauthorizedResponder({
+			message: 'Could not authenticate user'
+		});
 	}
 }

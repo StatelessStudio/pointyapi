@@ -15,6 +15,6 @@ export function onlyActive(
 		next();
 	}
 	else {
-		response.unauthorizedResponder('not active', response);
+		response.unauthorizedResponder('not active');
 	}
 }

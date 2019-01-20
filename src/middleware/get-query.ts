@@ -355,7 +355,7 @@ export async function getQuery(
 					next();
 				}
 			})
-			.catch((error) => response.error(error, response));
+			.catch((error) => response.error(error));
 	}
 	else if ('query' in request && 'id' in request.query && request.query.id) {
 		// Read one
@@ -367,7 +367,7 @@ export async function getQuery(
 					next();
 				}
 			})
-			.catch((error) => response.error(error, response));
+			.catch((error) => response.error(error));
 	}
 	else if ('query' in request && Object.keys(request.query).length) {
 		// Read many
@@ -379,7 +379,7 @@ export async function getQuery(
 					next();
 				}
 			})
-			.catch((error) => response.error(error, response));
+			.catch((error) => response.error(error));
 	}
 	else {
 		// Read all
@@ -391,6 +391,6 @@ export async function getQuery(
 					next();
 				}
 			})
-			.catch((error) => response.error(error, response));
+			.catch((error) => response.error(error));
 	}
 }

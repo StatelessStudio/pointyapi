@@ -38,7 +38,7 @@ export async function putEndpoint(request: Request, response: Response) {
 
 	// Check
 	if (errors.length) {
-		response.validationResponder(errors, response);
+		response.validationResponder(errors);
 	}
 	else {
 		// Check if "timeUpdated" key exists in request payload
@@ -48,7 +48,7 @@ export async function putEndpoint(request: Request, response: Response) {
 
 		await request.repository
 			.save(request.body)
-			.then((result) => response.putResponder(result, response))
-			.catch((error) => response.error(error, response));
+			.then((result) => response.putResponder(result))
+			.catch((error) => response.error(error));
 	}
 }

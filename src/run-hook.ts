@@ -13,7 +13,7 @@ export function runHook(
 
 		if (!hookResult) {
 			if (!response.headersSent) {
-				response.error('Could not complete hook', response);
+				response.error('Could not complete hook');
 			}
 
 			return false;

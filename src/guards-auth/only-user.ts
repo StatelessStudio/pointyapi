@@ -11,6 +11,6 @@ export function onlyUser(
 		next();
 	}
 	else {
-		response.unauthorizedResponder('not user', response);
+		response.unauthorizedResponder('not user');
 	}
 }
