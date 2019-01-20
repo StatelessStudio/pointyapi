@@ -1,17 +1,15 @@
-import { Response } from 'express';
-
-export function getResponder(result: any, response: Response) {
+export function getResponder(result: any) {
 	if (!result) {
-		response.goneResponder(result, response);
+		this.response.goneResponder(result);
 	}
 	else {
 		if (result) {
 			// Send response
-			response.json(result);
+			this.response.json(result);
 		}
 		else {
 			// Send unauthorized (bodyguard removed all fields)
-			response.unauthorizedResponder(result, response);
+			this.response.unauthorizedResponder(result);
 		}
 	}
 }

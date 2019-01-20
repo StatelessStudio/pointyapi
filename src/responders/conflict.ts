@@ -1,6 +1,4 @@
-import { Response } from 'express';
-
-export function conflictResponder(result: any, response: Response) {
+export function conflictResponder(result: any) {
 	// Send response
-	response.status(409).json(result);
+	this.response.status(409).json(result);
 }

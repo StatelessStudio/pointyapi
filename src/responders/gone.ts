@@ -1,6 +1,4 @@
-import { Response } from 'express';
-
-export function goneResponder(result: any, response: Response) {
+export function goneResponder(result: any) {
 	// Send response
-	response.status(410).json(result);
+	this.response.status(410).json(result);
 }
