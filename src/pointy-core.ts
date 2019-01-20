@@ -76,17 +76,52 @@ export class PointyApi {
 				request.userType = this.userType;
 				request.joinMembers = [];
 
-				response.error = this.error;
-				response.log = this.log;
-				response.conflictResponder = this.conflictResponder;
-				response.forbiddenResponder = this.forbiddenResponder;
-				response.goneResponder = this.goneResponder;
-				response.unauthorizedResponder = this.unauthorizedResponder;
-				response.validationResponder = this.validationResponder;
-				response.deleteResponder = this.deleteResponder;
-				response.getResponder = this.getResponder;
-				response.postResponder = this.postResponder;
-				response.putResponder = this.putResponder;
+				response.error = this.error.bind({
+					request: request,
+					response: response
+				});
+				response.log = this.log.bind({
+					request: request,
+					response: response
+				});
+				response.conflictResponder = this.conflictResponder.bind({
+					request: request,
+					response: response
+				});
+				response.forbiddenResponder = this.forbiddenResponder.bind({
+					request: request,
+					response: response
+				});
+				response.goneResponder = this.goneResponder.bind({
+					request: request,
+					response: response
+				});
+				response.unauthorizedResponder = this.unauthorizedResponder.bind(
+					{
+						request: request,
+						response: response
+					}
+				);
+				response.validationResponder = this.validationResponder.bind({
+					request: request,
+					response: response
+				});
+				response.deleteResponder = this.deleteResponder.bind({
+					request: request,
+					response: response
+				});
+				response.getResponder = this.getResponder.bind({
+					request: request,
+					response: response
+				});
+				response.postResponder = this.postResponder.bind({
+					request: request,
+					response: response
+				});
+				response.putResponder = this.putResponder.bind({
+					request: request,
+					response: response
+				});
 
 				next();
 			}
