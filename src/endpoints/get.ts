@@ -15,7 +15,7 @@ export async function getEndpoint(request: Request, response: Response) {
 	) {
 		// Check response
 		// Run model hook
-		if (!await runHook(request, response, 'beforeGet', request.payload)) {
+		if (!await runHook(request, response, 'get', request.payload)) {
 			return;
 		}
 
