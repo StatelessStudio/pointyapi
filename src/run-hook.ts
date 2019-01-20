@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-export function runHook(
+export async function runHook(
 	request: Request,
 	response: Response,
 	name: string,
@@ -9,7 +9,7 @@ export function runHook(
 	// Run model hook
 	let hookResult = false;
 	if (name in obj) {
-		hookResult = obj[name](request, response);
+		hookResult = await obj[name](request, response);
 
 		if (!hookResult) {
 			if (!response.headersSent) {

@@ -10,7 +10,7 @@ export async function logoutEndpoint(
 	next: NextFunction
 ) {
 	// Run model hook
-	if (!runHook(request, response, 'beforeLogOut', request.body)) {
+	if (!await runHook(request, response, 'beforeLogOut', request.body)) {
 		return;
 	}
 

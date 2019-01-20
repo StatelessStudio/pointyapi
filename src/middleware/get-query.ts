@@ -187,7 +187,7 @@ export async function getQuery(
 	next?: NextFunction
 ) {
 	// Run model hook
-	if (!runHook(request, response, 'onGetQuery', request.query)) {
+	if (!await runHook(request, response, 'onGetQuery', request.query)) {
 		return;
 	}
 

@@ -17,7 +17,9 @@ export async function deleteEndpoint(request: Request, response: Response) {
 		);
 
 		// Run model hook
-		if (!runHook(request, response, 'beforeDelete', request.payload)) {
+		if (
+			!await runHook(request, response, 'beforeDelete', request.payload)
+		) {
 			return;
 		}
 
