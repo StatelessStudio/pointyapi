@@ -26,8 +26,14 @@ import {
 	putResponder
 } from './responders';
 import { logHandler, errorHandler } from './handlers';
+import { bindResponders } from './bind-responders';
+
+// Base Models
 import { BaseUser, BaseUserInterface } from './models';
 
+/**
+ * PointyAPI App Instance
+ */
 export class PointyApi {
 	// Express app
 	public app = express();
@@ -76,52 +82,8 @@ export class PointyApi {
 				request.userType = this.userType;
 				request.joinMembers = [];
 
-				response.error = this.error.bind({
-					request: request,
-					response: response
-				});
-				response.log = this.log.bind({
-					request: request,
-					response: response
-				});
-				response.conflictResponder = this.conflictResponder.bind({
-					request: request,
-					response: response
-				});
-				response.forbiddenResponder = this.forbiddenResponder.bind({
-					request: request,
-					response: response
-				});
-				response.goneResponder = this.goneResponder.bind({
-					request: request,
-					response: response
-				});
-				response.unauthorizedResponder = this.unauthorizedResponder.bind(
-					{
-						request: request,
-						response: response
-					}
-				);
-				response.validationResponder = this.validationResponder.bind({
-					request: request,
-					response: response
-				});
-				response.deleteResponder = this.deleteResponder.bind({
-					request: request,
-					response: response
-				});
-				response.getResponder = this.getResponder.bind({
-					request: request,
-					response: response
-				});
-				response.postResponder = this.postResponder.bind({
-					request: request,
-					response: response
-				});
-				response.putResponder = this.putResponder.bind({
-					request: request,
-					response: response
-				});
+				// Bind the request & response to the responders
+				bindResponders(this, request, response);
 
 				next();
 			}
