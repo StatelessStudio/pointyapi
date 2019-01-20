@@ -15,6 +15,6 @@ export function onlyAdmin(
 		next();
 	}
 	else {
-		response.unauthorizedResponder('not admin', response);
+		response.unauthorizedResponder('not admin');
 	}
 }

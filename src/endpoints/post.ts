@@ -38,12 +38,12 @@ export async function postEndpoint(request: Request, response: Response) {
 
 			// Validate
 			const errors = await validate(request.body[i]).catch((error) =>
-				response.error(error, response)
+				response.error(error)
 			);
 
 			// Check
 			if (errors && errors.length) {
-				response.validationResponder(errors, response);
+				response.validationResponder(errors);
 				shouldSave = false;
 				return;
 			}
@@ -58,7 +58,7 @@ export async function postEndpoint(request: Request, response: Response) {
 				results.push(
 					await repo
 						.save(request.body[i])
-						.catch((error) => response.error(error, response))
+						.catch((error) => response.error(error))
 				);
 			}
 
@@ -71,7 +71,7 @@ export async function postEndpoint(request: Request, response: Response) {
 					request.joinMembers
 				);
 
-				response.postResponder(results, response);
+				response.postResponder(results);
 			}
 		}
 	}
@@ -89,12 +89,12 @@ export async function postEndpoint(request: Request, response: Response) {
 
 		// Validate
 		const errors = await validate(request.body).catch((error) =>
-			response.error(error, response)
+			response.error(error)
 		);
 
 		// Check
 		if (errors && errors.length) {
-			response.validationResponder(errors, response);
+			response.validationResponder(errors);
 		}
 		else {
 			// Send
@@ -109,9 +109,9 @@ export async function postEndpoint(request: Request, response: Response) {
 						request.joinMembers
 					);
 
-					response.postResponder(result, response);
+					response.postResponder(result);
 				})
-				.catch((error) => response.error(error, response));
+				.catch((error) => response.error(error));
 		}
 	}
 }

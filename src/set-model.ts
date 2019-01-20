@@ -42,8 +42,7 @@ import { runHook } from './run-hook';
 function isKeyInModel(key, model, response) {
 	if (!(key in model) && key.indexOf('__') !== 0) {
 		response.validationResponder(
-			'Member key "' + key + '" does not exist in model.',
-			response
+			'Member key "' + key + '" does not exist in model.'
 		);
 	}
 	else {

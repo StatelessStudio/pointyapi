@@ -1,13 +1,11 @@
-import { Response } from 'express';
-
-export function postResponder(result: any, response: Response) {
+export function postResponder(result: any) {
 	// Result should have ID
 	if (result instanceof Object || result instanceof Array) {
 		// Send response
-		response.json(result);
+		this.response.json(result);
 	}
 	else {
 		// Send error
-		response.error('ID not found in Post Response', response);
+		this.response.error('ID not found in Post Response');
 	}
 }

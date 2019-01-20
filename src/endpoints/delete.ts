@@ -24,12 +24,12 @@ export async function deleteEndpoint(request: Request, response: Response) {
 		// Delete
 		await request.repository
 			.remove(request.payload)
-			.then((result) => response.deleteResponder(result, response))
-			.catch((error) => response.error(error, response));
+			.then((result) => response.deleteResponder(result))
+			.catch((error) => response.error(error));
 	}
 	else {
 		// No payload
-		response.goneResponder(request.payload, response);
+		response.goneResponder(request.payload);
 		return;
 	}
 }

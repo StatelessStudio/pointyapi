@@ -25,20 +25,17 @@ export async function getEndpoint(request: Request, response: Response) {
 			request.query.__count &&
 			request.payload instanceof Array
 		) {
-			response.getResponder(
-				{
-					count: +request.payload.length
-				},
-				response
-			);
+			response.getResponder({
+				count: +request.payload.length
+			});
 		}
 		else {
-			response.getResponder(request.payload, response);
+			response.getResponder(request.payload);
 		}
 	}
 	else {
 		// No payload
-		response.goneResponder(request.payload, response);
+		response.goneResponder(request.payload);
 		return;
 	}
 }

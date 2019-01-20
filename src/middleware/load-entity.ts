@@ -10,9 +10,7 @@ export async function loadEntity(
 	if (request.identifier) {
 		const result = await request.repository
 			.findOne(getIdentifierValue(request))
-			.catch(() =>
-				response.error({ message: `Could not load entity` }, response)
-			);
+			.catch(() => response.error({ message: `Could not load entity` }));
 
 		if (result && result instanceof request.payloadType) {
 			request.payload = result;
@@ -25,15 +23,12 @@ export async function loadEntity(
 			}
 		}
 		else {
-			response.goneResponder(`Couldn't load entity`, response);
+			response.goneResponder(`Couldn't load entity`);
 			return false;
 		}
 	}
 	else {
-		response.error(
-			'Could not load entity on a route without a parameter',
-			response
-		);
+		response.error('Could not load entity on a route without a parameter');
 		return false;
 	}
 }

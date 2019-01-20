@@ -15,6 +15,6 @@ export function onlyMember(
 		next();
 	}
 	else {
-		response.unauthorizedResponder('not member', response);
+		response.unauthorizedResponder('not member');
 	}
 }

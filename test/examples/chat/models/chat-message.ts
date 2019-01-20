@@ -119,7 +119,7 @@ export class ChatMessage extends BaseModel {
 			return true;
 		}
 		else {
-			response.unauthorizedResponder('User not authenticated', response);
+			response.unauthorizedResponder('User not authenticated');
 		}
 	}
 }

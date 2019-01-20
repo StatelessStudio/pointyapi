@@ -1,12 +1,10 @@
-import { Response } from 'express';
-
-export function deleteResponder(result: any, response: Response) {
+export function deleteResponder(result: any) {
 	if (result instanceof Object) {
 		// Send response
-		response.sendStatus(204);
+		this.response.sendStatus(204);
 	}
 	else {
 		// Send error
-		response.error('ID not found in Delete Response', response);
+		this.response.error('ID not found in Delete Response');
 	}
 }

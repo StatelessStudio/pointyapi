@@ -25,9 +25,6 @@ export function postFilter(
 		next();
 	}
 	else {
-		response.forbiddenResponder(
-			'Cannot write member ' + writeFilterResult,
-			response
-		);
+		response.forbiddenResponder('Cannot write member ' + writeFilterResult);
 	}
 }

@@ -28,11 +28,11 @@ export async function loginEndpoint(
 		.where('user.username=:name OR user.email=:name')
 		.setParameters({ name: request.body.__user })
 		.getMany()
-		.catch((error) => response.error(error, response));
+		.catch((error) => response.error(error));
 
 	// Check users
 	if (!foundUsers || !foundUsers.length) {
-		response.goneResponder(foundUsers, response);
+		response.goneResponder(foundUsers);
 		return;
 	}
 
@@ -72,7 +72,7 @@ export async function loginEndpoint(
 			match.token = token;
 			await request.repository
 				.save(match)
-				.catch((error) => response.error(error, response));
+				.catch((error) => response.error(error));
 
 			// Set request user
 			request.user = match;
@@ -97,11 +97,8 @@ export async function loginEndpoint(
 		}
 	}
 	else {
-		response.unauthorizedResponder(
-			{
-				message: 'Could not authenticate user'
-			},
-			response
-		);
+		response.unauthorizedResponder({
+			message: 'Could not authenticate user'
+		});
 	}
 }
