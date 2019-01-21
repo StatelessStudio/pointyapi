@@ -45,9 +45,11 @@ describe('[Middleware] GetQuery', () => {
 
 		await setModel(request, response, BaseUser);
 
-		await getQuery(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await getQuery(request)
+			.then((result) => {
+				request.payload = result;
+			})
+			.catch((error) => fail(JSON.stringify(error)));
 
 		expect(request.payload).toEqual(jasmine.any(Array));
 		expect(request.payload.length).toBeGreaterThanOrEqual(2);

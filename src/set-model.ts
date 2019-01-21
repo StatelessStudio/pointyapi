@@ -44,6 +44,8 @@ function isKeyInModel(key, model, response) {
 		response.validationResponder(
 			'Member key "' + key + '" does not exist in model.'
 		);
+
+		return false;
 	}
 	else {
 		return true;
@@ -88,7 +90,7 @@ export async function setModel(
 						request.body[i]
 					)
 				) {
-					return;
+					return false;
 				}
 			}
 		}
@@ -110,7 +112,7 @@ export async function setModel(
 
 			// Run model hook
 			if (!await runHook(request, response, 'beforePost', request.body)) {
-				return;
+				return false;
 			}
 		}
 	}
@@ -129,10 +131,24 @@ export async function setModel(
 
 		// Run model hook
 		if (!await runHook(request, response, 'beforeGet', request.query)) {
-			return;
+			return false;
 		}
 
-		await getQuery(request, response);
+		let getSuccess = true;
+
+		await getQuery(request)
+			.then((result) => {
+				request.payload = result;
+			})
+			.catch((error) => {
+				response.error(error);
+
+				getSuccess = false;
+			});
+
+		if (!getSuccess) {
+			return false;
+		}
 	}
 	else if (request.method === 'PUT') {
 		for (const key in request.body) {
@@ -143,20 +159,24 @@ export async function setModel(
 
 		// Run model hook
 		if (!await runHook(request, response, 'beforePut', request.payload)) {
-			return;
+			return false;
 		}
 
-		await loadEntity(request, response);
+		if (!await loadEntity(request, response)) {
+			return false;
+		}
 	}
 	else if (request.method === 'DELETE') {
 		// Run model hook
 		if (
 			!await runHook(request, response, 'beforeDelete', request.payload)
 		) {
-			return;
+			return false;
 		}
 
-		await loadEntity(request, response);
+		if (!await loadEntity(request, response)) {
+			return false;
+		}
 	}
 
 	return !response.headersSent;

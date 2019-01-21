@@ -181,11 +181,7 @@ function createSearchQuery(payloadType, obj: Object, objKey: string = 'obj') {
  * @param request Request to query by
  * @param response Response object to respond with
  */
-export async function getQuery(
-	request: Request,
-	response: Response,
-	next?: NextFunction
-) {
+export async function getQuery(request: Request) {
 	if ('query' in request && '__search' in request.query) {
 		const objMnemonic = 'obj';
 
@@ -342,50 +338,18 @@ export async function getQuery(
 			request.query.__count = true;
 		}
 
-		await query
-			.getMany()
-			.then((result) => {
-				request.payload = result;
-				if (next) {
-					next();
-				}
-			})
-			.catch((error) => response.error(error));
+		return await query.getMany();
 	}
 	else if ('query' in request && 'id' in request.query && request.query.id) {
 		// Read one
-		await request.repository
-			.findOne(request.query.id)
-			.then((result) => {
-				request.payload = result;
-				if (next) {
-					next();
-				}
-			})
-			.catch((error) => response.error(error));
+		return await request.repository.findOne(request.query.id);
 	}
 	else if ('query' in request && Object.keys(request.query).length) {
 		// Read many
-		await request.repository
-			.find(request.query)
-			.then((result) => {
-				request.payload = result;
-				if (next) {
-					next();
-				}
-			})
-			.catch((error) => response.error(error));
+		return await request.repository.find(request.query);
 	}
 	else {
 		// Read all
-		await request.repository
-			.find()
-			.then((result) => {
-				request.payload = result;
-				if (next) {
-					next();
-				}
-			})
-			.catch((error) => response.error(error));
+		return await request.repository.find();
 	}
 }
