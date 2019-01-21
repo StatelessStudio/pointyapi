@@ -373,6 +373,25 @@ export async function getQuery(request: Request, response: Response) {
 		if (getRaw) {
 			return await query.getRawMany();
 		}
+		else if (groupByKeys.length) {
+			const prestring = `${objMnemonic}_`;
+
+			return await query.getRawMany().then((result) => {
+				if (result instanceof Array && result.length) {
+					result = result.map((resource) => {
+						const obj = new request.payloadType();
+
+						for (const key in resource) {
+							obj[key.replace(prestring, '')] = resource[key];
+						}
+
+						return obj;
+					});
+				}
+
+				return result;
+			});
+		}
 		else {
 			return await query.getMany();
 		}
