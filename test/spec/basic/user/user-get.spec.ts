@@ -89,6 +89,32 @@ describe('User API Read', () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
+	it('can select keys', async () => {
+		await http
+			.get('/api/v1/user', {
+				__search: '',
+				__select: [ 'lname' ]
+			})
+			.then((result) => {
+				expect(result.body[0].lname).toEqual(jasmine.any(String));
+				expect(result.body[0].fname).toEqual(undefined);
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
+
+	it('cannot select private keys', async () => {
+		await http
+			.get(
+				'/api/v1/user',
+				{
+					__search: '',
+					__select: [ 'password' ]
+				},
+				[ 403 ]
+			)
+			.catch((error) => fail(JSON.stringify(error)));
+	});
+
 	it('can count', async () => {
 		await http
 			.get('/api/v1/user', {

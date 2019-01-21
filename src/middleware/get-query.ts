@@ -185,6 +185,35 @@ export async function getQuery(request: Request, response: Response) {
 	if ('query' in request && '__search' in request.query) {
 		const objMnemonic = 'obj';
 
+		// Readable keys
+		let readableFields = getReadableFields(
+			new request.payloadType(),
+			request.user,
+			objMnemonic
+		);
+
+		// Extract __select query keys
+		const selectKeys = [];
+		if ('__select' in request.query) {
+			for (let key of request.query.__select) {
+				key = `obj.${key}`;
+
+				if (readableFields.includes(key)) {
+					selectKeys.push(key);
+				}
+				else {
+					// Key is not readable
+					response.forbiddenResponder(`Cannot select by key ${key}`);
+					return new Promise((_, reject) => {
+						reject(`Cannot select by key ${key}`);
+					});
+				}
+			}
+
+			readableFields = selectKeys;
+			delete request.query.__select;
+		}
+
 		// Extract Join __join query keys
 		if ('__join' in request.query) {
 			request.query.__join.forEach((key) => {
@@ -252,13 +281,6 @@ export async function getQuery(request: Request, response: Response) {
 		let { queryString, queryParams } = createSearchQuery(
 			new request.payloadType(),
 			request.query
-		);
-
-		// Readable keys
-		const readableFields = getReadableFields(
-			new request.payloadType(),
-			request.user,
-			objMnemonic
 		);
 
 		// Join bodyguard keys, unless this is the User
