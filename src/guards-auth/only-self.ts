@@ -101,6 +101,8 @@ export async function onlySelf(
 		return next();
 	}
 	else {
-		return response.unauthorizedResponder('[onlySelf] not self');
+		response.unauthorizedResponder('[onlySelf] not self');
+
+		return false;
 	}
 }

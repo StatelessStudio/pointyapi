@@ -16,7 +16,9 @@ export async function loadUser(
 		token = jwtBearer.dryVerify(token);
 
 		if (!token) {
-			return response.unauthorizedResponder('invalid token');
+			response.unauthorizedResponder('invalid token');
+
+			return false;
 		}
 
 		// Verify
