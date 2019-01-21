@@ -162,6 +162,7 @@ describe('User API Read', () => {
 	});
 
 	it('can group by', async () => {
+		// Create users
 		await http
 			.post('/api/v1/user', {
 				fname: 'groupTester',
@@ -171,6 +172,7 @@ describe('User API Read', () => {
 				email: 'groupTester1@get.com'
 			})
 			.catch((error) => fail(JSON.stringify(error)));
+
 		await http
 			.post('/api/v1/user', {
 				fname: 'groupTester',
@@ -181,13 +183,28 @@ describe('User API Read', () => {
 			})
 			.catch((error) => fail(JSON.stringify(error)));
 
+		// Get results
 		await http
 			.get('/api/v1/user', {
 				__search: '',
+				__select: [ 'lname' ],
 				__groupBy: [ 'lname' ]
 			})
 			.then((result) => {
-				expect(result.body[0].id).toBeGreaterThanOrEqual(3);
+				if (result.body instanceof Array) {
+					let nMatches = 0;
+
+					for (const resource of result.body) {
+						if (resource.lname === 'agroupBy') {
+							nMatches++;
+						}
+					}
+
+					expect(nMatches).toBe(1);
+				}
+				else {
+					fail('Result is not an array');
+				}
 			})
 			.catch((error) => fail(JSON.stringify(error)));
 	});
