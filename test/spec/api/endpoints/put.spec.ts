@@ -40,7 +40,10 @@ describe('[Endpoints] Put', () => {
 		request.body = user;
 		request.identifier = 'id';
 		request.params.id = user.id;
-		await setModel(request, response, BaseUser);
+
+		if (!await setModel(request, response, BaseUser)) {
+			fail('Could not set model');
+		}
 
 		response.putResponder = () => {};
 		await putEndpoint(request, response).catch((error) =>
@@ -65,7 +68,10 @@ describe('[Endpoints] Put', () => {
 		request.body = user;
 		request.identifier = 'id';
 		request.params.id = user.id;
-		await setModel(request, response, BaseUser);
+
+		if (!await setModel(request, response, BaseUser)) {
+			fail('Could not set model');
+		}
 
 		response.validationResponder = () => {};
 		await putEndpoint(request, response).catch((error) =>

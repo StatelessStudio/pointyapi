@@ -27,3 +27,15 @@
     - `beforeLoadGet()` -> `beforeGet()`
     - `beforeLoadDelete()` -> `beforeDelete()`
     - `onGetQuery()` -> `beforeGet()` (`onGetQuery()` has been removed, use `beforeGet()` instead)
+3. Check `setModel()` return value
+	Although this isn't a breaking change, it is something we've noticed that must be fixed: sometimes, setModel() will fail, which if left unchecked, the request will bleed through the rest of the program, even though it has already been handled/responded to.  This will lead to odd errors and 'Headers already sent' errors in rare occasions.
+
+	```typescript
+	// Set model
+	router.use((request, response, next) => {
+		if (await setModel(request, BaseUser, 'id')) {
+			// Note that this next() call is now in an if-statement around the setModel()
+			next();
+		}
+	});
+	```

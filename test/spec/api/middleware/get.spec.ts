@@ -43,7 +43,9 @@ describe('[Middleware] GetQuery', () => {
 			.save([ user1, user2 ])
 			.catch((error) => fail(JSON.stringify(error)));
 
-		await setModel(request, response, BaseUser);
+		if (!await setModel(request, response, BaseUser)) {
+			fail('Could not set model');
+		}
 
 		await getQuery(request)
 			.then((result) => {

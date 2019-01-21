@@ -5,20 +5,6 @@
  * set the route parameter (e.g. ':id').  This function should
  * be called in a middleware function BEFORE your endpoints.
  *
- * ```typescript
- * import { setModel } from 'pointyapi/set-model';
- * import { BaseUser } from 'pointyapi/models';
- *
- * router.use((request, response, next) => {
- *		await setModel(request,BaseUser, 'id');
- * 		next();
- * });
- *
- * // Set your router endpoints AFTER setModel();
- * // TODO: Set endpoints
- *
- * ```
- *
  * ## Parameters
  * - **request** - The Express Request object
  * - **model** - A model to set the request entity to.  This should be a type,

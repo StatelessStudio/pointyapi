@@ -35,7 +35,9 @@ describe('[Endpoints] Post', () => {
 
 		request.body = user;
 
-		await setModel(request, response, BaseUser);
+		if (!await setModel(request, response, BaseUser)) {
+			fail('Could not set model');
+		}
 
 		response.postResponder = () => {};
 		await postEndpoint(request, response).catch((error) =>
@@ -55,7 +57,9 @@ describe('[Endpoints] Post', () => {
 
 		request.body = user;
 
-		await setModel(request, response, BaseUser);
+		if (!await setModel(request, response, BaseUser)) {
+			fail('Could not set model');
+		}
 
 		response.validationResponder = () => {};
 		await postEndpoint(request, response).catch((error) =>

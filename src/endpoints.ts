@@ -44,8 +44,9 @@
  *
  * // Set model
  * router.use((request, response, next) => {
- * 		await setModel(request,BaseUser, 'id');
- * 		next();
+ * 		if (await setModel(request, BaseUser, 'id')) {
+ * 			next();
+ * 		}
  * });
  *
  * // Set routes

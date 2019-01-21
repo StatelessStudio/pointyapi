@@ -40,7 +40,9 @@ describe('[Endpoints] Get', () => {
 		user2.password = 'password123';
 		user2.email = 'get2@example.com';
 
-		await setModel(request, response, BaseUser);
+		if (!await setModel(request, response, BaseUser)) {
+			fail('Could not set model');
+		}
 
 		request.payload = [ user1, user2 ];
 

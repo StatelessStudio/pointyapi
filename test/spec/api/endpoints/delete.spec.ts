@@ -39,7 +39,9 @@ describe('[Endpoints] Delete', () => {
 		request.identifier = 'id';
 		request.params = result;
 
-		await setModel(request, response, BaseUser);
+		if (!await setModel(request, response, BaseUser)) {
+			fail('Could not set model');
+		}
 
 		response.deleteResponder = () => {};
 		await deleteEndpoint(request, response).catch((error) =>
@@ -55,13 +57,15 @@ describe('[Endpoints] Delete', () => {
 			id: 12345
 		};
 
-		response.goneResponder = () => {};
-		await setModel(request, response, BaseUser);
+		let result = false;
+		response.goneResponder = () => {
+			result = true;
+		};
 
-		request.payload = undefined;
+		if (await setModel(request, response, BaseUser)) {
+			fail('Should not have been able to set model!');
+		}
 
-		await deleteEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		expect(result).toBe(true);
 	});
 });

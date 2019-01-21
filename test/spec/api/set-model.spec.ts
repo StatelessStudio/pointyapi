@@ -10,7 +10,10 @@ describe('setModel', () => {
 
 		const response = mockResponse();
 
-		await setModel(request, response, BaseUser);
+		if (!await setModel(request, response, BaseUser)) {
+			fail('Could not set model');
+		}
+
 		expect(request.payload).toEqual(jasmine.any(BaseUser));
 	});
 
@@ -20,7 +23,9 @@ describe('setModel', () => {
 
 		const response = mockResponse();
 
-		await setModel(request, response, BaseUser, 'username');
+		if (!await setModel(request, response, BaseUser, 'username')) {
+			fail('Could not set model');
+		}
 
 		expect(request.identifier).toEqual('username');
 	});
