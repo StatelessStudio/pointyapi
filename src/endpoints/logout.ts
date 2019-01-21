@@ -26,8 +26,6 @@ export async function logoutEndpoint(
 		request.user = undefined;
 	}
 	else {
-		response.unauthorizedResponder({
-			message: 'Could not authenticate user'
-		});
+		response.unauthorizedResponder('Could not authenticate user');
 	}
 }

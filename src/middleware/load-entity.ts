@@ -10,7 +10,7 @@ export async function loadEntity(
 	if (request.identifier) {
 		const result = await request.repository
 			.findOne(getIdentifierValue(request))
-			.catch(() => response.error({ message: `Could not load entity` }));
+			.catch(() => response.error(`Could not load entity`));
 
 		if (result && result instanceof request.payloadType) {
 			request.payload = result;

@@ -7,12 +7,7 @@ export function errorHandler(error: any, code = 500) {
 
 		if (error.code === 23502) {
 			// Not-null violation
-			this.response.validationResponder(
-				{
-					message: 'Not null violation'
-				},
-				this.response
-			);
+			this.response.validationResponder('Not null violation');
 			return;
 		}
 		else if (error.code === 23503) {

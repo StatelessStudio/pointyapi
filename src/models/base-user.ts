@@ -141,9 +141,7 @@ export class BaseUser extends BaseModel {
 
 			// Check if user has some sort of password
 			if (!user.password) {
-				response.validationResponder({
-					message: 'Must supply a password'
-				});
+				response.validationResponder('Must supply a password');
 				return false;
 			}
 
