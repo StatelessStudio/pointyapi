@@ -127,7 +127,9 @@ export async function setModel(
 				request.payload = result;
 			})
 			.catch((error) => {
-				response.error(error);
+				if (!response.headersSent) {
+					response.error(error);
+				}
 
 				getSuccess = false;
 			});
