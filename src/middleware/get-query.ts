@@ -181,7 +181,7 @@ function createSearchQuery(payloadType, obj: Object, objKey: string = 'obj') {
  * @param request Request to query by
  * @param response Response object to respond with
  */
-export async function getQuery(request: Request) {
+export async function getQuery(request: Request, response: Response) {
 	if ('query' in request && '__search' in request.query) {
 		const objMnemonic = 'obj';
 

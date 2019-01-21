@@ -122,7 +122,7 @@ export async function setModel(
 
 		let getSuccess = true;
 
-		await getQuery(request)
+		await getQuery(request, response)
 			.then((result) => {
 				request.payload = result;
 			})

@@ -47,7 +47,7 @@ describe('[Middleware] GetQuery', () => {
 			fail('Could not set model');
 		}
 
-		await getQuery(request)
+		await getQuery(request, response)
 			.then((result) => {
 				request.payload = result;
 			})
