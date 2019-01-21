@@ -214,6 +214,13 @@ export async function getQuery(request: Request, response: Response) {
 			delete request.query.__select;
 		}
 
+		// Get raw
+		let getRaw = false;
+		if ('__raw' in request.query && request.query.__raw) {
+			getRaw = true;
+			delete request.query.__raw;
+		}
+
 		// Extract Join __join query keys
 		if ('__join' in request.query) {
 			request.query.__join.forEach((key) => {
@@ -360,7 +367,12 @@ export async function getQuery(request: Request, response: Response) {
 			request.query.__count = true;
 		}
 
-		return await query.getMany();
+		if (getRaw) {
+			return await query.getRawMany();
+		}
+		else {
+			return await query.getMany();
+		}
 	}
 	else if ('query' in request && 'id' in request.query && request.query.id) {
 		// Read one

@@ -89,6 +89,19 @@ describe('User API Read', () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
+	it('can get raw data', async () => {
+		await http
+			.get('/api/v1/user', {
+				__search: '',
+				__raw: true,
+				__select: [ 'lname' ]
+			})
+			.then((result) => {
+				expect(result.body[0].obj_lname).toEqual(jasmine.any(String));
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
+
 	it('can select keys', async () => {
 		await http
 			.get('/api/v1/user', {
