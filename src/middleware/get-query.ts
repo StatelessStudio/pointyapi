@@ -186,11 +186,6 @@ export async function getQuery(
 	response: Response,
 	next?: NextFunction
 ) {
-	// Run model hook
-	if (!await runHook(request, response, 'preload', request.query)) {
-		return;
-	}
-
 	if ('query' in request && '__search' in request.query) {
 		const objMnemonic = 'obj';
 

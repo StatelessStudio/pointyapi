@@ -26,4 +26,4 @@
     - `beforeLoadPut()` -> `beforePut()`
     - `beforeLoadGet()` -> `beforeGet()`
     - `beforeLoadDelete()` -> `beforeDelete()`
-    - `onGetQuery()` -> `preload()`
+    - `onGetQuery()` -> `beforeGet()` (`onGetQuery()` has been removed, use `beforeGet()` instead)
