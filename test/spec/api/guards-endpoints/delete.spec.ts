@@ -1,8 +1,6 @@
 import { mockRequest, mockResponse } from 'mock-req-res';
 
-import { setModel } from '../../../../src/';
 import { BaseUser } from '../../../../src/models';
-import { deleteEndpoint } from '../../../../src/endpoints';
 import { getRepository } from 'typeorm';
 import { deleteFilter } from '../../../../src/guards';
 

@@ -4,9 +4,7 @@ import { BaseUser } from '../models/base-user';
 import { UserRole } from '../enums/user-role';
 
 import { getBodyguardKeys } from '../bodyguard';
-import { getIdentifierValue } from '../get-identifier-value';
-import { compareNestedBodyguards, isSelf } from '../bodyguard';
-import { loadEntity } from '../middleware/load-entity';
+import { isSelf } from '../bodyguard';
 import { BaseModel } from '../models/base-model';
 
 export async function onlySelf(

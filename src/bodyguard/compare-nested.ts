@@ -12,7 +12,6 @@ function isDefined(a) {
  * @param objBodyguardKeys Key array from getBodyguardKeys(obj)
  * @param userBodyguardKeys Key array from getBodyguardKeys(user)
  */
-
 export function compareNestedBodyguards(
 	obj: BaseModel,
 	user: BaseUser,

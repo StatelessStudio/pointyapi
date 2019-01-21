@@ -17,11 +17,9 @@ import {
 	AnyoneCanRead,
 	OnlySelfCanRead,
 	OnlySelfCanWrite,
-	OnlyAdminCanWrite,
 	BodyguardKey,
 	CanSearch,
-	CanSearchRelation,
-	getSearchableFields
+	CanSearchRelation
 } from '../../../../src/bodyguard';
 
 // Models

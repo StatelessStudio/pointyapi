@@ -1,7 +1,5 @@
 import { pointy } from '../../../src';
 import { basicCors, loadUser } from '../../../src/middleware';
-import { BaseUser } from '../../../src/models/base-user';
-const ROOT_PATH = require('app-root-path').toString();
 
 // Routes
 import { userRouter } from './routes/user';
@@ -10,6 +8,7 @@ import { chatRouter } from './routes/chat';
 import { ChatMessage } from './models/chat-message';
 import { User } from './models/user';
 
+const ROOT_PATH = require('app-root-path').toString();
 pointy.userType = User;
 
 // Setup

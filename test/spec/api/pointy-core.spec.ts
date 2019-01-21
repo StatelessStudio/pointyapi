@@ -1,7 +1,5 @@
 import { pointy } from '../../../src/pointy-core';
 
-import 'jasmine';
-
 const ROOT_PATH = require('app-root-path').toString();
 
 beforeAll(async () => {

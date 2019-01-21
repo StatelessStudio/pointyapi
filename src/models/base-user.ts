@@ -177,6 +177,4 @@ export class BaseUser extends BaseModel {
 	}
 }
 
-export interface BaseUserInterface {
-	new (): BaseUser;
-}
+export type BaseUserInterface = new () => BaseUser;

@@ -6,7 +6,6 @@ import { BaseUser } from '../models';
  * @param userBodyguardKeys Array of bodyguard keys from getBodyguardKeys()
  * @param routeParam Route paramaters
  */
-
 export function compareIdToUser(
 	identifier: string,
 	value: number | string,

@@ -1,14 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import { compareSync } from 'bcryptjs';
-
-import { jwtBearer } from '../jwt-bearer';
 import { runHook } from '../run-hook';
 
-export async function logoutEndpoint(
-	request: Request,
-	response: Response,
-	next: NextFunction
-) {
+export async function logoutEndpoint(request: Request, response: Response) {
 	// Run model hook
 	if (!await runHook(request, response, 'logout', request.body)) {
 		return;

@@ -1,11 +1,10 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import {
 	getSearchableFields,
 	getSearchableRelations,
 	getReadableFields,
 	getBodyguardKeys
 } from '../bodyguard';
-import { runHook } from '../run-hook';
 import { UserRole } from '../enums/user-role';
 
 function createSearchQuery(payloadType, obj: Object, objKey: string = 'obj') {

@@ -1,9 +1,6 @@
 import { Router } from 'express';
-
 import { loginEndpoint, logoutEndpoint } from '../../../../src/endpoints';
-
 import { User } from '../models/user';
-
 import { setModel } from '../../../../src/';
 
 const router: Router = Router();

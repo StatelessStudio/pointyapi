@@ -1,5 +1,3 @@
-import { Request } from 'express';
-
 import {
 	responseFilter,
 	BodyguardKey,

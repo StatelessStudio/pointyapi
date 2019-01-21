@@ -46,7 +46,6 @@ describe('[Chat] Chat API Get', async () => {
 			);
 
 		// make chats to read
-
 		this.chat = await http
 			.post(
 				'/api/v1/chat',

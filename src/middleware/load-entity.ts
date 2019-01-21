@@ -1,5 +1,4 @@
 import { Request, Response, NextFunction } from 'express';
-import { getRepository } from 'typeorm';
 import { getIdentifierValue } from '../get-identifier-value';
 
 export async function loadEntity(
