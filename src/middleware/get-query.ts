@@ -238,7 +238,10 @@ export async function getQuery(request: Request, response: Response) {
 			});
 
 			// Add 'id' to array if not already
-			if (!('id' in request.query.__groupBy)) {
+			if (
+				readableFields.includes('obj.id') &&
+				!('id' in request.query.__groupBy)
+			) {
 				groupByKeys.push('id');
 			}
 
