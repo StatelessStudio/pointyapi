@@ -37,7 +37,11 @@
  */
 import { fork } from 'child_process';
 
-export function forkServer(serverFile: string) {
+/**
+ * Fork the server from a test-suite
+ * @param serverFile string File path to the server entry-point
+ */
+export function forkServer(serverFile: string): Promise<any> {
 	return new Promise((accept, reject) => {
 		const serverfork = fork(serverFile);
 

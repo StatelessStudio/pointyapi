@@ -1,7 +1,13 @@
 import { Request, Response, NextFunction } from 'express';
 import { runHook } from '../run-hook';
 
-export async function logoutEndpoint(request: Request, response: Response) {
+/**
+ * Logout endpoint
+ */
+export async function logoutEndpoint(
+	request: Request,
+	response: Response
+): Promise<void> {
 	// Run model hook
 	if (!await runHook(request, response, 'logout', request.body)) {
 		return;
@@ -9,6 +15,7 @@ export async function logoutEndpoint(request: Request, response: Response) {
 
 	// Check user
 	if (request.user) {
+		// Update token
 		request.user.token = '';
 
 		await request.repository
@@ -19,6 +26,7 @@ export async function logoutEndpoint(request: Request, response: Response) {
 		request.user = undefined;
 	}
 	else {
+		// User is not logged in
 		response.unauthorizedResponder('Could not authenticate user');
 	}
 }

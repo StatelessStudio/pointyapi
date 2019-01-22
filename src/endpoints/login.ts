@@ -5,11 +5,13 @@ import { jwtBearer } from '../jwt-bearer';
 import { runHook } from '../run-hook';
 import { responseFilter } from '../bodyguard/response-filter';
 
+/**
+ * Login endpoint
+ */
 export async function loginEndpoint(
 	request: Request,
-	response: Response,
-	next: NextFunction
-) {
+	response: Response
+): Promise<void> {
 	// Run model hook
 	if (!await runHook(request, response, 'login', request.body)) {
 		return;
@@ -77,18 +79,18 @@ export async function loginEndpoint(
 			// Set request user
 			request.user = match;
 
-			// Send response
+			// Create response
 			match = responseFilter(
 				match,
 				request.user,
 				request.payloadType,
-				request.userType,
-				request.joinMembers
+				request.userType
 			);
 
 			match['expiration'] = expiration;
 			match['token'] = token;
 
+			// Send response
 			response.json(match);
 		}
 		else {
@@ -97,6 +99,7 @@ export async function loginEndpoint(
 		}
 	}
 	else {
+		// No match found
 		response.unauthorizedResponder('Could not authenticate user');
 	}
 }

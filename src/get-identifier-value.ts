@@ -9,6 +9,10 @@
  */
 import { Request } from 'express';
 
-export function getIdentifierValue(request: Request) {
+/**
+ * Get parameter ID from URL
+ * @param request Express::Request Request to check URL from
+ */
+export function getIdentifierValue(request: Request): any {
 	return request.params[request.identifier || 'id'];
 }

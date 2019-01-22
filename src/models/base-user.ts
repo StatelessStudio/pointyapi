@@ -4,7 +4,6 @@ import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 // Validation
 import {
-	IsUrl,
 	Length,
 	IsEmail,
 	IsAlphanumeric,
@@ -27,6 +26,9 @@ import {
 import { BaseModel } from './base-model';
 import { UserRole, UserStatus } from '../enums';
 
+/**
+ * Base User
+ */
 @Entity('User')
 export class BaseUser extends BaseModel {
 	// ID

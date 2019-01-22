@@ -7,19 +7,21 @@ import { runHook } from '../run-hook';
  * @param request Request object to query by
  * @param response Response object to call responder with
  */
-export async function deleteEndpoint(request: Request, response: Response) {
+export async function deleteEndpoint(
+	request: Request,
+	response: Response
+): Promise<void> {
 	// Check response
 	if (request.payload && request.payload instanceof BaseModel) {
 		// Convert to model
+		// TODO: This should already be done, remove
 		request.payload = Object.assign(
 			new request.payloadType(),
 			request.payload
 		);
 
 		// Run model hook
-		if (
-			!await runHook(request, response, 'delete', request.payload)
-		) {
+		if (!await runHook(request, response, 'delete', request.payload)) {
 			return;
 		}
 

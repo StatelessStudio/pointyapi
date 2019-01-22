@@ -3,11 +3,11 @@ import { validate } from 'class-validator';
 import { runHook } from '../run-hook';
 import { responseFilter } from '../bodyguard/response-filter';
 
-function setModelType(type, obj) {
-	return Object.assign(new type(), obj);
-}
-
-function deleteUndefinedMembers(obj) {
+/**
+ * Delete undefined members from payload
+ * @param obj any Object to delete members from
+ */
+function deleteUndefinedMembers(obj: any): any {
 	for (const key in obj) {
 		if (obj[key] === undefined) {
 			delete obj[key];
@@ -17,14 +17,20 @@ function deleteUndefinedMembers(obj) {
 	return obj;
 }
 
-export async function postEndpoint(request: Request, response: Response) {
+/**
+ * Post endpoint
+ */
+export async function postEndpoint(
+	request: Request,
+	response: Response
+): Promise<void> {
 	if (request.body instanceof Array) {
 		let shouldSave = true;
 
 		for (let i = 0; i < request.body.length; i++) {
 			// Set model type
-			request.body[i] = setModelType(
-				request.payloadType,
+			request.body[i] = Object.assign(
+				new request.payloadType(),
 				request.body[i]
 			);
 
@@ -50,9 +56,10 @@ export async function postEndpoint(request: Request, response: Response) {
 		}
 
 		if (shouldSave && request.body.length) {
-			// Send
+			// Save
 			const repo = await request.repository;
 
+			// TODO: Replace with Promise.all for async posts
 			let results = [];
 			for (let i = 0; i < request.body.length; i++) {
 				results.push(
@@ -62,22 +69,23 @@ export async function postEndpoint(request: Request, response: Response) {
 				);
 			}
 
+			// Create result
 			if (results) {
 				results = responseFilter(
 					results,
 					request.user,
 					request.payloadType,
-					request.userType,
-					request.joinMembers
+					request.userType
 				);
 
+				// Send result
 				response.postResponder(results);
 			}
 		}
 	}
 	else {
 		// Set model type
-		request.body = setModelType(request.payloadType, request.body);
+		request.body = Object.assign(new request.payloadType(), request.body);
 
 		// Delete undefined members
 		request.body = deleteUndefinedMembers(request.body);
@@ -94,21 +102,23 @@ export async function postEndpoint(request: Request, response: Response) {
 
 		// Check
 		if (errors && errors.length) {
+			// Validation erros; respond with 400 Bad Request
 			response.validationResponder(errors);
 		}
 		else {
-			// Send
+			// Save
 			await request.repository
 				.save(request.body)
 				.then((result) => {
+					// Create response
 					result = responseFilter(
 						result,
 						request.user,
 						request.payloadType,
-						request.userType,
-						request.joinMembers
+						request.userType
 					);
 
+					// Send response and 200 Success
 					response.postResponder(result);
 				})
 				.catch((error) => response.error(error));

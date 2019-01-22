@@ -1,40 +1,38 @@
 import { Request, Response, NextFunction } from 'express';
 import { writeFilter, isSelf } from '../bodyguard';
-import { BaseModel } from '../models';
 
+/**
+ * Put Filter: Filter a PUT request payload, and respond with
+ * 	403 Forbidden if the request contains any private fields
+ */
 export function putFilter(
 	request: Request,
 	response: Response,
 	next: NextFunction
-) {
-	if (request.payload instanceof BaseModel) {
-		const isSelfResult = isSelf(
-			request.payload,
-			request.user,
-			request.payloadType,
-			request.userType
-		);
+): void {
+	// Check if user owns resource
+	const isSelfResult = isSelf(
+		request.payload,
+		request.user,
+		request.payloadType,
+		request.userType
+	);
 
-		const writeFilterResult = writeFilter(
-			request.body,
-			request.user,
-			request.payloadType,
-			request.userType,
-			isSelfResult
-		);
+	// Check incoming payload for write privelege
+	const writeFilterResult = writeFilter(
+		request.body,
+		request.user,
+		request.payloadType,
+		request.userType,
+		isSelfResult
+	);
 
-		if (writeFilterResult === true) {
-			next();
-		}
-		else {
-			response.forbiddenResponder(
-				'Cannot write member ' + writeFilterResult
-			);
-		}
+	if (writeFilterResult === true) {
+		// Put body is okay, proceed
+		next();
 	}
 	else {
-		response.validationResponder(
-			'bad request: payload is not of type BaseModel'
-		);
+		// Cannot write member, respond with 403 Forbidden
+		response.forbiddenResponder('Cannot write member ' + writeFilterResult);
 	}
 }

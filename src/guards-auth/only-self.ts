@@ -7,11 +7,15 @@ import { getBodyguardKeys } from '../bodyguard';
 import { isSelf } from '../bodyguard';
 import { BaseModel } from '../models/base-model';
 
+/**
+ * Only Self Guard: Return 401 Unauthorized if the User does not
+ * 	own the resource
+ */
 export async function onlySelf(
 	request: Request,
 	response: Response,
 	next: NextFunction
-) {
+): Promise<boolean> {
 	let authorized = false;
 	const userKeys = getBodyguardKeys(new request.userType());
 	const bodyKeys = getBodyguardKeys(new request.payloadType());
@@ -96,10 +100,12 @@ export async function onlySelf(
 	}
 
 	if (authorized) {
-		return next();
+		// User is self
+		next();
 	}
 	else {
-		response.unauthorizedResponder('[onlySelf] not self');
+		// User is not authenticated or self, respond with 401 Unauthorized
+		response.unauthorizedResponder('not self');
 
 		return false;
 	}

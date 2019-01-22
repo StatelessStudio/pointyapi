@@ -1,11 +1,16 @@
 import { Request, Response, NextFunction } from 'express';
 import { getIdentifierValue } from '../get-identifier-value';
 
+/**
+ * Load resource represented by the URL ID
+ * Example:
+ * 	/users/12 -> Load #12
+ */
 export async function loadEntity(
 	request: Request,
 	response: Response,
 	next?: NextFunction
-) {
+): Promise<boolean> {
 	if (request.identifier) {
 		const result = await request.repository
 			.findOne(getIdentifierValue(request))
@@ -15,7 +20,9 @@ export async function loadEntity(
 			request.payload = result;
 
 			if (next) {
-				return next();
+				next();
+
+				return true;
 			}
 			else {
 				return true;

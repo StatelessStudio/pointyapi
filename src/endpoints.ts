@@ -2,7 +2,7 @@
  * # Endpoints
  *
  * Endpoints are where the action of a route actually takes place,
- * for example posting an object or logging in.  The following
+ * for example posting a resource or logging in.  The following
  * endpoints come premade:
  * - CRUD
  *  - postEndpoint
@@ -11,7 +11,7 @@
  *  - deleteEndpoint
  * - Auth
  *  - loginEndpoint
- *  - logoutEndpoint (TODO)
+ *  - logoutEndpoint
  *
  * ## Using endpoints
  *
@@ -43,17 +43,17 @@
  * const router: Router = Router();
  *
  * // Set model
- * router.use((request, response, next) => {
+ * async function loader(request, response, next) {
  * 		if (await setModel(request, BaseUser, 'id')) {
  * 			next();
  * 		}
- * });
+ * }
  *
  * // Set routes
- * router.post('/', postGuard, postEndpoint);
- * router.get('/', getGuard, getEndpoint);
- * router.put(`/:id`, onlySelf, putGuard, putEndpoint);
- * router.delete(`/:id`, onlySelf, deleteGuard, deleteEndpoint);
+ * router.post('/', loader, postGuard, postEndpoint);
+ * router.get('/', loader, getGuard, getEndpoint);
+ * router.put(`/:id`, loader, onlySelf, putGuard, putEndpoint);
+ * router.delete(`/:id`, loader, onlySelf, deleteGuard, deleteEndpoint);
  *
  * // Export router
  * export const userRouter: Router = router;

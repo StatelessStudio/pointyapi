@@ -1,3 +1,6 @@
+/**
+ * Base Model
+ */
 export class BaseModel {
 	public id?: any = undefined;
 

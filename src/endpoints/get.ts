@@ -3,11 +3,14 @@ import { BaseModel } from '../models/base-model';
 import { runHook } from '../run-hook';
 
 /**
- * Delete the object represent by the url key/value
+ * Return the payload on a Get request
  * @param request Request object to query by
  * @param response Response object to call responder with
  */
-export async function getEndpoint(request: Request, response: Response) {
+export async function getEndpoint(
+	request: Request,
+	response: Response
+): Promise<void> {
 	if (
 		request.payload &&
 		(request.payload instanceof Array ||

@@ -1,6 +1,11 @@
 import { createTimestamp } from './create-timestamp';
 
-export function logHandler(message: string, data: any = false) {
+/**
+ * Default log handler
+ * @param message string Message string to log
+ * @param data any Message data to log
+ */
+export function logHandler(message: string, data: any = false): void {
 	console.log('[SERVER]', createTimestamp(), message);
 
 	if (data) {

@@ -1,10 +1,5 @@
 // Import handler function types
-import {
-	BaseUser,
-	BaseModel,
-	BaseUserInterface,
-	BaseModelInterface
-} from './models';
+import { BaseModel, BaseUserInterface, BaseModelInterface } from './models';
 import {
 	ErrorHandlerFunction,
 	LogHandlerFunction,

@@ -6,29 +6,25 @@ import { getCanRead, isSelf, isAdmin } from '../bodyguard';
  * @param obj Object or array to check (enables recursion).
  * 	This can be the direct obj set of a typeorm request
  * @param user User object to check against
+ * @param objType any Type of object to check
+ * @param userType any Type of User to check
  * @return Returns the filtered obj
  */
 export function responseFilter(
 	obj: any,
 	user: BaseUser,
-	objType,
-	userType,
-	joinMembers?
-) {
+	objType: any,
+	userType: any
+): any {
 	if (obj instanceof Array) {
 		for (let i = 0; i < obj.length; i++) {
-			obj[i] = responseFilter(
-				obj[i],
-				user,
-				objType,
-				userType,
-				joinMembers
-			);
+			obj[i] = responseFilter(obj[i], user, objType, userType);
 		}
 	}
 	else if (obj instanceof Object) {
 		const isSelfResult = isSelf(obj, user, objType, userType);
 		const isAdminResult = isAdmin(user);
+
 		// Loop through object members
 		for (const member in obj) {
 			if (!(obj[member] instanceof Function)) {

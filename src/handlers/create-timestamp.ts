@@ -1,4 +1,7 @@
-export function createTimestamp() {
+/**
+ * Create a timestamp for the current time
+ */
+export function createTimestamp(): string {
 	// Create a date object with the current time
 	const now = new Date();
 

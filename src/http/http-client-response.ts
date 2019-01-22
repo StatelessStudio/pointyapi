@@ -14,7 +14,12 @@
 
 import Request = require('request');
 
-export function isJson(str) {
+/**
+ * Check if a string is valid JSON
+ * @param str string String to check
+ * @return boolean
+ */
+export function isJson(str: string): boolean {
 	try {
 		JSON.parse(str);
 	} catch (e) {
@@ -23,11 +28,24 @@ export function isJson(str) {
 	return true;
 }
 
+/**
+ * HTTP Mock Client Response
+ */
 export class HttpClientResponse {
+	// Response status code
 	public statusCode: number;
+
+	// Response object
 	public response: Request.Response;
+
+	// Response body
 	public body: Request.Response;
 
+	/**
+	 * Create a mock http response
+	 * @param response Response response object
+	 * @param body Response body
+	 */
 	constructor(response: any, body: any) {
 		this.statusCode = response.statusCode;
 		this.response = response;

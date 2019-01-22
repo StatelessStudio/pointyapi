@@ -1,3 +1,6 @@
+/**
+ * Default User Roles
+ */
 export enum UserRole {
 	Guest = 'guest',
 	Basic = 'basic',

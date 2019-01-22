@@ -22,14 +22,23 @@ import { Request, Response } from 'express';
 import { BaseModelInterface } from './models';
 import { getRepository } from 'typeorm';
 import { getQuery, loadEntity } from './middleware';
-import { log } from 'util';
 import { runHook } from './run-hook';
 
-function isKeyInModel(key, model, response) {
+/**
+ * Check if the key is in the model, and not a PointyAPI special
+ * 	key (`__keyname`)
+ * @param key string Key name
+ * @param model any Model to check
+ * @param response Express::Response (Optional) Response object to
+ * 	respond with a 400
+ */
+function isKeyInModel(key: string, model: any, response?: Response): boolean {
 	if (!(key in model) && key.indexOf('__') !== 0) {
-		response.validationResponder(
-			'Member key "' + key + '" does not exist in model.'
-		);
+		if (response) {
+			response.validationResponder(
+				'Member key "' + key + '" does not exist in model.'
+			);
+		}
 
 		return false;
 	}
@@ -38,12 +47,21 @@ function isKeyInModel(key, model, response) {
 	}
 }
 
+/**
+ * Set model type and load payload
+ * @param request Express::Request Request object
+ * @param response Express::Response Response object
+ * @param model BaseModelInterface Model to set the request type to
+ * @param identifier string (Optional) URL parameter name, for
+ * 	example `/users/:id`.  Default is `id`.  Although this parameter
+ * 	is optional, you **must** set it to the same string as in your routes.
+ */
 export async function setModel(
 	request: Request,
 	response: Response,
 	model: BaseModelInterface,
 	identifier: string = 'id'
-) {
+): Promise<any> {
 	request.identifier = identifier;
 	request.payloadType = model;
 	request.payload = new model();

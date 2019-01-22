@@ -4,19 +4,21 @@ import { getBodyguardKeys } from './get-bodyguard-keys';
 import { compareNestedBodyguards } from './compare-nested';
 
 /**
- * Check if the user matches a BodyguardKey for the obj object
+ * Check if the user matches a BodyguardKey for the object
  * @param obj Object to check
  * @param user User to check for matching BodyguardKey
+ * @return boolean Returns if the user owns this object
  */
 export function isSelf(
 	obj: BaseModel | BaseModel[],
 	user: BaseUser,
-	objType,
-	userType,
+	objType: any,
+	userType: any,
 	objBodyguardKeys?: string[],
 	userBodyguardKeys?: string[]
-) {
+): boolean {
 	if (obj instanceof Array) {
+		// Recurse array of objects
 		for (let i = 0; i < obj.length; i++) {
 			if (
 				!isSelf(
@@ -35,6 +37,7 @@ export function isSelf(
 		return true;
 	}
 	else {
+		// Get bodyguard keys for object and user
 		if (objBodyguardKeys === undefined) {
 			objBodyguardKeys = getBodyguardKeys(new objType());
 		}
@@ -43,11 +46,9 @@ export function isSelf(
 			userBodyguardKeys = getBodyguardKeys(new userType());
 		}
 
-		if (!user) {
-			return false;
-		}
-
+		// Check user
 		if (user) {
+			// Admins pass isSelf regardless of user
 			if (user.role === UserRole.Admin) {
 				return true;
 			}
@@ -66,6 +67,8 @@ export function isSelf(
 			}
 			else {
 				// Object is not of type user
+
+				// Check nested bodyguard keys
 				return compareNestedBodyguards(
 					obj,
 					user,

@@ -37,43 +37,6 @@
  * pointy.db = new MyDatabase();
  * ```
  *
- * Example database class:
- * ```typescript
- * import { createConnection, ConnectionOptions } from 'typeorm';
- * import { BaseDb } from 'pointyapi/database';
- *
- * export class MyDatabase extends BaseDb {
- * 	public shouldSync = false;
- * 	public entities: any[];
- *
- * 	constructor() {
- * 		super();
- *
- * 		this.entities = [ BaseUser ];
- * 	}
- *
- * 	public setEntities(entities: any[]) {
- * 		this.entities = entities;
- *
- * 		return this;
- * 	}
- *
- * 	public async connect(rootPath: string) {
- * 		await createConnection(<ConnectionOptions>{
- * 			name: 'default',
- * 			type: process.env.TYPEORM_DRIVER_TYPE,
- * 			driver: process.env.TYPEORM_DRIVER_TYPE,
- * 			host: process.env.db_host,
- * 			port: process.env.db_port,
- * 			username: process.env.db_username,
- * 			password: process.env.db_password,
- * 			database: process.env.db_database,
- * 			entities: this.entities,
- * 			synchronize: this.shouldSync
- * 		}).catch((error) => this.errorHandler(error));
- * 	}
- * }
- * ```
  */
 
 /**

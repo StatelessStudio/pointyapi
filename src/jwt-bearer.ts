@@ -18,20 +18,37 @@ import { Request } from 'express';
 const btoa = require('btoa');
 const atob = require('atob');
 
+/**
+ * JWT Bearer for authentication
+ */
 class JwtBearer {
+	// Private Key
 	public key = 'unset_key';
 
+	/**
+	 * Construct a JWT Bearer token
+	 * @param key string Private key
+	 */
 	constructor(key: string = 'unset_key') {
 		if ('JWT_KEY' in process.env && process.env.JWT_KEY) {
 			this.key = process.env.JWT_KEY;
 		}
 	}
 
-	public getExpiration() {
+	/**
+	 * Get expiration of the token
+	 * @return number Returns the expiration epoch time
+	 */
+	public getExpiration(): number {
 		return Date.now() + parseInt(process.env.JWT_TTL, 10) * 1000;
 	}
 
-	public sign(user: BaseUser) {
+	/**
+	 * Sign the token to the User
+	 * @param user BaseUserInterface User to sign the JWT for
+	 * @return string Returns the signed, base64-encoded token
+	 */
+	public sign(user: BaseUser): string {
 		return btoa(
 			JWT.sign({ id: user.id }, this.key, {
 				expiresIn: parseInt(process.env.JWT_TTL, 10)
@@ -39,7 +56,12 @@ class JwtBearer {
 		);
 	}
 
-	public getToken(request: Request) {
+	/**
+	 * Get a token from an HTTP Request
+	 * @param request Express::Request Request to fetch the token from
+	 * @return boolean | string Returns the token if successful, otherwise false
+	 */
+	public getToken(request: Request): boolean | string {
 		const token = request.header('Authorization');
 
 		if (token && token.includes('Bearer')) {
@@ -50,7 +72,12 @@ class JwtBearer {
 		}
 	}
 
-	public dryVerify(token: string) {
+	/**
+	 * Verify the token
+	 * @param token string Token to verify
+	 * @return Returns the token payload, or false if invalid
+	 */
+	public dryVerify(token: string): any {
 		try {
 			return JWT.verify(atob(token), this.key);
 		} catch (ex) {

@@ -6,24 +6,6 @@
  *
  * **Before using, set HttpClient.url and HttpClient.port**
  *
- * Each function takes up to 4 parameters:
- * - path: string
- *
- * 	The path URL path to connect to
- *
- * - data: object (NOT ON DELETE)
- *
- *  Data as query/body to pass with the request
- *
- * - expect: number[] = [ 200 ]
- *
- *  Pass an array of status codes that you expect the endpoint to respond with.
- *  The promise will be rejected if the response status-code is not expected
- *
- * - bearer: bool | string = false
- *
- *  JWT Bearer token to pass with the request
- *
  */
 
 /**
@@ -34,9 +16,19 @@ import * as request from 'request';
 import { HttpClientResponse } from './http-client-response';
 
 export class HttpClient {
+	// Server URL
 	public url = 'http://localhost';
+
+	// Server PORT
 	public port = process.env.PORT;
 
+	/**
+	 * Send a POST http request to the server
+	 * @param path string Path to send to (e.g. /users)
+	 * @param data object Data to send as query
+	 * @param expect number[] Array of status codes to expect
+	 * @param bearer string (Optional) Bearer token to send
+	 */
 	public post(
 		path: string,
 		data: object,
@@ -71,6 +63,13 @@ export class HttpClient {
 		});
 	}
 
+	/**
+	 * Send a GET http request to the server
+	 * @param path string Path to send to (e.g. /users)
+	 * @param data object Data to send as query
+	 * @param expect number[] Array of status codes to expect
+	 * @param bearer string (Optional) Bearer token to send
+	 */
 	public get(
 		path: string,
 		data: boolean | Object = false,
@@ -105,6 +104,13 @@ export class HttpClient {
 		});
 	}
 
+	/**
+	 * Send a PUT http request to the server
+	 * @param path string Path to send to (e.g. /users)
+	 * @param data object Data to send as query
+	 * @param expect number[] Array of status codes to expect
+	 * @param bearer string (Optional) Bearer token to send
+	 */
 	public put(
 		path: string,
 		data: object,
@@ -139,6 +145,13 @@ export class HttpClient {
 		});
 	}
 
+	/**
+	 * Send a DELETE http request to the server
+	 * @param path string Path to send to (e.g. /users)
+	 * @param data object Data to send as query
+	 * @param expect number[] Array of status codes to expect
+	 * @param bearer string (Optional) Bearer token to send
+	 */
 	public delete(
 		path: string,
 		expect: number[] = [ 204 ],

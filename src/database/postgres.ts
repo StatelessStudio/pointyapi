@@ -5,22 +5,40 @@ import * as path from 'path';
 import { BaseUser } from '../models/base-user';
 import { BaseDb } from './base-db';
 
+/**
+ * Postgres Database Handler
+ */
 export class PointyPostgres extends BaseDb {
+	// Auto-sync (Empties database on restart, not for production!)
 	public shouldSync = false;
+
+	// Database entities
 	public entities: any[];
 
+	/**
+	 * Constructor
+	 */
 	constructor() {
 		super();
 
 		this.entities = [ BaseUser ];
 	}
 
+	/**
+	 * Set ORM entities
+	 * @param entities any[] Array of entities
+	 */
 	public setEntities(entities: any[]) {
 		this.entities = entities;
 
 		return this;
 	}
 
+	/**
+	 * Connect to the database
+	 * @param options string | Object Database credentials (pass
+	 * 	a string to load from file, or pass the object directly)
+	 */
 	public async connect(options: string | Object): Promise<any> {
 		let pgOptions: any;
 
@@ -58,6 +76,7 @@ export class PointyPostgres extends BaseDb {
 			this.shouldSync = true;
 		}
 
+		// Create connection
 		await createConnection(<ConnectionOptions>{
 			name: 'default',
 			type: process.env.TYPEORM_DRIVER_TYPE || pgOptions.type,

@@ -4,6 +4,9 @@ import { getRepository } from 'typeorm';
 import { jwtBearer } from '../jwt-bearer';
 import { BaseUser } from '../models';
 
+/**
+ * Load user if a JWT Bearer header exists
+ */
 export async function loadUser(
 	request: Request,
 	response: Response,
@@ -32,6 +35,8 @@ export async function loadUser(
 		}
 		else {
 			response.unauthorizedResponder(`Couldn't load user`);
+
+			return false;
 		}
 	}
 	else {

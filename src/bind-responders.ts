@@ -6,7 +6,7 @@ import { Request, Response } from 'express';
  * @param request Express Request to bind to
  * @param response Express Response to bind to
  */
-export function bindResponders(to, request: Request, response: Response) {
+export function bindResponders(to, request: Request, response: Response): void {
 	response.error = to.error.bind({
 		request: request,
 		response: response

@@ -1,23 +1,29 @@
 import { BaseModel, BaseUser } from '../models';
 
-function isDefined(a) {
+/**
+ * Check if variable is defined
+ * @param a Variable to check
+ * @return boolean
+ */
+function isDefined(a: any): boolean {
 	return a !== undefined && a !== null;
 }
 
 /**
- * Compare a model with nested User models against the user
- * 	for ownership
+ * Compare a nested User against a User for ownership
+ * 	Example: Does obj->owner->id equal user->id?
  * @param obj Object to test
  * @param user User to test
  * @param objBodyguardKeys Key array from getBodyguardKeys(obj)
  * @param userBodyguardKeys Key array from getBodyguardKeys(user)
+ * @return boolean Returns if the user owns the given object
  */
 export function compareNestedBodyguards(
 	obj: BaseModel,
 	user: BaseUser,
 	objBodyguardKeys: string[],
 	userBodyguardKeys: string[]
-) {
+): boolean {
 	for (const objKey of objBodyguardKeys) {
 		for (const userKey of userBodyguardKeys) {
 			if (

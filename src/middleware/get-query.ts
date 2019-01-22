@@ -7,7 +7,18 @@ import {
 } from '../bodyguard';
 import { UserRole } from '../enums/user-role';
 
-function createSearchQuery(payloadType, obj: Object, objKey: string = 'obj') {
+/**
+ * Create a SQL query string for a search
+ * @param payloadType any Request payload type
+ * @param obj Object Search query object
+ * @param objKey string (Optional) SQL query object alias
+ * @return Object Returns { queryString, queryParams }
+ */
+function createSearchQuery(
+	payloadType,
+	obj: Object,
+	objKey: string = 'obj'
+): any {
 	const searchableFields = getSearchableFields(payloadType);
 	const searchableRelations = getSearchableRelations(payloadType);
 	let queryString = '';
@@ -180,15 +191,18 @@ function createSearchQuery(payloadType, obj: Object, objKey: string = 'obj') {
  * @param request Request to query by
  * @param response Response object to respond with
  */
-export async function getQuery(request: Request, response: Response) {
+export async function getQuery(
+	request: Request,
+	response: Response
+): Promise<any> {
 	if ('query' in request && '__search' in request.query) {
-		const objMnemonic = 'obj';
+		const objAlias = 'obj';
 
 		// Readable keys
 		let readableFields = getReadableFields(
 			new request.payloadType(),
 			request.user,
-			objMnemonic
+			objAlias
 		);
 
 		// Extract __select query keys
@@ -309,7 +323,7 @@ export async function getQuery(request: Request, response: Response) {
 			) {
 				queryString += ` AND (`;
 				bodyguardKeys.forEach((key) => {
-					queryString += `${objMnemonic}.${key}=:bodyGuard${key} OR `;
+					queryString += `${objAlias}.${key}=:bodyGuard${key} OR `;
 
 					queryParams['bodyGuard' + key] = request.user.id;
 				});
@@ -321,13 +335,13 @@ export async function getQuery(request: Request, response: Response) {
 
 		// Create selection
 		let selection = await request.repository
-			.createQueryBuilder(objMnemonic)
+			.createQueryBuilder(objAlias)
 			.select(readableFields);
 
 		// Loop through join tables
 		for (const table of request.joinMembers) {
 			selection = await selection.leftJoinAndSelect(
-				`${objMnemonic}.${table}`,
+				`${objAlias}.${table}`,
 				table
 			);
 		}
@@ -373,7 +387,7 @@ export async function getQuery(request: Request, response: Response) {
 			return await query.getRawMany();
 		}
 		else if (groupByKeys.length) {
-			const prestring = `${objMnemonic}_`;
+			const prestring = `${objAlias}_`;
 
 			return await query.getRawMany().then((result) => {
 				if (result instanceof Array && result.length) {

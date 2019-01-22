@@ -1,4 +1,9 @@
-export function deleteResponder(result: any) {
+/**
+ * Delete Responder
+ * @param result any Respond with 204 Success: No-Content
+ * 	if the result is successful
+ */
+export function deleteResponder(result: any): void {
 	if (result instanceof Object) {
 		// Send response
 		this.response.sendStatus(204);

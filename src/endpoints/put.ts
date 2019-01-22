@@ -4,7 +4,13 @@ import { validate } from 'class-validator';
 import { runHook } from '../run-hook';
 import { getISOTime } from '../models';
 
-export async function putEndpoint(request: Request, response: Response) {
+/**
+ * Put endpoint
+ */
+export async function putEndpoint(
+	request: Request,
+	response: Response
+): Promise<void> {
 	// Merge payload
 	request.body = Object.assign(request.payload, request.body);
 
@@ -46,6 +52,7 @@ export async function putEndpoint(request: Request, response: Response) {
 			request.body.timeUpdated = getISOTime();
 		}
 
+		// Save
 		await request.repository
 			.save(request.body)
 			.then((result) => response.putResponder(result))
