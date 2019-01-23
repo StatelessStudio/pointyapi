@@ -1,4 +1,3 @@
-export { deleteFilter } from './guards-filter/delete';
 export { getFilter } from './guards-filter/get';
 export { postFilter } from './guards-filter/post';
 export { putFilter } from './guards-filter/put';

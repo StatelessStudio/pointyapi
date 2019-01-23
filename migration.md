@@ -39,3 +39,4 @@
 		}
 	});
 	```
+4. Remove `deleteFilter`.  This filter does not have any value

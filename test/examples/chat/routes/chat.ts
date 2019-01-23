@@ -4,7 +4,6 @@ import {
 	postFilter,
 	getFilter,
 	putFilter,
-	deleteFilter,
 	onlySelf
 } from '../../../../src/guards';
 
@@ -29,6 +28,6 @@ async function loader(request, response, next) {
 router.post('/', loader, onlySelf, postFilter, postEndpoint);
 router.get('/', loader, onlySelf, getFilter, getEndpoint);
 router.put(`/:id`, loader, onlySelf, putFilter, putEndpoint);
-router.delete(`/:id`, loader, onlySelf, deleteFilter, deleteEndpoint);
+router.delete(`/:id`, loader, onlySelf, deleteEndpoint);
 
 export const chatRouter: Router = router;
