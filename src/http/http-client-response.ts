@@ -47,7 +47,7 @@ export class HttpClientResponse {
 	 * @param body Response body
 	 */
 	constructor(response: any, body: any) {
-		this.statusCode = response.statusCode;
+		this.statusCode = response ? response.statusCode : undefined;
 		this.response = response;
 		this.body = isJson(body) ? JSON.parse(body) : body;
 	}

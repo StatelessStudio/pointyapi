@@ -51,13 +51,16 @@ export class HttpClient {
 				if (error) {
 					reject(new HttpClientResponse(response, error));
 				}
-				else {
+				else if (response) {
 					if (expect.includes(response.statusCode)) {
 						accept(new HttpClientResponse(response, body));
 					}
 					else {
 						reject(new HttpClientResponse(response, error));
 					}
+				}
+				else {
+					reject(new HttpClientResponse(response, 'No response'));
 				}
 			});
 		});
@@ -92,13 +95,16 @@ export class HttpClient {
 				if (error) {
 					reject(new HttpClientResponse(response, error));
 				}
-				else {
+				else if (response) {
 					if (expect.includes(response.statusCode)) {
 						accept(new HttpClientResponse(response, body));
 					}
 					else {
 						reject(new HttpClientResponse(response, error));
 					}
+				}
+				else {
+					reject(new HttpClientResponse(response, 'No response'));
 				}
 			});
 		});
@@ -133,13 +139,16 @@ export class HttpClient {
 				if (error) {
 					reject(new HttpClientResponse(response, error));
 				}
-				else {
+				else if (response) {
 					if (expect.includes(response.statusCode)) {
 						accept(new HttpClientResponse(response, body));
 					}
 					else {
 						reject(new HttpClientResponse(response, error));
 					}
+				}
+				else {
+					reject(new HttpClientResponse(response, 'No response'));
 				}
 			});
 		});
@@ -171,13 +180,16 @@ export class HttpClient {
 				if (error) {
 					reject(new HttpClientResponse(response, error));
 				}
-				else {
+				else if (response) {
 					if (expect.includes(response.statusCode)) {
 						accept(new HttpClientResponse(response, body));
 					}
 					else {
 						reject(new HttpClientResponse(response, error));
 					}
+				}
+				else {
+					reject(new HttpClientResponse(response, 'No response'));
 				}
 			});
 		});
