@@ -88,10 +88,10 @@ export async function setModel(
 				// Run model hook
 				if (
 					!await runHook(
-						request,
-						response,
 						'beforePost',
-						request.body[i]
+						request.body[i],
+						request,
+						response
 					)
 				) {
 					return false;
@@ -115,7 +115,7 @@ export async function setModel(
 			}
 
 			// Run model hook
-			if (!await runHook(request, response, 'beforePost', request.body)) {
+			if (!await runHook('beforePost', request.body, request, response)) {
 				return false;
 			}
 		}
@@ -134,7 +134,7 @@ export async function setModel(
 		}
 
 		// Run model hook
-		if (!await runHook(request, response, 'beforeGet', request.query)) {
+		if (!await runHook('beforeGet', request.query, request, response)) {
 			return false;
 		}
 
@@ -164,7 +164,7 @@ export async function setModel(
 		}
 
 		// Run model hook
-		if (!await runHook(request, response, 'beforePut', request.payload)) {
+		if (!await runHook('beforePut', request.payload, request, response)) {
 			return false;
 		}
 
@@ -175,7 +175,7 @@ export async function setModel(
 	else if (request.method === 'DELETE') {
 		// Run model hook
 		if (
-			!await runHook(request, response, 'beforeDelete', request.payload)
+			!await runHook('beforeDelete', request.payload, request, response)
 		) {
 			return false;
 		}

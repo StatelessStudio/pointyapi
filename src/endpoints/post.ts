@@ -38,7 +38,7 @@ export async function postEndpoint(
 			request.body[i] = deleteUndefinedMembers(request.body[i]);
 
 			// Run model hook
-			if (!await runHook(request, response, 'post', request.body[i])) {
+			if (!await runHook('post', request.body[i], request, response)) {
 				return;
 			}
 
@@ -91,7 +91,7 @@ export async function postEndpoint(
 		request.body = deleteUndefinedMembers(request.body);
 
 		// Run model hook
-		if (!await runHook(request, response, 'post', request.body)) {
+		if (!await runHook('post', request.body, request, response)) {
 			return;
 		}
 

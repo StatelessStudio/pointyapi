@@ -2,16 +2,16 @@ import { Request, Response } from 'express';
 
 /**
  * Run specified hook in the model
- * @param request Express::Request Request object to pass to hook
- * @param response Express::Response Response object to pass to hook
  * @param name string Name of hook to run
  * @param obj any Object to run hook on
+ * @param request Express::Request Request object to pass to hook
+ * @param response Express::Response Response object to pass to hook
  */
 export async function runHook(
-	request: Request,
-	response: Response,
 	name: string,
-	obj: any
+	obj: any,
+	request: Request,
+	response: Response
 ): Promise<boolean> {
 	// Run model hook
 	let hookResult = false;

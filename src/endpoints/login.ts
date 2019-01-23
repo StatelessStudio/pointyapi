@@ -13,7 +13,7 @@ export async function loginEndpoint(
 	response: Response
 ): Promise<void> {
 	// Run model hook
-	if (!await runHook(request, response, 'login', request.body)) {
+	if (!await runHook('login', request.body, request, response)) {
 		return;
 	}
 

@@ -9,7 +9,7 @@ export async function logoutEndpoint(
 	response: Response
 ): Promise<void> {
 	// Run model hook
-	if (!await runHook(request, response, 'logout', request.body)) {
+	if (!await runHook('logout', request.body, request, response)) {
 		return;
 	}
 
