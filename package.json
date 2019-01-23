@@ -14,7 +14,9 @@
 		"test:jasmine-guards": "npm run db:drop && jasmine --config=test/jasmine.guards.json",
 		"test:jasmine-chat": "npm run db:drop && jasmine --config=test/jasmine.chat.json",
 		"db:drop": "typeorm schema:drop -f orm-cli",
-		"doc": "typedoc --out docs src --excludeNotExported"
+		"doc": "typedoc --out docs src --excludeNotExported",
+		"coverage": "rm -rf coverage && npm run db:drop && nyc npm run coverage-test",
+		"coverage-test": "ts-node node_modules/jasmine/bin/jasmine --config=test/jasmine.api.json"
 	},
 	"dependencies": {
 		"@types/atob": "^2.1.1",
@@ -46,7 +48,13 @@
 	"main": "./index.js",
 	"types": "./index.d.ts",
 	"devDependencies": {
+		"istanbul": "^0.4.5",
+		"nyc": "^13.1.0",
+		"source-map-support": "^0.5.10",
 		"ts-node": "^7.0.1",
 		"typedoc": "^0.13.0"
+	},
+	"nyc": {
+		"reporter": [ "html" ]
 	}
 }
