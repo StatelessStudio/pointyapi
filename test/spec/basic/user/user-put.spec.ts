@@ -136,4 +136,16 @@ describe('User API Update', () => {
 			)
 			.catch((error) => fail(JSON.stringify(error)));
 	});
+
+	it('removes undefined members', async () => {
+		await http
+			.put(
+				`/api/v1/user/${this.user1.body.id}`,
+				{
+					biography: undefined
+				},
+				[ 204 ]
+			)
+			.catch((error) => fail(JSON.stringify(error)));
+	});
 });
