@@ -1,5 +1,17 @@
 # PointyApi Changelog
 
+## [0.6.1] Jan-24-2018
+
+Fixed packaging error on last release
+
+## [0.6.0] Jan-24-2018
+
+### Additions
+- Added MIT License
+- Added Contributing guide
+- Added pull-request template
+- Added issue templates
+
 ## [0.5.3] Jan-02-2018
 
 ### Fixes
