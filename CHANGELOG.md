@@ -1,5 +1,9 @@
 # PointyApi Changelog
 
+## [0.6.1] Jan-24-2018
+
+Fixed packaging error on last release
+
 ## [0.6.0] Jan-24-2018
 
 ### Additions
