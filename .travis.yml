@@ -8,3 +8,5 @@ install:
   - npm install --ignore-scripts
 services:
   - postgresql 
+after_success:
+  - npm run coveralls
