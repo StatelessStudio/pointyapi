@@ -19,12 +19,19 @@ async function createMockup() {
 	return { request, response };
 }
 
+/**
+ * getQuery()
+ * pointyapi/middleware
+ */
 describe('[Middleware] GetQuery', () => {
 	it('can search', async () => {
+		// Create mock request/response
 		const { request, response } = await createMockup();
 
+		// Create request
 		request.query.__search = 'Get';
 
+		// Create users
 		const user1 = new BaseUser();
 		user1.fname = 'Get';
 		user1.lname = 'Endpoint';
@@ -39,14 +46,17 @@ describe('[Middleware] GetQuery', () => {
 		user2.password = 'password123';
 		user2.email = 'get2@example.com';
 
+		// Save users
 		await getRepository(BaseUser)
 			.save([ user1, user2 ])
 			.catch((error) => fail(JSON.stringify(error)));
 
+		// Set model
 		if (!await setModel(request, response, BaseUser)) {
 			fail('Could not set model');
 		}
 
+		// Test getQuery()
 		await getQuery(request, response)
 			.then((result) => {
 				request.payload = result;

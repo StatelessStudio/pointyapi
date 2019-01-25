@@ -3,6 +3,10 @@ import { UserRole } from '../../../src/enums';
 import { upgradeUserRole } from '../../../src/upgrade-user-role';
 import { getRepository } from 'typeorm';
 
+/**
+ * upgradeAdmin()
+ * pointyapi/
+ */
 describe('upgradeAdmin()', () => {
 	beforeAll(async () => {
 		// Create user
@@ -14,11 +18,15 @@ describe('upgradeAdmin()', () => {
 		this.user.email = 'baseUserUpgrade@test.com';
 		this.user.role = UserRole.Basic;
 
+		// Save user
 		this.user = await getRepository(BaseUser)
 			.save(this.user)
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
+	/**
+	 * upgradeAdmin()
+	 */
 	it('can upgrade user', async () => {
 		// Upgrade role to admin
 		await upgradeUserRole(

@@ -139,7 +139,7 @@ describe('[Guards] User API Delete', () => {
 		}
 	});
 
-	it('Admin can delete', async () => {
+	it('admin can delete', async () => {
 		const result = await http
 			.post('/api/v1/user', {
 				fname: 'deleteUser',

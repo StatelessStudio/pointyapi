@@ -76,7 +76,7 @@ describe('[Chat] Chat API Put', () => {
 		}
 	});
 
-	it('Cannot update chat with the wrong token', async () => {
+	it('cannot update chat with the wrong token', async () => {
 		await http
 			.post('/api/v1/user', {
 				fname: 'Chat',

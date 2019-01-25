@@ -109,7 +109,7 @@ describe('[Chat] Chat API Get', async () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
-	it('Cannot view chat w/o  a token', async () => {
+	it('cannot view chat w/o  a token', async () => {
 		await http
 			.get(
 				'/api/v1/chat',
@@ -123,7 +123,7 @@ describe('[Chat] Chat API Get', async () => {
 			);
 	});
 
-	it('Cannot view chat with the wrong token', async () => {
+	it('cannot view chat with the wrong token', async () => {
 		await http
 			.post('/api/v1/user', {
 				fname: 'Chat',

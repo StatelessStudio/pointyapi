@@ -17,43 +17,70 @@ class TestModel extends BaseModel {
 	@OnlySelfCanRead() public message: string = undefined;
 }
 
+/**
+ * responseFilter()
+ * pointyapi/bodyguard
+ */
 describe('[Bodyguard] responseFilter', () => {
+	/**
+	 * responseFilter()
+	 */
 	it('filters unauthorized requests', () => {
+		// Create user
 		let user = new BaseUser();
 		user.id = 1;
 		user.email = 'test@example.com';
 
+		// Filter user object
 		user = responseFilter(user, new BaseUser(), BaseUser, BaseUser);
 
-		expect(user.role).toEqual(undefined);
+		// Check if filtered
+		expect(user.email).toEqual(undefined);
 	});
 
+	/**
+	 * responseFilter() authorized
+	 */
 	it('bypasses authorized requests', () => {
+		// Create user
 		let user = new BaseUser();
 		user.id = 1;
 		user.email = 'test@example.com';
 
+		// Filter user object
 		user = responseFilter(user, user, BaseUser, BaseUser);
 
+		// Expect the object to be unfiltered
 		expect(user.email).toEqual('test@example.com');
 	});
 
+	/**
+	 * responseFilter() bypasses admin
+	 */
 	it('bypasses admin requests', () => {
+		// Create admin user
 		const user1 = new BaseUser();
 		user1.id = 1;
 		user1.role = UserRole.Admin;
 
+		// Create basic user
 		let user2 = new BaseUser();
 		user2.id = 2;
 		user2.role = UserRole.Basic;
 		user2.email = 'test@example.com';
 
+		// Filter user object
 		user2 = responseFilter(user2, user1, BaseUser, BaseUser);
 
+		// Expect the result to be unfiltered
 		expect(user2.email).toEqual('test@example.com');
 	});
 
+	/**
+	 * responseFilter() nested array
+	 */
 	it('filters nested arrays', () => {
+		// Create users
 		const user1 = new BaseUser();
 		user1.id = 1;
 		user1.role = UserRole.Basic;
@@ -67,16 +94,18 @@ describe('[Bodyguard] responseFilter', () => {
 		const user3 = new BaseUser();
 		user3.id = 3;
 
+		// Create resources
 		const test1 = new TestModel();
 		test1.owner = user1;
 
 		const test2 = new TestModel();
 		test2.owner = user2;
 
+		// Filter resources
 		let results = [ test1, test2 ];
-
 		results = responseFilter(results, user3, BaseUser, BaseUser);
 
+		// Expect result to be filtered properly
 		expect(results).toEqual(jasmine.any(Array));
 		expect(results.length).toEqual(2);
 		expect(results[0].owner).toEqual(jasmine.any(Object));
@@ -84,17 +113,22 @@ describe('[Bodyguard] responseFilter', () => {
 		expect(results[0].owner.password).toBeUndefined();
 	});
 
+	/**
+	 * responseFilter() nested object
+	 */
 	it('filters nested objects', () => {
+		// Create users
 		const user1 = new User();
 		const user2 = new User();
-
-		const chat1 = new ChatMessage();
-		const chat2 = new ChatMessage();
 
 		user1.id = 1;
 		user2.id = 2;
 
 		user1.password = user2.password = 'password';
+
+		// Create chats
+		const chat1 = new ChatMessage();
+		const chat2 = new ChatMessage();
 
 		chat1.id = 1;
 		chat1.from = user1;
@@ -104,10 +138,11 @@ describe('[Bodyguard] responseFilter', () => {
 		chat2.from = user2;
 		chat2.to = user1;
 
+		// Filter results
 		let results = [ chat1, chat2 ];
-
 		results = responseFilter(results, user1, ChatMessage, User);
 
+		// Expect result to be filtered properly
 		expect(results[0].id).toBeGreaterThanOrEqual(1);
 		expect(results[0].from.id).toBeGreaterThanOrEqual(1);
 		expect(results[0].from.password).toBeUndefined();

@@ -5,6 +5,9 @@ import { setModel } from '../../../../src';
 import { BaseUser } from '../../../../src/models';
 import { postEndpoint } from '../../../../src/endpoints';
 
+/**
+ * Create mock request/response
+ */
 async function createMockup() {
 	const request = mockRequest();
 	request.repository = await getRepository(BaseUser);
@@ -22,10 +25,19 @@ async function createMockup() {
 	return { request, response };
 }
 
+/**
+ * postEndpoint()
+ * pointyapi/endpoints
+ */
 describe('[Endpoints] Post', () => {
+	/**
+	 * postEndpoint() can post
+	 */
 	it('can post', async () => {
+		// Create mock request/response
 		const { request, response } = await createMockup();
 
+		// Create users
 		const user = new BaseUser();
 		user.fname = 'Post';
 		user.lname = 'Endpoint';
@@ -35,19 +47,33 @@ describe('[Endpoints] Post', () => {
 
 		request.body = user;
 
+		// Set model
 		if (!await setModel(request, response, BaseUser)) {
 			fail('Could not set model');
 		}
 
-		response.postResponder = () => {};
+		// Test postResponder()
+		let result = false;
+
+		response.postResponder = () => {
+			result = true;
+		};
+
 		await postEndpoint(request, response).catch((error) =>
 			fail(JSON.stringify(error))
 		);
+
+		expect(result).toBe(true);
 	});
 
+	/**
+	 * postEndpoint() calls validationResponder()
+	 */
 	it('calls validationResponder for a bad request', async () => {
+		// Create mock request/response
 		const { request, response } = await createMockup();
 
+		// Create user
 		const user = new BaseUser();
 		user.fname = 'Post';
 		user.lname = 'Endpoint';
@@ -57,13 +83,22 @@ describe('[Endpoints] Post', () => {
 
 		request.body = user;
 
+		// Set model
 		if (!await setModel(request, response, BaseUser)) {
 			fail('Could not set model');
 		}
 
-		response.validationResponder = () => {};
+		// Test postEndpoint()
+		let result = false;
+
+		response.validationResponder = () => {
+			result = true;
+		};
+
 		await postEndpoint(request, response).catch((error) =>
 			fail(JSON.stringify(error))
 		);
+
+		expect(result).toBe(true);
 	});
 });

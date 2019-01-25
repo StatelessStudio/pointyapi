@@ -5,6 +5,9 @@ import { setModel } from '../../../../src';
 import { BaseUser } from '../../../../src/models';
 import { getEndpoint } from '../../../../src/endpoints';
 
+/**
+ * Create mock request/response
+ */
 async function createMockup() {
 	const request = mockRequest();
 	request.repository = await getRepository(BaseUser);
@@ -20,12 +23,20 @@ async function createMockup() {
 	return { request, response };
 }
 
+/**
+ * getEndpoint()
+ * pointyapi/getEndpoint()
+ */
 describe('[Endpoints] Get', () => {
+	/**
+	 * getEndpoint() returns the payload
+	 */
 	it('returns the payload', async () => {
+		// Create mock request/response
 		const { request, response } = await createMockup();
-
 		request.query.__search = 'Get';
 
+		// Create users
 		const user1 = new BaseUser();
 		user1.fname = 'Get';
 		user1.lname = 'Endpoint';
@@ -40,17 +51,21 @@ describe('[Endpoints] Get', () => {
 		user2.password = 'password123';
 		user2.email = 'get2@example.com';
 
+		// Set model
 		if (!await setModel(request, response, BaseUser)) {
 			fail('Could not set model');
 		}
 
+		// Set payload
 		request.payload = [ user1, user2 ];
 
+		// Check for getResponder()
 		response.getResponder = () => {
 			expect(request.payload).toEqual(jasmine.any(Array));
 			expect(request.payload.length).toBeGreaterThanOrEqual(2);
 		};
 
+		// Run request
 		await getEndpoint(request, response).catch((error) =>
 			fail(JSON.stringify(error))
 		);
