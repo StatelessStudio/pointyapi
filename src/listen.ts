@@ -15,18 +15,13 @@ export async function listen(
 	port?: number,
 	logger?: LogHandlerFunction
 ) {
-	if ('listen' in app) {
-		await app.listen(port, () => {
-			logger('Server started.');
-			logger(`Server listening on port ${process.env.PORT}`);
+	await app.listen(port, () => {
+		logger('Server started.');
+		logger(`Server listening on port ${process.env.PORT}`);
 
-			// Send IPC notification
-			if ('send' in process && process.send) {
-				process.send('server-ready');
-			}
-		});
-	}
-	else {
-		throw new Error(`App doesn't contain listen method.`);
-	}
+		// Send IPC notification
+		if ('send' in process && process.send) {
+			process.send('server-ready');
+		}
+	});
 }
