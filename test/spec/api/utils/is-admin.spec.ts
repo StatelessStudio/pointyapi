@@ -1,4 +1,4 @@
-import { isAdmin } from '../../../../src/bodyguard';
+import { isAdmin } from '../../../../src/utils';
 import { BaseUser } from '../../../../src/models';
 import { UserRole } from '../../../../src/enums';
 

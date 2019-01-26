@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import { writeFilter, isSelf } from '../bodyguard';
+import { writeFilter } from '../bodyguard';
+import { isSelf } from '../utils';
 
 /**
  * Put Filter: Filter a PUT request payload, and respond with

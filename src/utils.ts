@@ -1,4 +1,5 @@
 export { bindResponders } from './utils/bind-responders';
+export { createTimestamp } from './utils/create-timestamp';
 export { deleteUndefinedMembers } from './utils/delete-undefined-members';
 export { forkServer } from './utils/fork-server';
 export { getIdentifierValue } from './utils/get-identifier-value';

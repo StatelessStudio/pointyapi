@@ -277,9 +277,6 @@ export function CanSearchRelation(params: object) {
 	return Reflect.metadata(CanSearchRelationSymbol, params);
 }
 
-export { isAdmin } from './utils/is-admin';
-export { isSelf } from './utils/is-self';
-
 export { compareNestedBodyguards } from './bodyguard/compare-nested';
 export { compareIdToUser } from './bodyguard/compare-id-to-user';
 export { getBodyguardKeys } from './bodyguard/get-bodyguard-keys';

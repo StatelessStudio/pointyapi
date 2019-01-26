@@ -1,4 +1,4 @@
-import { isSelf } from '../../../../src/bodyguard';
+import { isSelf } from '../../../../src/utils';
 import { BaseUser } from '../../../../src/models';
 
 /**

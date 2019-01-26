@@ -1,4 +1,4 @@
-import { createTimestamp } from './create-timestamp';
+import { createTimestamp } from '../utils/create-timestamp';
 
 /**
  * Default error handler

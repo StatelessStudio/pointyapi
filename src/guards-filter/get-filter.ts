@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { getCanRead, isAdmin } from '../bodyguard';
-import { readFilter } from '../bodyguard/read-filter';
+import { getCanRead, readFilter } from '../bodyguard';
+import { isAdmin } from '../utils';
 
 /**
  * Get Filter: Filter a GET response to remove private fields

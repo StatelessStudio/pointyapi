@@ -1,5 +1,5 @@
 import { mockRequest } from 'mock-req-res';
-import { getIdentifierValue } from '../../../src';
+import { getIdentifierValue } from '../../../src/utils';
 
 /**
  * getIdentifierValue()

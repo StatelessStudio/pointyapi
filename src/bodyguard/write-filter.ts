@@ -1,5 +1,6 @@
-import { BaseModel, BaseUser } from '../models';
-import { getCanWrite, isSelf, isAdmin } from '../bodyguard';
+import { BaseUser } from '../models';
+import { getCanWrite } from '../bodyguard';
+import { isSelf, isAdmin } from '../utils';
 
 /**
  * Filter an incoming request body to ensure it doesn't allow sensitive fields

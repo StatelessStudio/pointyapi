@@ -1,5 +1,6 @@
 import { BaseUser } from '../models';
-import { getCanRead, isSelf, isAdmin } from '../bodyguard';
+import { getCanRead } from '../bodyguard';
+import { isSelf, isAdmin } from '../utils';
 
 /**
  * Filter an outgoing response body to ensure it doesn't leak private fields
