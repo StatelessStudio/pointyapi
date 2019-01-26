@@ -10,7 +10,7 @@ import { getCanRead, isSelf, isAdmin } from '../bodyguard';
  * @param userType any Type of User to check
  * @return Returns the filtered obj
  */
-export function responseFilter(
+export function readFilter(
 	obj: any,
 	user: BaseUser,
 	objType: any,
@@ -18,7 +18,7 @@ export function responseFilter(
 ): any {
 	if (obj instanceof Array) {
 		for (let i = 0; i < obj.length; i++) {
-			obj[i] = responseFilter(obj[i], user, objType, userType);
+			obj[i] = readFilter(obj[i], user, objType, userType);
 		}
 	}
 	else if (obj instanceof Object) {
@@ -34,7 +34,7 @@ export function responseFilter(
 						!(obj[member] instanceof Date))
 				) {
 					const subObjTpye = obj[member].constructor;
-					obj[member] = responseFilter(
+					obj[member] = readFilter(
 						obj[member],
 						user,
 						subObjTpye,

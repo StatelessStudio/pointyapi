@@ -287,5 +287,5 @@ export { getSearchableFields } from './bodyguard/get-searchable-fields';
 export { getSearchableRelations } from './bodyguard/get-searchable-relations';
 export { getReadableFields } from './bodyguard/get-readable-fields';
 
-export { responseFilter } from './bodyguard/response-filter';
+export { readFilter } from './bodyguard/read-filter';
 export { writeFilter } from './bodyguard/write-filter';

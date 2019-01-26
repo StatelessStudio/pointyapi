@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 import { getCanRead, isAdmin } from '../bodyguard';
-import { responseFilter } from '../bodyguard/response-filter';
+import { readFilter } from '../bodyguard/read-filter';
 
 /**
  * Get Filter: Filter a GET response to remove private fields
@@ -48,7 +48,7 @@ export function getFilter(
 	}
 	else {
 		// User is authorized, filter response payload
-		request.payload = responseFilter(
+		request.payload = readFilter(
 			request.payload,
 			request.user,
 			request.payloadType,

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { validate } from 'class-validator';
 import { runHook } from '../utils/run-hook';
-import { responseFilter } from '../bodyguard/response-filter';
+import { readFilter } from '../bodyguard/read-filter';
 import { deleteUndefinedMembers } from '../utils';
 
 /**
@@ -58,7 +58,7 @@ export async function postEndpoint(
 
 			// Create result
 			if (results) {
-				results = responseFilter(
+				results = readFilter(
 					results,
 					request.user,
 					request.payloadType,
@@ -98,7 +98,7 @@ export async function postEndpoint(
 				.save(request.body)
 				.then((result) => {
 					// Create response
-					result = responseFilter(
+					result = readFilter(
 						result,
 						request.user,
 						request.payloadType,

@@ -3,7 +3,7 @@ import { compareSync } from 'bcryptjs';
 
 import { jwtBearer } from '../jwt-bearer';
 import { runHook } from '../utils/run-hook';
-import { responseFilter } from '../bodyguard/response-filter';
+import { readFilter } from '../bodyguard/read-filter';
 
 /**
  * Login endpoint
@@ -80,7 +80,7 @@ export async function loginEndpoint(
 			request.user = match;
 
 			// Create response
-			match = responseFilter(
+			match = readFilter(
 				match,
 				request.user,
 				request.payloadType,

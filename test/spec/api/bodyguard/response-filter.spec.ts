@@ -1,5 +1,5 @@
 import {
-	responseFilter,
+	readFilter,
 	BodyguardKey,
 	OnlySelfCanRead
 } from '../../../../src/bodyguard';
@@ -18,12 +18,12 @@ class TestModel extends BaseModel {
 }
 
 /**
- * responseFilter()
+ * readFilter()
  * pointyapi/bodyguard
  */
-describe('[Bodyguard] responseFilter', () => {
+describe('[Bodyguard] readFilter', () => {
 	/**
-	 * responseFilter()
+	 * readFilter()
 	 */
 	it('filters unauthorized requests', () => {
 		// Create user
@@ -32,14 +32,14 @@ describe('[Bodyguard] responseFilter', () => {
 		user.email = 'test@example.com';
 
 		// Filter user object
-		user = responseFilter(user, new BaseUser(), BaseUser, BaseUser);
+		user = readFilter(user, new BaseUser(), BaseUser, BaseUser);
 
 		// Check if filtered
 		expect(user.email).toEqual(undefined);
 	});
 
 	/**
-	 * responseFilter() authorized
+	 * readFilter() authorized
 	 */
 	it('bypasses authorized requests', () => {
 		// Create user
@@ -48,14 +48,14 @@ describe('[Bodyguard] responseFilter', () => {
 		user.email = 'test@example.com';
 
 		// Filter user object
-		user = responseFilter(user, user, BaseUser, BaseUser);
+		user = readFilter(user, user, BaseUser, BaseUser);
 
 		// Expect the object to be unfiltered
 		expect(user.email).toEqual('test@example.com');
 	});
 
 	/**
-	 * responseFilter() bypasses admin
+	 * readFilter() bypasses admin
 	 */
 	it('bypasses admin requests', () => {
 		// Create admin user
@@ -70,14 +70,14 @@ describe('[Bodyguard] responseFilter', () => {
 		user2.email = 'test@example.com';
 
 		// Filter user object
-		user2 = responseFilter(user2, user1, BaseUser, BaseUser);
+		user2 = readFilter(user2, user1, BaseUser, BaseUser);
 
 		// Expect the result to be unfiltered
 		expect(user2.email).toEqual('test@example.com');
 	});
 
 	/**
-	 * responseFilter() nested array
+	 * readFilter() nested array
 	 */
 	it('filters nested arrays', () => {
 		// Create users
@@ -103,7 +103,7 @@ describe('[Bodyguard] responseFilter', () => {
 
 		// Filter resources
 		let results = [ test1, test2 ];
-		results = responseFilter(results, user3, BaseUser, BaseUser);
+		results = readFilter(results, user3, BaseUser, BaseUser);
 
 		// Expect result to be filtered properly
 		expect(results).toEqual(jasmine.any(Array));
@@ -114,7 +114,7 @@ describe('[Bodyguard] responseFilter', () => {
 	});
 
 	/**
-	 * responseFilter() nested object
+	 * readFilter() nested object
 	 */
 	it('filters nested objects', () => {
 		// Create users
@@ -140,7 +140,7 @@ describe('[Bodyguard] responseFilter', () => {
 
 		// Filter results
 		let results = [ chat1, chat2 ];
-		results = responseFilter(results, user1, ChatMessage, User);
+		results = readFilter(results, user1, ChatMessage, User);
 
 		// Expect result to be filtered properly
 		expect(results[0].id).toBeGreaterThanOrEqual(1);
