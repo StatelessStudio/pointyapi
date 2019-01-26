@@ -63,9 +63,9 @@
 /**
  * Endpoints
  */
-export { deleteEndpoint } from './endpoints/delete';
-export { getEndpoint } from './endpoints/get';
-export { postEndpoint } from './endpoints/post';
-export { putEndpoint } from './endpoints/put';
-export { loginEndpoint } from './endpoints/login';
-export { logoutEndpoint } from './endpoints/logout';
+export { deleteEndpoint } from './endpoints/delete-endpoint';
+export { getEndpoint } from './endpoints/get-endpoint';
+export { postEndpoint } from './endpoints/post-endpoint';
+export { putEndpoint } from './endpoints/put-endpoint';
+export { loginEndpoint } from './endpoints/login-endpoint';
+export { logoutEndpoint } from './endpoints/logout-endpoint';

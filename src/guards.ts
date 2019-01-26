@@ -1,6 +1,6 @@
-export { getFilter } from './guards-filter/get';
-export { postFilter } from './guards-filter/post';
-export { putFilter } from './guards-filter/put';
+export { getFilter } from './guards-filter/get-filter';
+export { postFilter } from './guards-filter/post-filter';
+export { putFilter } from './guards-filter/put-filter';
 
 export { onlyActive } from './guards-auth/only-active';
 export { onlyAdmin } from './guards-auth/only-admin';
