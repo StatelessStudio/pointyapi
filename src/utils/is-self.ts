@@ -1,7 +1,7 @@
 import { BaseModel, BaseUser } from '../models';
 import { UserRole } from '../enums';
-import { getBodyguardKeys } from './get-bodyguard-keys';
-import { compareNestedBodyguards } from './compare-nested';
+import { getBodyguardKeys } from '../bodyguard/get-bodyguard-keys';
+import { compareNestedBodyguards } from '../bodyguard/compare-nested';
 
 /**
  * Check if the user matches a BodyguardKey for the object
