@@ -12,7 +12,7 @@ import { getCanWrite, isSelf, isAdmin } from '../bodyguard';
  * @return Returns true on success, or a string of the member name which failed.
  */
 export function writeFilter(
-	obj: BaseModel,
+	obj: BaseModel | BaseModel[],
 	user: BaseUser,
 	objType: any,
 	userType: any,
