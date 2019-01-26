@@ -1,13 +1,5 @@
 import { BaseModel, BaseUser } from '../models';
-
-/**
- * Check if variable is defined
- * @param a Variable to check
- * @return boolean
- */
-function isDefined(a: any): boolean {
-	return a !== undefined && a !== null;
-}
+import { isDefined } from '../utils';
 
 /**
  * Compare a nested User against a User for ownership

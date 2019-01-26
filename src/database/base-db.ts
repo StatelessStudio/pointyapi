@@ -1,7 +1,6 @@
 /**
  * Base Database class
  */
-
 export class BaseDb {
 	// Database logging function
 	public logger: Function = (message, body?) => console.log(message, body);

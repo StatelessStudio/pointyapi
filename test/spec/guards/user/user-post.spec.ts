@@ -1,6 +1,6 @@
 import { pointy } from '../../../../src';
 import { UserRole } from '../../../../src/enums/user-role';
-import { upgradeUserRole } from '../../../../src/upgrade-user-role';
+import { upgradeUserRole } from '../../../../src/utils/upgrade-user-role';
 import { BaseUser } from '../../../../src/models';
 const http = pointy.http;
 

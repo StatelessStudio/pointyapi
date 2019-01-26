@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { compareSync } from 'bcryptjs';
 
 import { jwtBearer } from '../jwt-bearer';
-import { runHook } from '../run-hook';
+import { runHook } from '../utils/run-hook';
 import { responseFilter } from '../bodyguard/response-filter';
 
 /**

@@ -1,7 +1,7 @@
 import 'jasmine';
 
 import { pointy } from '../../../src/';
-import { forkServer } from '../../../src/fork-server';
+import { forkServer } from '../../../src/utils/fork-server';
 const ROOT_PATH = require('app-root-path').toString();
 
 const http = pointy.http;

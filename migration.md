@@ -40,3 +40,10 @@
 	});
 	```
 4. Remove `deleteFilter`.  This filter does not have any value
+5. Update import directories
+   - `/bind-responders` -> `/utils/bind-responders`
+   - `/fork-server` -> `/utils/fork-server`
+   - `/get-identifier-value` -> `/utils/get-identifier-value`
+   - `/listen` -> `/utils/listen`
+   - `/run-hooks` -> `/utils/run-hooks`
+   - `/upgrade-user-role` -> `/utils/upgrade-user-role`

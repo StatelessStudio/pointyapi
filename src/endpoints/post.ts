@@ -1,21 +1,8 @@
 import { Request, Response } from 'express';
 import { validate } from 'class-validator';
-import { runHook } from '../run-hook';
+import { runHook } from '../utils/run-hook';
 import { responseFilter } from '../bodyguard/response-filter';
-
-/**
- * Delete undefined members from payload
- * @param obj any Object to delete members from
- */
-function deleteUndefinedMembers(obj: any): any {
-	for (const key in obj) {
-		if (obj[key] === undefined) {
-			delete obj[key];
-		}
-	}
-
-	return obj;
-}
+import { deleteUndefinedMembers } from '../utils';
 
 /**
  * Post endpoint

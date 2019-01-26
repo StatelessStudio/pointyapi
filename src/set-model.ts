@@ -22,7 +22,7 @@ import { Request, Response } from 'express';
 import { BaseModelInterface } from './models';
 import { getRepository } from 'typeorm';
 import { getQuery, loadEntity } from './middleware';
-import { runHook } from './run-hook';
+import { runHook } from './utils/run-hook';
 
 /**
  * Check if the key is in the model, and not a PointyAPI special

@@ -1,6 +1,6 @@
 import { BaseUser } from '../../../src/models';
 import { UserRole } from '../../../src/enums';
-import { upgradeUserRole } from '../../../src/upgrade-user-role';
+import { upgradeUserRole } from '../../../src/utils/upgrade-user-role';
 import { getRepository } from 'typeorm';
 
 /**

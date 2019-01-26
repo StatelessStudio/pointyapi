@@ -1,4 +1,4 @@
-import { LogHandlerFunction } from './method-interface';
+import { LogHandlerFunction } from '../method-interface';
 
 /**
  * # Start listening

@@ -4,7 +4,7 @@ import { Response, Request, NextFunction } from 'express';
 import * as bodyParser from 'body-parser';
 
 // Pointy Core
-import { listen } from './listen';
+import { listen } from './utils/listen';
 import { BaseDb, PointyPostgres } from './database';
 import { HttpClient } from './http/http-client';
 import {
@@ -26,7 +26,7 @@ import {
 	putResponder
 } from './responders';
 import { logHandler, errorHandler } from './handlers';
-import { bindResponders } from './bind-responders';
+import { bindResponders } from './utils/bind-responders';
 
 // Base Models
 import { BaseUser, BaseUserInterface } from './models';

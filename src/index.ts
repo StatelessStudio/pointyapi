@@ -45,9 +45,9 @@ declare global {
 
 // Export root files
 export { pointy, PointyApi } from './pointy-core';
-export { forkServer } from './fork-server';
-export { getIdentifierValue } from './get-identifier-value';
+export { forkServer } from './utils/fork-server';
+export { getIdentifierValue } from './utils/get-identifier-value';
 export { jwtBearer } from './jwt-bearer';
-export { listen } from './listen';
+export { listen } from './utils/listen';
 export { setModel } from './set-model';
-export { runHook } from './run-hook';
+export { runHook } from './utils/run-hook';

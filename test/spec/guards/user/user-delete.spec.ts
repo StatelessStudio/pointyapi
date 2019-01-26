@@ -1,5 +1,5 @@
 import { pointy } from '../../../../src';
-import { upgradeUserRole } from '../../../../src/upgrade-user-role';
+import { upgradeUserRole } from '../../../../src/utils/upgrade-user-role';
 import { BaseUser } from '../../../../src/models';
 import { UserRole } from '../../../../src/enums/user-role';
 

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { BaseModel } from '../models/base-model';
-import { runHook } from '../run-hook';
+import { runHook } from '../utils/run-hook';
 
 /**
  * Delete the object represent by the url key/value

@@ -1,6 +1,6 @@
 import { getRepository } from 'typeorm';
-import { BaseUserInterface } from './models';
-import { UserRole } from './enums/user-role';
+import { BaseUserInterface } from '../models';
+import { UserRole } from '../enums/user-role';
 
 /**
  * Upgrade a user role for setting up dev users or creating test admins

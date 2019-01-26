@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { validate } from 'class-validator';
 
-import { runHook } from '../run-hook';
+import { runHook } from '../utils/run-hook';
 import { getISOTime } from '../models';
 
 /**

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { runHook } from '../run-hook';
+import { runHook } from '../utils/run-hook';
 
 /**
  * Logout endpoint

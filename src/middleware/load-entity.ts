@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { getIdentifierValue } from '../get-identifier-value';
+import { getIdentifierValue } from '../utils/get-identifier-value';
 
 /**
  * Load resource represented by the URL ID
