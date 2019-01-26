@@ -5,15 +5,15 @@
 1. Remove `response` parameter from responders and handlers
 	Responders and handlers no longer take a `response` parameter, so you just need to remove the parameter from all calls to the following functions.  This is easiest via find and replace (pro tip: use regex!)
 	- `response.error()`
-	- `response.conflict()`
-	- `response.delete()`
-	- `response.forbidden()`
-	- `response.get()`
-	- `response.gone()`
-	- `response.post()`
-	- `response.put()`
-	- `response.unauthorized()`
-	- `response.validation()`
+	- `response.conflictResponder()`
+	- `response.deleteResponder()`
+	- `response.forbiddenResponder()`
+	- `response.getResponder()`
+	- `response.goneResponder()`
+	- `response.postResponder()`
+	- `response.putResponder()`
+	- `response.unauthorizedResponder()`
+	- `response.validationResponder()`
 2. Rename hooks
 	Hooks have been renamed for clarity.  Rename all hooks in your models (pro tip: project-wide find & replace).  **Make sure you go in order, and replace all occourences before moving on, because some hook names conflict with old hook names!**
     - `beforePost()` -> `post()`
@@ -28,7 +28,7 @@
     - `beforeLoadDelete()` -> `beforeDelete()`
     - `onGetQuery()` -> `beforeGet()` (`onGetQuery()` has been removed, use `beforeGet()` instead)
 3. Check `setModel()` return value
-	Although this isn't a breaking change, it is something we've noticed that must be fixed: sometimes, setModel() will fail, which if left unchecked, the request will bleed through the rest of the program, even though it has already been handled/responded to.  This will lead to odd errors and 'Headers already sent' errors in rare occasions.
+	Ensure you wrap setModel() in an if statement, and only proceed to next() if the function returns true
 
 	```typescript
 	// Set model
@@ -41,9 +41,8 @@
 	```
 4. Remove `deleteFilter`.  This filter does not have any value
 5. Update import directories
-   - `/bind-responders` -> `/utils/bind-responders`
-   - `/fork-server` -> `/utils/fork-server`
-   - `/get-identifier-value` -> `/utils/get-identifier-value`
-   - `/listen` -> `/utils/listen`
-   - `/run-hooks` -> `/utils/run-hooks`
-   - `/upgrade-user-role` -> `/utils/upgrade-user-role`
+   - `/fork-server` -> `/utils`
+   - `/get-identifier-value` -> `/utils`
+   - `/listen` -> `/utils`
+   - `/run-hooks` -> `/utils`
+   - `/upgrade-user-role` -> `/utils`
