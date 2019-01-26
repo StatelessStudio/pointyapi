@@ -3,7 +3,7 @@ import { getCanWrite, isSelf, isAdmin } from '../bodyguard';
 
 /**
  * Filter an incoming request body to ensure it doesn't allow sensitive fields
- * @param obj Object or array to check (enables recursion).
+ * @param obj any | any[] Object or array to check (recursive).
  * 	This can be the direct obj set of a typeorm request
  * @param user User object to check against
  * @param objType any Type of object
@@ -12,7 +12,7 @@ import { getCanWrite, isSelf, isAdmin } from '../bodyguard';
  * @return Returns true on success, or a string of the member name which failed.
  */
 export function writeFilter(
-	obj: BaseModel | BaseModel[],
+	obj: any | any[],
 	user: BaseUser,
 	objType: any,
 	userType: any,
