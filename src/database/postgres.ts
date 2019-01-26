@@ -9,6 +9,9 @@ import { BaseDb } from './base-db';
  * Postgres Database Handler
  */
 export class PointyPostgres extends BaseDb {
+	// Connection name.  Default is "default"
+	public connectionName = 'default';
+
 	// Auto-sync (Empties database on restart, not for production!)
 	public shouldSync = false;
 
@@ -78,7 +81,7 @@ export class PointyPostgres extends BaseDb {
 
 		// Create connection
 		await createConnection(<ConnectionOptions>{
-			name: 'default',
+			name: this.connectionName,
 			type: process.env.TYPEORM_DRIVER_TYPE || pgOptions.type,
 			driver: process.env.TYPEORM_DRIVER_TYPE || pgOptions.type,
 			host: pgOptions.host,
