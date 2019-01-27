@@ -34,7 +34,7 @@ export async function loginEndpoint(
 
 	// Check users
 	if (!foundUsers || !foundUsers.length) {
-		response.goneResponder(foundUsers);
+		response.unauthorizedResponder('Could not authenticate user');
 		return;
 	}
 
