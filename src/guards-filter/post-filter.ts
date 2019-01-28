@@ -12,7 +12,7 @@ export function postFilter(
 ): void {
 	// Posting new user is always self
 	let isSelfResult;
-	if (request.method === 'POST' && request.payloadType === request.userType) {
+	if (request.payloadType === request.userType) {
 		isSelfResult = true;
 	}
 
