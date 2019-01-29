@@ -18,12 +18,12 @@ export function errorHandler(error: any, code: number = 500): void {
 		}
 		else if (error.code === 23503) {
 			// Foreign key violation
-			this.response.sendStatus(409);
+			this.response.conflictResponder('Foreign Key Violation');
 			return;
 		}
 		else if (error.code === 23505) {
 			// Duplicate key value
-			this.response.sendStatus(409);
+			this.response.conflictResponder('Duplicate Key Value');
 			return;
 		}
 	}
