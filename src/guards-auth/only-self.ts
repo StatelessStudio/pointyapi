@@ -11,11 +11,11 @@ import { BaseModel } from '../models/base-model';
  * Only Self Guard: Return 401 Unauthorized if the User does not
  * 	own the resource
  */
-export async function onlySelf(
+export function onlySelf(
 	request: Request,
 	response: Response,
 	next: NextFunction
-): Promise<boolean> {
+): boolean {
 	let authorized = false;
 	const userKeys = getBodyguardKeys(new request.userType());
 	const bodyKeys = getBodyguardKeys(new request.payloadType());
