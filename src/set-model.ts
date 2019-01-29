@@ -22,30 +22,7 @@ import { Request, Response } from 'express';
 import { BaseModelInterface } from './models';
 import { getRepository } from 'typeorm';
 import { getQuery, loadEntity } from './middleware';
-import { runHook } from './utils/run-hook';
-
-/**
- * Check if the key is in the model, and not a PointyAPI special
- * 	key (`__keyname`)
- * @param key string Key name
- * @param model any Model to check
- * @param response Express::Response (Optional) Response object to
- * 	respond with a 400
- */
-function isKeyInModel(key: string, model: any, response?: Response): boolean {
-	if (!(key in model) && key.indexOf('__') !== 0) {
-		if (response) {
-			response.validationResponder(
-				'Member key "' + key + '" does not exist in model.'
-			);
-		}
-
-		return false;
-	}
-	else {
-		return true;
-	}
-}
+import { runHook, isKeyInModel } from './utils';
 
 /**
  * Set model type and load payload

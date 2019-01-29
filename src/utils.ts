@@ -6,6 +6,7 @@ export { getIdentifierValue } from './utils/get-identifier-value';
 export { isAdmin } from './utils/is-admin';
 export { isDefined } from './utils/is-defined';
 export { isJson } from './utils/is-json';
+export { isKeyInModel } from './utils/is-key-in-model';
 export { isSelf } from './utils/is-self';
 export { listen } from './utils/listen';
 export { runHook } from './utils/run-hook';
