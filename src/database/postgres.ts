@@ -60,7 +60,7 @@ export class PointyPostgres extends BaseDb {
 		}
 		else {
 			// Local
-			if (typeof options === 'string' || options instanceof String) {
+			if (typeof options === 'string') {
 				pgOptions = require(path.join(
 					options.toString(),
 					'local.config.json'
