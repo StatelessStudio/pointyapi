@@ -33,6 +33,7 @@ export async function loadUser(
 			request.user = result;
 
 			next();
+			return true;
 		}
 		else {
 			response.unauthorizedResponder(`Couldn't load user`);
