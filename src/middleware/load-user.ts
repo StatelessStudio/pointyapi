@@ -13,10 +13,10 @@ export async function loadUser(
 	next: NextFunction
 ) {
 	// Validate
-	let token: any = jwtBearer.getToken(request);
+	const tokenString: any = jwtBearer.getToken(request);
 
-	if (token) {
-		token = jwtBearer.dryVerify(token);
+	if (tokenString) {
+		const token = jwtBearer.dryVerify(tokenString);
 
 		if (!token) {
 			response.unauthorizedResponder('invalid token');
@@ -26,11 +26,12 @@ export async function loadUser(
 
 		// Verify
 		const result = await getRepository(request.userType)
-			.findOne({ id: token.id })
+			.findOne({ id: token.id, token: tokenString })
 			.catch(() => response.error(`Could not load user`));
 
 		if (result && result instanceof BaseUser) {
 			request.user = result;
+
 			next();
 		}
 		else {
