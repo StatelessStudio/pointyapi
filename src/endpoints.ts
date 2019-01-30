@@ -44,7 +44,7 @@
  *
  * // Set model
  * async function loader(request, response, next) {
- * 		if (await setModel(request, BaseUser, 'id')) {
+ * 		if (await setModel(request, BaseUser)) {
  * 			next();
  * 		}
  * }

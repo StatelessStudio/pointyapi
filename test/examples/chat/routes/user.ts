@@ -19,7 +19,7 @@ import {
 const router: Router = Router();
 
 async function loader(request, response, next) {
-	if (await setModel(request, response, User, 'id')) {
+	if (await setModel(request, response, User)) {
 		next();
 	}
 }

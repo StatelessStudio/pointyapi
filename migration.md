@@ -33,7 +33,7 @@
 	```typescript
 	// Set model
 	router.use((request, response, next) => {
-		if (await setModel(request, BaseUser, 'id')) {
+		if (await setModel(request, response, BaseUser)) {
 			// Note that this next() call is now in an if-statement around the setModel()
 			next();
 		}
@@ -46,3 +46,16 @@
    - `/listen` -> `/utils`
    - `/run-hooks` -> `/utils`
    - `/upgrade-user-role` -> `/utils`
+6. Update `setModel()` for auth routers
+	Previously, `setModel()` would run the incorrect hooks for auth routers, and may even lead to deleting the wrong user's token.  This has been fixed by passing `true` to the fourth parameter (`isAuth`)
+
+	```typescript
+	// Set model
+	router.use((request, response, next) => {
+		//                                    vvv add this for auth routes
+		if (await setModel(request, response, BaseUser, true)) {
+			// Note that this next() call is now in an if-statement around the setModel()
+			next();
+		}
+	});
+	```

@@ -12,25 +12,32 @@ export async function loadEntity(
 	next?: NextFunction
 ): Promise<boolean> {
 	if (request.identifier) {
-		const result = await request.repository
-			.findOne(getIdentifierValue(request))
-			.catch(() => response.error(`Could not load entity`));
+		const value = getIdentifierValue(request);
 
-		if (result && result instanceof request.payloadType) {
-			request.payload = result;
+		if (value) {
+			const result = await request.repository
+				.findOne(value)
+				.catch(() => response.error(`Could not load entity`));
 
-			if (next) {
-				next();
+			if (result && result instanceof request.payloadType) {
+				request.payload = result;
 
-				return true;
+				if (next) {
+					next();
+
+					return true;
+				}
+				else {
+					return true;
+				}
 			}
 			else {
-				return true;
+				response.goneResponder(`Couldn't load entity`);
+				return false;
 			}
 		}
 		else {
-			response.goneResponder(`Couldn't load entity`);
-			return false;
+			response.validationResponder('Invalid query parameters');
 		}
 	}
 	else {

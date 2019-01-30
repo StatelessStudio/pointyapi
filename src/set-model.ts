@@ -29,6 +29,9 @@ import { runHook, isKeyInModel } from './utils';
  * @param request Express::Request Request object
  * @param response Express::Response Response object
  * @param model BaseModelInterface Model to set the request type to
+ * @param isAuth boolean (Optional) If this is an authentication route.
+ * 	Default is false.
+ * 	Will run beforeLogin() and beforeLogout() posts instead of post/delete hook
  * @param identifier string (Optional) URL parameter name, for
  * 	example `/users/:id`.  Default is `id`.  Although this parameter
  * 	is optional, you **must** set it to the same string as in your routes.
@@ -37,6 +40,7 @@ export async function setModel(
 	request: Request,
 	response: Response,
 	model: BaseModelInterface,
+	isAuth: boolean = false,
 	identifier: string = 'id'
 ): Promise<any> {
 	request.identifier = identifier;
@@ -44,7 +48,23 @@ export async function setModel(
 	request.payload = new model();
 	request.repository = getRepository(request.payloadType);
 
+	// Substitute authenticated user as resource for auth router deletes
+	if (isAuth && request.method === 'DELETE') {
+		request.params = request.user;
+
+		if (request.user) {
+			request.params = request.user;
+		}
+		else {
+			response.unauthorizedResponder('Not authenticated');
+
+			return false;
+		}
+	}
+
+	// Post loader
 	if (request.method === 'POST') {
+		// Load post array
 		if (request.body instanceof Array) {
 			for (let i = 0; i < request.body.length; i++) {
 				request.body[i] = Object.assign(
@@ -65,7 +85,7 @@ export async function setModel(
 				// Run model hook
 				if (
 					!await runHook(
-						'beforePost',
+						isAuth ? 'beforeLogin' : 'beforePost',
 						request.body[i],
 						request,
 						response
@@ -76,6 +96,7 @@ export async function setModel(
 			}
 		}
 		else {
+			// Load post object
 			request.body = Object.assign(
 				new request.payloadType(),
 				request.body
@@ -92,12 +113,20 @@ export async function setModel(
 			}
 
 			// Run model hook
-			if (!await runHook('beforePost', request.body, request, response)) {
+			if (
+				!await runHook(
+					isAuth ? 'beforeLogin' : 'beforePost',
+					request.body,
+					request,
+					response
+				)
+			) {
 				return false;
 			}
 		}
 	}
 	else if (request.method === 'GET') {
+		// Get loader
 		request.query = Object.assign(new request.payloadType(), request.query);
 
 		for (const key in request.query) {
@@ -134,6 +163,7 @@ export async function setModel(
 		}
 	}
 	else if (request.method === 'PUT') {
+		// Put loader
 		for (const key in request.body) {
 			if (!isKeyInModel(key, request.payload, response)) {
 				return false;
@@ -150,9 +180,15 @@ export async function setModel(
 		}
 	}
 	else if (request.method === 'DELETE') {
+		// Delete loader
 		// Run model hook
 		if (
-			!await runHook('beforeDelete', request.payload, request, response)
+			!await runHook(
+				isAuth ? 'beforeLogout' : 'beforeDelete',
+				request.payload,
+				request,
+				response
+			)
 		) {
 			return false;
 		}

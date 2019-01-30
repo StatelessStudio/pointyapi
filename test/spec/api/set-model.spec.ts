@@ -40,7 +40,7 @@ describe('setModel', () => {
 		const response = mockResponse();
 
 		// Set model
-		if (!await setModel(request, response, BaseUser, 'username')) {
+		if (!await setModel(request, response, BaseUser, false, 'username')) {
 			fail('Could not set model');
 		}
 

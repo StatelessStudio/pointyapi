@@ -6,7 +6,7 @@ import { setModel } from '../../../../src/';
 const router: Router = Router();
 
 async function loader(request, response, next) {
-	if (await setModel(request, response, User)) {
+	if (await setModel(request, response, User, true)) {
 		next();
 	}
 }
