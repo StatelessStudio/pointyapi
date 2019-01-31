@@ -6,9 +6,6 @@ import { getBodyguardKeys, compareIdToUser } from '../../../../src/bodyguard';
  * pointyapi/bodyguard
  */
 describe('[Bodyguard] compareIdToUser', () => {
-	/**
-	 * Before all
-	 */
 	beforeAll(() => {
 		// Create user
 		this.user = new BaseUser();
@@ -18,9 +15,6 @@ describe('[Bodyguard] compareIdToUser', () => {
 		this.guardKeys = getBodyguardKeys(new BaseUser());
 	});
 
-	/**
-	 * Test compareIdToUser() (Positive)
-	 */
 	it('returns true if the user matches', () => {
 		// Check if this.user has an id of 2
 		const result = compareIdToUser('id', 2, this.user, this.guardKeys);
@@ -28,9 +22,6 @@ describe('[Bodyguard] compareIdToUser', () => {
 		expect(result).toBe(true);
 	});
 
-	/**
-	 * Test compareIdToUser() (Negative)
-	 */
 	it('returns false if the user does not match', () => {
 		// This user should not have an id of 3
 		const result = compareIdToUser('id', 3, this.user, this.guardKeys);
