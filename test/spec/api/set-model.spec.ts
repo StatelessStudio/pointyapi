@@ -8,9 +8,6 @@ import { BaseUser } from '../../../src/models';
  * pointyapi/
  */
 describe('setModel', () => {
-	/**
-	 * setModel() sets request payload
-	 */
 	it('sets the payload', async () => {
 		// Create request
 		const request = mockRequest();
@@ -28,9 +25,6 @@ describe('setModel', () => {
 		expect(request.payload).toEqual(jasmine.any(BaseUser));
 	});
 
-	/**
-	 * setModel() sets the identifier
-	 */
 	it('sets the identifier', async () => {
 		// Create request
 		const request = mockRequest();

@@ -6,9 +6,6 @@ import { getReadableFields } from '../../../../src/bodyguard';
  * pointyapi/bodyguard
  */
 describe('[Bodyguard] getReadableFields', () => {
-	/**
-	 * getReadableFields() returns array of keys
-	 */
 	it('returns an array of one key for BaseUser', () => {
 		// Create user
 		const user = new BaseUser();

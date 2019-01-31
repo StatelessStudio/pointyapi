@@ -6,9 +6,6 @@ import { getBodyguardKeys } from '../../../../src/bodyguard';
  * pointyapi/bodyguard
  */
 describe('[Bodyguard] getBodyguardKeys', () => {
-	/**
-	 * getBodyguardKeys() returns array of keys
-	 */
 	it('returns an array of one key for BaseUser', () => {
 		// Get bodyguard keys
 		const ownerKeys = getBodyguardKeys(new BaseUser());

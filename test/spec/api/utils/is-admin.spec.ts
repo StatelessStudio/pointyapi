@@ -4,12 +4,9 @@ import { UserRole } from '../../../../src/enums';
 
 /**
  * isAdmin()
- * pointyapi/bodyguard
+ * pointyapi/utils
  */
-describe('[Bodyguard] isAdmin', () => {
-	/**
-	 * isAdmin() positive
-	 */
+describe('[Utils] isAdmin', () => {
 	it('returns true if the user is an admin', () => {
 		// Create admin user
 		const user = new BaseUser();
@@ -19,9 +16,6 @@ describe('[Bodyguard] isAdmin', () => {
 		expect(isAdmin(user)).toBe(true);
 	});
 
-	/**
-	 * isAdmin() negative
-	 */
 	it('returns false if the user is not an admin', () => {
 		// Create basic user
 		const user = new BaseUser();

@@ -8,32 +8,20 @@ import { BaseUser } from '../../../src/models';
  * pointyapi/
  */
 describe('[JWT]', () => {
-	/**
-	 * Sign token
-	 */
 	it('can sign a token', () => {
 		expect(jwtBearer.sign(new BaseUser())).toEqual(jasmine.any(String));
 	});
 
-	/**
-	 * Verify token
-	 */
 	it('can can verify a token', () => {
 		const jwtString = jwtBearer.sign(new BaseUser());
 
 		expect(jwtBearer.dryVerify(jwtString)).not.toEqual(false);
 	});
 
-	/**
-	 * Expiration
-	 */
 	it('can get an expiration date/time', () => {
 		expect(jwtBearer.getExpiration()).toBeGreaterThan(Date.now());
 	});
 
-	/**
-	 * Get token from request
-	 */
 	it('can get a token from request headers', () => {
 		// Sign token
 		const jwtString = jwtBearer.sign(new BaseUser());

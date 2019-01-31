@@ -14,9 +14,6 @@ class TestModel extends BaseModel {
  * pointyapi/bodyguard
  */
 describe('[Bodyguard] compareNested()', () => {
-	/**
-	 * Check matching user
-	 */
 	it('returns true if the object matches', () => {
 		// Create base user
 		const user = new BaseUser();
@@ -41,9 +38,6 @@ describe('[Bodyguard] compareNested()', () => {
 		).toBe(true);
 	});
 
-	/**
-	 * Check non-matching user
-	 */
 	it('returns false if the object does not match', () => {
 		// Create base user
 		const user = new BaseUser();

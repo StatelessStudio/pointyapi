@@ -3,12 +3,9 @@ import { BaseUser } from '../../../../src/models';
 
 /**
  * isSelf()
- * pointyapi/bodyguard
+ * pointyapi/utils
  */
-describe('[Bodyguard] isSelf', () => {
-	/**
-	 * isSelf() positive
-	 */
+describe('[Utils] isSelf', () => {
 	it('returns true if the user matches the result', () => {
 		// Create user
 		const user = new BaseUser();
@@ -21,9 +18,6 @@ describe('[Bodyguard] isSelf', () => {
 		expect(result).toBe(true);
 	});
 
-	/**
-	 * isSelf() negative
-	 */
 	it('returns false if the user does not match the result', () => {
 		// Create user
 		const user = new BaseUser();
