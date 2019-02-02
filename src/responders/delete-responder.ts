@@ -10,6 +10,6 @@ export function deleteResponder(result: any): void {
 	}
 	else {
 		// Send error
-		this.response.error('ID not found in Delete Response');
+		this.response.error('Delete responder result is not an object.');
 	}
 }
