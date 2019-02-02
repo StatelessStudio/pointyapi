@@ -1,5 +1,5 @@
 import {
-	readFilter,
+	writeFilter,
 	BodyguardKey,
 	OnlySelfCanRead
 } from '../../../../src/bodyguard';
@@ -10,53 +10,54 @@ import { ChatMessage } from '../../../examples/chat/models/chat-message';
 import { User } from '../../../examples/chat/models/user';
 
 /**
- * readFilter()
+ * writeFilter()
  * pointyapi/bodyguard
  */
-describe('[Bodyguard] readFilter', () => {
+describe('[Bodyguard] writeFilter', () => {
 	it('filters unauthorized requests', () => {
-		// Create user
-		let user = new BaseUser();
-		user.id = 1;
-		user.email = 'test@example.com';
-
 		// Filter user object
-		user = readFilter(user, new BaseUser(), BaseUser, BaseUser);
+		const result = writeFilter(
+			{ email: 'test@example.com' },
+			new BaseUser(),
+			BaseUser,
+			BaseUser,
+			false
+		);
 
 		// Check if filtered
-		expect(user.email).toEqual(undefined);
+		expect(result).toEqual('email');
 	});
 
 	it('bypasses authorized requests', () => {
-		// Create user
-		let user = new BaseUser();
-		user.id = 1;
-		user.email = 'test@example.com';
-
 		// Filter user object
-		user = readFilter(user, user, BaseUser, BaseUser);
+		const result = writeFilter(
+			{ email: 'test@example.com' },
+			new BaseUser(),
+			BaseUser,
+			BaseUser,
+			true
+		);
 
 		// Expect the object to be unfiltered
-		expect(user.email).toEqual('test@example.com');
+		expect(result).toBe(true);
 	});
 
 	it('bypasses admin requests', () => {
 		// Create admin user
-		const user1 = new BaseUser();
-		user1.id = 1;
-		user1.role = UserRole.Admin;
-
-		// Create basic user
-		let user2 = new BaseUser();
-		user2.id = 2;
-		user2.role = UserRole.Basic;
-		user2.email = 'test@example.com';
+		const admin = new BaseUser();
+		admin.id = 1;
+		admin.role = UserRole.Admin;
 
 		// Filter user object
-		user2 = readFilter(user2, user1, BaseUser, BaseUser);
+		const result = writeFilter(
+			{ email: 'test@example.com' },
+			admin,
+			BaseUser,
+			BaseUser
+		);
 
 		// Expect the result to be unfiltered
-		expect(user2.email).toEqual('test@example.com');
+		expect(result).toBe(true);
 	});
 
 	it('filters nested arrays', () => {
@@ -82,15 +83,11 @@ describe('[Bodyguard] readFilter', () => {
 		test2.from = user2;
 
 		// Filter resources
-		let results = [ test1, test2 ];
-		results = readFilter(results, user3, BaseUser, BaseUser);
+		const results = [ test1, test2 ];
+		const result = writeFilter(results, user3, BaseUser, BaseUser);
 
 		// Expect result to be filtered properly
-		expect(results).toEqual(jasmine.any(Array));
-		expect(results.length).toEqual(2);
-		expect(results[0].from).toEqual(jasmine.any(Object));
-		expect(results[0].from.id).toBeGreaterThanOrEqual(1);
-		expect(results[0].from.password).toBeUndefined();
+		expect(result).toBe('[#0]id');
 	});
 
 	it('filters nested objects', () => {
@@ -116,14 +113,10 @@ describe('[Bodyguard] readFilter', () => {
 		chat2.to = user1;
 
 		// Filter results
-		let results = [ chat1, chat2 ];
-		results = readFilter(results, user1, ChatMessage, User);
+		const results = [ chat1, chat2 ];
+		const result = writeFilter(results, user1, ChatMessage, User);
 
 		// Expect result to be filtered properly
-		expect(results[0].id).toBeGreaterThanOrEqual(1);
-		expect(results[0].from.id).toBeGreaterThanOrEqual(1);
-		expect(results[0].from.password).toBeUndefined();
-		expect(results[0].to.id).toBeGreaterThanOrEqual(1);
-		expect(results[0].to.password).toBeUndefined();
+		expect(result).toBe('[#0]id');
 	});
 });

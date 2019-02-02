@@ -1,10 +1,10 @@
-import { BaseUser } from '../../../src/models';
-import { UserRole } from '../../../src/enums';
-import { upgradeUserRole } from '../../../src/utils/upgrade-user-role';
+import { BaseUser } from '../../../../src/models';
+import { UserRole } from '../../../../src/enums';
+import { upgradeUserRole } from '../../../../src/utils/upgrade-user-role';
 import { getRepository } from 'typeorm';
 
 /**
- * upgradeAdmin()
+ * upgradeUserRole()
  * pointyapi/
  */
 describe('upgradeAdmin()', () => {
@@ -24,9 +24,6 @@ describe('upgradeAdmin()', () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
-	/**
-	 * upgradeAdmin()
-	 */
 	it('can upgrade user', async () => {
 		// Upgrade role to admin
 		await upgradeUserRole(

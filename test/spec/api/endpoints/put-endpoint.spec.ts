@@ -1,41 +1,16 @@
-import { mockRequest, mockResponse } from 'mock-req-res';
-import { getRepository } from 'typeorm';
-
 import { setModel } from '../../../../src';
 import { BaseUser } from '../../../../src/models';
 import { putEndpoint } from '../../../../src/endpoints';
-
-/**
- * Create mock request/response
- */
-async function createMockup() {
-	const request = mockRequest();
-	request.repository = await getRepository(BaseUser);
-	request.method = 'PUT';
-	request.baseUrl = '/api/v1/user';
-	request.userType = BaseUser;
-	request.joinMembers = [];
-
-	const response = mockResponse();
-	response.error = (error) => fail(JSON.stringify(error));
-	response.validationResponder = (msg) =>
-		fail('Validation: ' + JSON.stringify(msg));
-	response.putResponder = (msg) => fail('Deleted: ' + JSON.stringify(msg));
-
-	return { request, response };
-}
+import { createMockRequest } from '../../../../src/test-probe';
 
 /**
  * putEndpoint()
  * pointyapi/endpoints
  */
 describe('[Endpoints] Put', () => {
-	/**
-	 * putEndpoint()
-	 */
 	it('can put', async () => {
 		// Create mock request/response
-		const { request, response } = await createMockup();
+		const { request, response } = createMockRequest('PUT');
 
 		// Create user
 		const user = new BaseUser();
@@ -74,12 +49,9 @@ describe('[Endpoints] Put', () => {
 		expect(result).toBe(true);
 	});
 
-	/**
-	 * putEndpoint() bad request
-	 */
 	it('calls validationResponder for a bad request', async () => {
 		// Create mock request/response
-		const { request, response } = await createMockup();
+		const { request, response } = createMockRequest('PUT');
 
 		// Create user
 		const user = new BaseUser();

@@ -1,39 +1,17 @@
-import { mockRequest, mockResponse } from 'mock-req-res';
-import { getRepository } from 'typeorm';
-
 import { setModel } from '../../../../src';
 import { BaseUser } from '../../../../src/models';
 import { getEndpoint } from '../../../../src/endpoints';
 
-/**
- * Create mock request/response
- */
-async function createMockup() {
-	const request = mockRequest();
-	request.repository = await getRepository(BaseUser);
-	request.method = 'GET';
-	request.baseUrl = '/api/v1/user';
-	request.userType = BaseUser;
-	request.joinMembers = [];
-
-	const response = mockResponse();
-	response.error = (error) => fail(JSON.stringify(error));
-	response.getResponder = (error) => fail('Got: ' + JSON.stringify(error));
-
-	return { request, response };
-}
+import { createMockRequest } from '../../../../src/test-probe';
 
 /**
  * getEndpoint()
- * pointyapi/getEndpoint()
+ * pointyapi/endpoints
  */
 describe('[Endpoints] Get', () => {
-	/**
-	 * getEndpoint() returns the payload
-	 */
 	it('returns the payload', async () => {
 		// Create mock request/response
-		const { request, response } = await createMockup();
+		const { request, response } = createMockRequest();
 		request.query.__search = 'Get';
 
 		// Create users

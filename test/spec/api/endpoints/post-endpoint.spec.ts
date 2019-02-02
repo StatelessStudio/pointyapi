@@ -1,41 +1,16 @@
-import { mockRequest, mockResponse } from 'mock-req-res';
-import { getRepository } from 'typeorm';
-
 import { setModel } from '../../../../src';
 import { BaseUser } from '../../../../src/models';
 import { postEndpoint } from '../../../../src/endpoints';
-
-/**
- * Create mock request/response
- */
-async function createMockup() {
-	const request = mockRequest();
-	request.repository = await getRepository(BaseUser);
-	request.method = 'POST';
-	request.baseUrl = '/api/v1/user';
-	request.userType = BaseUser;
-	request.joinMembers = [];
-
-	const response = mockResponse();
-	response.error = (error) => fail(JSON.stringify(error));
-	response.validationResponder = (msg) =>
-		fail('Validation: ' + JSON.stringify(msg));
-	response.postResponder = (msg) => fail('Deleted: ' + JSON.stringify(msg));
-
-	return { request, response };
-}
+import { createMockRequest } from '../../../../src/test-probe';
 
 /**
  * postEndpoint()
  * pointyapi/endpoints
  */
 describe('[Endpoints] Post', () => {
-	/**
-	 * postEndpoint() can post
-	 */
 	it('can post', async () => {
 		// Create mock request/response
-		const { request, response } = await createMockup();
+		const { request, response } = createMockRequest('POST');
 
 		// Create users
 		const user = new BaseUser();
@@ -66,12 +41,9 @@ describe('[Endpoints] Post', () => {
 		expect(result).toBe(true);
 	});
 
-	/**
-	 * postEndpoint() calls validationResponder()
-	 */
 	it('calls validationResponder for a bad request', async () => {
 		// Create mock request/response
-		const { request, response } = await createMockup();
+		const { request, response } = createMockRequest('POST');
 
 		// Create user
 		const user = new BaseUser();

@@ -1,40 +1,17 @@
-import { mockRequest, mockResponse } from 'mock-req-res';
-
-import { setModel } from '../../../../src/';
+import { setModel } from '../../../../src';
 import { BaseUser } from '../../../../src/models';
 import { deleteEndpoint } from '../../../../src/endpoints';
-import { getRepository } from 'typeorm';
 
-/**
- * Create mock request/response objects
- */
-async function createMockup() {
-	const request = mockRequest();
-	request.repository = await getRepository(BaseUser);
-	request.method = 'DELETE';
-	request.baseUrl = '/api/v1/user';
-	request.userType = BaseUser;
-	request.joinMembers = [];
-
-	const response = mockResponse();
-	response.error = (error) => fail(JSON.stringify(error));
-	response.goneResponder = (error) => fail('Gone: ' + JSON.stringify(error));
-	response.deleteResponder = (msg) => fail('Deleted: ' + JSON.stringify(msg));
-
-	return { request, response };
-}
+import { createMockRequest } from '../../../../src/test-probe';
 
 /**
  * deleteEndpoint()
  * pointyapi/endpoints
  */
 describe('[Endpoints] Delete', () => {
-	/**
-	 * deleteEndpoint() deletes
-	 */
 	it('can delete', async () => {
 		// Create mock request/response
-		const { request, response } = await createMockup();
+		const { request, response } = createMockRequest('DELETE');
 
 		// Create base user
 		const user = new BaseUser();
@@ -45,7 +22,7 @@ describe('[Endpoints] Delete', () => {
 		user.email = 'delete@example.com';
 
 		// Get user repo
-		const result = await getRepository(BaseUser)
+		const result = await request.repository
 			.save(user)
 			.catch((error) => fail(JSON.stringify(error)));
 
@@ -65,12 +42,9 @@ describe('[Endpoints] Delete', () => {
 		);
 	});
 
-	/**
-	 * deleteResponder() calls response.goneResponder()
-	 */
 	it('calls response.goneResponder() if object not found', async () => {
 		// Create mock request/response
-		const { request, response } = await createMockup();
+		const { request, response } = createMockRequest('DELETE');
 
 		// Setup request
 		request.identifier = 'id';

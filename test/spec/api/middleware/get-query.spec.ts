@@ -1,23 +1,9 @@
-import { mockRequest, mockResponse } from 'mock-req-res';
 import { getRepository } from 'typeorm';
 
 import { setModel } from '../../../../src';
 import { BaseUser } from '../../../../src/models';
 import { getQuery } from '../../../../src/middleware';
-
-async function createMockup() {
-	const request = mockRequest();
-	request.repository = await getRepository(BaseUser);
-	request.method = 'GET';
-	request.baseUrl = '/api/v1/user';
-	request.userType = BaseUser;
-	request.joinMembers = [];
-
-	const response = mockResponse();
-	response.error = (error) => fail(JSON.stringify(error));
-
-	return { request, response };
-}
+import { createMockRequest } from '../../../../src/test-probe';
 
 /**
  * getQuery()
@@ -26,7 +12,7 @@ async function createMockup() {
 describe('[Middleware] GetQuery', () => {
 	it('can search', async () => {
 		// Create mock request/response
-		const { request, response } = await createMockup();
+		const { request, response } = createMockRequest();
 
 		// Create request
 		request.query.__search = 'Get';
