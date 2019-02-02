@@ -1,8 +1,9 @@
 # pointy
 
-[![Build Status](https://travis-ci.org/StatelessStudio/pointyapi.svg?branch=master)](https://travis-ci.org/StatelessStudio/pointyapi)
-
 Opinionated Restful Server Architecture
+
+[![Build Status](https://travis-ci.org/StatelessStudio/pointyapi.svg?branch=master)](https://travis-ci.org/StatelessStudio/pointyapi)
+[![Coverage Status](https://coveralls.io/repos/github/StatelessStudio/pointyapi/badge.svg?branch=v1.0.0)](https://coveralls.io/github/StatelessStudio/pointyapi?branch=v1.0.0)
 
 ## Installation
 
