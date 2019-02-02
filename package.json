@@ -58,6 +58,7 @@
 		"typedoc": "^0.13.0"
 	},
 	"nyc": {
-		"reporter": [ "lcov", "text-summary", "html" ]
+		"reporter": [ "lcov", "text-summary", "html" ],
+		"exclude": [ "**/*.spec.js", "**/examples/**" ]
 	}
 }
