@@ -137,20 +137,17 @@ export class BaseUser extends BaseModel {
 
 	// Post hook
 	public beforePost(request: Request, response: Response) {
-		// User route
-		if (request.baseUrl.includes('/v1/user')) {
-			const user = request.body;
+		const user = request.body;
 
-			// Check if user has some sort of password
-			if (!user.password) {
-				response.validationResponder('Must supply a password');
-				return false;
-			}
+		// Check if user has some sort of password
+		if (!user.password) {
+			response.validationResponder('Must supply a password');
+			return false;
+		}
 
-			// Hash password
-			if ('password' in user && user.password) {
-				user.password = hashSync(user.password, 12);
-			}
+		// Hash password
+		if ('password' in user && user.password) {
+			user.password = hashSync(user.password, 12);
 		}
 
 		return true;
