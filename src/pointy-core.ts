@@ -1,6 +1,6 @@
 // Express
 const express = require('express');
-import { Response, Request, NextFunction } from 'express';
+import { Response, Request, NextFunction, Application } from 'express';
 import * as bodyParser from 'body-parser';
 
 // Pointy Core
@@ -36,7 +36,7 @@ import { BaseUser, BaseUserInterface } from './models';
  */
 export class PointyApi {
 	// Express app
-	public app = express();
+	public app: Application = express();
 
 	// Core
 	public listen: Function = listen;
