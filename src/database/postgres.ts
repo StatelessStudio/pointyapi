@@ -39,10 +39,11 @@ export class PointyPostgres extends BaseDb {
 
 	/**
 	 * Connect to the database
-	 * @param options string | Object Database credentials (pass
-	 * 	a string to load from file, or pass the object directly)
+	 * @param options string | Object (Optional) Database credentials (pass
+	 * 	a string to load from file, or pass the object directly).  Database
+	 * 	will rely on `process.env.DATABASE_URL` if this is not set.
 	 */
-	public async connect(options: string | Object): Promise<any> {
+	public async connect(options?: string | Object): Promise<any> {
 		let pgOptions: any;
 
 		if (process.env.DATABASE_URL) {
@@ -52,7 +53,7 @@ export class PointyPostgres extends BaseDb {
 			);
 			pgOptions.type = 'postgres';
 
-			this.logger('Using production database', pgOptions);
+			this.logger('Using database', pgOptions);
 			this.logger(
 				'Using database driver',
 				process.env.TYPEORM_DRIVER_TYPE || pgOptions.type
