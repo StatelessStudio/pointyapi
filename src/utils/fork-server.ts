@@ -1,3 +1,5 @@
+import * as fs from 'fs';
+
 /**
  * # Fork Server
  *
@@ -43,14 +45,16 @@ import { fork } from 'child_process';
  */
 export function forkServer(serverFile: string): Promise<any> {
 	return new Promise((accept, reject) => {
-		const serverfork = fork(serverFile);
-
-		serverfork.on('message', (message) => {
-			if (message === 'server-ready') {
-				accept(serverfork);
+		fs.access(serverFile, (error) => {
+			if (error) {
+				reject('Could not read server file: ' + JSON.stringify(error));
 			}
 			else {
-				reject(message);
+				const serverfork = fork(serverFile);
+
+				serverfork.on('message', (message) => {
+					accept(serverfork);
+				});
 			}
 		});
 	});

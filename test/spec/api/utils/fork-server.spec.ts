@@ -18,4 +18,15 @@ describe('[Utils] forkServer()', async () => {
 			serverfork.kill();
 		}
 	});
+
+	it('rejects if the server is not a valid file', async () => {
+		let result = false;
+		const serverfork = await forkServer('invalid')
+			.then(fail)
+			.catch((error) => {
+				result = true;
+			});
+
+		expect(result).toBe(true);
+	});
 });
