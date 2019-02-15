@@ -65,3 +65,4 @@
 	Hooks are now bound to the resource, and should utilize `this.` notation
 9. Make sure hooks don't loop
     Hooks are called once per object, therefore they should only take care of one resource at a time
+11. Default resources can now be added via `addResource(User, {...})`

@@ -1,3 +1,4 @@
+export { addResource } from './utils/add-resource';
 export { bindResponders } from './utils/bind-responders';
 export { createSearchQuery } from './utils/create-search-query';
 export { createTimestamp } from './utils/create-timestamp';
