@@ -20,22 +20,9 @@ export async function putEndpoint(
 	}
 
 	// Pass null in place of empty strings
-	if (request.payload instanceof Array) {
-		request.payload.map((item: Object) => {
-			for (const key in item) {
-				if (item[key] === '') {
-					item[key] = null;
-				}
-			}
-
-			return item;
-		});
-	}
-	else {
-		for (const key in request.payload) {
-			if (request.payload[key] === '') {
-				request.payload[key] = null;
-			}
+	for (const key in request.payload) {
+		if (request.payload[key] === '') {
+			request.payload[key] = null;
 		}
 	}
 
