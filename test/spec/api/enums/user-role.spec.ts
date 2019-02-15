@@ -20,8 +20,4 @@ describe('[Enum] UserRole', () => {
 	it('contains Admin', () => {
 		expect(UserRole.Admin).toEqual('admin');
 	});
-
-	it('contains Developer', () => {
-		expect(UserRole.Developer).toEqual('developer');
-	});
 });
