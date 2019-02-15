@@ -5,9 +5,9 @@ import { getRepository } from 'typeorm';
 
 /**
  * upgradeUserRole()
- * pointyapi/
+ * pointyapi/utils
  */
-describe('upgradeAdmin()', () => {
+describe('upgradeUserRole()', () => {
 	beforeAll(async () => {
 		// Create user
 		this.user = new BaseUser();
@@ -31,7 +31,7 @@ describe('upgradeAdmin()', () => {
 			BaseUser,
 			UserRole.Admin
 		).catch((error) =>
-			fail('Could not upgrade user role' + JSON.stringify(error))
+			fail('Could not upgrade user role: ' + JSON.stringify(error))
 		);
 
 		// Pull user back from database
@@ -41,5 +41,19 @@ describe('upgradeAdmin()', () => {
 
 		// Check value
 		expect(this.user.role).toEqual(UserRole.Admin);
+	});
+
+	it('rejects if the user is not found', async () => {
+		let result = false;
+
+		// Upgrade role to admin
+		await upgradeUserRole('nobody', BaseUser, UserRole.Admin)
+			.then((error) =>
+				fail('Upgraded nobodies user role: ' + JSON.stringify(error))
+			)
+			.catch(() => (result = true));
+
+		// Check value
+		expect(result).toBe(true);
 	});
 });

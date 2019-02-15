@@ -23,7 +23,7 @@ describe('[HTTP] HTTP Client', () => {
 
 	it('can get', async () => {
 		const result: void | HttpClientResponse = await http
-			.get('/', {}, [ 404 ])
+			.get('/', {}, [ 404 ], 'Bearer: test')
 			.catch((error) => fail(JSON.stringify(error)));
 
 		if (result) {
@@ -46,7 +46,7 @@ describe('[HTTP] HTTP Client', () => {
 
 	it('can post', async () => {
 		const result: void | HttpClientResponse = await http
-			.post('/', {}, [ 404 ])
+			.post('/', {}, [ 404 ], 'Bearer: test')
 			.catch((error) => fail(JSON.stringify(error)));
 
 		if (result) {
@@ -69,7 +69,7 @@ describe('[HTTP] HTTP Client', () => {
 
 	it('can put', async () => {
 		const result: void | HttpClientResponse = await http
-			.put('/', {}, [ 404 ])
+			.put('/', {}, [ 404 ], 'Bearer: test')
 			.catch((error) => fail(JSON.stringify(error)));
 
 		if (result) {
@@ -92,7 +92,7 @@ describe('[HTTP] HTTP Client', () => {
 
 	it('can delete', async () => {
 		const result: void | HttpClientResponse = await http
-			.delete('/', [ 404 ])
+			.delete('/', [ 404 ], 'Bearer: test')
 			.catch((error) => fail(JSON.stringify(error)));
 
 		if (result) {

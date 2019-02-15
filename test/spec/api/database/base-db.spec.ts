@@ -9,12 +9,14 @@ describe('[BaseDb]', () => {
 		this.baseDb = new BaseDb();
 	});
 
-	it('contains a logger function', () => {
-		expect(this.baseDb.logger).toEqual(jasmine.any(Function));
+	beforeEach(() => {
+		this.clog = console.log;
+		this.cerr = console.error;
 	});
 
-	it('contains an error handler function', () => {
-		expect(this.baseDb.errorHandler).toEqual(jasmine.any(Function));
+	afterEach(() => {
+		console.log = this.clog;
+		console.error = this.cerr;
 	});
 
 	it('contains setEntities() & allows chaining', () => {
@@ -23,5 +25,27 @@ describe('[BaseDb]', () => {
 
 	it('contains connect() & returns a promise', () => {
 		expect(this.baseDb.connect({})).toEqual(jasmine.any(Promise));
+	});
+
+	it('can log a message', () => {
+		let result = false;
+
+		console.log = () => {
+			result = true;
+		};
+
+		this.baseDb.logger();
+		expect(result).toBe(true);
+	});
+
+	it('can log an error', () => {
+		let result = false;
+
+		console.error = () => {
+			result = true;
+		};
+
+		this.baseDb.errorHandler();
+		expect(result).toBe(true);
 	});
 });

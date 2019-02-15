@@ -90,6 +90,7 @@ describe('[Middleware] loadUser()', async () => {
 		const returnValue = await loadUser(request, response, fail);
 
 		expect(returnValue).toBe(false);
+		expect(result).toBe(true);
 	});
 
 	it('calls unauthorizedResponder on user not found', async () => {
@@ -126,5 +127,25 @@ describe('[Middleware] loadUser()', async () => {
 		});
 
 		expect(returnValue).toBe(false);
+		expect(result).toBe(true);
+	});
+
+	it('skips if the request does not have a token', async () => {
+		// Create mock request/response
+		const { request, response } = createMockRequest();
+		request._header = request.header;
+		request.header = (header) => {
+			if (header === 'Authorization') {
+				return false;
+			}
+			else {
+				return request._header(header);
+			}
+		};
+
+		let result = false;
+		await loadUser(request, response, () => (result = true));
+
+		expect(result).toBe(true);
 	});
 });

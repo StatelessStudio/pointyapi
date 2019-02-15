@@ -1,11 +1,21 @@
 import { createMockRequest } from '../../../../src/test-probe';
 import { BaseUser } from '../../../../src/models';
 
+declare var fail;
+
 /**
  * createMockRequest()
  * pointyapi/test-probe
  */
 describe('[Test Probe] createMockRequest()', () => {
+	beforeEach(() => {
+		this.fail = fail;
+	});
+
+	afterEach(() => {
+		fail = this.fail;
+	});
+
 	it('sets request', () => {
 		const { request, response } = createMockRequest();
 		expect(request).toEqual(jasmine.any(Object));
@@ -30,5 +40,39 @@ describe('[Test Probe] createMockRequest()', () => {
 		expect(response.putResponder).toEqual(jasmine.any(Function));
 		expect(response.unauthorizedResponder).toEqual(jasmine.any(Function));
 		expect(response.validationResponder).toEqual(jasmine.any(Function));
+	});
+
+	it('response responder functions fail by default', () => {
+		const { request, response } = createMockRequest();
+		const functions = [
+			'conflictResponder',
+			'deleteResponder',
+			'forbiddenResponder',
+			'getResponder',
+			'error',
+			'goneResponder',
+			'postResponder',
+			'putResponder',
+			'unauthorizedResponder',
+			'validationResponder'
+		];
+
+		let nTests = 0;
+		let nFails = 0;
+		fail = () => nFails++;
+
+		for (const func of functions) {
+			if (response[func] instanceof Function) {
+				response[func]();
+
+				nTests++;
+			}
+			else {
+				fail(func + ' is not a function.');
+			}
+		}
+
+		expect(nFails).toBe(nTests);
+		expect(nTests).toBeGreaterThanOrEqual(1);
 	});
 });

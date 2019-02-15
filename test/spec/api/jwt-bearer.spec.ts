@@ -36,4 +36,19 @@ describe('[JWT]', () => {
 		// Check request token
 		expect(jwtBearer.getToken(request)).toEqual(jasmine.any(String));
 	});
+
+	it('getToken() returns false if token is not valid', () => {
+		// Sign token
+		const jwtString = jwtBearer.sign(new BaseUser());
+
+		// Create request
+		const request = mockRequest();
+		request.header = () => {
+			return 'invalid ' + jwtString;
+		};
+		request.baseUrl = '/api/v1/user';
+
+		// Check request token
+		expect(jwtBearer.getToken(request)).toBe(false);
+	});
 });

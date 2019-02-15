@@ -16,7 +16,7 @@ describe('[Endpoints] Login', async () => {
 		user.fname = 'Login';
 		user.lname = 'Test';
 		user.username = 'logintest';
-		user.password = hashSync('password123', 12);
+		user.tempPassword = hashSync('password123', 12);
 		user.email = 'logintest@example.com';
 
 		await getRepository(BaseUser)
@@ -30,7 +30,8 @@ describe('[Endpoints] Login', async () => {
 
 		request.body = {
 			__user: 'logintest',
-			password: 'password123'
+			password: 'password123',
+			undefinedTest: undefined
 		};
 
 		// Run login endpoint

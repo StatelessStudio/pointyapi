@@ -1,7 +1,11 @@
+import { createMockRequest } from '../../../../src/test-probe';
+
 /**
  * runHook()
  * pointyapi/utils
  */
 describe('[Utils] runHook()', () => {
-	// TODO: Test
+	it('runs the hook', () => {
+		const { request, response } = createMockRequest();
+	});
 });

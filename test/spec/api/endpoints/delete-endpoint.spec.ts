@@ -59,9 +59,7 @@ describe('[Endpoints] Delete', () => {
 		};
 
 		// Set model
-		if (await setModel(request, response, BaseUser)) {
-			fail('Should not have been able to set model!');
-		}
+		await deleteEndpoint(request, response);
 
 		// Expect goneResponder() to have been called
 		expect(result).toBe(true);

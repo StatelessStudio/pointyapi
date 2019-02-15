@@ -73,4 +73,24 @@ describe('[Middleware] loadEntity()', async () => {
 
 		expect(result).toBe(true);
 	});
+
+	it('responds with error responder if identifier is not set', async () => {
+		// Create mock request/response
+		const { request, response } = createMockRequest();
+		request.params = {};
+		request.identifier = undefined;
+
+		// Override error responder
+		let result = false;
+		response.error = () => {
+			result = true;
+		};
+
+		// Load entity
+		await loadEntity(request, response, () => {
+			fail('Fail: Loaded entity successfully.');
+		});
+
+		expect(result).toBe(true);
+	});
 });

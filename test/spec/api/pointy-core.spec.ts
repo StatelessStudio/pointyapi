@@ -14,4 +14,27 @@ beforeAll(async () => {
 		.catch((error) =>
 			fail('Cannot start database' + JSON.stringify(error))
 		);
+
+	await pointy.start();
+
+	process.env.PORT = '8081';
+});
+
+describe('Pointy Core', () => {
+	beforeEach(() => {
+		this.errorHandler = pointy.error;
+	});
+
+	afterEach(() => {
+		pointy.error = this.errorHandler;
+	});
+
+	it('Handles Express error events', () => {
+		let result = false;
+		pointy.error = () => (result = true);
+
+		pointy.app.emit('error', '');
+
+		expect(result).toBe(true);
+	});
 });

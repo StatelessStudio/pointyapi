@@ -27,6 +27,7 @@ describe('[Endpoints] Put', () => {
 
 		// Create request
 		request.body = user;
+		request.body.lname = '';
 		request.identifier = 'id';
 		request.params.id = user.id;
 
@@ -47,6 +48,7 @@ describe('[Endpoints] Put', () => {
 		);
 
 		expect(result).toBe(true);
+		expect(request.payload.lname).toEqual(null);
 	});
 
 	it('calls validationResponder for a bad request', async () => {

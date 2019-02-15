@@ -1,8 +1,21 @@
 import { getRepository } from 'typeorm';
 
 import { createMockRequest } from '../../../../src/test-probe';
-import { BaseUser } from '../../../../src/models';
+import { BaseUser, BaseModel } from '../../../../src/models';
 import { getFilter } from '../../../../src/guards';
+import { OnlySelfCanRead, OnlyAdminCanRead } from '../../../../src/bodyguard';
+
+class OnlySelfCanReadMember extends BaseModel {
+	@OnlySelfCanRead() public id: number = undefined;
+}
+
+class OnlyAdminCanReadMember extends BaseModel {
+	@OnlyAdminCanRead() public id: number = undefined;
+}
+
+class NobodyCanReadMember extends BaseModel {
+	public id: number = undefined;
+}
 
 /**
  * getFilter()
@@ -52,6 +65,66 @@ describe('[Guards] getFilter', async () => {
 		// Create request
 		request.query = { password: 'password123' };
 		request.payload = [ this.user ];
+
+		// Filter
+		let result = false;
+		response.forbiddenResponder = () => {
+			result = true;
+		};
+
+		getFilter(request, response, fail);
+
+		expect(result).toBe(true);
+	});
+
+	it('refuses unauthenticated is-self requests', async () => {
+		// Create mock request/response
+		const { request, response } = createMockRequest();
+
+		// Create request
+		request.query = { id: 'password123' };
+		request.payload = [ new OnlySelfCanReadMember() ];
+		request.payloadType = OnlySelfCanReadMember;
+
+		// Filter
+		let result = false;
+		response.forbiddenResponder = () => {
+			result = true;
+		};
+
+		getFilter(request, response, fail);
+
+		expect(result).toBe(true);
+	});
+
+	it('refuses authenticated is-admin requests', async () => {
+		// Create mock request/response
+		const { request, response } = createMockRequest();
+
+		// Create request
+		request.query = { id: 'password123' };
+		request.payload = [ new OnlyAdminCanReadMember() ];
+		request.payloadType = OnlyAdminCanReadMember;
+
+		// Filter
+		let result = false;
+		response.forbiddenResponder = () => {
+			result = true;
+		};
+
+		getFilter(request, response, fail);
+
+		expect(result).toBe(true);
+	});
+
+	it('refuses authenticated no-read requests', async () => {
+		// Create mock request/response
+		const { request, response } = createMockRequest();
+
+		// Create request
+		request.query = { id: 'password123' };
+		request.payload = [ new NobodyCanReadMember() ];
+		request.payloadType = NobodyCanReadMember;
 
 		// Filter
 		let result = false;
