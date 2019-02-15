@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 
 import { BaseUser } from '../models/base-user';
-import { UserRole } from '../enums/user-role';
+import { isAdmin } from '../utils/is-admin';
 
 /**
  * Only Admin Guard: Responds with 401 Unauthorized if the
@@ -12,10 +12,7 @@ export function onlyAdmin(
 	response: Response,
 	next: NextFunction
 ): void {
-	if (
-		request.user instanceof BaseUser &&
-		request.user.role === UserRole.Admin
-	) {
+	if (request.user instanceof BaseUser && isAdmin(request.user)) {
 		// User is admin
 		next();
 	}

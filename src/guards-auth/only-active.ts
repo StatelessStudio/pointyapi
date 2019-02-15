@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 import { BaseUser } from '../models/base-user';
 import { UserStatus } from '../enums/user-status';
+import { isAdmin } from '../utils/is-admin';
 
 /**
  * Only Actie Guard: Check if the user has a status
@@ -15,7 +16,7 @@ export function onlyActive(
 ): void {
 	if (
 		request.user instanceof BaseUser &&
-		request.user.status === UserStatus.Active
+		(request.user.status === UserStatus.Active || isAdmin(request.user))
 	) {
 		// User is active
 		next();

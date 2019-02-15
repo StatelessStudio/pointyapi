@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 import { BaseUser } from '../models/base-user';
 import { UserRole } from '../enums/user-role';
+import { isAdmin } from '../utils/is-admin';
 
 /**
  * Only allow user with the role Member (or Admin+),
@@ -14,7 +15,7 @@ export function onlyMember(
 ): void {
 	if (
 		request.user instanceof BaseUser &&
-		request.user.role === UserRole.Member
+		(request.user.role === UserRole.Member || isAdmin(request.user))
 	) {
 		// User is member
 		next();
