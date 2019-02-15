@@ -136,40 +136,26 @@ export class BaseUser extends BaseModel {
 	public thumbnail: string = undefined;
 
 	// Post hook
-	public beforePost(request: Request, response: Response) {
-		const user = request.body;
-
+	public async beforePost(request: Request, response: Response) {
 		// Check if user has some sort of password
-		if (!user.password) {
+		if (!this.password) {
 			response.validationResponder('Must supply a password');
 			return false;
 		}
 
 		// Hash password
-		if ('password' in user && user.password) {
-			user.password = hashSync(user.password, 12);
+		if ('password' in this && this.password) {
+			this.password = hashSync(this.password, 12);
 		}
 
 		return true;
 	}
 
 	// Put hook
-	public beforePut(request: Request, response: Response) {
-		// User route
-		if (request.baseUrl.includes('/v1/user')) {
-			const user = request.body;
-
-			// Temp password
-			if ('password' in user && user.password) {
-				// TODO: Deep copy, not letter-by-letter
-				for (let i = 0; i < user.password.length; i++) {
-					user.tempPassword += user.password[i];
-				}
-
-				user.tempPassword = hashSync(user.tempPassword, 12);
-			}
-
-			delete user.password;
+	public async beforePut(request: Request, response: Response) {
+		// Temp password
+		if ('password' in this && this.password) {
+			this.password = hashSync(this.password, 12);
 		}
 
 		return true;

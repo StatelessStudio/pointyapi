@@ -23,12 +23,14 @@ export async function postEndpoint(
 
 			// Delete undefined members
 			request.body[i] = deleteUndefinedMembers(request.body[i]);
+		}
 
-			// Run model hook
-			if (!await runHook('post', request.body[i], request, response)) {
-				return;
-			}
+		// Run model hooks
+		if (!await runHook('post', request.body, request, response)) {
+			return;
+		}
 
+		for (let i = 0; i < request.body.length; i++) {
 			// Validate
 			const errors = await validate(request.body[i]).catch((error) =>
 				response.error(error)

@@ -59,3 +59,9 @@
 		}
 	});
 	```
+7. Make sure all hooks are `async` functions
+	Hooks must now be async functions.  Search through hooks, and replace with `public async HOOK_NAME()`
+8. Make sure hooks utilize this.
+	Hooks are now bound to the resource, and should utilize `this.` notation
+9. Make sure hooks don't loop
+    Hooks are called once per object, therefore they should only take care of one resource at a time

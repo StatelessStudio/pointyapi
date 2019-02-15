@@ -103,10 +103,9 @@ export class ChatMessage extends BaseModel {
 	@OnlySelfCanWrite()
 	public toStatus: ChatStatus = undefined;
 
-	public beforePost(request: Request, response: Response) {
+	public async beforePost(request: Request, response: Response) {
 		if (request.user) {
-			this.from = new User();
-			this.from.id = request.user.id;
+			this.from = request.user;
 
 			for (const key in this.from) {
 				if (this.from[key] === undefined) {

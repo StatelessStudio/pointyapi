@@ -8,7 +8,7 @@ import { createMockRequest } from '../../../../src/test-probe';
  * pointyapi/models
  */
 describe('[Models] BaseUser', () => {
-	it('Calls validation responder if the password is not set', async () => {
+	it('calls validation responder if the password is not set', async () => {
 		const user = new BaseUser();
 
 		const { request, response } = createMockRequest();
@@ -18,7 +18,7 @@ describe('[Models] BaseUser', () => {
 			result = true;
 		};
 
-		await user.beforePost(request, response);
+		await user.beforePost.bind(request.body)(request, response);
 
 		expect(result).toBe(true);
 	});
@@ -31,7 +31,20 @@ describe('[Models] BaseUser', () => {
 
 		response.validationResponder = (error) => fail(error);
 
-		await user.beforePost(request, response);
+		await user.beforePost.bind(request.body)(request, response);
+
+		expect(compareSync('password123', request.body.password)).toBe(true);
+	});
+
+	it('hashes the password in beforePut()', async () => {
+		const user = new BaseUser();
+
+		const { request, response } = createMockRequest();
+		request.body.password = 'password123';
+
+		response.validationResponder = (error) => fail(error);
+
+		await user.beforePut.bind(request.body)(request, response);
 
 		expect(compareSync('password123', request.body.password)).toBe(true);
 	});
