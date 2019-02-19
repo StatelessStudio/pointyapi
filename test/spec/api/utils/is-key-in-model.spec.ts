@@ -30,4 +30,11 @@ describe('[Utils] isKeyInModel()', () => {
 
 		expect(isKeyInModel('__username', model, response)).toBe(true);
 	});
+
+	it('returns true if the member is a joined key', () => {
+		const { request, response } = createMockRequest();
+		const model = { user: 1 };
+
+		expect(isKeyInModel('user.id', model, response)).toBe(true);
+	});
 });

@@ -13,6 +13,10 @@ export function isKeyInModel(
 	model: any,
 	response?: Response
 ): boolean {
+	if (key.includes('.')) {
+		key = key.split('.')[0];
+	}
+
 	if (!(key in model) && key.indexOf('__') !== 0) {
 		if (response) {
 			response.validationResponder(
