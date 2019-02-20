@@ -2,6 +2,8 @@ import { mockRequest, mockResponse } from 'mock-req-res';
 import { getRepository } from 'typeorm';
 import { BaseUser } from '../models/base-user';
 
+declare var fail;
+
 /**
  * Create mock request/response objects
  */
