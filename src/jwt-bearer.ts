@@ -23,7 +23,7 @@ const atob = require('atob');
  */
 export class JwtBearer {
 	// Private Key
-	public key = 'unset_key';
+	public key: string;
 
 	/**
 	 * Construct a JWT Bearer token
@@ -36,6 +36,9 @@ export class JwtBearer {
 			process.env.JWT_KEY
 		) {
 			this.key = process.env.JWT_KEY;
+		}
+		else {
+			this.key = key;
 		}
 	}
 
