@@ -41,7 +41,7 @@ describe('[Guards] getFilter', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create request
-		request.query = { fname: 'tom' };
+		request.query = { where: { fname: 'tom' } };
 		request.payload = [ this.user ];
 
 		// Filter
@@ -58,12 +58,12 @@ describe('[Guards] getFilter', async () => {
 		expect(request.payload[0].password).toEqual(undefined);
 	});
 
-	it('refuses unauthenticated requests', async () => {
+	it('refuses unauthenticated requests (object)', async () => {
 		// Create mock request/response
 		const { request, response } = createMockRequest();
 
 		// Create request
-		request.query = { password: 'password123' };
+		request.query = { where: { password: 'password123' } };
 		request.payload = [ this.user ];
 
 		// Filter
@@ -77,12 +77,12 @@ describe('[Guards] getFilter', async () => {
 		expect(result).toBe(true);
 	});
 
-	it('refuses unauthenticated is-self requests', async () => {
+	it('refuses unauthenticated is-self requests (object)', async () => {
 		// Create mock request/response
 		const { request, response } = createMockRequest();
 
 		// Create request
-		request.query = { id: 'password123' };
+		request.query = { where: { id: 'password123' } };
 		request.payload = [ new OnlySelfCanReadMember() ];
 		request.payloadType = OnlySelfCanReadMember;
 
@@ -97,12 +97,12 @@ describe('[Guards] getFilter', async () => {
 		expect(result).toBe(true);
 	});
 
-	it('refuses authenticated is-admin requests', async () => {
+	it('refuses authenticated is-admin requests (object)', async () => {
 		// Create mock request/response
 		const { request, response } = createMockRequest();
 
 		// Create request
-		request.query = { id: 'password123' };
+		request.query = { where: { id: 'password123' } };
 		request.payload = [ new OnlyAdminCanReadMember() ];
 		request.payloadType = OnlyAdminCanReadMember;
 
@@ -117,12 +117,12 @@ describe('[Guards] getFilter', async () => {
 		expect(result).toBe(true);
 	});
 
-	it('refuses authenticated no-read requests', async () => {
+	it('refuses authenticated no-read requests (object)', async () => {
 		// Create mock request/response
 		const { request, response } = createMockRequest();
 
 		// Create request
-		request.query = { id: 'password123' };
+		request.query = { where: { id: 'password123' } };
 		request.payload = [ new NobodyCanReadMember() ];
 		request.payloadType = NobodyCanReadMember;
 
@@ -135,5 +135,112 @@ describe('[Guards] getFilter', async () => {
 		getFilter(request, response, fail);
 
 		expect(result).toBe(true);
+	});
+
+	it('parses joined members (object)', async () => {
+		// Create mock request/response
+		const { request, response } = createMockRequest();
+
+		// Create request
+		request.query = { orderBy: { 'relations.id': 'ASC' } };
+		request.payload = [ this.user ];
+		response.forbiddenResponder = (message) => {
+			expect(message).toBe('Cannot get by member relations');
+		};
+
+		getFilter(request, response, () => {});
+	});
+
+	it('refuses unauthenticated requests (array)', async () => {
+		// Create mock request/response
+		const { request, response } = createMockRequest();
+
+		// Create request
+		request.query = { select: [ 'password' ] };
+		request.payload = [ this.user ];
+
+		// Filter
+		let result = false;
+		response.forbiddenResponder = () => {
+			result = true;
+		};
+
+		getFilter(request, response, fail);
+
+		expect(result).toBe(true);
+	});
+
+	it('refuses unauthenticated is-self requests (array)', async () => {
+		// Create mock request/response
+		const { request, response } = createMockRequest();
+
+		// Create request
+		request.query = { select: [ 'id' ] };
+		request.payload = [ new OnlySelfCanReadMember() ];
+		request.payloadType = OnlySelfCanReadMember;
+
+		// Filter
+		let result = false;
+		response.forbiddenResponder = () => {
+			result = true;
+		};
+
+		getFilter(request, response, fail);
+
+		expect(result).toBe(true);
+	});
+
+	it('refuses authenticated is-admin requests (array)', async () => {
+		// Create mock request/response
+		const { request, response } = createMockRequest();
+
+		// Create request
+		request.query = { select: [ 'id' ] };
+		request.payload = [ new OnlyAdminCanReadMember() ];
+		request.payloadType = OnlyAdminCanReadMember;
+
+		// Filter
+		let result = false;
+		response.forbiddenResponder = () => {
+			result = true;
+		};
+
+		getFilter(request, response, fail);
+
+		expect(result).toBe(true);
+	});
+
+	it('refuses authenticated no-read requests (array)', async () => {
+		// Create mock request/response
+		const { request, response } = createMockRequest();
+
+		// Create request
+		request.query = { select: [ 'id' ] };
+		request.payload = [ new NobodyCanReadMember() ];
+		request.payloadType = NobodyCanReadMember;
+
+		// Filter
+		let result = false;
+		response.forbiddenResponder = () => {
+			result = true;
+		};
+
+		getFilter(request, response, fail);
+
+		expect(result).toBe(true);
+	});
+
+	it('parses joined members (array)', async () => {
+		// Create mock request/response
+		const { request, response } = createMockRequest();
+
+		// Create request
+		request.query = { select: [ 'relations.id' ] };
+		request.payload = [ this.user ];
+		response.forbiddenResponder = (message) => {
+			expect(message).toBe('Cannot get by member relations');
+		};
+
+		getFilter(request, response, () => {});
 	});
 });

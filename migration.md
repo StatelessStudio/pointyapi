@@ -52,7 +52,7 @@
 	```typescript
 	// Set model
 	router.use((request, response, next) => {
-		//                                    vvv add this for auth routes
+		//                                               vvv add this for auth routes
 		if (await setModel(request, response, BaseUser, true)) {
 			// Note that this next() call is now in an if-statement around the setModel()
 			next();
@@ -66,3 +66,24 @@
 9. Make sure hooks don't loop
     Hooks are called once per object, therefore they should only take care of one resource at a time
 11. Default resources can now be added via `addResource(User, {...})`
+12. Update GET queries
+	GET queries have been reworked.  The following field names have changed:
+	- `__select` => `select`
+	- `__whereAnyOf` => `whereAnyOf`
+	- `__search` => `search`
+	- `__not` => `not`
+	- `__raw` => `raw`
+	- `__join` => `join`
+	- `__between` => `between`
+	- `__lessThan` => `lessThan`
+	- `__lessThanOrEqual` => `lessThanOrEqual`
+	- `__greaterThan` => `greaterThan`
+	- `__greaterThanOrEqual` => `greaterThanOrEqual`
+	- `__groupBy` => `groupBy`
+	- `__orderBy` => `orderBy`
+	- `__limit` => `limit`
+	- `__offset` => `offset`
+	- `__count` => `count`
+
+	Additionaly, WHERE fields should no longer be in the top-level of the query, and instead should be in the `where` query type
+

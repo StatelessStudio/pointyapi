@@ -1,4 +1,5 @@
 import { getSearchableFields, getSearchableRelations } from '../bodyguard';
+import { BaseModelInterface } from '../models/base-model';
 
 /**
  * Create a SQL query string for a search
@@ -8,173 +9,151 @@ import { getSearchableFields, getSearchableRelations } from '../bodyguard';
  * @return Object Returns { queryString, queryParams }
  */
 export function createSearchQuery(
-	payloadType,
+	payloadType: BaseModelInterface,
 	obj: Object,
 	objKey: string = 'obj'
 ): any {
-	const searchableFields = getSearchableFields(payloadType);
-	const searchableRelations = getSearchableRelations(payloadType);
 	let queryString = '';
 	const queryParams = {};
-	const hasSearchable = searchableFields.length;
-	const hasAdditional = Object.keys(obj).length > 1;
 
-	// Join strings
-	if (hasSearchable && hasAdditional) {
-		queryString += '(';
-	}
+	for (const field in obj) {
+		if (field && field === 'where') {
+			queryString += '(';
 
-	// Searchable strings
-	if (hasSearchable) {
-		queryString += '(';
-		searchableFields.forEach((field) => {
-			// Append searchable key to queryString
-			queryString += `${objKey}.${field} LIKE :__search OR `;
-
-			// Append parameter to queryParams (with wildcards)
-			const value = obj['__search'].replace(/[\s]+/, '%');
-			queryParams['__search'] = `%${value}%`;
-		});
-
-		searchableRelations.forEach((field) => {
-			// Append searchable key to queryString
-			queryString += `${field} LIKE :__search OR `;
-
-			// Append parameter to queryParams (with wildcards)
-			const value = obj['__search'].replace(/[\s]+/, '%');
-			queryParams['__search'] = `%${value}%`;
-		});
-
-		queryString = queryString.replace(/ OR +$/, '');
-		queryString += ')';
-	}
-
-	// Join strings
-	if (hasSearchable && hasAdditional) {
-		queryString += ' AND ';
-	}
-
-	// Additional parameters
-	if (hasAdditional) {
-		queryString += '(';
-
-		for (const field in obj) {
-			if (
-				field &&
-				field.indexOf('__') !== 0 &&
-				!(obj[field] instanceof Function)
-			) {
+			// Loop through any of keys
+			for (const whereKey in obj['where']) {
 				// Append key to queryString
-				queryString += `${objKey}.${field}=:${field} AND `;
+				queryString += `${objKey}.${whereKey}=:${whereKey} AND `;
 
 				// Append parameter to queryParams
-				queryParams[field] = `${obj[field]}`;
+				queryParams[whereKey] = `${obj['where'][whereKey]}`;
 			}
-			else if (field && field === '__whereAnyOf') {
-				queryString += '(';
 
-				// Loop through any of keys
-				for (const anyOfKey in obj['__whereAnyOf']) {
-					// Append key to queryString
-					queryString += `${objKey}.${anyOfKey}=:${anyOfKey} OR `;
+			queryString = queryString.replace(/ AND +$/, '');
+			queryString += ') AND ';
+		}
+		else if (field && field === 'whereAnyOf') {
+			queryString += '(';
 
-					// Append parameter to queryParams
-					queryParams[anyOfKey] = `${obj['__whereAnyOf'][anyOfKey]}`;
-				}
+			// Loop through any of keys
+			for (const anyOfKey in obj['whereAnyOf']) {
+				// Append key to queryString
+				queryString += `${objKey}.${anyOfKey}=:${anyOfKey} OR `;
 
-				queryString = queryString.replace(/ OR +$/, '');
-				queryString += ') AND ';
+				// Append parameter to queryParams
+				queryParams[anyOfKey] = `${obj['whereAnyOf'][anyOfKey]}`;
 			}
-			else if (field && field === '__between') {
-				for (const betweenKey in obj['__between']) {
-					const range = obj['__between'][betweenKey];
 
-					// Range should be an array of two
-					if ('length' in range && range.length === 2) {
-						// Range should be int
-						range.map((val) => {
-							return parseInt(val, 10);
-						});
+			queryString = queryString.replace(/ OR +$/, '');
+			queryString += ') AND ';
+		}
+		else if (field && field === 'search') {
+			const ptype = new payloadType();
 
-						// Append key to queryString
-						queryString +=
-							`(${objKey}.${betweenKey} BETWEEN ` +
-							range[0] +
-							' AND ' +
-							range[1] +
-							') AND ';
-					}
-				}
-			}
-			else if (field && field === '__lessThan') {
-				for (const lessThanKey in obj['__lessThan']) {
-					// Append key to queryString
-					queryString += `${objKey}.${lessThanKey} < :${lessThanKey} AND `;
+			const searchableFields = getSearchableFields(ptype);
+			const searchableRelations = getSearchableRelations(ptype);
 
-					// Append parameter to queryParams
-					queryParams[lessThanKey] = `${obj['__lessThan'][
-						lessThanKey
-					]}`;
-				}
-			}
-			else if (field && field === '__greaterThan') {
-				for (const greaterThanKey in obj['__greaterThan']) {
-					// Append key to queryString
-					queryString += `${objKey}.${greaterThanKey} > :${greaterThanKey} AND `;
+			queryString += '(';
+			searchableFields.forEach((key) => {
+				// Append searchable key to queryString
+				queryString += `${objKey}.${key} LIKE :search OR `;
 
-					// Append parameter to queryParams
-					queryParams[greaterThanKey] = `${obj['__greaterThan'][
-						greaterThanKey
-					]}`;
-				}
-			}
-			else if (field && field === '__lessThanOrEqual') {
-				for (const lessThanOrEqualKey in obj['__lessThanOrEqual']) {
+				// Append parameter to queryParams (with wildcards)
+				const value = obj['search'].replace(/[\s]+/, '%');
+				queryParams['search'] = `%${value}%`;
+			});
+
+			searchableRelations.forEach((key) => {
+				// Append searchable key to queryString
+				queryString += `${key} LIKE :search OR `;
+
+				// Append parameter to queryParams (with wildcards)
+				const value = obj['search'].replace(/[\s]+/, '%');
+				queryParams['search'] = `%${value}%`;
+			});
+
+			queryString = queryString.replace(/ OR +$/, '');
+			queryString += ') AND ';
+		}
+		else if (field && field === 'between') {
+			for (const betweenKey in obj['between']) {
+				const range = obj['between'][betweenKey];
+
+				// Range should be an array of two
+				if ('length' in range && range.length === 2) {
+					// Range should be int
+					range.map((val) => {
+						return parseInt(val, 10);
+					});
+
 					// Append key to queryString
 					queryString +=
-						`${objKey}.${lessThanOrEqualKey} <= ` +
-						`:${lessThanOrEqualKey} AND `;
-
-					// Append parameter to queryParams
-					queryParams[lessThanOrEqualKey] = `${obj[
-						'__lessThanOrEqual'
-					][lessThanOrEqualKey]}`;
-				}
-			}
-			else if (field && field === '__greaterThanOrEqual') {
-				for (const greaterThanOrEqualKey in obj[
-					'__greaterThanOrEqual'
-				]) {
-					// Append key to queryString
-					queryString +=
-						`${objKey}.${greaterThanOrEqualKey} >= ` +
-						`:${greaterThanOrEqualKey} AND `;
-
-					// Append parameter to queryParams
-					queryParams[greaterThanOrEqualKey] = `${obj[
-						'__greaterThanOrEqual'
-					][greaterThanOrEqualKey]}`;
-				}
-			}
-			else if (field && field === '__not') {
-				for (const notKey in obj['__not']) {
-					// Append key to queryString
-					queryString += `${objKey}.${notKey}!=:${notKey} AND `;
-
-					// Append parameter to queryParams
-					queryParams[notKey] = `${obj['__not'][notKey]}`;
+						`(${objKey}.${betweenKey} BETWEEN ` +
+						range[0] +
+						' AND ' +
+						range[1] +
+						') AND ';
 				}
 			}
 		}
+		else if (field && field === 'lessThan') {
+			for (const lessThanKey in obj['lessThan']) {
+				// Append key to queryString
+				queryString += `${objKey}.${lessThanKey} < :${lessThanKey} AND `;
 
-		queryString = queryString.replace(/ AND +$/, '');
-		queryString += ')';
+				// Append parameter to queryParams
+				queryParams[lessThanKey] = `${obj['lessThan'][lessThanKey]}`;
+			}
+		}
+		else if (field && field === 'greaterThan') {
+			for (const greaterThanKey in obj['greaterThan']) {
+				// Append key to queryString
+				queryString += `${objKey}.${greaterThanKey} > :${greaterThanKey} AND `;
+
+				// Append parameter to queryParams
+				queryParams[greaterThanKey] = `${obj['greaterThan'][
+					greaterThanKey
+				]}`;
+			}
+		}
+		else if (field && field === 'lessThanOrEqual') {
+			for (const lessThanOrEqualKey in obj['lessThanOrEqual']) {
+				// Append key to queryString
+				queryString +=
+					`${objKey}.${lessThanOrEqualKey} <= ` +
+					`:${lessThanOrEqualKey} AND `;
+
+				// Append parameter to queryParams
+				queryParams[lessThanOrEqualKey] = `${obj['lessThanOrEqual'][
+					lessThanOrEqualKey
+				]}`;
+			}
+		}
+		else if (field && field === 'greaterThanOrEqual') {
+			for (const greaterThanOrEqualKey in obj['greaterThanOrEqual']) {
+				// Append key to queryString
+				queryString +=
+					`${objKey}.${greaterThanOrEqualKey} >= ` +
+					`:${greaterThanOrEqualKey} AND `;
+
+				// Append parameter to queryParams
+				queryParams[greaterThanOrEqualKey] = `${obj[
+					'greaterThanOrEqual'
+				][greaterThanOrEqualKey]}`;
+			}
+		}
+		else if (field && field === 'not') {
+			for (const notKey in obj['not']) {
+				// Append key to queryString
+				queryString += `${objKey}.${notKey}!=:${notKey} AND `;
+
+				// Append parameter to queryParams
+				queryParams[notKey] = `${obj['not'][notKey]}`;
+			}
+		}
 	}
 
-	// Join strings
-	if (hasSearchable && hasAdditional) {
-		queryString += ')';
-	}
+	queryString = queryString.replace(/ AND +$/, '');
 
 	return { queryString, queryParams };
 }

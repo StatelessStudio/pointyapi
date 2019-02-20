@@ -165,9 +165,11 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/chat',
 				{
-					__search: 'test',
-					to: this.user.body.id,
-					from: this.user2.body.id
+					search: 'test',
+					where: {
+						to: this.user.body.id,
+						from: this.user2.body.id
+					}
 				},
 				[ 200 ],
 				this.token.body.token
@@ -188,8 +190,8 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/user',
 				{
-					__search: 'chatGet1',
-					__join: [ 'inbox' ]
+					search: 'chatGet1',
+					join: [ 'inbox' ]
 				},
 				[ 200 ],
 				this.token.body.token
@@ -210,8 +212,8 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/chat',
 				{
-					__search: 'test',
-					__whereAnyOf: {
+					search: 'test',
+					whereAnyOf: {
 						to: +this.user.body.id,
 						from: +this.user.body.id
 					}
@@ -234,8 +236,8 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/chat',
 				{
-					__search: '',
-					__whereAnyOf: {
+					search: '',
+					whereAnyOf: {
 						to: this.user.body.id,
 						from: this.user.body.id
 					}
@@ -287,8 +289,8 @@ describe('[Chat] Chat API Get', async () => {
 				.get(
 					'/api/v1/chat',
 					{
-						__search: '',
-						__whereAnyOf: {
+						search: '',
+						whereAnyOf: {
 							to: this.user.body.id,
 							from: this.user.body.id
 						}
@@ -308,9 +310,9 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/chat',
 				{
-					__search: '',
-					__count: true,
-					__whereAnyOf: {
+					search: '',
+					count: true,
+					whereAnyOf: {
 						to: this.user.body.id,
 						from: this.user.body.id
 					}
@@ -368,7 +370,7 @@ describe('[Chat] Chat API Get', async () => {
 				.get(
 					'/api/v1/chat',
 					{
-						__search: 'nestedGet1'
+						search: 'nestedGet1'
 					},
 					[ 200 ],
 					token.body['token']
@@ -398,8 +400,8 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/chat',
 				{
-					__search: '',
-					__orderBy: {
+					search: '',
+					orderBy: {
 						'from.username': 'DESC'
 					}
 				},
@@ -436,8 +438,9 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/chat',
 				{
-					__search: '',
-					__orderBy: {
+					search: '',
+					join: [ 'from' ],
+					orderBy: {
 						id: 'ASC'
 					}
 				},
@@ -452,6 +455,6 @@ describe('[Chat] Chat API Get', async () => {
 					fail('Result is not an array');
 				}
 			})
-			.catch((error) => JSON.stringify(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 });

@@ -29,7 +29,7 @@ describe('[Endpoints] Get', () => {
 	it('returns the payload', async () => {
 		// Create mock request/response
 		const { request, response } = createMockRequest();
-		request.query.__search = 'Get';
+		request.query.search = 'Get';
 
 		// Set model
 		if (!await setModel(request, response, BaseUser)) {
@@ -54,8 +54,8 @@ describe('[Endpoints] Get', () => {
 	it('can return a count request', async () => {
 		// Create mock request/response
 		const { request, response } = createMockRequest();
-		request.query.__search = 'Get';
-		request.query.__count = true;
+		request.query.search = 'Get';
+		request.query.count = true;
 
 		// Set model
 		if (!await setModel(request, response, BaseUser)) {
@@ -79,7 +79,7 @@ describe('[Endpoints] Get', () => {
 	it('can return a single resource request', async () => {
 		// Create mock request/response
 		const { request, response } = createMockRequest();
-		request.query.__search = 'Get';
+		request.query.search = 'Get';
 
 		// Set model
 		if (!await setModel(request, response, BaseUser)) {

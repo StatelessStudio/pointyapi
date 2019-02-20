@@ -34,7 +34,9 @@ describe('User API Read', () => {
 	it('can read many', async () => {
 		await http
 			.get('/api/v1/user', {
-				lname: 'getUser'
+				where: {
+					lname: 'getUser'
+				}
 			})
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Array));
@@ -80,7 +82,7 @@ describe('User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				__search: 'searchTester'
+				search: 'searchTester'
 			})
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Array));
@@ -92,9 +94,9 @@ describe('User API Read', () => {
 	it('can get raw data', async () => {
 		await http
 			.get('/api/v1/user', {
-				__search: '',
-				__raw: true,
-				__select: [ 'lname' ]
+				search: '',
+				raw: true,
+				select: [ 'lname' ]
 			})
 			.then((result) => {
 				expect(result.body[0].obj_lname).toEqual(jasmine.any(String));
@@ -105,8 +107,8 @@ describe('User API Read', () => {
 	it('can select keys', async () => {
 		await http
 			.get('/api/v1/user', {
-				__search: '',
-				__select: [ 'lname' ]
+				search: '',
+				select: [ 'lname' ]
 			})
 			.then((result) => {
 				expect(result.body[0].lname).toEqual(jasmine.any(String));
@@ -120,8 +122,8 @@ describe('User API Read', () => {
 			.get(
 				'/api/v1/user',
 				{
-					__search: '',
-					__select: [ 'password' ]
+					search: '',
+					select: [ 'password' ]
 				},
 				[ 403 ]
 			)
@@ -131,8 +133,8 @@ describe('User API Read', () => {
 	it('can count', async () => {
 		await http
 			.get('/api/v1/user', {
-				__search: '',
-				__count: true
+				search: '',
+				count: true
 			})
 			.then((result) => {
 				expect(result.body['count']).toBeGreaterThanOrEqual(2);
@@ -141,8 +143,8 @@ describe('User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				__search: 'basicGetUser1',
-				__count: true
+				search: 'basicGetUser1',
+				count: true
 			})
 			.then((result) => {
 				expect(result.body['count']).toEqual(1);
@@ -151,9 +153,11 @@ describe('User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				__search: '',
-				__count: true,
-				username: 'basicGetUser1'
+				search: '',
+				count: true,
+				where: {
+					username: 'basicGetUser1'
+				}
 			})
 			.then((result) => {
 				expect(result.body['count']).toEqual(1);
@@ -186,9 +190,9 @@ describe('User API Read', () => {
 		// Get results
 		await http
 			.get('/api/v1/user', {
-				__search: '',
-				__select: [ 'lname' ],
-				__groupBy: [ 'lname' ]
+				search: '',
+				select: [ 'lname' ],
+				groupBy: [ 'lname' ]
 			})
 			.then((result) => {
 				if (result.body instanceof Array) {
@@ -231,8 +235,8 @@ describe('User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				__search: '',
-				__orderBy: {
+				search: '',
+				orderBy: {
 					lname: 'DESC'
 				}
 			})
@@ -245,8 +249,8 @@ describe('User API Read', () => {
 	it('can limit', async () => {
 		await http
 			.get('/api/v1/user', {
-				__search: '',
-				__limit: 1
+				search: '',
+				limit: 1
 			})
 			.then((result) => {
 				expect(result.body['length']).toBe(1);
@@ -267,8 +271,8 @@ describe('User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				__search: '',
-				__offset: 2
+				search: '',
+				offset: 2
 			})
 			.then((result) => {
 				expect(result.body[0].id).toBeGreaterThanOrEqual(3);
@@ -290,8 +294,8 @@ describe('User API Read', () => {
 		if (user) {
 			await http
 				.get('/api/v1/user', {
-					__search: '',
-					__between: {
+					search: '',
+					between: {
 						id: [ user.body['id'], user.body['id'] ]
 					}
 				})
@@ -315,8 +319,8 @@ describe('User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				__search: '',
-				__lessThan: {
+				search: '',
+				lessThan: {
 					id: 1
 				}
 			})
@@ -339,8 +343,8 @@ describe('User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				__search: '',
-				__greaterThan: {
+				search: '',
+				greaterThan: {
 					id: 1
 				}
 			})
@@ -363,8 +367,8 @@ describe('User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				__search: '',
-				__lessThanOrEqual: {
+				search: '',
+				lessThanOrEqual: {
 					id: 1
 				}
 			})
@@ -387,8 +391,8 @@ describe('User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				__search: '',
-				__greaterThanOrEqual: {
+				search: '',
+				greaterThanOrEqual: {
 					id: 1
 				}
 			})
@@ -412,8 +416,8 @@ describe('User API Read', () => {
 		if (user) {
 			await http
 				.get('/api/v1/user', {
-					__search: '',
-					__not: {
+					search: '',
+					not: {
 						id: user.body['id']
 					}
 				})
@@ -431,8 +435,8 @@ describe('User API Read', () => {
 
 			await http
 				.get('/api/v1/user', {
-					__search: '',
-					__not: {
+					search: '',
+					not: {
 						fname: 'searchNot'
 					}
 				})

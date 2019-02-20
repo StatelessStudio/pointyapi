@@ -15,7 +15,7 @@ describe('[Middleware] GetQuery', () => {
 		const { request, response } = createMockRequest();
 
 		// Create request
-		request.query.__search = 'Get';
+		request.query.search = 'Get';
 
 		// Create users
 		const user1 = new BaseUser();

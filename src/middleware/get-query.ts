@@ -13,8 +13,9 @@ export async function getQuery(
 	request: Request,
 	response: Response
 ): Promise<any> {
-	if ('query' in request && '__search' in request.query) {
+	if ('query' in request && 'search' in request.query) {
 		const objAlias = 'obj';
+		const shouldCount = 'count' in request.query && request.query.count;
 
 		// Readable keys
 		let readableFields = getReadableFields(
@@ -23,10 +24,10 @@ export async function getQuery(
 			objAlias
 		);
 
-		// Extract __select query keys
+		// Extract select query keys
 		const selectKeys = [];
-		if ('__select' in request.query) {
-			for (let key of request.query.__select) {
+		if ('select' in request.query) {
+			for (let key of request.query.select) {
 				key = `obj.${key}`;
 
 				if (readableFields.includes(key)) {
@@ -42,85 +43,49 @@ export async function getQuery(
 			}
 
 			readableFields = selectKeys;
-			delete request.query.__select;
 		}
 
-		// Get raw
-		let getRaw = false;
-		if ('__raw' in request.query && request.query.__raw) {
-			getRaw = true;
-			delete request.query.__raw;
-		}
-
-		// Extract Join __join query keys
-		if ('__join' in request.query) {
-			request.query.__join.forEach((key) => {
-				request.joinMembers.push(key);
+		// Extract Join join query keys
+		if ('join' in request.query) {
+			request.query.join.forEach((key) => {
+				if (!request.joinMembers.includes(key)) {
+					request.joinMembers.push(key);
+				}
 			});
-
-			delete request.query.__join;
 		}
 
 		// Extract Group By query keys
 		const groupByKeys = [];
-		if ('__groupBy' in request.query) {
-			request.query.__groupBy.forEach((key) => {
+		if ('groupBy' in request.query) {
+			request.query.groupBy.forEach((key) => {
 				groupByKeys.push(key);
 			});
 
 			// Add 'id' to array if not already
 			if (
 				readableFields.includes('obj.id') &&
-				!('id' in request.query.__groupBy)
+				!('id' in request.query.groupBy)
 			) {
 				groupByKeys.push('id');
 			}
-
-			delete request.query.__groupBy;
 		}
 
 		// Extract order By query keys
 		const orderByKeys = [];
 		const orderByOrders = [];
-		if ('__orderBy' in request.query) {
-			for (const key in request.query.__orderBy) {
+		if ('orderBy' in request.query) {
+			for (const key in request.query.orderBy) {
 				orderByKeys.push(key);
 				orderByOrders.push(
-					request.query.__orderBy[key] === 'DESC' ? 'DESC' : 'ASC'
+					request.query.orderBy[key] === 'DESC' ? 'DESC' : 'ASC'
 				);
 			}
-
-			delete request.query.__orderBy;
-		}
-
-		// Extract limit
-		let limit;
-		if ('__limit' in request.query) {
-			limit = request.query.__limit;
-
-			delete request.query.__limit;
-		}
-
-		// Extract offset
-		let offset;
-		if ('__offset' in request.query) {
-			offset = request.query.__offset;
-
-			delete request.query.__offset;
-		}
-
-		// Extract count
-		let shouldCount = false;
-		if ('__count' in request.query && request.query.__count) {
-			shouldCount = true;
-
-			delete request.query.__count;
 		}
 
 		// Search
 		// tslint:disable-next-line:prefer-const
 		let { queryString, queryParams } = createSearchQuery(
-			new request.payloadType(),
+			request.payloadType,
 			request.query
 		);
 
@@ -130,7 +95,9 @@ export async function getQuery(
 			const bodyguardKeys = getBodyguardKeys(new request.payloadType());
 
 			bodyguardKeys.forEach((key) => {
-				request.joinMembers.push(key);
+				if (!request.joinMembers.includes(key)) {
+					request.joinMembers.push(key);
+				}
 			});
 
 			// Append to where clause
@@ -187,21 +154,17 @@ export async function getQuery(
 			}
 
 			// Add limit
-			if (limit) {
-				query.take(limit);
+			if ('limit' in request.query && request.query.limit) {
+				query.take(request.query.limit);
 			}
 
 			// Add offset
-			if (offset) {
-				query.skip(offset);
+			if ('offset' in request.query && request.query.offset) {
+				query.skip(request.query.offset);
 			}
 		}
 
-		if (shouldCount) {
-			request.query.__count = true;
-		}
-
-		if (getRaw) {
+		if ('raw' in request.query && request.query.raw) {
 			return await query.getRawMany();
 		}
 		else if (groupByKeys.length) {
@@ -230,10 +193,6 @@ export async function getQuery(
 	else if ('query' in request && 'id' in request.query && request.query.id) {
 		// Read one
 		return await request.repository.findOne(request.query.id);
-	}
-	else if ('query' in request && Object.keys(request.query).length) {
-		// Read many
-		return await request.repository.find(request.query);
 	}
 	else {
 		// Read all

@@ -24,8 +24,8 @@ export async function getEndpoint(
 
 		// Is this a count request?
 		if (
-			'__count' in request.query &&
-			request.query.__count &&
+			'count' in request.query &&
+			request.query.count &&
 			request.payload instanceof Array
 		) {
 			response.getResponder({

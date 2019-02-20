@@ -23,6 +23,7 @@ import { BaseModelInterface } from './models';
 import { getRepository } from 'typeorm';
 import { getQuery, loadEntity } from './middleware';
 import { runHook, isKeyInModel } from './utils';
+import { queryValidator } from './utils/query-validator';
 
 /**
  * Set model type and load payload
@@ -127,16 +128,10 @@ export async function setModel(
 	}
 	else if (request.method === 'GET') {
 		// Get loader
-		request.query = Object.assign(new request.payloadType(), request.query);
+		// request.query = Object.assign(new request.payloadType(), request.query);
 
-		for (const key in request.query) {
-			if (request.query[key] === undefined) {
-				delete request.query[key];
-			}
-
-			if (!isKeyInModel(key, request.payload, response)) {
-				return false;
-			}
+		if (!queryValidator(request, response)) {
+			return false;
 		}
 
 		// Run model hook

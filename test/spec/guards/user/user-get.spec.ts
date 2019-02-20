@@ -142,8 +142,8 @@ describe('[Guards] User API Read', () => {
 	it('can count', async () => {
 		await http
 			.get('/api/v1/user', {
-				__search: '',
-				__count: true
+				search: '',
+				count: true
 			})
 			.then((result) => {
 				expect(result.body['count']).toBeGreaterThanOrEqual(3);
@@ -152,8 +152,8 @@ describe('[Guards] User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				__search: 'guardUserGet1',
-				__count: true
+				search: 'guardUserGet1',
+				count: true
 			})
 			.then((result) => {
 				expect(result.body['count']).toEqual(1);
@@ -162,9 +162,11 @@ describe('[Guards] User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				__search: '',
-				__count: true,
-				username: 'guardUserGet1'
+				search: '',
+				count: true,
+				where: {
+					username: 'guardUserGet1'
+				}
 			})
 			.then((result) => {
 				expect(result.body['count']).toEqual(1);
