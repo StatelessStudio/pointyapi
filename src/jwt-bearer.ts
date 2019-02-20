@@ -30,7 +30,11 @@ class JwtBearer {
 	 * @param key string Private key
 	 */
 	constructor(key: string = 'unset_key') {
-		if ('JWT_KEY' in process.env && process.env.JWT_KEY) {
+		if (
+			key === 'unset_key' &&
+			'JWT_KEY' in process.env &&
+			process.env.JWT_KEY
+		) {
 			this.key = process.env.JWT_KEY;
 		}
 	}
