@@ -21,7 +21,7 @@ const atob = require('atob');
 /**
  * JWT Bearer for authentication
  */
-class JwtBearer {
+export class JwtBearer {
 	// Private Key
 	public key = 'unset_key';
 

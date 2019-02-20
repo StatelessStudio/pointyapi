@@ -45,5 +45,5 @@ declare global {
 
 // Export root files
 export { pointy, PointyApi } from './pointy-core';
-export { jwtBearer } from './jwt-bearer';
+export { JwtBearer, jwtBearer } from './jwt-bearer';
 export { setModel } from './set-model';
