@@ -12,8 +12,6 @@ export async function postEndpoint(
 	response: Response
 ): Promise<void> {
 	if (request.body instanceof Array) {
-		let shouldSave = true;
-
 		for (let i = 0; i < request.body.length; i++) {
 			// Set model type
 			request.body[i] = Object.assign(
@@ -39,12 +37,11 @@ export async function postEndpoint(
 			// Check
 			if (errors && errors.length) {
 				response.validationResponder(errors);
-				shouldSave = false;
 				return;
 			}
 		}
 
-		if (shouldSave && request.body.length) {
+		if (request.body.length) {
 			// Save
 			const repo = await request.repository;
 
