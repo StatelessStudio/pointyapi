@@ -236,7 +236,6 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/chat',
 				{
-					search: '',
 					whereAnyOf: {
 						to: this.user.body.id,
 						from: this.user.body.id
@@ -289,7 +288,6 @@ describe('[Chat] Chat API Get', async () => {
 				.get(
 					'/api/v1/chat',
 					{
-						search: '',
 						whereAnyOf: {
 							to: this.user.body.id,
 							from: this.user.body.id
@@ -310,7 +308,6 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/chat',
 				{
-					search: '',
 					count: true,
 					whereAnyOf: {
 						to: this.user.body.id,
@@ -400,7 +397,6 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/chat',
 				{
-					search: '',
 					orderBy: {
 						'from.username': 'DESC'
 					}
@@ -438,7 +434,6 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/chat',
 				{
-					search: '',
 					join: [ 'from' ],
 					orderBy: {
 						id: 'ASC'

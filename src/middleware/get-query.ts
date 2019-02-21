@@ -3,6 +3,7 @@ import { getReadableFields, getBodyguardKeys } from '../bodyguard';
 import { UserRole } from '../enums/user-role';
 
 import { createSearchQuery } from '../utils';
+import { queryTypeKeys } from 'utils/query-types';
 
 /**
  * Get the objects represented by the request query
@@ -13,7 +14,13 @@ export async function getQuery(
 	request: Request,
 	response: Response
 ): Promise<any> {
-	if ('query' in request && 'search' in request.query) {
+	if ('query' in request && 'id' in request.query && request.query.id) {
+		// Read one
+		return await request.repository.findOne(request.query.id);
+	}
+	else if ('query' in request && Object.keys(request.query).length) {
+		// Read query
+
 		const objAlias = 'obj';
 		const shouldCount = 'count' in request.query && request.query.count;
 
@@ -106,7 +113,11 @@ export async function getQuery(
 				request.user &&
 				request.user.role !== UserRole.Admin
 			) {
-				queryString += ` AND (`;
+				if (queryString.length) {
+					queryString += ' AND ';
+				}
+
+				queryString += '(';
 				bodyguardKeys.forEach((key) => {
 					queryString += `${objAlias}.${key}=:bodyGuard${key} OR `;
 
@@ -189,10 +200,6 @@ export async function getQuery(
 		else {
 			return await query.getMany();
 		}
-	}
-	else if ('query' in request && 'id' in request.query && request.query.id) {
-		// Read one
-		return await request.repository.findOne(request.query.id);
 	}
 	else {
 		// Read all

@@ -118,7 +118,6 @@ describe('[Middleware] GetQuery', () => {
 
 		// Create request
 		request.query = {
-			search: '',
 			join: [ 'relations' ]
 		};
 
@@ -153,7 +152,6 @@ describe('[Middleware] GetQuery', () => {
 
 		// Create request
 		request.query = {
-			search: '',
 			groupBy: [ 'fname' ]
 		};
 
@@ -179,7 +177,6 @@ describe('[Middleware] GetQuery', () => {
 
 		// Create request
 		request.query = {
-			search: '',
 			orderBy: { fname: 'DESC', lname: 'ASC' }
 		};
 
@@ -205,7 +202,6 @@ describe('[Middleware] GetQuery', () => {
 
 		// Create request
 		request.query = {
-			search: '',
 			limit: 1
 		};
 
@@ -232,7 +228,6 @@ describe('[Middleware] GetQuery', () => {
 
 		// Create request
 		request.query = {
-			search: '',
 			offset: 1
 		};
 
@@ -258,7 +253,6 @@ describe('[Middleware] GetQuery', () => {
 
 		// Create request
 		request.query = {
-			search: '',
 			raw: true
 		};
 

@@ -142,7 +142,6 @@ describe('[Guards] User API Read', () => {
 	it('can count', async () => {
 		await http
 			.get('/api/v1/user', {
-				search: '',
 				count: true
 			})
 			.then((result) => {
@@ -162,7 +161,6 @@ describe('[Guards] User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				search: '',
 				count: true,
 				where: {
 					username: 'guardUserGet1'

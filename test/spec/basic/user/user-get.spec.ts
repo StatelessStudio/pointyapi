@@ -94,7 +94,6 @@ describe('User API Read', () => {
 	it('can get raw data', async () => {
 		await http
 			.get('/api/v1/user', {
-				search: '',
 				raw: true,
 				select: [ 'lname' ]
 			})
@@ -107,7 +106,6 @@ describe('User API Read', () => {
 	it('can select keys', async () => {
 		await http
 			.get('/api/v1/user', {
-				search: '',
 				select: [ 'lname' ]
 			})
 			.then((result) => {
@@ -122,7 +120,6 @@ describe('User API Read', () => {
 			.get(
 				'/api/v1/user',
 				{
-					search: '',
 					select: [ 'password' ]
 				},
 				[ 403 ]
@@ -133,7 +130,6 @@ describe('User API Read', () => {
 	it('can count', async () => {
 		await http
 			.get('/api/v1/user', {
-				search: '',
 				count: true
 			})
 			.then((result) => {
@@ -153,7 +149,6 @@ describe('User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				search: '',
 				count: true,
 				where: {
 					username: 'basicGetUser1'
@@ -190,7 +185,6 @@ describe('User API Read', () => {
 		// Get results
 		await http
 			.get('/api/v1/user', {
-				search: '',
 				select: [ 'lname' ],
 				groupBy: [ 'lname' ]
 			})
@@ -235,7 +229,6 @@ describe('User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				search: '',
 				orderBy: {
 					lname: 'DESC'
 				}
@@ -249,7 +242,6 @@ describe('User API Read', () => {
 	it('can limit', async () => {
 		await http
 			.get('/api/v1/user', {
-				search: '',
 				limit: 1
 			})
 			.then((result) => {
@@ -271,7 +263,6 @@ describe('User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				search: '',
 				offset: 2
 			})
 			.then((result) => {
@@ -294,7 +285,6 @@ describe('User API Read', () => {
 		if (user) {
 			await http
 				.get('/api/v1/user', {
-					search: '',
 					between: {
 						id: [ user.body['id'], user.body['id'] ]
 					}
@@ -319,7 +309,6 @@ describe('User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				search: '',
 				lessThan: {
 					id: 1
 				}
@@ -343,7 +332,6 @@ describe('User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				search: '',
 				greaterThan: {
 					id: 1
 				}
@@ -367,7 +355,6 @@ describe('User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				search: '',
 				lessThanOrEqual: {
 					id: 1
 				}
@@ -391,7 +378,6 @@ describe('User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				search: '',
 				greaterThanOrEqual: {
 					id: 1
 				}
@@ -416,7 +402,6 @@ describe('User API Read', () => {
 		if (user) {
 			await http
 				.get('/api/v1/user', {
-					search: '',
 					not: {
 						id: user.body['id']
 					}
@@ -435,7 +420,6 @@ describe('User API Read', () => {
 
 			await http
 				.get('/api/v1/user', {
-					search: '',
 					not: {
 						fname: 'searchNot'
 					}
