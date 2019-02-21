@@ -3,8 +3,6 @@ import { getReadableFields, getBodyguardKeys } from '../bodyguard';
 import { UserRole } from '../enums/user-role';
 
 import { createSearchQuery } from '../utils';
-import { queryTypeKeys } from 'utils/query-types';
-
 /**
  * Get the objects represented by the request query
  * @param request Request to query by
