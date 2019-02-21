@@ -49,6 +49,17 @@ describe('[Utils] createSearchQuery()', () => {
 		expect(queryParams).toEqual({ search: '%hello%world%' });
 	});
 
+	it('can run search object query', () => {
+		const query = {
+			search: { fname: 'hello world' }
+		};
+
+		const { queryString, queryParams } = createSearchQuery(BaseUser, query);
+
+		expect(queryString).toBe('(obj.fname LIKE :search_fname)');
+		expect(queryParams).toEqual({ search_fname: '%hello%world%' });
+	});
+
 	it('can run search string query on relation', () => {
 		const query = {
 			search: 'hello world'
