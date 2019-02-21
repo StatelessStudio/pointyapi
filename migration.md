@@ -18,15 +18,15 @@
 	Hooks have been renamed for clarity.  Rename all hooks in your models (pro tip: project-wide find & replace).  **Make sure you go in order, and replace all occourences before moving on, because some hook names conflict with old hook names!**
     - `beforePost()` -> `post()`
     - `beforePut()` -> `put()`
-    - `beforeGet()` -> `get()`
+    - `beforeGet()` -> REMOVED
     - `beforeDelete()` -> `delete()`
     - `beforeLogin()` -> `login()`
     - `beforeLogout()` -> `logout()`
     - `beforeLoadPost()` -> `beforePost()`
     - `beforeLoadPut()` -> `beforePut()`
-    - `beforeLoadGet()` -> `beforeGet()`
+    - `beforeLoadGet()` -> REMOVED
     - `beforeLoadDelete()` -> `beforeDelete()`
-    - `onGetQuery()` -> `beforeGet()` (`onGetQuery()` has been removed, use `beforeGet()` instead)
+    - `onGetQuery()` -> REMOVED
 3. Check `setModel()` return value
 	Ensure you wrap setModel() in an if statement, and only proceed to next() if the function returns true
 

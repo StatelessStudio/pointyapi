@@ -135,11 +135,6 @@ export async function setModel(
 			return false;
 		}
 
-		// Run model hook
-		if (!await runHook('beforeGet', request.query, request, response)) {
-			return false;
-		}
-
 		let getSuccess = true;
 
 		request.payload = await getQuery(request, response).catch((error) => {
