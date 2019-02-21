@@ -2,7 +2,7 @@ import { getRepository } from 'typeorm';
 
 import { createMockRequest } from '../../../../src/test-probe';
 import { BaseUser, BaseModel } from '../../../../src/models';
-import { getFilter } from '../../../../src/guards';
+import { getFilter } from '../../../../src/filters';
 import { OnlySelfCanRead, OnlyAdminCanRead } from '../../../../src/bodyguard';
 
 class OnlySelfCanReadMember extends BaseModel {

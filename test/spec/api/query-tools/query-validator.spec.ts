@@ -1,6 +1,5 @@
-import { queryValidator } from '../../../../src/utils/query-validator';
+import { queryValidator } from '../../../../src/query-tools/query-validator';
 import { createMockRequest } from '../../../../src/test-probe';
-import { setModel } from '../../../../src/set-model';
 import { BaseUser } from '../../../../src/models';
 
 /**

@@ -1,6 +1,5 @@
 import { getSearchableFields, getSearchableRelations } from '../bodyguard';
 import { BaseModelInterface } from '../models/base-model';
-import { request } from 'https';
 
 /**
  * Create a SQL query string for a search

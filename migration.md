@@ -92,3 +92,7 @@
 	`putResponder` => `patchResponder`
 	`putEndpoint` => `patchEndpoint`
 14. Relations which will be queried must have `@CanReadRelation()` key
+15. Update imports
+	- Filters from `pointyapi/filters`
+	- Guards from `pointyapi/guards`
+  

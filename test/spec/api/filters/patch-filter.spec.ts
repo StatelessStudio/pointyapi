@@ -2,23 +2,23 @@ import { getRepository } from 'typeorm';
 
 import { createMockRequest } from '../../../../src/test-probe';
 import { BaseUser } from '../../../../src/models';
-import { postFilter } from '../../../../src/guards';
+import { patchFilter } from '../../../../src/filters';
 
 /**
- * postFilter()
+ * patchFilter()
  * pointyapi/guards
  */
-describe('[Guards] postFilter', async () => {
+describe('[Guards] patchFilter', async () => {
 	beforeAll(async () => {
 		// Create mock user
 		this.user = new BaseUser();
 		this.user.fname = 'tom';
 		this.user.lname = 'doe';
-		this.user.username = 'tomFilter2';
-		this.user.email = 'tomFilter2@example.com';
+		this.user.username = 'tomFilter3';
+		this.user.email = 'tomFilter3@example.com';
 		this.user.password = 'password123';
 
-		this.user = await getRepository(BaseUser)
+		await getRepository(BaseUser)
 			.save(this.user)
 			.catch((error) => fail(error));
 	});
@@ -31,7 +31,7 @@ describe('[Guards] postFilter', async () => {
 		request.payload = this.user;
 		request.user = this.user;
 		request.body = {
-			fname: 'tom'
+			fname: 'update'
 		};
 
 		// Filter
@@ -40,7 +40,7 @@ describe('[Guards] postFilter', async () => {
 			result = true;
 		};
 
-		postFilter(request, response, next);
+		patchFilter(request, response, next);
 
 		expect(result).toBe(true);
 	});
@@ -51,6 +51,7 @@ describe('[Guards] postFilter', async () => {
 
 		// Create request
 		request.payload = this.user;
+		request.user = this.user;
 		request.body = {
 			id: 12
 		};
@@ -61,7 +62,7 @@ describe('[Guards] postFilter', async () => {
 			result = true;
 		};
 
-		postFilter(request, response, fail);
+		patchFilter(request, response, fail);
 
 		expect(result).toBe(true);
 	});

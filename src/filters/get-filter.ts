@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 
 import { getCanRead, readFilter } from '../bodyguard';
 import { isAdmin } from '../utils';
-import { queryTypeKeys } from '../utils/query-types';
+import { queryTypeKeys } from '../query-tools/query-types';
 
 /**
  * Get Filter: Filter a GET response to remove private fields

@@ -23,7 +23,7 @@ import { BaseModelInterface } from './models';
 import { getRepository } from 'typeorm';
 import { getQuery, loadEntity } from './middleware';
 import { runHook, isKeyInModel } from './utils';
-import { queryValidator } from './utils/query-validator';
+import { queryValidator } from './query-tools/query-validator';
 
 /**
  * Set model type and load payload

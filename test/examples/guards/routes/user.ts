@@ -10,12 +10,8 @@ import { BaseUser } from '../../../../src/models/base-user';
 
 import { setModel } from '../../../../src/';
 
-import {
-	postFilter,
-	getFilter,
-	patchFilter,
-	onlySelf
-} from '../../../../src/guards';
+import { postFilter, getFilter, patchFilter } from '../../../../src/filters';
+import { onlySelf } from '../../../../src/guards';
 
 const router: Router = Router();
 

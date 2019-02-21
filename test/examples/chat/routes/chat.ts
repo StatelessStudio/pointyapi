@@ -1,11 +1,6 @@
 import { Router } from 'express';
-
-import {
-	postFilter,
-	getFilter,
-	patchFilter,
-	onlySelf
-} from '../../../../src/guards';
+import { postFilter, getFilter, patchFilter } from '../../../../src/filters';
+import { onlySelf } from '../../../../src/guards';
 
 import {
 	postEndpoint,
