@@ -3,6 +3,7 @@ import { ExampleOwner } from './example-owner';
 
 import { Entity, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { CanSearchRelation, BodyguardKey } from '../../../../src/bodyguard';
+import { BodyguardOwner } from '../../../../src/enums';
 
 /**
  * Foregin key test class - Resource
@@ -16,7 +17,7 @@ export class ExampleRelation extends BaseModel {
 	@ManyToOne((type) => ExampleOwner, (owner) => owner.relations)
 	@BodyguardKey()
 	@CanSearchRelation({
-		who: '__anyone__',
+		who: BodyguardOwner.Anyone,
 		fields: [ 'username' ]
 	})
 	public owner: ExampleOwner = undefined;

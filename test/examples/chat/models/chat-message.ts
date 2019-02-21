@@ -27,6 +27,7 @@ import {
 import { BaseModel } from '../../../../src/models';
 import { User } from './user';
 import { ChatStatus } from '../enums/chat-status';
+import { BodyguardOwner } from '../../../../src/enums';
 
 @Entity('ChatMessage')
 export class ChatMessage extends BaseModel {
@@ -44,9 +45,9 @@ export class ChatMessage extends BaseModel {
 	@BodyguardKey()
 	@OnlySelfCanRead()
 	@OnlySelfCanWrite()
-	@CanReadRelation('__self__')
+	@CanReadRelation(BodyguardOwner.Self)
 	@CanSearchRelation({
-		who: '__self__',
+		who: BodyguardOwner.Self,
 		fields: [ 'username', 'fname', 'lname' ]
 	})
 	public from: User = undefined;
@@ -60,9 +61,9 @@ export class ChatMessage extends BaseModel {
 	@BodyguardKey()
 	@OnlySelfCanRead()
 	@OnlySelfCanWrite()
-	@CanReadRelation('__self__')
+	@CanReadRelation(BodyguardOwner.Self)
 	@CanSearchRelation({
-		who: '__self__',
+		who: BodyguardOwner.Self,
 		fields: [ 'username', 'fname', 'lname' ]
 	})
 	public to: User = undefined;
@@ -87,7 +88,7 @@ export class ChatMessage extends BaseModel {
 	@Column({ type: 'text' })
 	@OnlySelfCanRead()
 	@OnlySelfCanWrite()
-	@CanSearch('__self__')
+	@CanSearch(BodyguardOwner.Self)
 	public body: string = undefined;
 
 	// User Status

@@ -1,6 +1,7 @@
 import { BaseUser } from '../models';
 import { getCanWrite } from '../bodyguard';
 import { isSelf, isAdmin } from '../utils';
+import { BodyguardOwner } from '../enums';
 
 /**
  * Filter an incoming request body to ensure it doesn't allow sensitive fields
@@ -55,9 +56,9 @@ export function writeFilter(
 					}
 				}
 				else if (
-					canWrite !== '__anyone__' &&
-					((canWrite === '__self__' && !isSelfResult) ||
-						(canWrite === '__admin__' && !isAdminResult))
+					canWrite !== BodyguardOwner.Anyone &&
+					((canWrite === BodyguardOwner.Self && !isSelfResult) ||
+						(canWrite === BodyguardOwner.Admin && !isAdminResult))
 				) {
 					// No permission to write this field
 					return member;

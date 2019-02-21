@@ -17,6 +17,7 @@ import {
 	CanSearchRelation
 } from '../../../../src/bodyguard';
 import { BaseModel } from '../../../../src/models';
+import { BodyguardOwner } from '../../../../src/enums';
 
 class ExampleModel extends BaseModel {
 	@BodyguardKey() public bodyguardKey: number = undefined;
@@ -33,14 +34,14 @@ class ExampleModel extends BaseModel {
 
 	@OnlyAdminCanWrite() public onlyAdminCanWrite: string = undefined;
 
-	@CanRead('__anyone__') public canReadAnyone: string = undefined;
+	@CanRead(BodyguardOwner.Anyone) public canReadAnyone: string = undefined;
 
-	@CanWrite('__anyone__') public canWriteAnyone: string = undefined;
+	@CanWrite(BodyguardOwner.Anyone) public canWriteAnyone: string = undefined;
 
 	@CanSearch() public canSearch: string = undefined;
 
 	@CanSearchRelation({
-		who: '__anyone__',
+		who: BodyguardOwner.Anyone,
 		fields: [ 'id' ]
 	})
 	public canSearchRelation: Object = {};
@@ -66,20 +67,28 @@ describe('isBodyguardKey()', () => {
  * pointyapi/bodyguard
  */
 describe('getCanRead()', () => {
-	it('returns "__anyone__" if the member has AnyoneCanRead', () => {
-		expect(getCanRead(example, 'anyoneCanRead')).toBe('__anyone__');
+	it('returns "BodyguardOwner.Admin" if the member has AnyoneCanRead', () => {
+		expect(getCanRead(example, 'anyoneCanRead')).toBe(
+			BodyguardOwner.Anyone
+		);
 	});
 
-	it('returns "__self__" if the member has OnlySelfCanRead', () => {
-		expect(getCanRead(example, 'onlySelfCanRead')).toBe('__self__');
+	it('returns "BodyguardOwner.Self" if the member has OnlySelfCanRead', () => {
+		expect(getCanRead(example, 'onlySelfCanRead')).toBe(
+			BodyguardOwner.Self
+		);
 	});
 
-	it('returns "__admin__" if the member has OnlyAdminCanRead', () => {
-		expect(getCanRead(example, 'onlyAdminCanRead')).toBe('__admin__');
+	it('returns "BodyguardOwner.Admin" if the member has OnlyAdminCanRead', () => {
+		expect(getCanRead(example, 'onlyAdminCanRead')).toBe(
+			BodyguardOwner.Admin
+		);
 	});
 
 	it('returns parameter value if the member has CanRead', () => {
-		expect(getCanRead(example, 'canReadAnyone')).toBe('__anyone__');
+		expect(getCanRead(example, 'canReadAnyone')).toBe(
+			BodyguardOwner.Anyone
+		);
 	});
 
 	it('returns undefined if the member is not readable', () => {
@@ -92,20 +101,28 @@ describe('getCanRead()', () => {
  * pointyapi/bodyguard
  */
 describe('getCanWrite()', () => {
-	it('returns "__anyone__" if the member has AnyoneCanWrite', () => {
-		expect(getCanWrite(example, 'anyoneCanWrite')).toBe('__anyone__');
+	it('returns "BodyguardOwner.Admin" if the member has AnyoneCanWrite', () => {
+		expect(getCanWrite(example, 'anyoneCanWrite')).toBe(
+			BodyguardOwner.Anyone
+		);
 	});
 
-	it('returns "__self__" if the member has OnlySelfCanWrite', () => {
-		expect(getCanWrite(example, 'onlySelfCanWrite')).toBe('__self__');
+	it('returns "BodyguardOwner.Self" if the member has OnlySelfCanWrite', () => {
+		expect(getCanWrite(example, 'onlySelfCanWrite')).toBe(
+			BodyguardOwner.Self
+		);
 	});
 
-	it('returns "__admin__" if the member has OnlyAdminCanWrite', () => {
-		expect(getCanWrite(example, 'onlyAdminCanWrite')).toBe('__admin__');
+	it('returns BodyguardOwner.Admin on OnlyAdminCanWrite', () => {
+		expect(getCanWrite(example, 'onlyAdminCanWrite')).toBe(
+			BodyguardOwner.Admin
+		);
 	});
 
 	it('returns parameter value if the member has CanWrite', () => {
-		expect(getCanWrite(example, 'canWriteAnyone')).toBe('__anyone__');
+		expect(getCanWrite(example, 'canWriteAnyone')).toBe(
+			BodyguardOwner.Anyone
+		);
 	});
 
 	it('returns undefined if the member is not writeable', () => {
@@ -118,8 +135,8 @@ describe('getCanWrite()', () => {
  * pointyapi/bodyguard
  */
 describe('getCanSearch()', () => {
-	it('returns "__anyone__" if the member has CanSearch', () => {
-		expect(getCanSearch(example, 'canSearch')).toBe('__anyone__');
+	it('returns "BodyguardOwner.Admin" if the member has CanSearch', () => {
+		expect(getCanSearch(example, 'canSearch')).toBe(BodyguardOwner.Anyone);
 	});
 
 	it('returns undefined if the member is not searchable', () => {
@@ -136,7 +153,7 @@ describe('getCanSearchRelation()', () => {
 		const result = getCanSearchRelation(example, 'canSearchRelation');
 
 		expect(result).toEqual(jasmine.any(Object));
-		expect(result.who).toEqual('__anyone__');
+		expect(result.who).toEqual(BodyguardOwner.Anyone);
 		expect(result.fields).toEqual(jasmine.any(Array));
 	});
 

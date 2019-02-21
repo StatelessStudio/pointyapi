@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import { getCanRead, readFilter } from '../bodyguard';
 import { isAdmin } from '../utils';
 import { queryTypeKeys } from '../query-tools/query-types';
+import { BodyguardOwner } from '../enums';
 
 /**
  * Get Filter: Filter a GET response to remove private fields
@@ -46,9 +47,10 @@ export function getFilter(
 
 						if (
 							canRead === undefined ||
-							(canRead !== '__anyone__' &&
-								((canRead === '__self__' && !request.user) ||
-									(canRead === '__admin__' &&
+							(canRead !== BodyguardOwner.Anyone &&
+								((canRead === BodyguardOwner.Self &&
+									!request.user) ||
+									(canRead === BodyguardOwner.Admin &&
 										!isAdminResult)))
 						) {
 							// User does not have privilege
@@ -75,9 +77,10 @@ export function getFilter(
 
 						if (
 							canRead === undefined ||
-							(canRead !== '__anyone__' &&
-								((canRead === '__self__' && !request.user) ||
-									(canRead === '__admin__' &&
+							(canRead !== BodyguardOwner.Anyone &&
+								((canRead === BodyguardOwner.Self &&
+									!request.user) ||
+									(canRead === BodyguardOwner.Admin &&
 										!isAdminResult)))
 						) {
 							// User does not have privilege

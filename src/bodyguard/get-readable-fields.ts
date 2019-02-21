@@ -1,6 +1,6 @@
 import { getCanRead } from '../bodyguard';
 import { BaseUser } from '../models';
-import { UserRole } from '../enums/user-role';
+import { BodyguardOwner, UserRole } from '../enums';
 
 /**
  * Get readable fields for a payload, given a User
@@ -25,10 +25,11 @@ export function getReadableFields(
 
 			if (
 				(canRead &&
-					(canRead === '__anyone__' ||
+					(canRead === BodyguardOwner.Anyone ||
 						(user && canRead === user.role))) ||
-				(canRead === '__self__' && user && user.id) ||
-				((canRead === '__admin__' || canRead === '__self__') &&
+				(canRead === BodyguardOwner.Self && user && user.id) ||
+				((canRead === BodyguardOwner.Admin ||
+					canRead === BodyguardOwner.Self) &&
 					user &&
 					user.role === UserRole.Admin)
 			) {

@@ -27,7 +27,7 @@
  *  - CanSearch(who?)
  *
  * Decorators which take a *who* parameter default to anyone but also
- * can take a UserRole, or (`__anyone__`, `__self__`, `__admin__`)
+ * can take a UserRole or BodyguardOwner enum
  *
  * **NOTE: If a member does not have a CanRead or CanWrite key, it will
  * not be able to be read or written!**
@@ -67,6 +67,7 @@
  * 	OnlyAdminCanWrite,
  * 	CanSearch
  * } from 'pointyapi/bodyguards';
+ * import { UserRole, UserStatus, BodyguardOwner } from 'pointyapi/enums';
  *
  * export class User extends BaseUser() {
  *		// ID
@@ -136,6 +137,7 @@
  * Bodyguard Decorators
  */
 import 'reflect-metadata';
+import { BodyguardOwner, UserRole } from './enums';
 
 const CanReadSymbol = Symbol('CanRead');
 const CanWriteSymbol = Symbol('CanWrite');
@@ -212,57 +214,57 @@ export function BodyguardKey() {
  * Anyone can read the field
  */
 export function AnyoneCanRead() {
-	return Reflect.metadata(CanReadSymbol, '__anyone__');
+	return Reflect.metadata(CanReadSymbol, BodyguardOwner.Anyone);
 }
 
 /**
  * Anyone can write the field
  */
 export function AnyoneCanWrite() {
-	return Reflect.metadata(CanWriteSymbol, '__anyone__');
+	return Reflect.metadata(CanWriteSymbol, BodyguardOwner.Anyone);
 }
 
 /**
  * Only owner can read the field
  */
 export function OnlySelfCanRead() {
-	return Reflect.metadata(CanReadSymbol, '__self__');
+	return Reflect.metadata(CanReadSymbol, BodyguardOwner.Self);
 }
 
 /**
  * Only owner can write the field
  */
 export function OnlySelfCanWrite() {
-	return Reflect.metadata(CanWriteSymbol, '__self__');
+	return Reflect.metadata(CanWriteSymbol, BodyguardOwner.Self);
 }
 
 /**
  * Only admin can read the field
  */
 export function OnlyAdminCanRead() {
-	return Reflect.metadata(CanReadSymbol, '__admin__');
+	return Reflect.metadata(CanReadSymbol, BodyguardOwner.Admin);
 }
 
 /**
  * Only admin can write the field
  */
 export function OnlyAdminCanWrite() {
-	return Reflect.metadata(CanWriteSymbol, '__admin__');
+	return Reflect.metadata(CanWriteSymbol, BodyguardOwner.Admin);
 }
 
 /**
  * Sets the read privilege of the field
- * @param who Who can read the field (`__anyone__`, `__self__`, `__admin__`)
+ * @param who Who can read the field
  */
-export function CanRead(who: string) {
+export function CanRead(who: BodyguardOwner | UserRole) {
 	return Reflect.metadata(CanReadSymbol, who);
 }
 
 /**
  * Sets the write privilege of the field
- * @param who Who can read the field (`__anyone__`, `__self__`, `__admin__`)
+ * @param who Who can read the field
  */
-export function CanWrite(who: string) {
+export function CanWrite(who: BodyguardOwner | UserRole) {
 	return Reflect.metadata(CanWriteSymbol, who);
 }
 
@@ -270,7 +272,9 @@ export function CanWrite(who: string) {
  * Sets who can search the field
  * @param who string (Optional) Default is anyone
  */
-export function CanSearch(who: string = '__anyone__') {
+export function CanSearch(
+	who: BodyguardOwner | UserRole = BodyguardOwner.Anyone
+) {
 	return Reflect.metadata(CanSearchSymbol, who);
 }
 
@@ -279,7 +283,7 @@ export function CanSearch(who: string = '__anyone__') {
  * @param who Object Object with who (string) and field (array)
  *
  * {
- * 		who: '__self__',
+ * 		who: BodyguardOwner.Self,
  * 		fields: [ 'username', 'fname', 'lname' ]
  * }
  */
@@ -291,7 +295,9 @@ export function CanSearchRelation(params: object) {
  * Sets who can read the relation
  * @param who string (Optional) Default is anyone
  */
-export function CanReadRelation(who: string = '__anyone__') {
+export function CanReadRelation(
+	who: BodyguardOwner | UserRole = BodyguardOwner.Anyone
+) {
 	return Reflect.metadata(CanReadRelationSymbol, who);
 }
 

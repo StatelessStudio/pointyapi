@@ -1,6 +1,7 @@
 import { BaseUser } from '../models';
 import { getCanRead } from '../bodyguard';
 import { isSelf, isAdmin } from '../utils';
+import { BodyguardOwner } from '../enums';
 
 /**
  * Filter an outgoing response body to ensure it doesn't leak private fields
@@ -49,9 +50,10 @@ export function readFilter(
 						delete obj[member];
 					}
 					else if (
-						canRead !== '__anyone__' &&
-						((canRead === '__self__' && !isSelfResult) ||
-							(canRead === '__admin__' && !isAdminResult))
+						canRead !== BodyguardOwner.Anyone &&
+						((canRead === BodyguardOwner.Self && !isSelfResult) ||
+							(canRead === BodyguardOwner.Admin &&
+								!isAdminResult))
 					) {
 						delete obj[member];
 					}
