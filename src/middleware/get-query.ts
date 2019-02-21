@@ -35,17 +35,7 @@ export async function getQuery(
 		if ('select' in request.query) {
 			for (let key of request.query.select) {
 				key = `obj.${key}`;
-
-				if (readableFields.includes(key)) {
-					selectKeys.push(key);
-				}
-				else {
-					// Key is not readable
-					response.forbiddenResponder(`Cannot select by key ${key}`);
-					return new Promise((_, reject) => {
-						reject(`Cannot select by key ${key}`);
-					});
-				}
+				selectKeys.push(key);
 			}
 
 			readableFields = selectKeys;

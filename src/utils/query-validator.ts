@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { isKeyInModel } from '../utils';
 import { queryTypes, queryTypeKeys } from './query-types';
+import { getReadableFields, getReadableRelations } from '../bodyguard';
 
 /**
  * Validate a GET query type
@@ -13,6 +14,16 @@ function queryFieldValidator(
 	request: Request,
 	response: Response
 ) {
+	const readableKeys = getReadableFields(
+		new request.payloadType(),
+		request.user
+	);
+
+	const readableRelations = getReadableRelations(
+		new request.payloadType(),
+		request.user
+	);
+
 	if (type in request.query) {
 		if (request.query[type] instanceof Array) {
 			for (let i = 0; i < request.query[type].length; i++) {
@@ -27,6 +38,19 @@ function queryFieldValidator(
 				if (!isKeyInModel(key, request.payload, response)) {
 					return false;
 				}
+
+				if (
+					!readableKeys.includes(key) &&
+					!readableRelations.includes(
+						key && key.indexOf('.') ? key.split('.')[0] : key
+					)
+				) {
+					response.forbiddenResponder(
+						'Cannot "' + type + '" by member "' + key + '"'
+					);
+
+					return false;
+				}
 			}
 		}
 		else if (request.query[type] instanceof Object) {
@@ -38,6 +62,19 @@ function queryFieldValidator(
 				}
 
 				if (!isKeyInModel(key, request.payload, response)) {
+					return false;
+				}
+
+				if (
+					!readableKeys.includes(key) &&
+					!readableRelations.includes(
+						key && key.indexOf('.') ? key.split('.')[0] : key
+					)
+				) {
+					response.validationResponder(
+						'Cannot "' + type + '" by member "' + key + '"'
+					);
+
 					return false;
 				}
 			}
