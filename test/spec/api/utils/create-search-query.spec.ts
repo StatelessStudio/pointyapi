@@ -59,7 +59,7 @@ describe('[Utils] createSearchQuery()', () => {
 			query
 		);
 
-		expect(queryString).toBe('(owner.id LIKE :search)');
+		expect(queryString).toBe('(owner.username LIKE :search)');
 		expect(queryParams).toEqual({ search: '%hello%world%' });
 	});
 
