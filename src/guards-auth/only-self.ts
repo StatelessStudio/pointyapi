@@ -69,7 +69,7 @@ export function onlySelf(
 				}
 			}
 			else if (
-				(request.method === 'PUT' || request.method === 'PATCH') &&
+				(request.method === 'PATCH' || request.method === 'PATCH') &&
 				request.payload instanceof BaseModel
 			) {
 				// Update

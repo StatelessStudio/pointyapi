@@ -59,7 +59,7 @@ describe('[Utils] bindResponders()', () => {
 		expect(this.response.postResponder).toEqual(jasmine.any(Function));
 	});
 
-	it('binds the putResponder', () => {
-		expect(this.response.putResponder).toEqual(jasmine.any(Function));
+	it('binds the patchResponder', () => {
+		expect(this.response.patchResponder).toEqual(jasmine.any(Function));
 	});
 });

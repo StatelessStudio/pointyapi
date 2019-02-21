@@ -49,8 +49,9 @@ export function createMockRequest(
 	response.postResponder = (result) =>
 		fail('Post: ' + JSON.stringify(result));
 
-	// Put responder
-	response.putResponder = (result) => fail('Put: ' + JSON.stringify(result));
+	// Patch responder
+	response.patchResponder = (result) =>
+		fail('Patch: ' + JSON.stringify(result));
 
 	// Unauthorized responder
 	response.unauthorizedResponder = (error) =>

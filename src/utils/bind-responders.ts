@@ -47,7 +47,7 @@ export function bindResponders(to, request: Request, response: Response): void {
 		request: request,
 		response: response
 	});
-	response.putResponder = to.putResponder.bind({
+	response.patchResponder = to.patchResponder.bind({
 		request: request,
 		response: response
 	});

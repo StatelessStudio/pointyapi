@@ -6,7 +6,7 @@ import { Request, Response, NextFunction } from 'express';
  * 	Access-Control-Allow-Origin
  * 		'*'
  * 	Access-Control-Allow-Methods
- * 		'POST, GET, PUT, DELETE, OPTIONS'
+ * 		'POST, GET, PATCH, DELETE, OPTIONS'
  * 	Access-Control-Allow-Headers
  * 		'X-Requested-With, Content-Type, Authorization, Cache-Control'
  * 	Access-Control-Allow-Credentials
@@ -23,7 +23,7 @@ export function basicCors(
 	response.setHeader('Access-Control-Allow-Origin', '*');
 	response.setHeader(
 		'Access-Control-Allow-Methods',
-		'POST, GET, PUT, DELETE, OPTIONS'
+		'POST, GET, PATCH, DELETE, OPTIONS'
 	);
 	response.setHeader(
 		'Access-Control-Allow-Headers',

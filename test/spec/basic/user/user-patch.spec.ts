@@ -5,11 +5,11 @@ describe('User API Update', () => {
 	beforeAll(async () => {
 		this.user1 = await http
 			.post('/api/v1/user', {
-				fname: 'userPut',
-				lname: 'userPut',
-				username: 'basicUserPut1',
+				fname: 'userPatch',
+				lname: 'userPatch',
+				username: 'basicUserPatch1',
 				password: 'password123',
-				email: 'basicUserPut1@test.com'
+				email: 'basicUserPatch1@test.com'
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
@@ -18,7 +18,7 @@ describe('User API Update', () => {
 
 	it('can update', async () => {
 		await http
-			.put(
+			.patch(
 				`/api/v1/user/${this.user1.body.id}`,
 				{
 					lname: 'testLast'
@@ -45,11 +45,11 @@ describe('User API Update', () => {
 	it('can clear a field that has already been set', async () => {
 		const user = await http
 			.post('/api/v1/user', {
-				fname: 'userPut',
-				lname: 'userPut',
-				username: 'basicUserPut2',
+				fname: 'userPatch',
+				lname: 'userPatch',
+				username: 'basicUserPatch2',
 				password: 'password123',
-				email: 'basicUserPut2@test.com'
+				email: 'basicUserPatch2@test.com'
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
@@ -57,7 +57,7 @@ describe('User API Update', () => {
 
 		if (user) {
 			await http
-				.put(
+				.patch(
 					`/api/v1/user/${user.body['id']}`,
 					{
 						email: ''
@@ -87,7 +87,7 @@ describe('User API Update', () => {
 
 	it('maintains other fields on update', async () => {
 		await http
-			.put(
+			.patch(
 				`/api/v1/user/${this.user1.body.id}`,
 				{
 					lname: 'testLast'
@@ -105,7 +105,7 @@ describe('User API Update', () => {
 					)
 					.then((getResult) =>
 						expect(getResult.body['email']).toEqual(
-							'basicUserPut1@test.com'
+							'basicUserPatch1@test.com'
 						)
 					)
 					.catch((error) => fail(JSON.stringify(error)));
@@ -115,7 +115,7 @@ describe('User API Update', () => {
 
 	it('cannot accept a nonsense username', async () => {
 		await http
-			.put(
+			.patch(
 				`/api/v1/user/${this.user1.body.id}`,
 				{
 					username: 'tom<tester5'
@@ -127,7 +127,7 @@ describe('User API Update', () => {
 
 	it('cannot accept a nonsense email', async () => {
 		await http
-			.put(
+			.patch(
 				`/api/v1/user/${this.user1.body.id}`,
 				{
 					email: 'drew3test.com'
@@ -139,7 +139,7 @@ describe('User API Update', () => {
 
 	it('removes undefined members', async () => {
 		await http
-			.put(
+			.patch(
 				`/api/v1/user/${this.user1.body.id}`,
 				{
 					biography: undefined

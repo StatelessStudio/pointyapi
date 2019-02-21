@@ -137,8 +137,8 @@ export async function setModel(
 			return false;
 		}
 	}
-	else if (request.method === 'PUT') {
-		// Put loader
+	else if (request.method === 'PATCH') {
+		// Patch loader
 		for (const key in request.body) {
 			if (!isKeyInModel(key, request.payload, response)) {
 				return false;
@@ -151,7 +151,7 @@ export async function setModel(
 		}
 
 		// Run model hook
-		if (!await runHook('beforePut', request.payload, request, response)) {
+		if (!await runHook('beforePatch', request.payload, request, response)) {
 			return false;
 		}
 	}

@@ -3,10 +3,10 @@ import { writeFilter } from '../bodyguard';
 import { isSelf } from '../utils';
 
 /**
- * Put Filter: Filter a PUT request payload, and respond with
+ * Patch Filter: Filter a PATCH request payload, and respond with
  * 	403 Forbidden if the request contains any private fields
  */
-export function putFilter(
+export function patchFilter(
 	request: Request,
 	response: Response,
 	next: NextFunction
@@ -29,7 +29,7 @@ export function putFilter(
 	);
 
 	if (writeFilterResult === true) {
-		// Put body is okay, proceed
+		// Patch body is okay, proceed
 		next();
 	}
 	else {

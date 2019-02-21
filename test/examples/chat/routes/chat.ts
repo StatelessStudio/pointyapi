@@ -3,13 +3,13 @@ import { Router } from 'express';
 import {
 	postFilter,
 	getFilter,
-	putFilter,
+	patchFilter,
 	onlySelf
 } from '../../../../src/guards';
 
 import {
 	postEndpoint,
-	putEndpoint,
+	patchEndpoint,
 	deleteEndpoint,
 	getEndpoint
 } from '../../../../src/endpoints';
@@ -27,7 +27,7 @@ async function loader(request, response, next) {
 // Create
 router.post('/', loader, onlySelf, postFilter, postEndpoint);
 router.get('/', loader, onlySelf, getFilter, getEndpoint);
-router.put(`/:id`, loader, onlySelf, putFilter, putEndpoint);
+router.patch(`/:id`, loader, onlySelf, patchFilter, patchEndpoint);
 router.delete(`/:id`, loader, onlySelf, deleteEndpoint);
 
 export const chatRouter: Router = router;

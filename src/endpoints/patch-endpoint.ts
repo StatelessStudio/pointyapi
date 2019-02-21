@@ -5,9 +5,9 @@ import { runHook } from '../utils/run-hook';
 import { getISOTime } from '../models';
 
 /**
- * Put endpoint
+ * Patch endpoint
  */
-export async function putEndpoint(
+export async function patchEndpoint(
 	request: Request,
 	response: Response
 ): Promise<void> {
@@ -15,7 +15,7 @@ export async function putEndpoint(
 	request.body = Object.assign(request.payload, request.body);
 
 	// Run model hook
-	if (!await runHook('put', request.body, request, response)) {
+	if (!await runHook('patch', request.body, request, response)) {
 		return;
 	}
 
@@ -42,7 +42,7 @@ export async function putEndpoint(
 		// Save
 		await request.repository
 			.save(request.body)
-			.then((result) => response.putResponder(result))
+			.then((result) => response.patchResponder(result))
 			.catch((error) => response.error(error));
 	}
 }

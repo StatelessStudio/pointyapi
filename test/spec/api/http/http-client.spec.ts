@@ -67,9 +67,9 @@ describe('[HTTP] HTTP Client', () => {
 		expect(hasError).toBe(true);
 	});
 
-	it('can put', async () => {
+	it('can patch', async () => {
 		const result: void | HttpClientResponse = await http
-			.put('/', {}, [ 404 ], 'Bearer: test')
+			.patch('/', {}, [ 404 ], 'Bearer: test')
 			.catch((error) => fail(JSON.stringify(error)));
 
 		if (result) {
@@ -80,11 +80,11 @@ describe('[HTTP] HTTP Client', () => {
 		}
 	});
 
-	it('put rejects if the expected status code is not met', async () => {
+	it('patch rejects if the expected status code is not met', async () => {
 		let hasError = false;
 
 		const result: boolean | HttpClientResponse = await http
-			.put('/', {}, [ 200 ])
+			.patch('/', {}, [ 200 ])
 			.catch((error) => (hasError = true));
 
 		expect(hasError).toBe(true);

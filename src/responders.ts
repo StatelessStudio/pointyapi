@@ -16,4 +16,4 @@ export { validationResponder } from './responders/validation-responder';
 export { deleteResponder } from './responders/delete-responder';
 export { getResponder } from './responders/get-responder';
 export { postResponder } from './responders/post-responder';
-export { putResponder } from './responders/put-responder';
+export { patchResponder } from './responders/patch-responder';

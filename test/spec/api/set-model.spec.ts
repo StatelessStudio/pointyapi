@@ -199,9 +199,9 @@ describe('setModel', () => {
 		expect(result).toBe(true);
 	});
 
-	it('calls validation responder (put)', async () => {
+	it('calls validation responder (patch)', async () => {
 		// Create mock request/response
-		const { request, response } = createMockRequest('PUT');
+		const { request, response } = createMockRequest('PATCH');
 		request.body = {
 			username: 'username2',
 			password: 'test',
@@ -220,9 +220,9 @@ describe('setModel', () => {
 		expect(result).toBe(true);
 	});
 
-	it('calls gone responder (put)', async () => {
+	it('calls gone responder (patch)', async () => {
 		// Create mock request/response
-		const { request, response } = createMockRequest('PUT');
+		const { request, response } = createMockRequest('PATCH');
 		request.params = { id: 9999999 };
 
 		let result = false;

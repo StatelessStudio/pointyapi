@@ -2,13 +2,13 @@ import { getRepository } from 'typeorm';
 
 import { createMockRequest } from '../../../../src/test-probe';
 import { BaseUser } from '../../../../src/models';
-import { putFilter } from '../../../../src/guards';
+import { patchFilter } from '../../../../src/guards';
 
 /**
- * putFilter()
+ * patchFilter()
  * pointyapi/guards
  */
-describe('[Guards] putFilter', async () => {
+describe('[Guards] patchFilter', async () => {
 	beforeAll(async () => {
 		// Create mock user
 		this.user = new BaseUser();
@@ -40,7 +40,7 @@ describe('[Guards] putFilter', async () => {
 			result = true;
 		};
 
-		putFilter(request, response, next);
+		patchFilter(request, response, next);
 
 		expect(result).toBe(true);
 	});
@@ -62,7 +62,7 @@ describe('[Guards] putFilter', async () => {
 			result = true;
 		};
 
-		putFilter(request, response, fail);
+		patchFilter(request, response, fail);
 
 		expect(result).toBe(true);
 	});

@@ -4,15 +4,15 @@ import { stringify } from 'querystring';
 import { log } from 'util';
 
 const http = pointy.http;
-describe('[Chat] Chat API Put', () => {
+describe('[Chat] Chat API Patch', () => {
 	beforeAll(async () => {
 		this.user = await http
 			.post('/api/v1/user', {
 				fname: 'Chat',
 				lname: 'Tester',
-				username: 'chatPut1',
+				username: 'chatPatch1',
 				password: 'password123',
-				email: 'chatPut1@test.com'
+				email: 'chatPatch1@test.com'
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
@@ -22,9 +22,9 @@ describe('[Chat] Chat API Put', () => {
 			.post('/api/v1/user', {
 				fname: 'jim',
 				lname: 'Tester',
-				username: 'chatPut2',
+				username: 'chatPatch2',
 				password: 'password123',
-				email: 'chatPut2@test.com'
+				email: 'chatPatch2@test.com'
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
@@ -32,7 +32,7 @@ describe('[Chat] Chat API Put', () => {
 
 		this.token = await http
 			.post('/api/v1/auth', {
-				__user: 'chatPut1',
+				__user: 'chatPatch1',
 				password: 'password123'
 			})
 			.catch((error) =>
@@ -41,7 +41,7 @@ describe('[Chat] Chat API Put', () => {
 
 		this.token2 = await http
 			.post('/api/v1/auth', {
-				__user: 'chatPut2',
+				__user: 'chatPatch2',
 				password: 'password123'
 			})
 			.catch((error) => {
@@ -64,7 +64,7 @@ describe('[Chat] Chat API Put', () => {
 
 		if (result) {
 			await http
-				.put(
+				.patch(
 					`/api/v1/chat/${result.body['id']}`,
 					{
 						fromStatus: ChatStatus.Read
@@ -81,9 +81,9 @@ describe('[Chat] Chat API Put', () => {
 			.post('/api/v1/user', {
 				fname: 'Chat',
 				lname: 'Tester',
-				username: 'chatPut3',
+				username: 'chatPatch3',
 				password: 'password123',
-				email: 'chatPut3@test.com'
+				email: 'chatPatch3@test.com'
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
@@ -91,7 +91,7 @@ describe('[Chat] Chat API Put', () => {
 
 		const wrongToken = await http
 			.post('/api/v1/auth', {
-				__user: 'chatPut3',
+				__user: 'chatPatch3',
 				password: 'password123'
 			})
 			.catch((error) =>
@@ -114,7 +114,7 @@ describe('[Chat] Chat API Put', () => {
 
 		if (chat && wrongToken) {
 			await http
-				.put(
+				.patch(
 					`/api/v1/chat/${chat.body['id']}`,
 					{
 						fromStatus: ChatStatus.Read

@@ -7,10 +7,10 @@ import { createMockRequest } from '../../../../src/test-probe';
  * onlySelf
  * pointyapi/guards
  */
-describe('[Guards] onlySelf (Put)', async () => {
+describe('[Guards] onlySelf (Patch)', async () => {
 	it('passes authorized requests', async () => {
 		// Create mock request/response
-		const { request, response } = createMockRequest('PUT');
+		const { request, response } = createMockRequest('PATCH');
 
 		// Create user
 		const user = new BaseUser();
@@ -34,7 +34,7 @@ describe('[Guards] onlySelf (Put)', async () => {
 
 	it('refuses unauthenticated requests', async () => {
 		// Create mock request/response
-		const { request, response } = createMockRequest('PUT');
+		const { request, response } = createMockRequest('PATCH');
 
 		// Create user
 		request.payload = new BaseUser();
@@ -55,7 +55,7 @@ describe('[Guards] onlySelf (Put)', async () => {
 
 	it('refuses unauthorized requests', async () => {
 		// Create mock request/response
-		const { request, response } = createMockRequest('PUT');
+		const { request, response } = createMockRequest('PATCH');
 
 		// Create user
 		request.user = new BaseUser();

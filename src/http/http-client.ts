@@ -2,7 +2,7 @@
  * # HttpClient
  *
  * HttpClient can be used to mock requests in your test-suite.  There are
- * 4 functions: post(), get(), put(), delete()
+ * 4 functions: post(), get(), patch(), delete()
  *
  * **Before using, set HttpClient.url and HttpClient.port**
  *
@@ -111,20 +111,20 @@ export class HttpClient {
 	}
 
 	/**
-	 * Send a PUT http request to the server
+	 * Send a PATCH http request to the server
 	 * @param path string Path to send to (e.g. /users)
 	 * @param data object Data to send as query
 	 * @param expect number[] Array of status codes to expect
 	 * @param bearer string (Optional) Bearer token to send
 	 */
-	public put(
+	public patch(
 		path: string,
 		data: object,
 		expect: number[] = [ 204 ],
 		bearer: boolean | string = false
 	): Promise<HttpClientResponse> {
 		const options = {
-			method: 'PUT',
+			method: 'PATCH',
 			url: `${this.url}:${this.port}${path}`,
 			body: data,
 			json: true

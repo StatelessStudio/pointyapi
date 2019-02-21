@@ -7,7 +7,7 @@
  * - CRUD
  *  - postEndpoint
  *  - getEndpoint
- *  - putEndpoint
+ *  - patchEndpoint
  *  - deleteEndpoint
  * - Auth
  *  - loginEndpoint
@@ -26,7 +26,7 @@
  * import {
  * 		postGuard,
  * 		getGuard,
- * 		putGuard,
+ * 		patchGuard,
  * 		deleteGuard,
  * 		onlySelf
  * } from 'pointyapi/guards';
@@ -35,7 +35,7 @@
  * import {
  * 		postEndpoint,
  * 		getEndpoint,
- * 		putEndpoint,
+ * 		patchEndpoint,
  * 		deleteEndpoint
  * } from 'pointyapi/endpoints';
  *
@@ -52,7 +52,7 @@
  * // Set routes
  * router.post('/', loader, postGuard, postEndpoint);
  * router.get('/', loader, getGuard, getEndpoint);
- * router.put(`/:id`, loader, onlySelf, putGuard, putEndpoint);
+ * router.patch(`/:id`, loader, onlySelf, patchGuard, patchEndpoint);
  * router.delete(`/:id`, loader, onlySelf, deleteGuard, deleteEndpoint);
  *
  * // Export router
@@ -66,6 +66,6 @@
 export { deleteEndpoint } from './endpoints/delete-endpoint';
 export { getEndpoint } from './endpoints/get-endpoint';
 export { postEndpoint } from './endpoints/post-endpoint';
-export { putEndpoint } from './endpoints/put-endpoint';
+export { patchEndpoint } from './endpoints/patch-endpoint';
 export { loginEndpoint } from './endpoints/login-endpoint';
 export { logoutEndpoint } from './endpoints/logout-endpoint';

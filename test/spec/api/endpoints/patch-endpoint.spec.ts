@@ -1,24 +1,24 @@
 import { setModel } from '../../../../src';
 import { BaseUser } from '../../../../src/models';
-import { putEndpoint } from '../../../../src/endpoints';
+import { patchEndpoint } from '../../../../src/endpoints';
 import { createMockRequest } from '../../../../src/test-probe';
 
 /**
- * putEndpoint()
+ * patchEndpoint()
  * pointyapi/endpoints
  */
-describe('[Endpoints] Put', () => {
-	it('can put', async () => {
+describe('[Endpoints] Patch', () => {
+	it('can patch', async () => {
 		// Create mock request/response
-		const { request, response } = createMockRequest('PUT');
+		const { request, response } = createMockRequest('PATCH');
 
 		// Create user
 		const user = new BaseUser();
-		user.fname = 'Put';
+		user.fname = 'Patch';
 		user.lname = 'Endpoint';
-		user.username = 'putEndpoint';
+		user.username = 'patchEndpoint';
 		user.password = 'password123';
-		user.email = 'put@example.com';
+		user.email = 'patch@example.com';
 
 		// Create repo
 		await request.repository
@@ -36,14 +36,14 @@ describe('[Endpoints] Put', () => {
 			fail('Could not set model');
 		}
 
-		// Test putEndpoint()
+		// Test patchEndpoint()
 		let result = false;
 
-		response.putResponder = () => {
+		response.patchResponder = () => {
 			result = true;
 		};
 
-		await putEndpoint(request, response).catch((error) =>
+		await patchEndpoint(request, response).catch((error) =>
 			fail(JSON.stringify(error))
 		);
 
@@ -53,13 +53,13 @@ describe('[Endpoints] Put', () => {
 
 	it('calls validationResponder for a bad request', async () => {
 		// Create mock request/response
-		const { request, response } = createMockRequest('PUT');
+		const { request, response } = createMockRequest('PATCH');
 
 		// Create user
 		const user = new BaseUser();
-		user.fname = 'Put';
+		user.fname = 'Patch';
 		user.lname = 'Endpoint';
-		user.username = 'putEndpoint2';
+		user.username = 'patchEndpoint2';
 		user.password = 'password123';
 		user.email = 'testy';
 
@@ -78,13 +78,13 @@ describe('[Endpoints] Put', () => {
 			fail('Could not set model');
 		}
 
-		// Check putEndpoint()
+		// Check patchEndpoint()
 		let result = false;
 		response.validationResponder = () => {
 			result = true;
 		};
 
-		await putEndpoint(request, response).catch((error) =>
+		await patchEndpoint(request, response).catch((error) =>
 			fail(JSON.stringify(error))
 		);
 

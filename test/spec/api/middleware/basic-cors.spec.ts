@@ -17,7 +17,7 @@ describe('[Middleware] basicCors()', () => {
 		basicCors(undefined, response, () => {
 			expect(headers['Access-Control-Allow-Origin']).toEqual('*');
 			expect(headers['Access-Control-Allow-Methods']).toEqual(
-				'POST, GET, PUT, DELETE, OPTIONS'
+				'POST, GET, PATCH, DELETE, OPTIONS'
 			);
 			expect(headers['Access-Control-Allow-Credentials']).toEqual('true');
 			expect(headers['Content-Type']).toEqual(

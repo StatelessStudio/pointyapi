@@ -11,7 +11,7 @@ describe('[Guards] User API Update', () => {
 			.post('/api/v1/user', {
 				fname: 'userAdmin',
 				lname: 'userAdmin',
-				username: 'adminGuardPut1',
+				username: 'adminGuardPatch1',
 				password: 'password123',
 				email: 'userAdmin@test.com'
 			})
@@ -19,11 +19,11 @@ describe('[Guards] User API Update', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		await upgradeUserRole('adminGuardPut1', BaseUser, UserRole.Admin);
+		await upgradeUserRole('adminGuardPatch1', BaseUser, UserRole.Admin);
 
 		this.adminToken = await http
 			.post('/api/v1/auth', {
-				__user: 'adminGuardPut1',
+				__user: 'adminGuardPatch1',
 				password: 'password123'
 			})
 			.catch((error) =>
@@ -32,11 +32,11 @@ describe('[Guards] User API Update', () => {
 
 		this.user = await http
 			.post('/api/v1/user', {
-				fname: 'userPut4',
-				lname: 'userPut4',
-				username: 'userPut4',
+				fname: 'userPatch4',
+				lname: 'userPatch4',
+				username: 'userPatch4',
 				password: 'password123',
-				email: 'userPut4@test.com'
+				email: 'userPatch4@test.com'
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
@@ -44,7 +44,7 @@ describe('[Guards] User API Update', () => {
 
 		this.token = await http
 			.post('/api/v1/auth', {
-				__user: 'userPut4',
+				__user: 'userPatch4',
 				password: 'password123'
 			})
 			.catch((error) =>
@@ -55,11 +55,11 @@ describe('[Guards] User API Update', () => {
 	it('allows users to update', async () => {
 		const user = await http
 			.post('/api/v1/user', {
-				fname: 'userPut1',
-				lname: 'userPut1',
-				username: 'userPut1',
+				fname: 'userPatch1',
+				lname: 'userPatch1',
+				username: 'userPatch1',
 				password: 'password123',
-				email: 'userPut1@test.com'
+				email: 'userPatch1@test.com'
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
@@ -67,7 +67,7 @@ describe('[Guards] User API Update', () => {
 
 		const token = await http
 			.post('/api/v1/auth', {
-				__user: 'userPut1',
+				__user: 'userPatch1',
 				password: 'password123'
 			})
 			.catch((error) =>
@@ -76,7 +76,7 @@ describe('[Guards] User API Update', () => {
 
 		if (user && token) {
 			const result = await http
-				.put(
+				.patch(
 					`/api/v1/user/${user.body['id']}`,
 					{
 						fname: 'updatedName'
@@ -108,17 +108,17 @@ describe('[Guards] User API Update', () => {
 	it('does not allow user to update without token', async () => {
 		const result = await http
 			.post('/api/v1/user', {
-				fname: 'userPut2',
-				lname: 'userPut2',
-				username: 'userPut2',
+				fname: 'userPatch2',
+				lname: 'userPatch2',
+				username: 'userPatch2',
 				password: 'password123',
-				email: 'userPut2@test.com'
+				email: 'userPatch2@test.com'
 			})
 			.catch((error) => fail(JSON.stringify(error)));
 
 		if (result) {
 			await http
-				.put(
+				.patch(
 					`/api/v1/user/${result.body['id']}`,
 					{
 						fname: 'noToken'
@@ -144,7 +144,7 @@ describe('[Guards] User API Update', () => {
 
 		if (user && this.token) {
 			await http
-				.put(
+				.patch(
 					`/api/v1/user/${user.body['id']}`,
 					{
 						fname: 'wrongToken'
@@ -161,7 +161,7 @@ describe('[Guards] User API Update', () => {
 
 	it('does not allow users to change their role', async () => {
 		await http
-			.put(
+			.patch(
 				`/api/v1/user/${this.user.body.id}`,
 				{
 					role: UserRole.Admin
@@ -174,7 +174,7 @@ describe('[Guards] User API Update', () => {
 
 	it('allows for admin to update users', async () => {
 		const result = await http
-			.put(
+			.patch(
 				`/api/v1/user/${this.user.body.id}`,
 				{
 					fname: 'adminUpdate'

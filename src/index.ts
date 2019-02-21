@@ -38,7 +38,7 @@ declare global {
 			deleteResponder: ResponderFunction;
 			getResponder: ResponderFunction;
 			postResponder: ResponderFunction;
-			putResponder: ResponderFunction;
+			patchResponder: ResponderFunction;
 		}
 	}
 }

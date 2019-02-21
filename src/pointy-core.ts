@@ -23,7 +23,7 @@ import {
 	deleteResponder,
 	getResponder,
 	postResponder,
-	putResponder
+	patchResponder
 } from './responders';
 import { logHandler, errorHandler } from './handlers';
 import { bindResponders } from './utils/bind-responders';
@@ -59,7 +59,7 @@ export class PointyApi {
 	public deleteResponder: ResponderFunction = deleteResponder;
 	public getResponder: ResponderFunction = getResponder;
 	public postResponder: ResponderFunction = postResponder;
-	public putResponder: ResponderFunction = putResponder;
+	public patchResponder: ResponderFunction = patchResponder;
 
 	// Hooks
 	public before: Function = (app: any) => {};

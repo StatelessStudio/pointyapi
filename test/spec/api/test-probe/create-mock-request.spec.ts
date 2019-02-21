@@ -37,7 +37,7 @@ describe('[Test Probe] createMockRequest()', () => {
 		expect(response.error).toEqual(jasmine.any(Function));
 		expect(response.goneResponder).toEqual(jasmine.any(Function));
 		expect(response.postResponder).toEqual(jasmine.any(Function));
-		expect(response.putResponder).toEqual(jasmine.any(Function));
+		expect(response.patchResponder).toEqual(jasmine.any(Function));
 		expect(response.unauthorizedResponder).toEqual(jasmine.any(Function));
 		expect(response.validationResponder).toEqual(jasmine.any(Function));
 	});
@@ -52,7 +52,7 @@ describe('[Test Probe] createMockRequest()', () => {
 			'error',
 			'goneResponder',
 			'postResponder',
-			'putResponder',
+			'patchResponder',
 			'unauthorizedResponder',
 			'validationResponder'
 		];

@@ -17,13 +17,13 @@
 2. Rename hooks
 	Hooks have been renamed for clarity.  Rename all hooks in your models (pro tip: project-wide find & replace).  **Make sure you go in order, and replace all occourences before moving on, because some hook names conflict with old hook names!**
     - `beforePost()` -> `post()`
-    - `beforePut()` -> `put()`
+    - `beforePut()` -> `patch()`
     - `beforeGet()` -> REMOVED
     - `beforeDelete()` -> `delete()`
     - `beforeLogin()` -> `login()`
     - `beforeLogout()` -> `logout()`
     - `beforeLoadPost()` -> `beforePost()`
-    - `beforeLoadPut()` -> `beforePut()`
+    - `beforeLoadPut()` -> `beforePatch()`
     - `beforeLoadGet()` -> REMOVED
     - `beforeLoadDelete()` -> `beforeDelete()`
     - `onGetQuery()` -> REMOVED
@@ -86,4 +86,8 @@
 	- `__count` => `count`
 
 	Additionaly, WHERE fields should no longer be in the top-level of the query, and instead should be in the `where` query type
-
+13. Change all PUT requests to PATCH
+	`putEndpoint` => `patchEndpoint`
+	`putFilter` => `patchFilter`
+	`putResponder` => `patchResponder`
+	`putEndpoint` => `patchEndpoint`

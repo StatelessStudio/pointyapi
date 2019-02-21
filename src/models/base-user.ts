@@ -151,8 +151,8 @@ export class BaseUser extends BaseModel {
 		return true;
 	}
 
-	// Put hook
-	public async beforePut(request: Request, response: Response) {
+	// Patch hook
+	public async beforePatch(request: Request, response: Response) {
 		// Temp password
 		if ('password' in this && this.password) {
 			this.password = hashSync(this.password, 12);

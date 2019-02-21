@@ -36,7 +36,7 @@ describe('[Models] BaseUser', () => {
 		expect(compareSync('password123', request.body.password)).toBe(true);
 	});
 
-	it('hashes the password in beforePut()', async () => {
+	it('hashes the password in beforePatch()', async () => {
 		const user = new BaseUser();
 
 		const { request, response } = createMockRequest();
@@ -44,7 +44,7 @@ describe('[Models] BaseUser', () => {
 
 		response.validationResponder = (error) => fail(error);
 
-		await user.beforePut.bind(request.body)(request, response);
+		await user.beforePatch.bind(request.body)(request, response);
 
 		expect(compareSync('password123', request.body.password)).toBe(true);
 	});

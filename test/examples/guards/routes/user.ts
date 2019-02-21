@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import {
 	postEndpoint,
-	putEndpoint,
+	patchEndpoint,
 	deleteEndpoint,
 	getEndpoint
 } from '../../../../src/endpoints';
@@ -13,7 +13,7 @@ import { setModel } from '../../../../src/';
 import {
 	postFilter,
 	getFilter,
-	putFilter,
+	patchFilter,
 	onlySelf
 } from '../../../../src/guards';
 
@@ -28,7 +28,7 @@ async function loader(request, response, next) {
 // Create
 router.post('/', loader, postFilter, postEndpoint);
 router.get('/', loader, getFilter, getEndpoint);
-router.put(`/:id`, loader, onlySelf, putFilter, putEndpoint);
+router.patch(`/:id`, loader, onlySelf, patchFilter, patchEndpoint);
 router.delete(`/:id`, loader, onlySelf, deleteEndpoint);
 
 export const userRouter: Router = router;

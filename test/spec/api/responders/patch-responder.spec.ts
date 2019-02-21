@@ -1,11 +1,11 @@
 import { createMockRequest } from '../../../../src/test-probe';
-import { putResponder } from '../../../../src/responders';
+import { patchResponder } from '../../../../src/responders';
 
 /**
- * putResponder()
+ * patchResponder()
  * pointyapi/responders
  */
-describe('[Responders] putResponder', () => {
+describe('[Responders] patchResponder', () => {
 	it('responds with a 200 on success', () => {
 		const { request, response } = createMockRequest();
 
@@ -14,7 +14,7 @@ describe('[Responders] putResponder', () => {
 			result = _result;
 		};
 
-		putResponder.bind({ response: response })({ message: 'Hello' });
+		patchResponder.bind({ response: response })({ message: 'Hello' });
 
 		expect(result).toBe(204);
 	});
@@ -28,7 +28,7 @@ describe('[Responders] putResponder', () => {
 			result = true;
 		};
 
-		putResponder.bind({ response: response })(undefined);
+		patchResponder.bind({ response: response })(undefined);
 
 		expect(result).toEqual(true);
 	});
