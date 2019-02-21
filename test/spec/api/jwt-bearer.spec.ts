@@ -1,6 +1,6 @@
 import { mockRequest } from 'mock-req-res';
 
-import { jwtBearer } from '../../../src';
+import { JwtBearer, jwtBearer } from '../../../src';
 import { BaseUser } from '../../../src/models';
 
 /**
@@ -10,6 +10,12 @@ import { BaseUser } from '../../../src/models';
 describe('[JWT]', () => {
 	it('can sign a token', () => {
 		expect(jwtBearer.sign(new BaseUser())).toEqual(jasmine.any(String));
+	});
+
+	it('can sign a token', () => {
+		const jwt = new JwtBearer('test-key');
+		expect(jwt.sign(new BaseUser())).toEqual(jasmine.any(String));
+		expect(jwt.key).toBe('test-key');
 	});
 
 	it('can can verify a token', () => {

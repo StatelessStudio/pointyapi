@@ -4,19 +4,16 @@ import { setModel } from '../../../../src';
 import { BaseUser } from '../../../../src/models';
 import { getQuery } from '../../../../src/middleware';
 import { createMockRequest } from '../../../../src/test-probe';
+import { ExampleOwner } from '../../../examples/api/models/example-owner';
+import { ExampleRelation } from '../../../examples/api/models/example-relation';
+import { UserRole } from '../../../../src/enums';
 
 /**
  * getQuery()
  * pointyapi/middleware
  */
 describe('[Middleware] GetQuery', () => {
-	it('can search', async () => {
-		// Create mock request/response
-		const { request, response } = createMockRequest();
-
-		// Create request
-		request.query.search = 'Get';
-
+	beforeAll(async () => {
 		// Create users
 		const user1 = new BaseUser();
 		user1.fname = 'Get';
@@ -35,7 +32,39 @@ describe('[Middleware] GetQuery', () => {
 		// Save users
 		await getRepository(BaseUser)
 			.save([ user1, user2 ])
-			.catch((error) => fail(JSON.stringify(error)));
+			.catch((error) =>
+				fail('Could not save users: ' + JSON.stringify(error))
+			);
+
+		// Create example relation
+		const owner = new ExampleOwner();
+		owner.username = 'joinowner';
+
+		await getRepository(ExampleOwner)
+			.save(owner)
+			.catch((error) =>
+				fail('Could not save owner: ' + JSON.stringify(error))
+			);
+
+		const relation = new ExampleRelation();
+		relation.owner = owner;
+
+		await getRepository(ExampleRelation)
+			.save(relation)
+			.catch((error) =>
+				fail('Could not save relation: ' + JSON.stringify(error))
+			);
+	});
+
+	it('can search (string)', async () => {
+		// Create mock request/response
+		// Use '' request method to prevent setModel() from running getQuery
+		const { request, response } = createMockRequest('');
+
+		// Create request
+		request.query = {
+			search: 'get%@example.com'
+		};
 
 		// Set model
 		if (!await setModel(request, response, BaseUser)) {
@@ -47,9 +76,302 @@ describe('[Middleware] GetQuery', () => {
 			.then((result) => {
 				request.payload = result;
 			})
-			.catch((error) => fail(JSON.stringify(error)));
+			.catch((error) => fail('Could not get: ' + JSON.stringify(error)));
 
 		expect(request.payload).toEqual(jasmine.any(Array));
-		expect(request.payload.length).toBeGreaterThanOrEqual(2);
+		expect(request.payload.length).toBe(2);
+	});
+
+	it('can select keys', async () => {
+		// Create mock request/response
+		// Use '' request method to prevent setModel() from running getQuery
+		const { request, response } = createMockRequest('');
+
+		// Create request
+		request.query = {
+			search: 'get%@example.com',
+			select: [ 'fname' ]
+		};
+
+		// Set model
+		if (!await setModel(request, response, BaseUser)) {
+			fail('Could not set model');
+		}
+
+		// Test getQuery()
+		await getQuery(request, response)
+			.then((result) => {
+				request.payload = result;
+			})
+			.catch((error) => fail('Could not get: ' + JSON.stringify(error)));
+
+		expect(request.payload).toEqual(jasmine.any(Array));
+		expect(request.payload.length).toBe(2);
+		expect(request.payload[0].fname).toBe('Get');
+		expect(request.payload[0].lname).toBe(undefined);
+	});
+
+	it('can join keys', async () => {
+		// Create mock request/response
+		// Use '' request method to prevent setModel() from running getQuery
+		const { request, response } = createMockRequest('');
+
+		// Create request
+		request.query = {
+			search: '',
+			join: [ 'relations' ]
+		};
+
+		// Set model
+		request.userType = ExampleOwner;
+		if (!await setModel(request, response, ExampleOwner)) {
+			fail('Could not set model');
+		}
+
+		// Test getQuery()
+
+		await getQuery(request, response)
+			.then((result) => {
+				request.payload = result;
+			})
+			.catch((error) => fail('Could not get: ' + JSON.stringify(error)));
+
+		expect(request.payload).toEqual(jasmine.any(Array));
+		expect(request.payload.length).toBeGreaterThanOrEqual(1);
+		expect(request.payload[0]).toEqual(jasmine.any(ExampleOwner));
+		expect(request.payload[0].relations).toEqual(jasmine.any(Array));
+		expect(request.payload[0].relations.length).toBeGreaterThanOrEqual(1);
+		expect(request.payload[0].relations[0]).toEqual(
+			jasmine.any(ExampleRelation)
+		);
+	});
+
+	it('can group keys', async () => {
+		// Create mock request/response
+		// Use '' request method to prevent setModel() from running getQuery
+		const { request, response } = createMockRequest('');
+
+		// Create request
+		request.query = {
+			search: '',
+			groupBy: [ 'fname' ]
+		};
+
+		// Set model
+		if (!await setModel(request, response, BaseUser)) {
+			fail('Could not set model');
+		}
+
+		// Test getQuery()
+		await getQuery(request, response)
+			.then((result) => {
+				request.payload = result;
+			})
+			.catch((error) => fail('Could not get: ' + JSON.stringify(error)));
+
+		expect(request.payload).toEqual(jasmine.any(Array));
+	});
+
+	it('can order keys', async () => {
+		// Create mock request/response
+		// Use '' request method to prevent setModel() from running getQuery
+		const { request, response } = createMockRequest('');
+
+		// Create request
+		request.query = {
+			search: '',
+			orderBy: { fname: 'DESC', lname: 'ASC' }
+		};
+
+		// Set model
+		if (!await setModel(request, response, BaseUser)) {
+			fail('Could not set model');
+		}
+
+		// Test getQuery()
+		await getQuery(request, response)
+			.then((result) => {
+				request.payload = result;
+			})
+			.catch((error) => fail('Could not get: ' + JSON.stringify(error)));
+
+		expect(request.payload).toEqual(jasmine.any(Array));
+	});
+
+	it('can limit', async () => {
+		// Create mock request/response
+		// Use '' request method to prevent setModel() from running getQuery
+		const { request, response } = createMockRequest('');
+
+		// Create request
+		request.query = {
+			search: '',
+			limit: 1
+		};
+
+		// Set model
+		if (!await setModel(request, response, BaseUser)) {
+			fail('Could not set model');
+		}
+
+		// Test getQuery()
+		await getQuery(request, response)
+			.then((result) => {
+				request.payload = result;
+			})
+			.catch((error) => fail('Could not get: ' + JSON.stringify(error)));
+
+		expect(request.payload).toEqual(jasmine.any(Array));
+		expect(request.payload.length).toEqual(1);
+	});
+
+	it('can offset', async () => {
+		// Create mock request/response
+		// Use '' request method to prevent setModel() from running getQuery
+		const { request, response } = createMockRequest('');
+
+		// Create request
+		request.query = {
+			search: '',
+			offset: 1
+		};
+
+		// Set model
+		if (!await setModel(request, response, BaseUser)) {
+			fail('Could not set model');
+		}
+
+		// Test getQuery()
+		await getQuery(request, response)
+			.then((result) => {
+				request.payload = result;
+			})
+			.catch((error) => fail('Could not get: ' + JSON.stringify(error)));
+
+		expect(request.payload).toEqual(jasmine.any(Array));
+	});
+
+	it('can get raw', async () => {
+		// Create mock request/response
+		// Use '' request method to prevent setModel() from running getQuery
+		const { request, response } = createMockRequest('');
+
+		// Create request
+		request.query = {
+			search: '',
+			raw: true
+		};
+
+		// Set model
+		if (!await setModel(request, response, BaseUser)) {
+			fail('Could not set model');
+		}
+
+		// Test getQuery()
+		await getQuery(request, response)
+			.then((result) => {
+				request.payload = result;
+			})
+			.catch((error) => fail('Could not get: ' + JSON.stringify(error)));
+
+		expect(request.payload).toEqual(jasmine.any(Array));
+	});
+
+	it('can get one', async () => {
+		// Create mock request/response
+		// Use '' request method to prevent setModel() from running getQuery
+		const { request, response } = createMockRequest('');
+
+		// Create request
+		request.query = {
+			id: 1
+		};
+
+		// Set model
+		if (!await setModel(request, response, BaseUser)) {
+			fail('Could not set model');
+		}
+
+		// Test getQuery()
+		await getQuery(request, response)
+			.then((result) => {
+				request.payload = result;
+			})
+			.catch((error) => fail('Could not get: ' + JSON.stringify(error)));
+
+		expect(request.payload).toEqual(jasmine.any(BaseUser));
+	});
+
+	it('can get all', async () => {
+		// Create mock request/response
+		// Use '' request method to prevent setModel() from running getQuery
+		const { request, response } = createMockRequest('');
+
+		// Create request
+		request.query = {};
+
+		// Set model
+		if (!await setModel(request, response, BaseUser)) {
+			fail('Could not set model');
+		}
+
+		// Test getQuery()
+		await getQuery(request, response)
+			.then((result) => {
+				request.payload = result;
+			})
+			.catch((error) => fail('Could not get: ' + JSON.stringify(error)));
+
+		expect(request.payload).toEqual(jasmine.any(Array));
+	});
+
+	it('can get non-owner models', async () => {
+		// Create mock request/response
+		// Use '' request method to prevent setModel() from running getQuery
+		const { request, response } = createMockRequest('');
+
+		// Create request
+		request.query = { search: '' };
+
+		// Set model
+		request.userType = ExampleOwner;
+		if (!await setModel(request, response, ExampleRelation)) {
+			fail('Could not set model');
+		}
+
+		// Test getQuery()
+		await getQuery(request, response)
+			.then((result) => {
+				request.payload = result;
+			})
+			.catch((error) => fail('Could not get: ' + JSON.stringify(error)));
+
+		expect(request.payload).toEqual(jasmine.any(Array));
+	});
+
+	it('can get non-owner models (non-admin)', async () => {
+		// Create mock request/response
+		// Use '' request method to prevent setModel() from running getQuery
+		const { request, response } = createMockRequest('');
+
+		// Create request
+		request.query = { search: '' };
+		request.user = new ExampleOwner();
+		request.user.role = UserRole.Basic;
+
+		// Set model
+		request.userType = ExampleOwner;
+		if (!await setModel(request, response, ExampleRelation)) {
+			fail('Could not set model');
+		}
+
+		// Test getQuery()
+		await getQuery(request, response)
+			.then((result) => {
+				request.payload = result;
+			})
+			.catch((error) => fail('Could not get: ' + JSON.stringify(error)));
+
+		expect(request.payload).toEqual(jasmine.any(Array));
 	});
 });
