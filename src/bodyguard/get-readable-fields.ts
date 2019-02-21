@@ -28,7 +28,7 @@ export function getReadableFields(
 					(canRead === '__anyone__' ||
 						(user && canRead === user.role))) ||
 				(canRead === '__self__' && user && user.id) ||
-				(canRead === '__admin__' &&
+				((canRead === '__admin__' || canRead === '__self__') &&
 					user &&
 					user.role === UserRole.Admin)
 			) {
