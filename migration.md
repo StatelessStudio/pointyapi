@@ -95,4 +95,7 @@
 15. Update imports
 	- Filters from `pointyapi/filters`
 	- Guards from `pointyapi/guards`
-  
+16. Replace BodyguardOwner keys
+	- `__anyone__` => BodyguardOwner.Anyone
+	- `__self__` => BodyguardOwner.Self
+	- `__admin__` => BodyguardOwner.Admin
