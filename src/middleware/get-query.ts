@@ -21,14 +21,13 @@ export async function getQuery(
 	else if ('query' in request && Object.keys(request.query).length) {
 		// Read query
 
-		const objAlias = 'obj';
 		const shouldCount = 'count' in request.query && request.query.count;
 
 		// Readable keys
 		let readableFields = getReadableFields(
 			new request.payloadType(),
 			request.user,
-			objAlias
+			'obj'
 		);
 
 		// Extract select query keys
@@ -119,7 +118,7 @@ export async function getQuery(
 
 				queryString += '(';
 				bodyguardKeys.forEach((key) => {
-					queryString += `${objAlias}.${key}=:bodyGuard${key} OR `;
+					queryString += `obj.${key}=:bodyGuard${key} OR `;
 
 					queryParams['bodyGuard' + key] = request.user.id;
 				});
@@ -131,13 +130,13 @@ export async function getQuery(
 
 		// Create selection
 		let selection = await request.repository
-			.createQueryBuilder(objAlias)
+			.createQueryBuilder('obj')
 			.select(readableFields);
 
 		// Loop through join tables
 		for (const table of request.joinMembers) {
 			selection = await selection.leftJoinAndSelect(
-				`${objAlias}.${table}`,
+				`obj.${table}`,
 				table
 			);
 		}
@@ -179,7 +178,7 @@ export async function getQuery(
 			return await query.getRawMany();
 		}
 		else if (groupByKeys.length) {
-			const prestring = `${objAlias}_`;
+			const prestring = `obj_`;
 
 			return await query.getRawMany().then((result) => {
 				if (result instanceof Array && result.length) {
