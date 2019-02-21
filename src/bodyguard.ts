@@ -142,6 +142,7 @@ const CanWriteSymbol = Symbol('CanWrite');
 const BodyguardKeySymbol = Symbol('BodyguardKey');
 const CanSearchSymbol = Symbol('CanSearch');
 const CanSearchRelationSymbol = Symbol('CanSearchRelation');
+const CanReadRelationSymbol = Symbol('CanReadRelationSymbol');
 
 /**
  * Check if the key is a bodyguard key
@@ -186,6 +187,15 @@ export function getCanSearch(target: any, propertyKey: string): string {
  */
 export function getCanSearchRelation(target: any, propertyKey: string): any {
 	return Reflect.getMetadata(CanSearchRelationSymbol, target, propertyKey);
+}
+
+/**
+ * Get the read relations of the key
+ * @param target any Object to test
+ * @param propertyKey string Key to check
+ */
+export function getCanReadRelation(target: any, propertyKey: string): any {
+	return Reflect.getMetadata(CanReadRelationSymbol, target, propertyKey);
 }
 
 /**
@@ -277,12 +287,21 @@ export function CanSearchRelation(params: object) {
 	return Reflect.metadata(CanSearchRelationSymbol, params);
 }
 
+/**
+ * Sets who can read the relation
+ * @param who string (Optional) Default is anyone
+ */
+export function CanReadRelation(who: string = '__anyone__') {
+	return Reflect.metadata(CanReadRelationSymbol, who);
+}
+
 export { compareNestedBodyguards } from './bodyguard/compare-nested';
 export { compareIdToUser } from './bodyguard/compare-id-to-user';
 export { getBodyguardKeys } from './bodyguard/get-bodyguard-keys';
 export { getSearchableFields } from './bodyguard/get-searchable-fields';
 export { getSearchableRelations } from './bodyguard/get-searchable-relations';
 export { getReadableFields } from './bodyguard/get-readable-fields';
+export { getReadableRelations } from './bodyguard/get-readable-relations';
 
 export { readFilter } from './bodyguard/read-filter';
 export { writeFilter } from './bodyguard/write-filter';

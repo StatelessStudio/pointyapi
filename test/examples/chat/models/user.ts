@@ -18,7 +18,8 @@ import {
 	OnlySelfCanWrite,
 	OnlyAdminCanWrite,
 	BodyguardKey,
-	CanSearch
+	CanSearch,
+	CanReadRelation
 } from '../../../../src/bodyguard';
 
 // Models
@@ -150,9 +151,11 @@ export class User extends BaseUser {
 
 	// Chat Message (Sent)
 	@OneToMany((type) => ChatMessage, (chat) => chat.from)
+	@CanReadRelation('__self__')
 	public outbox: ChatMessage[] = undefined;
 
 	// Chat Message (Received)
 	@OneToMany((type) => ChatMessage, (chat) => chat.to)
+	@CanReadRelation('__self__')
 	public inbox: ChatMessage[] = undefined;
 }

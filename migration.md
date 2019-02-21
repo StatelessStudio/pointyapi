@@ -91,3 +91,4 @@
 	`putFilter` => `patchFilter`
 	`putResponder` => `patchResponder`
 	`putEndpoint` => `patchEndpoint`
+14. Relations which will be queried must have `@CanReadRelation()` key
