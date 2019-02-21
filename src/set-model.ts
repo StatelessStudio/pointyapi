@@ -82,18 +82,6 @@ export async function setModel(
 						return false;
 					}
 				}
-
-				// Run model hook
-				if (
-					!await runHook(
-						isAuth ? 'beforeLogin' : 'beforePost',
-						request.body[i],
-						request,
-						response
-					)
-				) {
-					return false;
-				}
 			}
 		}
 		else {
@@ -112,18 +100,18 @@ export async function setModel(
 					return false;
 				}
 			}
+		}
 
-			// Run model hook
-			if (
-				!await runHook(
-					isAuth ? 'beforeLogin' : 'beforePost',
-					request.body,
-					request,
-					response
-				)
-			) {
-				return false;
-			}
+		// Run model hook
+		if (
+			!await runHook(
+				isAuth ? 'beforeLogin' : 'beforePost',
+				request.body,
+				request,
+				response
+			)
+		) {
+			return false;
 		}
 	}
 	else if (request.method === 'GET') {
