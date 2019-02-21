@@ -15,10 +15,10 @@ export async function deleteEndpoint(
 	if (request.payload && request.payload instanceof BaseModel) {
 		// Convert to model
 		// TODO: This should already be done, remove
-		request.payload = Object.assign(
+		/*request.payload = Object.assign(
 			new request.payloadType(),
 			request.payload
-		);
+		);*/
 
 		// Run model hook
 		if (!await runHook('delete', request.payload, request, response)) {

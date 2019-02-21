@@ -14,10 +14,13 @@ export async function postEndpoint(
 	if (request.body instanceof Array) {
 		for (let i = 0; i < request.body.length; i++) {
 			// Set model type
+			// TODO: Remove
+			/*
 			request.body[i] = Object.assign(
 				new request.payloadType(),
 				request.body[i]
 			);
+			*/
 
 			// Delete undefined members
 			request.body[i] = deleteUndefinedMembers(request.body[i]);
@@ -71,7 +74,8 @@ export async function postEndpoint(
 	}
 	else {
 		// Set model type
-		request.body = Object.assign(new request.payloadType(), request.body);
+		// TODO: Remove
+		// request.body = Object.assign(new request.payloadType(), request.body);
 
 		// Delete undefined members
 		request.body = deleteUndefinedMembers(request.body);

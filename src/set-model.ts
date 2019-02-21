@@ -128,6 +128,7 @@ export async function setModel(
 	}
 	else if (request.method === 'GET') {
 		// Get loader
+		// TODO: Remove
 		// request.query = Object.assign(new request.payloadType(), request.query);
 
 		if (!queryValidator(request, response)) {
