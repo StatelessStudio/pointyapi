@@ -141,17 +141,13 @@ export async function setModel(
 
 		let getSuccess = true;
 
-		await getQuery(request, response)
-			.then((result) => {
-				request.payload = result;
-			})
-			.catch((error) => {
-				if (!response.headersSent) {
-					response.error(error);
-				}
+		request.payload = await getQuery(request, response).catch((error) => {
+			if (!response.headersSent) {
+				response.error(error);
+			}
 
-				getSuccess = false;
-			});
+			getSuccess = false;
+		});
 
 		if (!getSuccess) {
 			return false;
