@@ -145,16 +145,22 @@ export async function setModel(
 			}
 		}
 
+		// Load entity
+		if (!await loadEntity(request, response)) {
+			return false;
+		}
+
 		// Run model hook
 		if (!await runHook('beforePut', request.payload, request, response)) {
 			return false;
 		}
-
+	}
+	else if (request.method === 'DELETE') {
+		// Load entity
 		if (!await loadEntity(request, response)) {
 			return false;
 		}
-	}
-	else if (request.method === 'DELETE') {
+
 		// Delete loader
 		// Run model hook
 		if (
@@ -165,10 +171,6 @@ export async function setModel(
 				response
 			)
 		) {
-			return false;
-		}
-
-		if (!await loadEntity(request, response)) {
 			return false;
 		}
 	}
