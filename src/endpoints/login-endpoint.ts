@@ -94,8 +94,8 @@ export async function loginEndpoint(
 			response.json(match);
 		}
 		else {
-			// Couldn't create status
-			response.sendStatus(500);
+			// Couldn't create token
+			response.error('Could not create create auth token');
 		}
 	}
 	else {
