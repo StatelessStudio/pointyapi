@@ -37,7 +37,7 @@ export async function loadEntity(
 			}
 		}
 		else {
-			response.validationResponder('Invalid query parameters');
+			response.validationResponder('Invalid request parameters');
 		}
 	}
 	else {
