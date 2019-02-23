@@ -51,8 +51,6 @@ export async function setModel(
 
 	// Substitute authenticated user as resource for auth router deletes
 	if (isAuth && request.method === 'DELETE') {
-		request.params = request.user;
-
 		if (request.user) {
 			request.params = request.user;
 		}
