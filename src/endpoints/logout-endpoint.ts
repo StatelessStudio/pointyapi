@@ -8,13 +8,13 @@ export async function logoutEndpoint(
 	request: Request,
 	response: Response
 ): Promise<void> {
-	// Run model hook
-	if (!await runHook('logout', request.body, request, response)) {
-		return;
-	}
-
 	// Check user
 	if (request.user) {
+		// Run model hook
+		if (!await runHook('logout', request.user, request, response)) {
+			return;
+		}
+
 		// Update token
 		request.user.token = '';
 
