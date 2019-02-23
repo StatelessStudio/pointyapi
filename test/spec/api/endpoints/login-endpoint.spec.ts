@@ -4,6 +4,8 @@ import { hashSync } from 'bcryptjs';
 import { BaseUser } from '../../../../src/models';
 import { loginEndpoint } from '../../../../src/endpoints';
 import { createMockRequest } from '../../../../src/test-probe';
+import { HookTestClass } from '../../../examples/api/models/hook-test-class';
+import { addResource } from '../../../../src/utils';
 
 /**
  * loginEndpoint()
@@ -93,5 +95,70 @@ describe('[Endpoints] Login', async () => {
 		await loginEndpoint(request, response);
 
 		expect(match).toBe(true);
+	});
+
+	it('runs login hook', async () => {
+		await addResource(HookTestClass, {
+			username: 'login',
+			password: hashSync('password123'),
+			fname: 'login',
+			lnmae: 'hook',
+			email: 'login@example.com'
+		}).catch((error) =>
+			fail('Could not create user ' + JSON.stringify(error))
+		);
+
+		// Create mock request/response
+		const { request, response } = createMockRequest('POST');
+
+		let result = '';
+		request.hookShouldPass = true;
+		request.hookCallback = (name) => (result = name);
+
+		request.payloadType = HookTestClass;
+		request.repository = getRepository(HookTestClass);
+		request.body = Object.assign(new HookTestClass(), {
+			__user: 'login',
+			password: 'password123'
+		});
+
+		await loginEndpoint(request, response);
+
+		expect(result).toBe('login');
+	});
+
+	it('calls response.error if login hook fails', async () => {
+		await addResource(HookTestClass, {
+			username: 'loginFail',
+			password: hashSync('password123'),
+			fname: 'login',
+			lnmae: 'hook',
+			email: 'loginFail@example.com'
+		}).catch((error) =>
+			fail('Could not create user ' + JSON.stringify(error))
+		);
+
+		// Create mock request/response
+		const { request, response } = createMockRequest('POST');
+
+		let result = '';
+		let hasError = '';
+		request.hookShouldPass = false;
+		request.hookCallback = (name) => (result = name);
+		response.error = (error) => {
+			hasError = error;
+		};
+
+		request.payloadType = HookTestClass;
+		request.repository = getRepository(HookTestClass);
+		request.body = Object.assign(new HookTestClass(), {
+			__user: 'loginFail',
+			password: 'password123'
+		});
+
+		await loginEndpoint(request, response);
+
+		expect(result).toBe('login');
+		expect(hasError).toBe('Could not complete hook');
 	});
 });

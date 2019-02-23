@@ -2,6 +2,9 @@ import { setModel } from '../../../../src';
 import { BaseUser } from '../../../../src/models';
 import { patchEndpoint } from '../../../../src/endpoints';
 import { createMockRequest } from '../../../../src/test-probe';
+import { HookTestClass } from '../../../examples/api/models/hook-test-class';
+import { addResource } from '../../../../src/utils';
+import { getRepository } from 'typeorm';
 
 /**
  * patchEndpoint()
@@ -89,5 +92,82 @@ describe('[Endpoints] Patch', () => {
 		);
 
 		expect(result).toBe(true);
+	});
+
+	it('runs patch() hook', async () => {
+		const user = Object.assign(
+			new HookTestClass(),
+			await addResource(HookTestClass, {
+				username: 'patch',
+				password: 'password123',
+				fname: 'patch',
+				lnmae: 'hook',
+				email: 'patch@example.com',
+				token: 'testtoken'
+			}).catch((error) =>
+				fail('Could not create user ' + JSON.stringify(error))
+			)
+		);
+
+		// Create mock request/response
+		const { request, response } = createMockRequest('PATCH');
+
+		let result = '';
+		request.hookShouldPass = true;
+		request.hookCallback = (name) => (result = name);
+
+		request.user = user;
+		request.payload = user;
+		request.payloadType = HookTestClass;
+		request.body = Object.assign(user, {
+			fname: 'patched'
+		});
+
+		request.repository = getRepository(HookTestClass);
+		response.patchResponder = () => {};
+
+		await patchEndpoint(request, response);
+
+		expect(result).toBe('patch');
+	});
+
+	it('returns false if patch() hook fails', async () => {
+		const user = Object.assign(
+			new HookTestClass(),
+			await addResource(HookTestClass, {
+				username: 'patchFail',
+				password: 'password123',
+				fname: 'patch',
+				lnmae: 'hook',
+				email: 'patchFail@example.com',
+				token: 'testtoken'
+			}).catch((error) =>
+				fail('Could not create user ' + JSON.stringify(error))
+			)
+		);
+
+		// Create mock request/response
+		const { request, response } = createMockRequest('PATCH');
+
+		request.user = user;
+		request.payload = user;
+		request.repository = getRepository(HookTestClass);
+		request.body = Object.assign(user, {
+			fname: 'patched'
+		});
+
+		let result = '';
+		let hasError = '';
+		request.hookShouldPass = false;
+		request.hookCallback = (name) => (result = name);
+		response.error = (error) => {
+			hasError = error;
+		};
+		response.patchResponder = () => {};
+
+		await patchEndpoint(request, response);
+
+		expect(result).toBe('patch');
+		expect(hasError).toBe('Could not complete hook');
 	});
 });

@@ -3,6 +3,9 @@ import { BaseUser } from '../../../../src/models';
 import { getEndpoint } from '../../../../src/endpoints';
 
 import { createMockRequest } from '../../../../src/test-probe';
+import { HookTestClass } from '../../../examples/api/models/hook-test-class';
+import { addResource } from '../../../../src/utils';
+import { getRepository } from 'typeorm';
 
 /**
  * getEndpoint()
@@ -121,5 +124,75 @@ describe('[Endpoints] Get', () => {
 
 		// Expect goneResponder() to have been called
 		expect(result).toBe(true);
+	});
+
+	it('runs get() hook', async () => {
+		const user = Object.assign(
+			new HookTestClass(),
+			await addResource(HookTestClass, {
+				username: 'get',
+				password: 'password123',
+				fname: 'get',
+				lnmae: 'hook',
+				email: 'get@example.com',
+				token: 'testtoken'
+			}).catch((error) =>
+				fail('Could not create user ' + JSON.stringify(error))
+			)
+		);
+
+		// Create mock request/response
+		const { request, response } = createMockRequest('DELETE');
+
+		let result = '';
+		request.hookShouldPass = true;
+		request.hookCallback = (name) => (result = name);
+
+		request.user = user;
+		request.payload = user;
+		request.payloadType = HookTestClass;
+		request.repository = getRepository(HookTestClass);
+		response.getResponder = () => {};
+
+		await getEndpoint(request, response);
+
+		expect(result).toBe('get');
+	});
+
+	it('returns false if get() hook fails', async () => {
+		const user = Object.assign(
+			new HookTestClass(),
+			await addResource(HookTestClass, {
+				username: 'getFail',
+				password: 'password123',
+				fname: 'get',
+				lnmae: 'hook',
+				email: 'getFail@example.com',
+				token: 'testtoken'
+			}).catch((error) =>
+				fail('Could not create user ' + JSON.stringify(error))
+			)
+		);
+
+		// Create mock request/response
+		const { request, response } = createMockRequest('DELETE');
+
+		request.user = user;
+		request.payload = user;
+		request.repository = getRepository(HookTestClass);
+		response.getResponder = () => {};
+
+		let result = '';
+		let hasError = '';
+		request.hookShouldPass = false;
+		request.hookCallback = (name) => (result = name);
+		response.error = (error) => {
+			hasError = error;
+		};
+
+		await getEndpoint(request, response);
+
+		expect(result).toBe('get');
+		expect(hasError).toBe('Could not complete hook');
 	});
 });

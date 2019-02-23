@@ -2,6 +2,9 @@ import { setModel } from '../../../../src';
 import { BaseUser } from '../../../../src/models';
 import { postEndpoint } from '../../../../src/endpoints';
 import { createMockRequest } from '../../../../src/test-probe';
+import { HookTestClass } from '../../../examples/api/models/hook-test-class';
+import { addResource } from '../../../../src/utils';
+import { getRepository } from 'typeorm';
 
 /**
  * postEndpoint()
@@ -152,5 +155,59 @@ describe('[Endpoints] Post', () => {
 		);
 
 		expect(result).toBe(true);
+	});
+
+	it('runs post() hook', async () => {
+		// Create mock request/response
+		const { request, response } = createMockRequest('POST');
+
+		let result = '';
+		request.hookShouldPass = true;
+		request.hookCallback = (name) => (result = name);
+
+		request.payloadType = HookTestClass;
+		request.body = Object.assign(new HookTestClass(), {
+			username: 'post',
+			password: 'password123',
+			fname: 'post',
+			lnmae: 'hook',
+			email: 'post@example.com'
+		});
+
+		request.repository = getRepository(HookTestClass);
+		response.postResponder = () => {};
+
+		await postEndpoint(request, response);
+
+		expect(result).toBe('post');
+	});
+
+	it('returns false if post() hook fails', async () => {
+		// Create mock request/response
+		const { request, response } = createMockRequest('POST');
+
+		request.payloadType = HookTestClass;
+		request.body = Object.assign(new HookTestClass(), {
+			username: 'post',
+			password: 'password123',
+			fname: 'post',
+			lnmae: 'hook',
+			email: 'post@example.com'
+		});
+
+		let result = '';
+		let hasError = '';
+		request.hookShouldPass = false;
+		request.repository = getRepository(HookTestClass);
+		request.hookCallback = (name) => (result = name);
+		response.error = (error) => {
+			hasError = error;
+		};
+		response.postResponder = () => {};
+
+		await postEndpoint(request, response);
+
+		expect(result).toBe('post');
+		expect(hasError).toBe('Could not complete hook');
 	});
 });
