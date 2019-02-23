@@ -11,6 +11,11 @@ export async function postEndpoint(
 	request: Request,
 	response: Response
 ): Promise<void> {
+	// Run model hook
+	if (!await runHook('post', request.body, request, response)) {
+		return;
+	}
+
 	if (request.body instanceof Array) {
 		for (let i = 0; i < request.body.length; i++) {
 			// Set model type
@@ -21,14 +26,8 @@ export async function postEndpoint(
 				request.body[i]
 			);
 			*/
-
 			// Delete undefined members
-			request.body[i] = deleteUndefinedMembers(request.body[i]);
-		}
-
-		// Run model hooks
-		if (!await runHook('post', request.body, request, response)) {
-			return;
+			// request.body[i] = deleteUndefinedMembers(request.body[i]);
 		}
 
 		for (let i = 0; i < request.body.length; i++) {
@@ -78,12 +77,7 @@ export async function postEndpoint(
 		// request.body = Object.assign(new request.payloadType(), request.body);
 
 		// Delete undefined members
-		request.body = deleteUndefinedMembers(request.body);
-
-		// Run model hook
-		if (!await runHook('post', request.body, request, response)) {
-			return;
-		}
+		// request.body = deleteUndefinedMembers(request.body);
 
 		// Validate
 		const errors = await validate(request.body).catch((error) =>
