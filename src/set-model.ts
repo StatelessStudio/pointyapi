@@ -149,7 +149,7 @@ export async function setModel(
 		}
 
 		// Run model hook
-		if (!await runHook('beforePatch', request.payload, request, response)) {
+		if (!await runHook('beforePatch', request.body, request, response)) {
 			return false;
 		}
 	}
