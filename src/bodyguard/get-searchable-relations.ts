@@ -14,8 +14,6 @@ export function getSearchableRelations(obj: BaseModel): string[] {
 		const canSearchRelation = getCanSearchRelation(obj, member);
 
 		if (canSearchRelation) {
-			// TODO: Remove? vvv
-			const who = canSearchRelation.who;
 			const fields = canSearchRelation.fields.map((field) => {
 				return `${member}.${field}`;
 			});

@@ -16,17 +16,5 @@ export function compareIdToUser(
 	user: BaseUserInterface,
 	userBodyguardKeys: string[]
 ): boolean {
-	// Traverse bodyguard keys, and check if it matches
-	// TODO: This should be able to be done without looping to reduce runtime
-	for (const userKey of userBodyguardKeys) {
-		if (
-			value !== undefined &&
-			identifier === userKey &&
-			`${value}` === `${user[userKey]}`
-		) {
-			return true;
-		}
-	}
-
-	return false;
+	return userBodyguardKeys.includes(identifier) && value === user[identifier];
 }

@@ -18,19 +18,6 @@ export async function postEndpoint(
 
 	if (request.body instanceof Array) {
 		for (let i = 0; i < request.body.length; i++) {
-			// Set model type
-			// TODO: Remove
-			/*
-			request.body[i] = Object.assign(
-				new request.payloadType(),
-				request.body[i]
-			);
-			*/
-			// Delete undefined members
-			// request.body[i] = deleteUndefinedMembers(request.body[i]);
-		}
-
-		for (let i = 0; i < request.body.length; i++) {
 			// Validate
 			const errors = await validate(request.body[i]).catch((error) =>
 				response.error(error)
@@ -44,18 +31,20 @@ export async function postEndpoint(
 		}
 
 		if (request.body.length) {
-			// Save
+			// Get repo
 			const repo = await request.repository;
 
-			// TODO: Replace with Promise.all for async posts
-			let results = [];
+			// Get array of promises
+			const promises = [];
 			for (let i = 0; i < request.body.length; i++) {
-				results.push(
-					await repo
+				promises.push(
+					repo
 						.save(request.body[i])
 						.catch((error) => response.error(error))
 				);
 			}
+
+			let results = await Promise.all(promises);
 
 			// Create result
 			if (results) {
@@ -72,13 +61,6 @@ export async function postEndpoint(
 		}
 	}
 	else {
-		// Set model type
-		// TODO: Remove
-		// request.body = Object.assign(new request.payloadType(), request.body);
-
-		// Delete undefined members
-		// request.body = deleteUndefinedMembers(request.body);
-
 		// Validate
 		const errors = await validate(request.body).catch((error) =>
 			response.error(error)

@@ -16,15 +16,6 @@ export async function loginEndpoint(
 	if (!await runHook('login', request.body, request, response)) {
 		return;
 	}
-	// Delete undefined members
-	// TODO: Remove
-	/*
-	for (const key in request.body) {
-		if (request.body[key] === undefined) {
-			delete request.body[key];
-		}
-	}
-	*/
 
 	// Load users
 	const foundUsers = await request.repository
