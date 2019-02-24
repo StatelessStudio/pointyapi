@@ -23,7 +23,7 @@ export function getFilter(
 		let field: any;
 		for (field of queryTypeKeys) {
 			// Skip joins
-			if (field === 'join') {
+			if (field === 'join' || field === 'additionalParameters') {
 				continue;
 			}
 
