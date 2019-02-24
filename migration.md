@@ -16,8 +16,7 @@
 	- `response.validationResponder()`
 2. Rename hooks
 	Hooks have been renamed for clarity.  Rename all hooks in your models (pro tip: project-wide find & replace).  **Make sure you go in order, and replace all occourences before moving on, because some hook names conflict with old hook names!**
-    - `beforePost()` -> `post()`
-    - `beforePut()` -> `patch()`
+    - `beforePut()` -> `beforePatch()`
     - `beforeGet()` -> REMOVED
     - `beforeDelete()` -> `delete()`
     - `beforeLogin()` -> `login()`
@@ -27,6 +26,7 @@
     - `beforeLoadGet()` -> REMOVED
     - `beforeLoadDelete()` -> `beforeDelete()`
     - `onGetQuery()` -> REMOVED
+    - `put()` -> `patch()`
 3. Check `setModel()` return value
 	Ensure you wrap setModel() in an if statement, and only proceed to next() if the function returns true
 
@@ -66,7 +66,7 @@
 9. Make sure hooks don't loop
     Hooks are called once per object, therefore they should only take care of one resource at a time
 11. Default resources can now be added via `addResource(User, {...})`
-12. Update GET queries
+12. Update GET queries.
 	GET queries have been reworked.  The following field names have changed:
 	- `__select` => `select`
 	- `__whereAnyOf` => `whereAnyOf`
@@ -87,10 +87,13 @@
 
 	Additionaly, WHERE fields should no longer be in the top-level of the query, and instead should be in the `where` query type
 13. Change all PUT requests to PATCH
-	`putEndpoint` => `patchEndpoint`
-	`putFilter` => `patchFilter`
-	`putResponder` => `patchResponder`
-	`putEndpoint` => `patchEndpoint`
+	- `putEndpoint` => `patchEndpoint`
+	- `putFilter` => `patchFilter`
+	- `putResponder` => `patchResponder`
+	- `putEndpoint` => `patchEndpoint`
+	- `http.put()` => `http.patch()`
+	- `router.put()` => `router.patch()`
+	- `PUT` => `PATCH`
 14. Relations which will be queried must have `@CanReadRelation()` key
 15. Update imports
 	- Filters from `pointyapi/filters`
@@ -99,3 +102,7 @@
 	- `__anyone__` => BodyguardOwner.Anyone
 	- `__self__` => BodyguardOwner.Self
 	- `__admin__` => BodyguardOwner.Admin
+17. Remove empty searches.
+	Get queries no longer require a `search` key to access other query keys
+18. All mdoel members must be initialized to undefined, including relational arrays
+19. Queries may no longer pass special keys with `__` or `___`.  You should now put these queries in the `additionalParameters` query object
