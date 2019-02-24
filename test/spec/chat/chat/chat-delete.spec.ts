@@ -107,7 +107,7 @@ describe('[Chat] Chat API Delete', () => {
 		}
 	});
 
-	it('cannot delete w/o token', async () => {
+	it('cannot delete without token', async () => {
 		const result = await http
 			.post(
 				'/api/v1/chat',

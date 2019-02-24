@@ -75,7 +75,7 @@ describe('[Chat] Chat API Get', async () => {
 			);
 	});
 
-	it('allows a user to view their message(sent)', async () => {
+	it('allows a user to view their message (sent)', async () => {
 		await http
 			.get(
 				'/api/v1/chat',
@@ -92,7 +92,7 @@ describe('[Chat] Chat API Get', async () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
-	it('allows a user to view their message(received)', async () => {
+	it('allows a user to view their message (received)', async () => {
 		await http
 			.get(
 				'/api/v1/chat',
@@ -109,7 +109,7 @@ describe('[Chat] Chat API Get', async () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
-	it('cannot view chat w/o  a token', async () => {
+	it('cannot view chat without a token', async () => {
 		await http
 			.get(
 				'/api/v1/chat',
@@ -261,7 +261,7 @@ describe('[Chat] Chat API Get', async () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
-	it(`does not return chats the user does not own`, async () => {
+	it('does not return chats the user does not own', async () => {
 		const user = await http
 			.post('/api/v1/user', {
 				fname: 'Chat',

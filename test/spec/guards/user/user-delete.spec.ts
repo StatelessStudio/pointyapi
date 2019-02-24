@@ -73,7 +73,7 @@ describe('[Guards] User API Delete', () => {
 		}
 	});
 
-	it('cannot delete w/o token', async () => {
+	it('cannot delete without token', async () => {
 		const result = await http
 			.post('/api/v1/user', {
 				fname: 'deleteUser',
@@ -91,7 +91,7 @@ describe('[Guards] User API Delete', () => {
 		}
 	});
 
-	it(`can\'t delete with the wrong token`, async () => {
+	it('cannot delete with the wrong token', async () => {
 		await http
 			.post('/api/v1/user', {
 				fname: 'deleteUser',

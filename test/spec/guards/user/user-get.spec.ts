@@ -97,7 +97,7 @@ describe('[Guards] User API Read', () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
-	it(`cannot reveal sensitive information (one)`, async () => {
+	it('cannot reveal sensitive information (one)', async () => {
 		await http
 			.get('/api/v1/user', {
 				id: this.getUser1.body.id
@@ -118,7 +118,7 @@ describe('[Guards] User API Read', () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
-	it(`cannot reveal sensitive information (all)`, async () => {
+	it('cannot reveal sensitive information (all)', async () => {
 		await http
 			.get('/api/v1/user')
 			.then((result) => {

@@ -6,7 +6,7 @@ import { getIdentifierValue } from '../../../../src/utils';
  * pointyapi/
  */
 describe('getIdentifierValue', () => {
-	it('gets a value from a request w/o identifier', () => {
+	it('gets a value from a request without identifier', () => {
 		// Create mock request
 		const request = mockRequest();
 		request.params = {
