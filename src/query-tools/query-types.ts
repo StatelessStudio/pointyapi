@@ -16,6 +16,7 @@ export const queryTypes = {
 	limit: [ 'number', 'string' ],
 	offset: [ 'number', 'string' ],
 	count: [ 'boolean', 'string' ],
+	additionalParameters: [ 'object' ],
 	id: [ 'number', 'string' ]
 };
 

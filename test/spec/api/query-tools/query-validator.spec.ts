@@ -91,4 +91,23 @@ describe('[Utils] queryValidator()', () => {
 		expect(queryValidator(request, response)).toBe(false);
 		expect(hasValidationResponder).toBe(true);
 	});
+
+	it('can get with additional parameters', async () => {
+		const { request, response } = createMockRequest();
+		request.query = {
+			where: { id: 1 },
+			additionalParameters: {
+				categories: [ 1, 2, 3 ]
+			}
+		};
+		request.payloadType = BaseUser;
+		request.payload = new BaseUser();
+
+		let hasValidationResponder = false;
+		response.validationResponder = (result) =>
+			(hasValidationResponder = result);
+
+		expect(queryValidator(request, response)).toBe(true);
+		expect(hasValidationResponder).toBe(false);
+	});
 });

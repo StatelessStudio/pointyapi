@@ -137,7 +137,10 @@ export function queryValidator(request: Request, response: Response) {
 		}
 
 		// Is current query valid?
-		if (!queryFieldValidator(type, request, response)) {
+		if (
+			type !== 'additionalParameters' &&
+			!queryFieldValidator(type, request, response)
+		) {
 			return false;
 		}
 	}
