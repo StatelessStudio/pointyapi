@@ -1,4 +1,4 @@
-import { BaseModelInterface } from 'models/base-model';
+import { BaseModelInterface } from '../models/base-model';
 import { getRepository } from 'typeorm';
 
 export async function addResource(type: BaseModelInterface, resource: Object) {
