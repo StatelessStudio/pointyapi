@@ -12,6 +12,15 @@ import { addResource } from '../../../../src/utils';
  * pointyapi/endpoints
  */
 describe('[Endpoints] Logout', async () => {
+	beforeEach(() => {
+		this.cwarn = console.warn;
+		console.warn = () => {};
+	});
+
+	afterEach(() => {
+		console.warn = this.cwarn;
+	});
+
 	beforeAll(async () => {
 		// Create user
 		const user = new BaseUser();

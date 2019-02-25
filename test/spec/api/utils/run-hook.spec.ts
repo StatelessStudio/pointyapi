@@ -39,6 +39,15 @@ class TestHooks extends BaseModel {
  * pointyapi/utils
  */
 describe('[Utils] runHook()', () => {
+	beforeEach(() => {
+		this.cwarn = console.warn;
+		console.warn = () => {};
+	});
+
+	afterEach(() => {
+		console.warn = this.cwarn;
+	});
+
 	it('runs the hook', async () => {
 		const { request, response } = createMockRequest();
 

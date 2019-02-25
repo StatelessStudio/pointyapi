@@ -10,6 +10,15 @@ import { addResource } from '../../../src/utils';
  * pointyapi/
  */
 describe('setModel', () => {
+	beforeEach(() => {
+		this.cwarn = console.warn;
+		console.warn = () => {};
+	});
+
+	afterEach(() => {
+		console.warn = this.cwarn;
+	});
+
 	beforeAll(async () => {
 		// Create user
 		this.user = new BaseUser();

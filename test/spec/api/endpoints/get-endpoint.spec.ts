@@ -12,6 +12,15 @@ import { getRepository } from 'typeorm';
  * pointyapi/endpoints
  */
 describe('[Endpoints] Get', () => {
+	beforeEach(() => {
+		this.cwarn = console.warn;
+		console.warn = () => {};
+	});
+
+	afterEach(() => {
+		console.warn = this.cwarn;
+	});
+
 	beforeAll(() => {
 		// Create users
 		this.user1 = new BaseUser();

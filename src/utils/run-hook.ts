@@ -51,6 +51,8 @@ export async function runHook(
 			// Respond with 500 error if this has not responded yet
 			response.error('Could not complete hook');
 		}
+
+		console.warn('Could not complete hook "' + name + '" on object: ', obj);
 	}
 
 	return hookResult;

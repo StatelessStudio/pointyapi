@@ -11,6 +11,15 @@ import { getRepository } from 'typeorm';
  * pointyapi/endpoints
  */
 describe('[Endpoints] Patch', () => {
+	beforeEach(() => {
+		this.cwarn = console.warn;
+		console.warn = () => {};
+	});
+
+	afterEach(() => {
+		console.warn = this.cwarn;
+	});
+
 	it('can patch', async () => {
 		// Create mock request/response
 		const { request, response } = createMockRequest('PATCH');
