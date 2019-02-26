@@ -8,7 +8,7 @@ import { isDefined } from '../utils';
  * @param user User to test
  * @param objBodyguardKeys Key array from getBodyguardKeys(obj)
  * @param userBodyguardKeys Key array from getBodyguardKeys(user)
- * @return boolean Returns if the user owns the given object
+ * @return Returns if the user owns the given object
  */
 export function compareNestedBodyguards(
 	obj: BaseModel,

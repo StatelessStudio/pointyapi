@@ -1,3 +1,6 @@
+/**
+ * Specify allowed query-types and allowed values
+ */
 export const queryTypes = {
 	select: [ 'array' ],
 	where: [ 'object' ],
@@ -20,4 +23,7 @@ export const queryTypes = {
 	id: [ 'number', 'string' ]
 };
 
+/**
+ * Specify allowed query-type keys
+ */
 export const queryTypeKeys = Object.keys(queryTypes);

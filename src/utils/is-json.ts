@@ -1,7 +1,7 @@
 /**
  * Check if a string is valid JSON
- * @param str string String to check
- * @return boolean
+ * @param str String to check
+ * @return Returns if the string is valid JSON
  */
 export function isJson(str: string): boolean {
 	try {

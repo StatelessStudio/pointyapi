@@ -1,6 +1,6 @@
 /**
  * Respond with 409 Conflic
- * @param result any Response to send (as JSON)
+ * @param result Response to send (as JSON)
  */
 export function conflictResponder(result: any): void {
 	// Send response

@@ -1,6 +1,6 @@
 /**
  * Delete Responder
- * @param result any Respond with 204 Success: No-Content
+ * @param result Respond with 204 Success: No-Content
  * 	if the result is successful
  */
 export function deleteResponder(result: any): void {

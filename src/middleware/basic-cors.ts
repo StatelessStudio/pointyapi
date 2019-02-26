@@ -2,18 +2,9 @@ import { Request, Response, NextFunction } from 'express';
 
 /**
  * Basic CORS Middleware
- *
- * 	Access-Control-Allow-Origin
- * 		'*'
- * 	Access-Control-Allow-Methods
- * 		'POST, GET, PATCH, DELETE, OPTIONS'
- * 	Access-Control-Allow-Headers
- * 		'X-Requested-With, Content-Type, Authorization, Cache-Control'
- * 	Access-Control-Allow-Credentials
- * 		'true'
- *  Content-Type
- *		'application/json;charset=utf-8'
- *
+ * @param request Express request
+ * @param response Express response
+ * @param next Next function to call on success
  */
 export function basicCors(
 	request: Request,

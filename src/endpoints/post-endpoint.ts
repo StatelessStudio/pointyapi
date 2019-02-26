@@ -2,10 +2,11 @@ import { Request, Response } from 'express';
 import { validate } from 'class-validator';
 import { runHook } from '../utils/run-hook';
 import { readFilter } from '../bodyguard/read-filter';
-import { deleteUndefinedMembers } from '../utils';
 
 /**
  * Post endpoint
+ * @param request Request object to query by
+ * @param response Response object to call responder with
  */
 export async function postEndpoint(
 	request: Request,

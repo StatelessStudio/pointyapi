@@ -6,6 +6,8 @@ import { getISOTime } from '../models';
 
 /**
  * Patch endpoint
+ * @param request Request object to query by
+ * @param response Response object to call responder with
  */
 export async function patchEndpoint(
 	request: Request,

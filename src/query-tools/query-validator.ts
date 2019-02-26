@@ -5,15 +5,16 @@ import { getReadableFields, getReadableRelations } from '../bodyguard';
 
 /**
  * Validate a GET query type
- * @param type string Query type name
- * @param request Express::Request Express request
- * @param response Express::Response Express response
+ * @param type Query type name
+ * @param request Express request
+ * @param response Express response
+ * @return Returns if the currrent query type is valid
  */
 function queryFieldValidator(
 	type: string,
 	request: Request,
 	response: Response
-) {
+): boolean {
 	const readableKeys = getReadableFields(
 		new request.payloadType(),
 		request.user
@@ -88,8 +89,9 @@ function queryFieldValidator(
  * Validate a GET query
  * @param request Express::Request Express request
  * @param response Express::Response Express response
+ * @return Returns if the get query is valid
  */
-export function queryValidator(request: Request, response: Response) {
+export function queryValidator(request: Request, response: Response): boolean {
 	for (const type in request.query) {
 		// Is this defined?
 		if (request.query[type] === undefined) {

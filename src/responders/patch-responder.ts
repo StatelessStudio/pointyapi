@@ -1,6 +1,6 @@
 /**
  * Patch Responder
- * @param result any Result to send (as JSON)
+ * @param result Result to send (as JSON)
  */
 export function patchResponder(result: any): void {
 	if (result instanceof Object) {

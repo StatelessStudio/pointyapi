@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { compareSync } from 'bcryptjs';
 
 import { jwtBearer } from '../jwt-bearer';
@@ -7,6 +7,8 @@ import { readFilter } from '../bodyguard/read-filter';
 
 /**
  * Login endpoint
+ * @param request Request object to query by
+ * @param response Response object to call responder with
  */
 export async function loginEndpoint(
 	request: Request,

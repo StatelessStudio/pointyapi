@@ -4,9 +4,10 @@ import { UserRole } from '../enums/user-role';
 
 /**
  * Upgrade a user role for setting up dev users or creating test admins
- * @param username string Username to upgrade
- * @param userConstructor BaseUserInterface User model to use
- * @param role UserRole User role to assign to the user
+ * @param username Username to upgrade
+ * @param userConstructor User model to use
+ * @param role User role to assign to the user
+ * @return Return s a Promise
  */
 export async function upgradeUserRole(
 	username: string,

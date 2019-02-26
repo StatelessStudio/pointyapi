@@ -1,7 +1,7 @@
 /**
  * Respond with 200 Success & result set, or goneResponder()
  * 	if the result is empty
- * @param result any Result set to send
+ * @param result Result set to send
  */
 export function getResponder(result: any): void {
 	if (result) {

@@ -5,12 +5,12 @@ import { BodyguardOwner } from '../enums';
 
 /**
  * Filter an incoming request body to ensure it doesn't allow sensitive fields
- * @param obj any | any[] Object or array to check (recursive).
+ * @param obj Object or array to check (recursive).
  * 	This can be the direct obj set of a typeorm request
  * @param user User object to check against
- * @param objType any Type of object
- * @param userType any Type of user
- * @param isSelfResult boolean (Optional) If the usr owns the object
+ * @param objType Type of object
+ * @param userType Type of user
+ * @param isSelfResult If the usr owns the object
  * @return Returns true on success, or a string of the member name which failed.
  */
 export function writeFilter(

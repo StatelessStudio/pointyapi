@@ -9,7 +9,7 @@
  * - **request** - The Express Request object
  * - **model** - A model to set the request entity to.  This should be a type,
  * not an instance
- * - **identifier** - (Optional) The URL path identifier for the request, e.g.
+ * - **identifier** - The URL path identifier for the request, e.g.
  * if your path is `/user/:username`, you should set your identifier to
  * `username`
  *
@@ -27,15 +27,16 @@ import { queryValidator } from './query-tools/query-validator';
 
 /**
  * Set model type and load payload
- * @param request Express::Request Request object
- * @param response Express::Response Response object
- * @param model BaseModelInterface Model to set the request type to
- * @param isAuth boolean (Optional) If this is an authentication route.
+ * @param request Request object
+ * @param response Response object
+ * @param model Model to set the request type to
+ * @param isAuth If this is an authentication route.
  * 	Default is false.
  * 	Will run beforeLogin() and beforeLogout() posts instead of post/delete hook
- * @param identifier string (Optional) URL parameter name, for
+ * @param identifier URL parameter name, for
  * 	example `/users/:id`.  Default is `id`.  Although this parameter
  * 	is optional, you **must** set it to the same string as in your routes.
+ * @return Returns a Promise
  */
 export async function setModel(
 	request: Request,

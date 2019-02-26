@@ -1,5 +1,6 @@
 /**
  * Create a timestamp for the current time
+ * @return Returns the timestamp
  */
 export function createTimestamp(): string {
 	// Create a date object with the current time

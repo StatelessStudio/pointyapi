@@ -8,6 +8,9 @@ import { isAdmin } from '../utils/is-admin';
  * Only Actie Guard: Check if the user has a status
  *	and that it matches UserStatus.Active, otherwise
  *	respond with 401 Unauthorized
+ * @param request Request object to query by
+ * @param response Response object to call responder with
+ * @param next Next function to call on success
  */
 export function onlyActive(
 	request: Request,

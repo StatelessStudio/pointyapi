@@ -3,10 +3,11 @@ import { BaseModel } from '../models';
 
 /**
  * Run specified hook in the model
- * @param name string Name of hook to run
- * @param obj any Object to run hook on
- * @param request Express::Request Request object to pass to hook
- * @param response Express::Response Response object to pass to hook
+ * @param name Name of hook to run
+ * @param obj Object to run hook on
+ * @param request Request object to pass to hook
+ * @param response Response object to pass to hook
+ * @return Returns of a Promise of boolean
  */
 export async function runHook(
 	name: string,

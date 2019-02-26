@@ -7,6 +7,7 @@ import { createSearchQuery } from '../utils';
  * Get the objects represented by the request query
  * @param request Request to query by
  * @param response Response object to respond with
+ * @return Returns a Promise of an array or single object
  */
 export async function getQuery(
 	request: Request,

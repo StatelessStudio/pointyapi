@@ -1,8 +1,10 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { runHook } from '../utils/run-hook';
 
 /**
  * Logout endpoint
+ * @param request Request object to query by
+ * @param response Response object to call responder with
  */
 export async function logoutEndpoint(
 	request: Request,

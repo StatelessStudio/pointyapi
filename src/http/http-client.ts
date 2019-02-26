@@ -24,10 +24,11 @@ export class HttpClient {
 
 	/**
 	 * Send a POST http request to the server
-	 * @param path string Path to send to (e.g. /users)
-	 * @param data object Data to send as query
-	 * @param expect number[] Array of status codes to expect
-	 * @param bearer string (Optional) Bearer token to send
+	 * @param path Path to send to (e.g. /users)
+	 * @param data Data to send as query
+	 * @param expect Array of status codes to expect
+	 * @param bearer Bearer token to send
+	 * @return Returns a promise of HttpClientResponse
 	 */
 	public post(
 		path: string,
@@ -68,10 +69,11 @@ export class HttpClient {
 
 	/**
 	 * Send a GET http request to the server
-	 * @param path string Path to send to (e.g. /users)
-	 * @param data object Data to send as query
-	 * @param expect number[] Array of status codes to expect
-	 * @param bearer string (Optional) Bearer token to send
+	 * @param path Path to send to (e.g. /users)
+	 * @param data Data to send as query
+	 * @param expect Array of status codes to expect
+	 * @param bearer Bearer token to send
+	 * @return Returns a promise of HttpClientResponse
 	 */
 	public get(
 		path: string,
@@ -112,10 +114,11 @@ export class HttpClient {
 
 	/**
 	 * Send a PATCH http request to the server
-	 * @param path string Path to send to (e.g. /users)
-	 * @param data object Data to send as query
-	 * @param expect number[] Array of status codes to expect
-	 * @param bearer string (Optional) Bearer token to send
+	 * @param path Path to send to (e.g. /users)
+	 * @param data Data to send as query
+	 * @param expect Array of status codes to expect
+	 * @param bearer Bearer token to send
+	 * @return Returns a promise of HttpClientResponse
 	 */
 	public patch(
 		path: string,
@@ -156,10 +159,11 @@ export class HttpClient {
 
 	/**
 	 * Send a DELETE http request to the server
-	 * @param path string Path to send to (e.g. /users)
-	 * @param data object Data to send as query
-	 * @param expect number[] Array of status codes to expect
-	 * @param bearer string (Optional) Bearer token to send
+	 * @param path Path to send to (e.g. /users)
+	 * @param data Data to send as query
+	 * @param expect Array of status codes to expect
+	 * @param bearer Bearer token to send
+	 * @return Returns a promise of HttpClientResponse
 	 */
 	public delete(
 		path: string,

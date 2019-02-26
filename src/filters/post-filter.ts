@@ -4,6 +4,9 @@ import { writeFilter } from '../bodyguard/write-filter';
 /**
  * Post Filter: Filter a POST request payload, and respond with
  * 	403 Forbidden if the request contains any private fields
+ * @param request Request object to query by
+ * @param response Response object to call responder with
+ * @param next Next function to call on success
  */
 export function postFilter(
 	request: Request,

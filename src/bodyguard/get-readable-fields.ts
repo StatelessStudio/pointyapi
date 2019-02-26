@@ -4,11 +4,11 @@ import { BodyguardOwner, UserRole } from '../enums';
 
 /**
  * Get readable fields for a payload, given a User
- * @param payload Object Payload object to check
- * @param user BaseUser User to authorize fields for
- * @param objAlias string (Optional) Object alias from a SQL query to prepend
+ * @param payload Payload object to check
+ * @param user User to authorize fields for
+ * @param objAlias Object alias from a SQL query to prepend
  * 	to the member keys
- * @return string[] Returns an array of field names
+ * @return Returns an array of field names
  */
 export function getReadableFields(
 	payload: Object,

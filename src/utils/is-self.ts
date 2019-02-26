@@ -7,7 +7,11 @@ import { compareNestedBodyguards } from '../bodyguard/compare-nested';
  * Check if the user matches a BodyguardKey for the object
  * @param obj Object to check
  * @param user User to check for matching BodyguardKey
- * @return boolean Returns if the user owns this object
+ * @param objType Type of object
+ * @param userType Type of user
+ * @param objBodyguardKeys Bodyguard keys which belong to the object
+ * @param userBodyguardKeys Bodyguard keys which belong to the user
+ * @return Returns if the user owns this object
  */
 export function isSelf(
 	obj: BaseModel | BaseModel[],

@@ -3,10 +3,10 @@ import { BaseModelInterface } from '../models/base-model';
 
 /**
  * Create a SQL query string for a search
- * @param payloadType any Request payload type
- * @param obj Object Search query object
- * @param objKey string (Optional) SQL query object alias
- * @return Object Returns { queryString, queryParams }
+ * @param payloadType Request payload type
+ * @param obj Search query object
+ * @param objKey SQL query object alias. Default is `obj`
+ * @return Returns { queryString, queryParams }
  */
 export function createSearchQuery(
 	payloadType: BaseModelInterface,

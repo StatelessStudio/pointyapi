@@ -7,6 +7,9 @@ import { isAdmin } from '../utils/is-admin';
 /**
  * Only allow user with the role Member (or Admin+),
  * 	or respond with 401 Unauthorized
+ * @param request Request object to query by
+ * @param response Response object to call responder with
+ * @param next Next function to call on success
  */
 export function onlyMember(
 	request: Request,

@@ -4,6 +4,9 @@ import { BaseUser } from '../models/base-user';
 /**
  * Only User Guard: Return 401 Unauthorized if the user
  * 	is not logged in
+ * @param request Request object to query by
+ * @param response Response object to call responder with
+ * @param next Next function to call on success
  */
 export function onlyUser(
 	request: Request,

@@ -29,7 +29,7 @@ export class PointyPostgres extends BaseDb {
 
 	/**
 	 * Set ORM entities
-	 * @param entities any[] Array of entities
+	 * @param entities Array of entities
 	 */
 	public setEntities(entities: any[]) {
 		this.entities = entities;
@@ -39,7 +39,7 @@ export class PointyPostgres extends BaseDb {
 
 	/**
 	 * Connect to the database
-	 * @param options string | Object (Optional) Database credentials (pass
+	 * @param options Database credentials (pass
 	 * 	a string to load from file, or pass the object directly).  Database
 	 * 	will rely on `process.env.DATABASE_URL` if this is not set.
 	 */

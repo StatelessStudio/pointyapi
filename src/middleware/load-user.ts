@@ -6,12 +6,16 @@ import { BaseUser } from '../models';
 
 /**
  * Load user if a JWT Bearer header exists
+ * @param request Express request
+ * @param response Express response
+ * @param next Next function to call on success
+ * @return Returns a Promise of boolean
  */
 export async function loadUser(
 	request: Request,
 	response: Response,
 	next: NextFunction
-) {
+): Promise<boolean> {
 	// Validate
 	const tokenString: any = jwtBearer.getToken(request);
 

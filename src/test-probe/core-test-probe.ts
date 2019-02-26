@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 const ROOT_PATH = require('app-root-path').toString();
 
-// Package interface.json
+// Package.json interface
 let pkg = {
 	version: '',
 	dependencies: {

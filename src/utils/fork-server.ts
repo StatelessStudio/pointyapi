@@ -41,7 +41,8 @@ import { fork } from 'child_process';
 
 /**
  * Fork the server from a test-suite
- * @param serverFile string File path to the server entry-point
+ * @param serverFile File path to the server entry-point
+ * @return Returns a Promise
  */
 export function forkServer(serverFile: string): Promise<any> {
 	return new Promise((accept, reject) => {

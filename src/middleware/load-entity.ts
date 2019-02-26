@@ -5,6 +5,10 @@ import { getIdentifierValue } from '../utils/get-identifier-value';
  * Load resource represented by the URL ID
  * Example:
  * 	/users/12 -> Load #12
+ * @param request Express request
+ * @param response Express response
+ * @param next Next function to call on success
+ * @return Returns a Promise of boolean
  */
 export async function loadEntity(
 	request: Request,

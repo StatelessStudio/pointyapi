@@ -8,8 +8,8 @@ import { BodyguardOwner } from '../enums';
  * @param obj Object or array to check (enables recursion).
  * 	This can be the direct obj set of a typeorm request
  * @param user User object to check against
- * @param objType any Type of object to check
- * @param userType any Type of User to check
+ * @param objType Type of object to check
+ * @param userType Type of User to check
  * @return Returns the filtered obj
  */
 export function readFilter(

@@ -15,7 +15,7 @@ export class BaseDb {
 
 	/**
 	 * Set ORM entities
-	 * @param entities any[] Array of entities
+	 * @param entities Array of entities
 	 */
 	public setEntities(entities: any[]): BaseDb {
 		return this;

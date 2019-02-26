@@ -148,8 +148,8 @@ const CanReadRelationSymbol = Symbol('CanReadRelationSymbol');
 
 /**
  * Check if the key is a bodyguard key
- * @param target any Object to test
- * @param propertyKey string Key to check
+ * @param target Object to test
+ * @param propertyKey Key to check
  */
 export function isBodyguardKey(target: any, propertyKey: string): boolean {
 	return Reflect.getMetadata(BodyguardKeySymbol, target, propertyKey);
@@ -157,8 +157,8 @@ export function isBodyguardKey(target: any, propertyKey: string): boolean {
 
 /**
  * Get the read privilege of the key
- * @param target any Object to test
- * @param propertyKey string Key to check
+ * @param target Object to test
+ * @param propertyKey Key to check
  */
 export function getCanRead(target: any, propertyKey: string): string {
 	return Reflect.getMetadata(CanReadSymbol, target, propertyKey);
@@ -166,8 +166,8 @@ export function getCanRead(target: any, propertyKey: string): string {
 
 /**
  * Get the write privilege of the key
- * @param target any Object to test
- * @param propertyKey string Key to check
+ * @param target Object to test
+ * @param propertyKey Key to check
  */
 export function getCanWrite(target: any, propertyKey: string): string {
 	return Reflect.getMetadata(CanWriteSymbol, target, propertyKey);
@@ -175,8 +175,8 @@ export function getCanWrite(target: any, propertyKey: string): string {
 
 /**
  * Get the search privilege of the key
- * @param target any Object to test
- * @param propertyKey string Key to check
+ * @param target Object to test
+ * @param propertyKey Key to check
  */
 export function getCanSearch(target: any, propertyKey: string): string {
 	return Reflect.getMetadata(CanSearchSymbol, target, propertyKey);
@@ -184,8 +184,8 @@ export function getCanSearch(target: any, propertyKey: string): string {
 
 /**
  * Get the search relations of the key
- * @param target any Object to test
- * @param propertyKey string Key to check
+ * @param target Object to test
+ * @param propertyKey Key to check
  */
 export function getCanSearchRelation(target: any, propertyKey: string): any {
 	return Reflect.getMetadata(CanSearchRelationSymbol, target, propertyKey);
@@ -193,8 +193,8 @@ export function getCanSearchRelation(target: any, propertyKey: string): any {
 
 /**
  * Get the read relations of the key
- * @param target any Object to test
- * @param propertyKey string Key to check
+ * @param target Object to test
+ * @param propertyKey Key to check
  */
 export function getCanReadRelation(target: any, propertyKey: string): any {
 	return Reflect.getMetadata(CanReadRelationSymbol, target, propertyKey);
@@ -270,7 +270,7 @@ export function CanWrite(who: BodyguardOwner | UserRole) {
 
 /**
  * Sets who can search the field
- * @param who string (Optional) Default is anyone
+ * @param who Who can search the field. Default is anyone
  */
 export function CanSearch(
 	who: BodyguardOwner | UserRole = BodyguardOwner.Anyone
@@ -280,7 +280,7 @@ export function CanSearch(
 
 /**
  * Sets who can search relations in the field
- * @param who Object Object with who (string) and field (array)
+ * @param who Object with who (string) and field (array)
  *
  * {
  * 		who: BodyguardOwner.Self,
@@ -293,7 +293,7 @@ export function CanSearchRelation(params: object) {
 
 /**
  * Sets who can read the relation
- * @param who string (Optional) Default is anyone
+ * @param who Who can read the relation. Default is anyone
  */
 export function CanReadRelation(
 	who: BodyguardOwner | UserRole = BodyguardOwner.Anyone

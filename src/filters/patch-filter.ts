@@ -5,6 +5,9 @@ import { isSelf } from '../utils';
 /**
  * Patch Filter: Filter a PATCH request payload, and respond with
  * 	403 Forbidden if the request contains any private fields
+ * @param request Request object to query by
+ * @param response Response object to call responder with
+ * @param next Next function to call on success
  */
 export function patchFilter(
 	request: Request,

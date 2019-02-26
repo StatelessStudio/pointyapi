@@ -7,6 +7,9 @@ import { BodyguardOwner } from '../enums';
 
 /**
  * Get Filter: Filter a GET response to remove private fields
+ * @param request Request object to query by
+ * @param response Response object to call responder with
+ * @param next Next function to call on success
  */
 export function getFilter(
 	request: Request,

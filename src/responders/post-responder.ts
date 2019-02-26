@@ -1,6 +1,6 @@
 /**
  * Respond with 200 Success with post body
- * @param result any Post result body to send back (as JSON)
+ * @param result Post result body to send back (as JSON)
  */
 export function postResponder(result: any): void {
 	// Result should have ID

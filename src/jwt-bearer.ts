@@ -27,7 +27,7 @@ export class JwtBearer {
 
 	/**
 	 * Construct a JWT Bearer token
-	 * @param key string Private key
+	 * @param key Private key
 	 */
 	constructor(key: string = 'unset_key') {
 		if (
@@ -44,7 +44,7 @@ export class JwtBearer {
 
 	/**
 	 * Get expiration of the token
-	 * @return number Returns the expiration epoch time
+	 * @return Returns the expiration epoch time
 	 */
 	public getExpiration(): number {
 		return Date.now() + parseInt(process.env.JWT_TTL, 10) * 1000;
@@ -52,8 +52,8 @@ export class JwtBearer {
 
 	/**
 	 * Sign the token to the User
-	 * @param user BaseUserInterface User to sign the JWT for
-	 * @return string Returns the signed, base64-encoded token
+	 * @param user User to sign the JWT for
+	 * @return Returns the signed, base64-encoded token
 	 */
 	public sign(user: BaseUser): string {
 		return btoa(
@@ -65,8 +65,8 @@ export class JwtBearer {
 
 	/**
 	 * Get a token from an HTTP Request
-	 * @param request Express::Request Request to fetch the token from
-	 * @return boolean | string Returns the token if successful, otherwise false
+	 * @param request Request to fetch the token from
+	 * @return Returns the token if successful, otherwise false
 	 */
 	public getToken(request: Request): boolean | string {
 		const token = request.header('Authorization');
@@ -81,7 +81,7 @@ export class JwtBearer {
 
 	/**
 	 * Verify the token
-	 * @param token string Token to verify
+	 * @param token Token to verify
 	 * @return Returns the token payload, or false if invalid
 	 */
 	public dryVerify(token: string): any {

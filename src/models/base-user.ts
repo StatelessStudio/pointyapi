@@ -15,7 +15,6 @@ import {
 import {
 	AnyoneCanRead,
 	OnlySelfCanRead,
-	OnlyAdminCanRead,
 	OnlySelfCanWrite,
 	OnlyAdminCanWrite,
 	BodyguardKey,

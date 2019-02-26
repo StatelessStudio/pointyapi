@@ -6,6 +6,9 @@ declare var fail;
 
 /**
  * Create mock request/response objects
+ * @param method HTTP method verb for this request
+ * @param url URL to mock the request
+ * @return Returns { request, response }
  */
 export function createMockRequest(
 	method: string = 'GET',
