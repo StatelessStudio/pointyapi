@@ -2,7 +2,7 @@
 
 ## [1.0.0] Feb-27-2019
 
-First major release.  View the migration guide: (TODO: ADD MIGRATION GUIDE)
+First major release.  View the migration guide: ([MIGRATION GUIDE](https://github.com/StatelessStudio/pointyapi/blob/master/migration.md))
 
 ### Breaking Changes
 - [Issue #78] Removed response parameter from responder functions
