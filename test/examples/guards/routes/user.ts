@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import {
 	postEndpoint,
-	putEndpoint,
+	patchEndpoint,
 	deleteEndpoint,
 	getEndpoint
 } from '../../../../src/endpoints';
@@ -10,18 +10,13 @@ import { BaseUser } from '../../../../src/models/base-user';
 
 import { setModel } from '../../../../src/';
 
-import {
-	postFilter,
-	getFilter,
-	putFilter,
-	deleteFilter,
-	onlySelf
-} from '../../../../src/guards';
+import { postFilter, getFilter, patchFilter } from '../../../../src/filters';
+import { onlySelf } from '../../../../src/guards';
 
 const router: Router = Router();
 
 async function loader(request, response, next) {
-	if (await setModel(request, response, BaseUser, 'id')) {
+	if (await setModel(request, response, BaseUser)) {
 		next();
 	}
 }
@@ -29,7 +24,7 @@ async function loader(request, response, next) {
 // Create
 router.post('/', loader, postFilter, postEndpoint);
 router.get('/', loader, getFilter, getEndpoint);
-router.put(`/:id`, loader, onlySelf, putFilter, putEndpoint);
-router.delete(`/:id`, loader, onlySelf, deleteFilter, deleteEndpoint);
+router.patch(`/:id`, loader, onlySelf, patchFilter, patchEndpoint);
+router.delete(`/:id`, loader, onlySelf, deleteEndpoint);
 
 export const userRouter: Router = router;

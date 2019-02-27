@@ -4,7 +4,7 @@ import { BaseModel } from '../models';
 /**
  * Get an array of searchable fields for the object
  * @param obj Object to receive keys for
- * @param user User object to check for permissions
+ * @return Returns an array of field names
  */
 export function getSearchableRelations(obj: BaseModel): string[] {
 	let searchableFields: string[] = [];
@@ -13,7 +13,6 @@ export function getSearchableRelations(obj: BaseModel): string[] {
 		const canSearchRelation = getCanSearchRelation(obj, member);
 
 		if (canSearchRelation) {
-			const who = canSearchRelation.who;
 			const fields = canSearchRelation.fields.map((field) => {
 				return `${member}.${field}`;
 			});

@@ -1,10 +1,5 @@
 // Import handler function types
-import {
-	BaseUser,
-	BaseModel,
-	BaseUserInterface,
-	BaseModelInterface
-} from './models';
+import { BaseModel, BaseUserInterface, BaseModelInterface } from './models';
 import {
 	ErrorHandlerFunction,
 	LogHandlerFunction,
@@ -43,16 +38,12 @@ declare global {
 			deleteResponder: ResponderFunction;
 			getResponder: ResponderFunction;
 			postResponder: ResponderFunction;
-			putResponder: ResponderFunction;
+			patchResponder: ResponderFunction;
 		}
 	}
 }
 
 // Export root files
 export { pointy, PointyApi } from './pointy-core';
-export { forkServer } from './fork-server';
-export { getIdentifierValue } from './get-identifier-value';
-export { jwtBearer } from './jwt-bearer';
-export { listen } from './listen';
+export { JwtBearer, jwtBearer } from './jwt-bearer';
 export { setModel } from './set-model';
-export { runHook } from './run-hook';

@@ -2,16 +2,16 @@
  * # Endpoints
  *
  * Endpoints are where the action of a route actually takes place,
- * for example posting an object or logging in.  The following
+ * for example posting a resource or logging in.  The following
  * endpoints come premade:
  * - CRUD
  *  - postEndpoint
  *  - getEndpoint
- *  - putEndpoint
+ *  - patchEndpoint
  *  - deleteEndpoint
  * - Auth
  *  - loginEndpoint
- *  - logoutEndpoint (TODO)
+ *  - logoutEndpoint
  *
  * ## Using endpoints
  *
@@ -23,19 +23,16 @@
  * import { BaseUser } from 'pointyapi/models';
  *
  * // Guards
- * import {
- * 		postGuard,
- * 		getGuard,
- * 		putGuard,
- * 		deleteGuard,
- * 		onlySelf
- * } from 'pointyapi/guards';
+ * import { onlySelf } from 'pointyapi/guards';
+ *
+ * // Filters
+ * import { postFilter, getFilter, patchFilter } from 'pointyapi/filters';
  *
  * // Endpoints
  * import {
  * 		postEndpoint,
  * 		getEndpoint,
- * 		putEndpoint,
+ * 		patchEndpoint,
  * 		deleteEndpoint
  * } from 'pointyapi/endpoints';
  *
@@ -43,16 +40,17 @@
  * const router: Router = Router();
  *
  * // Set model
- * router.use((request, response, next) => {
- * 		await setModel(request,BaseUser, 'id');
- * 		next();
- * });
+ * async function loader(request, response, next) {
+ * 		if (await setModel(request, BaseUser)) {
+ * 			next();
+ * 		}
+ * }
  *
  * // Set routes
- * router.post('/', postGuard, postEndpoint);
- * router.get('/', getGuard, getEndpoint);
- * router.put(`/:id`, onlySelf, putGuard, putEndpoint);
- * router.delete(`/:id`, onlySelf, deleteGuard, deleteEndpoint);
+ * router.post('/', loader, postFilter, postEndpoint);
+ * router.get('/', loader, getFilter, getEndpoint);
+ * router.patch(`/:id`, loader, onlySelf, patchFilter, patchEndpoint);
+ * router.delete(`/:id`, loader, onlySelf, deleteEndpoint);
  *
  * // Export router
  * export const userRouter: Router = router;
@@ -62,9 +60,9 @@
 /**
  * Endpoints
  */
-export { deleteEndpoint } from './endpoints/delete';
-export { getEndpoint } from './endpoints/get';
-export { postEndpoint } from './endpoints/post';
-export { putEndpoint } from './endpoints/put';
-export { loginEndpoint } from './endpoints/login';
-export { logoutEndpoint } from './endpoints/logout';
+export { deleteEndpoint } from './endpoints/delete-endpoint';
+export { getEndpoint } from './endpoints/get-endpoint';
+export { postEndpoint } from './endpoints/post-endpoint';
+export { patchEndpoint } from './endpoints/patch-endpoint';
+export { loginEndpoint } from './endpoints/login-endpoint';
+export { logoutEndpoint } from './endpoints/logout-endpoint';

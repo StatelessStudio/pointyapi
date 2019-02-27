@@ -1,5 +1,5 @@
 import { pointy } from '../../../../src';
-import { upgradeUserRole } from '../../../../src/upgrade-user-role';
+import { upgradeUserRole } from '../../../../src/utils/upgrade-user-role';
 import { User } from '../../../examples/chat/models/user';
 import { UserRole } from '../../../../src/enums';
 
@@ -107,7 +107,7 @@ describe('[Chat] Chat API Delete', () => {
 		}
 	});
 
-	it('cannot delete w/o token', async () => {
+	it('cannot delete without token', async () => {
 		const result = await http
 			.post(
 				'/api/v1/chat',

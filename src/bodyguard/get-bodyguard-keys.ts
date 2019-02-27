@@ -2,7 +2,7 @@ import { isBodyguardKey } from '../bodyguard';
 import { BaseModel } from '../models';
 
 /**
- * Get an array of BodyguardKeys for the object
+ * Get an array of bodyguard keys for the object
  * @param obj Object to receive keys for
  * @return Returns an array of keys
  */

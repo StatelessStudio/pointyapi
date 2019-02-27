@@ -1,6 +1,6 @@
 {
 	"name": "pointyapi",
-	"version": "0.6.1",
+	"version": "1.0.0",
 	"author": "stateless-studio",
 	"license": "MIT",
 	"scripts": {
@@ -8,21 +8,25 @@
 		"build": "tsc --p tsconfig.json",
 		"build:spec": "tsc --p tsconfig.json && tsc --p tsconfig.spec.json",
 		"postinstall": "tsc --p tsconfig.dist.json",
-		"test": "npm run build:spec && npm run test:jasmine-api && npm run test:jasmine-basic && npm run test:jasmine-guards && npm run test:jasmine-chat",
+		"test": "npm run build:spec && npm run coverage && npm run test-examples",
+		"test-examples": "npm run test:jasmine-basic && npm run test:jasmine-guards && npm run test:jasmine-chat",
 		"test:jasmine-api": "npm run db:drop && jasmine --config=test/jasmine.api.json",
 		"test:jasmine-basic": "npm run db:drop && jasmine --config=test/jasmine.basic.json",
 		"test:jasmine-guards": "npm run db:drop && jasmine --config=test/jasmine.guards.json",
 		"test:jasmine-chat": "npm run db:drop && jasmine --config=test/jasmine.chat.json",
 		"db:drop": "typeorm schema:drop -f orm-cli",
-		"doc": "typedoc --out docs src --excludeNotExported"
+		"doc": "typedoc --out docs src --excludeNotExported",
+		"coverage": "npm run db:drop && nyc npm run coverage-test",
+		"coverage-test": "jasmine --config=test/jasmine.api.json",
+		"coveralls": "cat ./coverage/lcov.info | coveralls"
 	},
 	"dependencies": {
 		"@types/atob": "^2.1.1",
-		"@types/btoa": "^1.2.0",
-		"@types/express": "^4.16.0",
-		"@types/jasmine": "^2.8.14",
+		"@types/btoa": "^1.2.2",
+		"@types/express": "^4.16.1",
+		"@types/jasmine": "^2.8.16",
 		"@types/jsonwebtoken": "^7.2.8",
-		"@types/node": "^10.12.18",
+		"@types/node": "^10.12.27",
 		"@types/request": "^2.48.1",
 		"atob": "^2.1.2",
 		"bcryptjs": "^2.4.3",
@@ -30,23 +34,38 @@
 		"class-validator": "^0.9.1",
 		"express": "^4.16.4",
 		"jasmine": "^3.3.1",
-		"jsonwebtoken": "^8.4.0",
-		"mock-req-res": "^1.0.2",
-		"pg": "^7.7.1",
+		"jsonwebtoken": "^8.5.0",
+		"mock-req-res": "^1.0.3",
+		"pg": "^7.8.1",
 		"pg-connection-string": "^2.0.0",
-		"reflect-metadata": "^0.1.12",
+		"reflect-metadata": "^0.1.13",
 		"request": "^2.88.0",
-		"sinon": "^7.2.2",
-		"tslint": "^5.12.0",
+		"sinon": "^7.2.4",
+		"tslint": "^5.13.0",
 		"tslint-eslint-rules": "^5.4.0",
-		"typeorm": "^0.2.9",
-		"typescript": "^3.2.2",
-		"validator": "^10.9.0"
+		"typeorm": "^0.2.14",
+		"typescript": "^3.3.3333",
+		"validator": "^10.11.0"
 	},
 	"main": "./index.js",
 	"types": "./index.d.ts",
 	"devDependencies": {
+		"coveralls": "^3.0.3",
+		"istanbul": "^0.4.5",
+		"nyc": "^13.3.0",
+		"source-map-support": "^0.5.10",
 		"ts-node": "^7.0.1",
 		"typedoc": "^0.13.0"
+	},
+	"nyc": {
+		"reporter": [
+			"lcov",
+			"text-summary",
+			"html"
+		],
+		"exclude": [
+			"**/*.spec.js",
+			"**/examples/**"
+		]
 	}
 }

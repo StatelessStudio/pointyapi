@@ -2,27 +2,9 @@
  * # HttpClient
  *
  * HttpClient can be used to mock requests in your test-suite.  There are
- * 4 functions: post(), get(), put(), delete()
+ * 4 functions: post(), get(), patch(), delete()
  *
  * **Before using, set HttpClient.url and HttpClient.port**
- *
- * Each function takes up to 4 parameters:
- * - path: string
- *
- * 	The path URL path to connect to
- *
- * - data: object (NOT ON DELETE)
- *
- *  Data as query/body to pass with the request
- *
- * - expect: number[] = [ 200 ]
- *
- *  Pass an array of status codes that you expect the endpoint to respond with.
- *  The promise will be rejected if the response status-code is not expected
- *
- * - bearer: bool | string = false
- *
- *  JWT Bearer token to pass with the request
  *
  */
 
@@ -34,9 +16,20 @@ import * as request from 'request';
 import { HttpClientResponse } from './http-client-response';
 
 export class HttpClient {
+	// Server URL
 	public url = 'http://localhost';
+
+	// Server PORT
 	public port = process.env.PORT;
 
+	/**
+	 * Send a POST http request to the server
+	 * @param path Path to send to (e.g. /users)
+	 * @param data Data to send as query
+	 * @param expect Array of status codes to expect
+	 * @param bearer Bearer token to send
+	 * @return Returns a promise of HttpClientResponse
+	 */
 	public post(
 		path: string,
 		data: object,
@@ -59,7 +52,7 @@ export class HttpClient {
 				if (error) {
 					reject(new HttpClientResponse(response, error));
 				}
-				else {
+				else if (response) {
 					if (expect.includes(response.statusCode)) {
 						accept(new HttpClientResponse(response, body));
 					}
@@ -67,10 +60,21 @@ export class HttpClient {
 						reject(new HttpClientResponse(response, error));
 					}
 				}
+				else {
+					reject(new HttpClientResponse(response, 'No response'));
+				}
 			});
 		});
 	}
 
+	/**
+	 * Send a GET http request to the server
+	 * @param path Path to send to (e.g. /users)
+	 * @param data Data to send as query
+	 * @param expect Array of status codes to expect
+	 * @param bearer Bearer token to send
+	 * @return Returns a promise of HttpClientResponse
+	 */
 	public get(
 		path: string,
 		data: boolean | Object = false,
@@ -93,7 +97,7 @@ export class HttpClient {
 				if (error) {
 					reject(new HttpClientResponse(response, error));
 				}
-				else {
+				else if (response) {
 					if (expect.includes(response.statusCode)) {
 						accept(new HttpClientResponse(response, body));
 					}
@@ -101,18 +105,29 @@ export class HttpClient {
 						reject(new HttpClientResponse(response, error));
 					}
 				}
+				else {
+					reject(new HttpClientResponse(response, 'No response'));
+				}
 			});
 		});
 	}
 
-	public put(
+	/**
+	 * Send a PATCH http request to the server
+	 * @param path Path to send to (e.g. /users)
+	 * @param data Data to send as query
+	 * @param expect Array of status codes to expect
+	 * @param bearer Bearer token to send
+	 * @return Returns a promise of HttpClientResponse
+	 */
+	public patch(
 		path: string,
 		data: object,
 		expect: number[] = [ 204 ],
 		bearer: boolean | string = false
 	): Promise<HttpClientResponse> {
 		const options = {
-			method: 'PUT',
+			method: 'PATCH',
 			url: `${this.url}:${this.port}${path}`,
 			body: data,
 			json: true
@@ -127,7 +142,7 @@ export class HttpClient {
 				if (error) {
 					reject(new HttpClientResponse(response, error));
 				}
-				else {
+				else if (response) {
 					if (expect.includes(response.statusCode)) {
 						accept(new HttpClientResponse(response, body));
 					}
@@ -135,10 +150,21 @@ export class HttpClient {
 						reject(new HttpClientResponse(response, error));
 					}
 				}
+				else {
+					reject(new HttpClientResponse(response, 'No response'));
+				}
 			});
 		});
 	}
 
+	/**
+	 * Send a DELETE http request to the server
+	 * @param path Path to send to (e.g. /users)
+	 * @param data Data to send as query
+	 * @param expect Array of status codes to expect
+	 * @param bearer Bearer token to send
+	 * @return Returns a promise of HttpClientResponse
+	 */
 	public delete(
 		path: string,
 		expect: number[] = [ 204 ],
@@ -158,13 +184,16 @@ export class HttpClient {
 				if (error) {
 					reject(new HttpClientResponse(response, error));
 				}
-				else {
+				else if (response) {
 					if (expect.includes(response.statusCode)) {
 						accept(new HttpClientResponse(response, body));
 					}
 					else {
 						reject(new HttpClientResponse(response, error));
 					}
+				}
+				else {
+					reject(new HttpClientResponse(response, 'No response'));
 				}
 			});
 		});

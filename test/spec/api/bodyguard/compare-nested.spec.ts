@@ -9,17 +9,25 @@ class TestModel extends BaseModel {
 	@BodyguardKey() public owner: BaseUser = undefined;
 }
 
+/**
+ * compareNested()
+ * pointyapi/bodyguard
+ */
 describe('[Bodyguard] compareNested()', () => {
 	it('returns true if the object matches', () => {
+		// Create base user
 		const user = new BaseUser();
 		user.id = 2;
 
+		// Create comparator user
 		const test = new TestModel();
 		test.owner = user;
 
+		// Get bodyguard keys
 		const objBodyguardKeys = getBodyguardKeys(test);
 		const userBodyguardKeys = getBodyguardKeys(user);
 
+		// Check compareNested()
 		expect(
 			compareNestedBodyguards(
 				test,
@@ -31,18 +39,23 @@ describe('[Bodyguard] compareNested()', () => {
 	});
 
 	it('returns false if the object does not match', () => {
+		// Create base user
 		const user = new BaseUser();
 		user.id = 2;
 
+		// Create another base user
 		const user2 = new BaseUser();
 		user.id = 3;
 
+		// Create a resource belonging to user
 		const test = new TestModel();
 		test.owner = user;
 
+		// Get bodyguard keys
 		const objBodyguardKeys = getBodyguardKeys(test);
 		const userBodyguardKeys = getBodyguardKeys(user);
 
+		// User 1 should own the test resource
 		expect(
 			compareNestedBodyguards(
 				test,

@@ -46,7 +46,6 @@ describe('[Chat] Chat API Get', async () => {
 			);
 
 		// make chats to read
-
 		this.chat = await http
 			.post(
 				'/api/v1/chat',
@@ -76,7 +75,7 @@ describe('[Chat] Chat API Get', async () => {
 			);
 	});
 
-	it('allows a user to view their message(sent)', async () => {
+	it('allows a user to view their message (sent)', async () => {
 		await http
 			.get(
 				'/api/v1/chat',
@@ -93,7 +92,7 @@ describe('[Chat] Chat API Get', async () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
-	it('allows a user to view their message(received)', async () => {
+	it('allows a user to view their message (received)', async () => {
 		await http
 			.get(
 				'/api/v1/chat',
@@ -110,7 +109,7 @@ describe('[Chat] Chat API Get', async () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
-	it('Cannot view chat w/o  a token', async () => {
+	it('cannot view chat without a token', async () => {
 		await http
 			.get(
 				'/api/v1/chat',
@@ -124,7 +123,7 @@ describe('[Chat] Chat API Get', async () => {
 			);
 	});
 
-	it('Cannot view chat with the wrong token', async () => {
+	it('cannot view chat with the wrong token', async () => {
 		await http
 			.post('/api/v1/user', {
 				fname: 'Chat',
@@ -166,9 +165,11 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/chat',
 				{
-					__search: 'test',
-					to: this.user.body.id,
-					from: this.user2.body.id
+					search: 'test',
+					where: {
+						to: this.user.body.id,
+						from: this.user2.body.id
+					}
 				},
 				[ 200 ],
 				this.token.body.token
@@ -189,8 +190,8 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/user',
 				{
-					__search: 'chatGet1',
-					__join: [ 'inbox' ]
+					search: 'chatGet1',
+					join: [ 'inbox' ]
 				},
 				[ 200 ],
 				this.token.body.token
@@ -211,8 +212,8 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/chat',
 				{
-					__search: 'test',
-					__whereAnyOf: {
+					search: 'test',
+					whereAnyOf: {
 						to: +this.user.body.id,
 						from: +this.user.body.id
 					}
@@ -235,8 +236,7 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/chat',
 				{
-					__search: '',
-					__whereAnyOf: {
+					whereAnyOf: {
 						to: this.user.body.id,
 						from: this.user.body.id
 					}
@@ -261,7 +261,7 @@ describe('[Chat] Chat API Get', async () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
-	it(`does not return chats the user does not own`, async () => {
+	it('does not return chats the user does not own', async () => {
 		const user = await http
 			.post('/api/v1/user', {
 				fname: 'Chat',
@@ -288,8 +288,7 @@ describe('[Chat] Chat API Get', async () => {
 				.get(
 					'/api/v1/chat',
 					{
-						__search: '',
-						__whereAnyOf: {
+						whereAnyOf: {
 							to: this.user.body.id,
 							from: this.user.body.id
 						}
@@ -309,9 +308,8 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/chat',
 				{
-					__search: '',
-					__count: true,
-					__whereAnyOf: {
+					count: true,
+					whereAnyOf: {
 						to: this.user.body.id,
 						from: this.user.body.id
 					}
@@ -369,7 +367,7 @@ describe('[Chat] Chat API Get', async () => {
 				.get(
 					'/api/v1/chat',
 					{
-						__search: 'nestedGet1'
+						search: 'nestedGet1'
 					},
 					[ 200 ],
 					token.body['token']
@@ -399,8 +397,7 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/chat',
 				{
-					__search: '',
-					__orderBy: {
+					orderBy: {
 						'from.username': 'DESC'
 					}
 				},
@@ -437,8 +434,8 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/chat',
 				{
-					__search: '',
-					__orderBy: {
+					join: [ 'from' ],
+					orderBy: {
 						id: 'ASC'
 					}
 				},
@@ -453,6 +450,6 @@ describe('[Chat] Chat API Get', async () => {
 					fail('Result is not an array');
 				}
 			})
-			.catch((error) => JSON.stringify(error));
+			.catch((error) => fail(JSON.stringify(error)));
 	});
 });

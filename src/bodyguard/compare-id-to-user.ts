@@ -1,27 +1,20 @@
-import { BaseUser } from '../models';
+import { BaseUserInterface } from '../models';
 
 /**
- * Compare bodyguard keys against request.params for ownership
- * @param request Express Request object
- * @param userBodyguardKeys Array of bodyguard keys from getBodyguardKeys()
- * @param routeParam Route paramaters
+ * Compare bodyguard keys of a user against an identifier/value pair to see if
+ * 	they match
+ * @param identifier Identifier field name
+ * @param value Identifier field value
+ * @param user User to check
+ * @param userBodyguardKeys Array of user type bodyguard keys to check
+ * @return Returns if the identifier is a valid bodyguard key and that
+ * 	it also matches the user's key
  */
-
 export function compareIdToUser(
 	identifier: string,
 	value: number | string,
-	user: BaseUser,
+	user: BaseUserInterface,
 	userBodyguardKeys: string[]
-) {
-	for (const userKey of userBodyguardKeys) {
-		if (
-			value !== undefined &&
-			identifier === userKey &&
-			`${value}` === `${user[userKey]}`
-		) {
-			return true;
-		}
-	}
-
-	return false;
+): boolean {
+	return userBodyguardKeys.includes(identifier) && value === user[identifier];
 }

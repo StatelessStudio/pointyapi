@@ -5,28 +5,10 @@
  * set the route parameter (e.g. ':id').  This function should
  * be called in a middleware function BEFORE your endpoints.
  *
- * ```typescript
- * import { setModel } from 'pointyapi/set-model';
- * import { BaseUser } from 'pointyapi/models';
+ * ## Auth Routes
  *
- * router.use((request, response, next) => {
- *		await setModel(request,BaseUser, 'id');
- * 		next();
- * });
- *
- * // Set your router endpoints AFTER setModel();
- * // TODO: Set endpoints
- *
- * ```
- *
- * ## Parameters
- * - **request** - The Express Request object
- * - **model** - A model to set the request entity to.  This should be a type,
- * not an instance
- * - **identifier** - (Optional) The URL path identifier for the request, e.g.
- * if your path is `/user/:username`, you should set your identifier to
- * `username`
- *
+ * Auth routes must specify to `setModel` that it is an auth route.  Do
+ * this by passing `true` to the `isAuth` (fourth) parameter.
  */
 
 /**
@@ -36,33 +18,49 @@ import { Request, Response } from 'express';
 import { BaseModelInterface } from './models';
 import { getRepository } from 'typeorm';
 import { getQuery, loadEntity } from './middleware';
-import { log } from 'util';
-import { runHook } from './run-hook';
+import { runHook, isKeyInModel } from './utils';
+import { queryValidator } from './query-tools/query-validator';
 
-function isKeyInModel(key, model, response) {
-	if (!(key in model) && key.indexOf('__') !== 0) {
-		response.validationResponder(
-			'Member key "' + key + '" does not exist in model.',
-			response
-		);
-	}
-	else {
-		return true;
-	}
-}
-
+/**
+ * Set model type and load payload
+ * @param request Request object
+ * @param response Response object
+ * @param model Model to set the request type to
+ * @param isAuth If this is an authentication route.
+ * 	Default is false.
+ * 	Will run beforeLogin() and beforeLogout() posts instead of post/delete hook
+ * @param identifier URL parameter name, for
+ * 	example `/users/:id`.  Default is `id`.  Although this parameter
+ * 	is optional, you **must** set it to the same string as in your routes.
+ * @return Returns a Promise
+ */
 export async function setModel(
 	request: Request,
 	response: Response,
 	model: BaseModelInterface,
+	isAuth: boolean = false,
 	identifier: string = 'id'
-) {
+): Promise<any> {
 	request.identifier = identifier;
 	request.payloadType = model;
 	request.payload = new model();
 	request.repository = getRepository(request.payloadType);
 
+	// Substitute authenticated user as resource for auth router deletes
+	if (isAuth && request.method === 'DELETE') {
+		if (request.user) {
+			request.params = request.user;
+		}
+		else {
+			response.unauthorizedResponder('Not authenticated');
+
+			return false;
+		}
+	}
+
+	// Post loader
 	if (request.method === 'POST') {
+		// Load post array
 		if (request.body instanceof Array) {
 			for (let i = 0; i < request.body.length; i++) {
 				request.body[i] = Object.assign(
@@ -79,21 +77,10 @@ export async function setModel(
 						return false;
 					}
 				}
-
-				// Run model hook
-				if (
-					!runHook(
-						request,
-						response,
-						'beforeLoadPost',
-						request.body[i]
-					)
-				) {
-					return;
-				}
 			}
 		}
 		else {
+			// Load post object
 			request.body = Object.assign(
 				new request.payloadType(),
 				request.body
@@ -108,54 +95,77 @@ export async function setModel(
 					return false;
 				}
 			}
-
-			// Run model hook
-			if (!runHook(request, response, 'beforeLoadPost', request.body)) {
-				return;
-			}
-		}
-	}
-	else if (request.method === 'GET') {
-		request.query = Object.assign(new request.payloadType(), request.query);
-
-		for (const key in request.query) {
-			if (request.query[key] === undefined) {
-				delete request.query[key];
-			}
-
-			if (!isKeyInModel(key, request.payload, response)) {
-				return false;
-			}
 		}
 
 		// Run model hook
-		if (!runHook(request, response, 'beforeLoadGet', request.query)) {
-			return;
+		if (
+			!await runHook(
+				isAuth ? 'beforeLogin' : 'beforePost',
+				request.body,
+				request,
+				response
+			)
+		) {
+			return false;
+		}
+	}
+	else if (request.method === 'GET') {
+		// Get loader
+
+		if (!queryValidator(request, response)) {
+			return false;
 		}
 
-		await getQuery(request, response);
+		let getSuccess = true;
+
+		request.payload = await getQuery(request, response).catch((error) => {
+			if (!response.headersSent) {
+				response.error(error);
+			}
+
+			getSuccess = false;
+		});
+
+		if (!getSuccess) {
+			return false;
+		}
 	}
-	else if (request.method === 'PUT') {
+	else if (request.method === 'PATCH') {
+		// Patch loader
 		for (const key in request.body) {
 			if (!isKeyInModel(key, request.payload, response)) {
 				return false;
 			}
 		}
 
-		// Run model hook
-		if (!runHook(request, response, 'beforeLoadPut', request.payload)) {
-			return;
+		// Load entity
+		if (!await loadEntity(request, response)) {
+			return false;
 		}
 
-		await loadEntity(request, response);
+		// Run model hook
+		if (!await runHook('beforePatch', request.body, request, response)) {
+			return false;
+		}
 	}
 	else if (request.method === 'DELETE') {
-		// Run model hook
-		if (!runHook(request, response, 'beforeLoadDelete', request.payload)) {
-			return;
+		// Load entity
+		if (!await loadEntity(request, response)) {
+			return false;
 		}
 
-		await loadEntity(request, response);
+		// Delete loader
+		// Run model hook
+		if (
+			!await runHook(
+				isAuth ? 'beforeLogout' : 'beforeDelete',
+				request.payload,
+				request,
+				response
+			)
+		) {
+			return false;
+		}
 	}
 
 	return !response.headersSent;

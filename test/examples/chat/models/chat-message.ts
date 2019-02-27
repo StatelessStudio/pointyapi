@@ -17,17 +17,17 @@ import {
 	AnyoneCanRead,
 	OnlySelfCanRead,
 	OnlySelfCanWrite,
-	OnlyAdminCanWrite,
 	BodyguardKey,
 	CanSearch,
 	CanSearchRelation,
-	getSearchableFields
+	CanReadRelation
 } from '../../../../src/bodyguard';
 
 // Models
 import { BaseModel } from '../../../../src/models';
 import { User } from './user';
 import { ChatStatus } from '../enums/chat-status';
+import { BodyguardOwner } from '../../../../src/enums';
 
 @Entity('ChatMessage')
 export class ChatMessage extends BaseModel {
@@ -45,8 +45,9 @@ export class ChatMessage extends BaseModel {
 	@BodyguardKey()
 	@OnlySelfCanRead()
 	@OnlySelfCanWrite()
+	@CanReadRelation(BodyguardOwner.Self)
 	@CanSearchRelation({
-		who: '__self__',
+		who: BodyguardOwner.Self,
 		fields: [ 'username', 'fname', 'lname' ]
 	})
 	public from: User = undefined;
@@ -60,8 +61,9 @@ export class ChatMessage extends BaseModel {
 	@BodyguardKey()
 	@OnlySelfCanRead()
 	@OnlySelfCanWrite()
+	@CanReadRelation(BodyguardOwner.Self)
 	@CanSearchRelation({
-		who: '__self__',
+		who: BodyguardOwner.Self,
 		fields: [ 'username', 'fname', 'lname' ]
 	})
 	public to: User = undefined;
@@ -86,7 +88,7 @@ export class ChatMessage extends BaseModel {
 	@Column({ type: 'text' })
 	@OnlySelfCanRead()
 	@OnlySelfCanWrite()
-	@CanSearch('__self__')
+	@CanSearch(BodyguardOwner.Self)
 	public body: string = undefined;
 
 	// User Status
@@ -105,10 +107,9 @@ export class ChatMessage extends BaseModel {
 	@OnlySelfCanWrite()
 	public toStatus: ChatStatus = undefined;
 
-	public beforeLoadPost(request: Request, response: Response) {
+	public async beforePost(request: Request, response: Response) {
 		if (request.user) {
-			this.from = new User();
-			this.from.id = request.user.id;
+			this.from = request.user;
 
 			for (const key in this.from) {
 				if (this.from[key] === undefined) {
@@ -119,7 +120,7 @@ export class ChatMessage extends BaseModel {
 			return true;
 		}
 		else {
-			response.unauthorizedResponder('User not authenticated', response);
+			response.unauthorizedResponder('User not authenticated');
 		}
 	}
 }

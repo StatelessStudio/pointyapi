@@ -1,5 +1,5 @@
 import { pointy } from '../../../../src';
-import { upgradeUserRole } from '../../../../src/upgrade-user-role';
+import { upgradeUserRole } from '../../../../src/utils/upgrade-user-role';
 import { BaseUser } from '../../../../src/models';
 import { UserRole } from '../../../../src/enums/user-role';
 
@@ -73,7 +73,7 @@ describe('[Guards] User API Delete', () => {
 		}
 	});
 
-	it('cannot delete w/o token', async () => {
+	it('cannot delete without token', async () => {
 		const result = await http
 			.post('/api/v1/user', {
 				fname: 'deleteUser',
@@ -91,7 +91,7 @@ describe('[Guards] User API Delete', () => {
 		}
 	});
 
-	it(`can\'t delete with the wrong token`, async () => {
+	it('cannot delete with the wrong token', async () => {
 		await http
 			.post('/api/v1/user', {
 				fname: 'deleteUser',
@@ -139,7 +139,7 @@ describe('[Guards] User API Delete', () => {
 		}
 	});
 
-	it('Admin can delete', async () => {
+	it('admin can delete', async () => {
 		const result = await http
 			.post('/api/v1/user', {
 				fname: 'deleteUser',

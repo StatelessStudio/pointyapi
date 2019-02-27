@@ -1,10 +1,10 @@
 // Express
 const express = require('express');
-import { Response, Request, NextFunction } from 'express';
+import { Response, Request, NextFunction, Application } from 'express';
 import * as bodyParser from 'body-parser';
 
 // Pointy Core
-import { listen } from './listen';
+import { listen } from './utils/listen';
 import { BaseDb, PointyPostgres } from './database';
 import { HttpClient } from './http/http-client';
 import {
@@ -23,14 +23,20 @@ import {
 	deleteResponder,
 	getResponder,
 	postResponder,
-	putResponder
+	patchResponder
 } from './responders';
 import { logHandler, errorHandler } from './handlers';
+import { bindResponders } from './utils/bind-responders';
+
+// Base Models
 import { BaseUser, BaseUserInterface } from './models';
 
+/**
+ * PointyAPI App Instance
+ */
 export class PointyApi {
 	// Express app
-	public app = express();
+	public app: Application = express();
 
 	// Core
 	public listen: Function = listen;
@@ -53,7 +59,7 @@ export class PointyApi {
 	public deleteResponder: ResponderFunction = deleteResponder;
 	public getResponder: ResponderFunction = getResponder;
 	public postResponder: ResponderFunction = postResponder;
-	public putResponder: ResponderFunction = putResponder;
+	public patchResponder: ResponderFunction = patchResponder;
 
 	// Hooks
 	public before: Function = (app: any) => {};
@@ -76,17 +82,8 @@ export class PointyApi {
 				request.userType = this.userType;
 				request.joinMembers = [];
 
-				response.error = this.error;
-				response.log = this.log;
-				response.conflictResponder = this.conflictResponder;
-				response.forbiddenResponder = this.forbiddenResponder;
-				response.goneResponder = this.goneResponder;
-				response.unauthorizedResponder = this.unauthorizedResponder;
-				response.validationResponder = this.validationResponder;
-				response.deleteResponder = this.deleteResponder;
-				response.getResponder = this.getResponder;
-				response.postResponder = this.postResponder;
-				response.putResponder = this.putResponder;
+				// Bind the request & response to the responders
+				bindResponders(this, request, response);
 
 				next();
 			}

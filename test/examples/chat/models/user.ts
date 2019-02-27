@@ -18,12 +18,13 @@ import {
 	OnlySelfCanWrite,
 	OnlyAdminCanWrite,
 	BodyguardKey,
-	CanSearch
+	CanSearch,
+	CanReadRelation
 } from '../../../../src/bodyguard';
 
 // Models
 import { BaseUser } from '../../../../src/models';
-import { UserRole, UserStatus } from '../../../../src/enums';
+import { BodyguardOwner, UserRole, UserStatus } from '../../../../src/enums';
 
 @Entity('User')
 export class User extends BaseUser {
@@ -150,9 +151,11 @@ export class User extends BaseUser {
 
 	// Chat Message (Sent)
 	@OneToMany((type) => ChatMessage, (chat) => chat.from)
+	@CanReadRelation(BodyguardOwner.Self)
 	public outbox: ChatMessage[] = undefined;
 
 	// Chat Message (Received)
 	@OneToMany((type) => ChatMessage, (chat) => chat.to)
+	@CanReadRelation(BodyguardOwner.Self)
 	public inbox: ChatMessage[] = undefined;
 }

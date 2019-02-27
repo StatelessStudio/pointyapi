@@ -1,5 +1,6 @@
-import { Request, Response } from 'express';
-
+/**
+ * Base Model
+ */
 export class BaseModel {
 	public id?: any = undefined;
 
@@ -8,6 +9,4 @@ export class BaseModel {
 	}
 }
 
-export interface BaseModelInterface {
-	new (): BaseModel;
-}
+export type BaseModelInterface = new () => BaseModel;

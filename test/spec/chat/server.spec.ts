@@ -1,7 +1,7 @@
 import 'jasmine';
 
 import { pointy } from '../../../src/';
-import { forkServer } from '../../../src/fork-server';
+import { forkServer } from '../../../src/utils/fork-server';
 import { User } from '../../examples/chat/models/user';
 import { ChatMessage } from '../../examples/chat/models/chat-message';
 const ROOT_PATH = require('app-root-path').toString();

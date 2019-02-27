@@ -135,4 +135,21 @@ describe('User API Create', () => {
 			)
 			.catch((error) => fail(JSON.stringify(error)));
 	});
+
+	it('removes undefined members', async () => {
+		await http
+			.post(
+				'/api/v1/user',
+				{
+					fname: 'post400',
+					lname: 'post400',
+					username: 'basicPost400',
+					password: 'password123',
+					email: 'basicPost400@test.com',
+					biography: undefined
+				},
+				[ 200 ]
+			)
+			.catch((error) => fail(JSON.stringify(error)));
+	});
 });

@@ -1,5 +1,5 @@
 import { pointy } from '../../../../src';
-import { upgradeUserRole } from '../../../../src/upgrade-user-role';
+import { upgradeUserRole } from '../../../../src/utils/upgrade-user-role';
 import { BaseUser } from '../../../../src/models';
 import { UserRole } from '../../../../src/enums/user-role';
 
@@ -97,7 +97,7 @@ describe('[Guards] User API Read', () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
-	it(`cannot reveal sensitive information (one)`, async () => {
+	it('cannot reveal sensitive information (one)', async () => {
 		await http
 			.get('/api/v1/user', {
 				id: this.getUser1.body.id
@@ -118,7 +118,7 @@ describe('[Guards] User API Read', () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
-	it(`cannot reveal sensitive information (all)`, async () => {
+	it('cannot reveal sensitive information (all)', async () => {
 		await http
 			.get('/api/v1/user')
 			.then((result) => {
@@ -142,8 +142,7 @@ describe('[Guards] User API Read', () => {
 	it('can count', async () => {
 		await http
 			.get('/api/v1/user', {
-				__search: '',
-				__count: true
+				count: true
 			})
 			.then((result) => {
 				expect(result.body['count']).toBeGreaterThanOrEqual(3);
@@ -152,8 +151,8 @@ describe('[Guards] User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				__search: 'guardUserGet1',
-				__count: true
+				search: 'guardUserGet1',
+				count: true
 			})
 			.then((result) => {
 				expect(result.body['count']).toEqual(1);
@@ -162,9 +161,10 @@ describe('[Guards] User API Read', () => {
 
 		await http
 			.get('/api/v1/user', {
-				__search: '',
-				__count: true,
-				username: 'guardUserGet1'
+				count: true,
+				where: {
+					username: 'guardUserGet1'
+				}
 			})
 			.then((result) => {
 				expect(result.body['count']).toEqual(1);
