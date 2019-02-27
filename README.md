@@ -269,22 +269,22 @@ npm i pointyapi
 	```
 
 	Open Postman, and send a GET request for all users. You'll see the result as an empty array, as there are no users yet:
-	![postman](https://github.com/StatelessStudio/pointyapi/readme/img/step7.JPG "Postman GET Request")
+	![postman](https://github.com/StatelessStudio/pointyapi/blob/master/readme/img/step7.JPG "Postman GET Request")
 
 	Create a user:
 
 	We'll send a POST request to `/api/v1/user`, with the JSON body of our new user
-	![postman](https://github.com/StatelessStudio/pointyapi/readme/img/step7b.JPG "Postman POST Request")
+	![postman](https://github.com/StatelessStudio/pointyapi/blob/master/readme/img/step7b.JPG "Postman POST Request")
 
 	Let's get all users again:
-	![postman](https://github.com/StatelessStudio/pointyapi/readme/img/step7c.JPG "Postman GET Request")
+	![postman](https://github.com/StatelessStudio/pointyapi/blob/master/readme/img/step7c.JPG "Postman GET Request")
 
 	You can see that now a get request for all users produces an array of our one user.
 
 8. **Authentication**
 
 	So we can get and post users, but what if we try to delete or update a user? Let's try it:
-	![postman](https://github.com/StatelessStudio/pointyapi/readme/img/step8.JPG "Postman DELETE Request")
+	![postman](https://github.com/StatelessStudio/pointyapi/blob/master/readme/img/step8.JPG "Postman DELETE Request")
 
 	So the server responded with `401 Unauthorized`, and a body of `"not self"`. What gives?
 
@@ -353,7 +353,7 @@ npm i pointyapi
 	Restart the server (ctrl+c to stop the server)
 
 	We can login with Postman:
-	![postman](https://github.com/StatelessStudio/pointyapi/readme/img/step8b.JPG "Postman Login Request")
+	![postman](https://github.com/StatelessStudio/pointyapi/blob/master/readme/img/step8b.JPG "Postman Login Request")
 
 	We received a "token" back (yours will be different):
 	```json
@@ -361,7 +361,7 @@ npm i pointyapi
 	```
 
 	We can now use that token to delete our user:
-	![postman](https://github.com/StatelessStudio/pointyapi/readme/img/step8c.JPG "Postman DELETE Request")
+	![postman](https://github.com/StatelessStudio/pointyapi/blob/master/readme/img/step8c.JPG "Postman DELETE Request")
 
 	Notice that now we get a `204 No Content` (which means deleted successfully!).
 
