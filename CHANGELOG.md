@@ -1,10 +1,10 @@
 # PointyApi Changelog
 
-## [0.6.1] Jan-24-2018
+## [0.6.1] Jan-24-2019
 
 Fixed packaging error on last release
 
-## [0.6.0] Jan-24-2018
+## [0.6.0] Jan-24-2019
 
 ### Additions
 - Added MIT License
@@ -12,7 +12,7 @@ Fixed packaging error on last release
 - Added pull-request template
 - Added issue templates
 
-## [0.5.3] Jan-02-2018
+## [0.5.3] Jan-02-2019
 
 ### Fixes
 - [Issue #75] Login endpoint should run responseFilter() as newly logged in user
