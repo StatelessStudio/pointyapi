@@ -19,8 +19,6 @@
     - `beforePut()` -> `beforePatch()`
     - `beforeGet()` -> REMOVED
     - `beforeDelete()` -> `delete()`
-    - `beforeLogin()` -> `login()`
-    - `beforeLogout()` -> `logout()`
     - `beforeLoadPost()` -> `beforePost()`
     - `beforeLoadPut()` -> `beforePatch()`
     - `beforeLoadGet()` -> REMOVED
