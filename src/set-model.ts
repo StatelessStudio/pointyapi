@@ -5,14 +5,10 @@
  * set the route parameter (e.g. ':id').  This function should
  * be called in a middleware function BEFORE your endpoints.
  *
- * ## Parameters
- * - **request** - The Express Request object
- * - **model** - A model to set the request entity to.  This should be a type,
- * not an instance
- * - **identifier** - The URL path identifier for the request, e.g.
- * if your path is `/user/:username`, you should set your identifier to
- * `username`
+ * ## Auth Routes
  *
+ * Auth routes must specify to `setModel` that it is an auth route.  Do
+ * this by passing `true` to the `isAuth` (fourth) parameter.
  */
 
 /**

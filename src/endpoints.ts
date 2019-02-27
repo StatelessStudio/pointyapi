@@ -23,13 +23,10 @@
  * import { BaseUser } from 'pointyapi/models';
  *
  * // Guards
- * import {
- * 		postGuard,
- * 		getGuard,
- * 		patchGuard,
- * 		deleteGuard,
- * 		onlySelf
- * } from 'pointyapi/guards';
+ * import { onlySelf } from 'pointyapi/guards';
+ *
+ * // Filters
+ * import { postFilter, getFilter, patchFilter } from 'pointyapi/filters';
  *
  * // Endpoints
  * import {
@@ -50,10 +47,10 @@
  * }
  *
  * // Set routes
- * router.post('/', loader, postGuard, postEndpoint);
- * router.get('/', loader, getGuard, getEndpoint);
- * router.patch(`/:id`, loader, onlySelf, patchGuard, patchEndpoint);
- * router.delete(`/:id`, loader, onlySelf, deleteGuard, deleteEndpoint);
+ * router.post('/', loader, postFilter, postEndpoint);
+ * router.get('/', loader, getFilter, getEndpoint);
+ * router.patch(`/:id`, loader, onlySelf, patchFilter, patchEndpoint);
+ * router.delete(`/:id`, loader, onlySelf, deleteEndpoint);
  *
  * // Export router
  * export const userRouter: Router = router;
