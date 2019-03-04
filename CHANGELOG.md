@@ -2,7 +2,7 @@
 
 ## [1.1.0] Mar-04-2019
 
-## Additions
+### Additions
 - Added many-to-many terms example
 
 ## [1.0.0] Feb-27-2019
