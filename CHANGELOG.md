@@ -1,5 +1,10 @@
 # PointyApi Changelog
 
+## [1.1.0] Mar-04-2019
+
+### Additions
+- Added many-to-many terms example
+
 ## [1.0.0] Feb-27-2019
 
 First major release.  View the migration guide: ([MIGRATION GUIDE](https://github.com/StatelessStudio/pointyapi/blob/master/migration.md))
