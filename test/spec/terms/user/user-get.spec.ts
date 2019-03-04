@@ -54,6 +54,37 @@ describe('[User] API Read', () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
+	it('can get one', async () => {
+		// Create base user
+		const user = await http
+			.post('/api/v1/user', {
+				fname: 'termUserGetOne',
+				lname: 'termUserGetOne',
+				username: 'termUserGetOne',
+				password: 'password123',
+				email: 'termUserGetOne@test.com',
+				termRelations: [ this.term.body ]
+			})
+			.catch((error) =>
+				fail('Could not create base user: ' + JSON.stringify(error))
+			);
+
+		// Get & check result
+		if (user) {
+			await http
+				.get('/api/v1/user', {
+					id: user.body['id']
+				})
+				.then((result) => {
+					expect(result.body).toEqual(jasmine.any(Object));
+				})
+				.catch((error) => fail('Cannot get: ' + JSON.stringify(error)));
+		}
+		else {
+			fail();
+		}
+	});
+
 	it('can read term relations', async () => {
 		// Create base user
 		const user = await http
@@ -74,8 +105,7 @@ describe('[User] API Read', () => {
 			await http
 				.get('/api/v1/user', {
 					where: { username: user.body['username'] },
-					join: [ 'termRelations' ],
-					select: [ 'id' ]
+					join: [ 'termRelations' ]
 				})
 				.then((result) => {
 					expect(result.body).toEqual(jasmine.any(Array));

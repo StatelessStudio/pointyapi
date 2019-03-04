@@ -145,6 +145,5 @@ export class User extends BaseUser {
 	@JoinTable()
 	@CanReadRelation()
 	@OnlySelfCanWrite()
-	@AnyoneCanRead()
 	public termRelations: Term[] = undefined;
 }

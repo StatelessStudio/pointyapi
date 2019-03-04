@@ -22,7 +22,8 @@ import {
 	OnlyAdminCanWrite,
 	BodyguardKey,
 	CanSearch,
-	CanSearchRelation
+	CanSearchRelation,
+	CanReadRelation
 } from '../../../../src/bodyguard';
 import { BodyguardOwner } from '../../../../src/enums';
 
@@ -46,6 +47,7 @@ export class Term extends BaseModel {
 	public author: User = undefined;
 
 	@ManyToMany((type) => User, (user) => user.termRelations)
+	@CanReadRelation()
 	public users: User[] = undefined;
 
 	@Column({ default: false })
