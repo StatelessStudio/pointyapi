@@ -1,5 +1,13 @@
 # PointyApi Changelog
 
+## [1.1.1] Mar-04-2019
+
+### Fixes
+- Added CanReadRelation() on Term end of termRelations
+- Removed AnyoneCanRead() from User termRelations
+- Removed select query from Term relationship test
+- Added get one test to Term relationship test suite
+
 ## [1.1.0] Mar-04-2019
 
 ### Additions
