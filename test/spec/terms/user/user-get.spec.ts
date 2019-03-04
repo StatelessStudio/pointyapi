@@ -74,8 +74,7 @@ describe('[User] API Read', () => {
 			await http
 				.get('/api/v1/user', {
 					where: { username: user.body['username'] },
-					join: [ 'termRelations' ],
-					select: [ 'id' ]
+					join: [ 'termRelations' ]
 				})
 				.then((result) => {
 					expect(result.body).toEqual(jasmine.any(Array));
