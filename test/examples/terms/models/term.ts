@@ -36,9 +36,8 @@ export class Term extends BaseModel {
 	@ManyToOne((type) => User, (user) => user.terms, {
 		eager: true
 	})
-	@JoinColumn()
 	@BodyguardKey()
-	@AnyoneCanRead()
+	@CanReadRelation()
 	@OnlyAdminCanWrite()
 	@CanSearchRelation({
 		who: BodyguardOwner.Self,
