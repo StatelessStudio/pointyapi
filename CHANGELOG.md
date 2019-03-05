@@ -1,5 +1,11 @@
 # PointyApi Changelog
 
+## [1.1.2] Mar-05-2019
+
+### Fixes
+- Removed JoinColumn() from Term author
+- [Issue #144] readFilter() detypes nested arrays of objects
+
 ## [1.1.1] Mar-04-2019
 
 ### Fixes
