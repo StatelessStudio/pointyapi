@@ -116,6 +116,12 @@ describe('[User] API Read', () => {
 						jasmine.any(Array)
 					);
 					expect(result.body[0].termRelations['length']).toBe(1);
+					expect(
+						result.body[0].termRelations[0].id
+					).toBeGreaterThanOrEqual(1);
+					expect(result.body[0].termRelations[0].title).toEqual(
+						jasmine.any(String)
+					);
 				})
 				.catch((error) => fail('Cannot get: ' + JSON.stringify(error)));
 		}
