@@ -20,7 +20,8 @@ export function readFilter(
 ): any {
 	if (obj instanceof Array) {
 		for (let i = 0; i < obj.length; i++) {
-			obj[i] = readFilter(obj[i], user, objType, userType);
+			const subObjTpye = obj[i].constructor;
+			obj[i] = readFilter(obj[i], user, subObjTpye, userType);
 		}
 	}
 	else if (obj instanceof Object) {
