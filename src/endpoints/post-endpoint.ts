@@ -49,6 +49,10 @@ export async function postEndpoint(
 
 			// Create result
 			if (results) {
+				if (!await runHook('afterPost', results, request, response)) {
+					return;
+				}
+
 				results = readFilter(
 					results,
 					request.user,
@@ -76,7 +80,13 @@ export async function postEndpoint(
 			// Save
 			await request.repository
 				.save(request.body)
-				.then((result) => {
+				.then(async (result) => {
+					if (
+						!await runHook('afterPost', result, request, response)
+					) {
+						return;
+					}
+
 					// Create response
 					result = readFilter(
 						result,
