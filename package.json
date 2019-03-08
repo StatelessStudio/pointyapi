@@ -1,6 +1,6 @@
 {
 	"name": "pointyapi",
-	"version": "1.1.2",
+	"version": "1.2.0",
 	"author": "stateless-studio",
 	"license": "MIT",
 	"scripts": {
@@ -27,7 +27,7 @@
 		"@types/express": "^4.16.1",
 		"@types/jasmine": "^2.8.16",
 		"@types/jsonwebtoken": "^7.2.8",
-		"@types/node": "^10.12.29",
+		"@types/node": "^10.12.30",
 		"@types/request": "^2.48.1",
 		"atob": "^2.1.2",
 		"bcryptjs": "^2.4.3",
@@ -36,8 +36,8 @@
 		"express": "^4.16.4",
 		"jasmine": "^3.3.1",
 		"jsonwebtoken": "^8.5.0",
-		"mock-req-res": "^1.0.3",
-		"pg": "^7.8.1",
+		"mock-req-res": "^1.0.4",
+		"pg": "^7.8.2",
 		"pg-connection-string": "^2.0.0",
 		"reflect-metadata": "^0.1.13",
 		"request": "^2.88.0",

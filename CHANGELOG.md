@@ -1,5 +1,16 @@
 # PointyApi Changelog
 
+## [1.2.0] Mar-08-2019
+
+### Additions
+
+- [Issue #147] Add after hooks
+
+### Fixes
+
+- Cleaned up getReadable functions
+- [Issue #146] setModel() doesn't load not owned objects
+
 ## [1.1.2] Mar-05-2019
 
 ### Fixes
