@@ -23,19 +23,23 @@ export function getReadableFields(
 		if (member && !(payload[member] instanceof Function)) {
 			const canRead = getCanRead(payload, member);
 
+			// Check if the key has a CanRead() decorator, and if it equals Anyone
+			// Exceptions:
+			// 	a. The CanRead() key is a UserRole that is equivalent to the User's role
+			//  b. The CanRead() key is set to Self and the user is authenticated (we'll filter later)
+			// 	c. The CanRead() key is set to Admin and the user is an admin
 			if (
-				(canRead &&
-					(canRead === BodyguardOwner.Anyone ||
-						(user && canRead === user.role))) ||
-				(canRead === BodyguardOwner.Self && user && user.id) ||
-				((canRead === BodyguardOwner.Admin ||
-					canRead === BodyguardOwner.Self) &&
-					user &&
-					user.role === UserRole.Admin)
+				canRead && // must have CanRead() key
+				(canRead === BodyguardOwner.Anyone || // Anyone
+				(user && canRead === user.role) || // By role
+				(user && canRead === BodyguardOwner.Self && user.id) || // Self
+					(user && // Admin
+						canRead === BodyguardOwner.Admin &&
+						user.role === UserRole.Admin))
 			) {
-				member = objAlias ? objAlias + '.' + member : member;
-
-				readableFields.push(member);
+				readableFields.push(
+					objAlias ? objAlias + '.' + member : member
+				);
 			}
 		}
 	}

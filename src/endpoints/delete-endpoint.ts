@@ -21,7 +21,20 @@ export async function deleteEndpoint(
 		// Delete
 		await request.repository
 			.remove(request.payload)
-			.then((result) => response.deleteResponder(result))
+			.then(async (result) => {
+				if (
+					!await runHook(
+						'afterDelete',
+						request.payload,
+						request,
+						response
+					)
+				) {
+					return;
+				}
+
+				response.deleteResponder(result);
+			})
 			.catch((error) => response.error(error));
 	}
 	else {

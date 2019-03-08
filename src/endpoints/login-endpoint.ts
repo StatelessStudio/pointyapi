@@ -86,6 +86,10 @@ export async function loginEndpoint(
 			match['token'] = token;
 
 			// Send response
+			if (!await runHook('afterLogin', request.user, request, response)) {
+				return;
+			}
+
 			response.json(match);
 		}
 		else {

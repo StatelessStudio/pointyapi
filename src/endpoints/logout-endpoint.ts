@@ -22,7 +22,20 @@ export async function logoutEndpoint(
 
 		await request.repository
 			.save(request.user)
-			.then((result) => response.deleteResponder(result))
+			.then(async (result) => {
+				if (
+					!await runHook(
+						'afterLogout',
+						request.user,
+						request,
+						response
+					)
+				) {
+					return;
+				}
+
+				response.deleteResponder(result);
+			})
 			.catch((error) => response.error(error));
 
 		request.user = undefined;

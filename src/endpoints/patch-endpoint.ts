@@ -44,7 +44,20 @@ export async function patchEndpoint(
 		// Save
 		await request.repository
 			.save(request.body)
-			.then((result) => response.patchResponder(result))
+			.then(async (result) => {
+				if (
+					!await runHook(
+						'afterPatch',
+						request.payload,
+						request,
+						response
+					)
+				) {
+					return;
+				}
+
+				response.patchResponder(result);
+			})
 			.catch((error) => response.error(error));
 	}
 }
