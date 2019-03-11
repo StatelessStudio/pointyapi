@@ -54,13 +54,12 @@ export async function loginEndpoint(
 		foundUsers.forEach((foundUser) => {
 			let isMatch = false;
 
-			if (foundUser['tempPassword'] && !foundUser['password']) {
-				isMatch = compareSync(
-					request.body.password,
-					foundUser['tempPassword']
-				);
-			}
-			else {
+			if (
+				'password' in request.body &&
+				request.body.password &&
+				'password' in foundUser &&
+				foundUser['password']
+			) {
 				isMatch = compareSync(
 					request.body.password,
 					foundUser['password']
