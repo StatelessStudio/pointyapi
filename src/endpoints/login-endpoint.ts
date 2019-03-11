@@ -19,10 +19,25 @@ export async function loginEndpoint(
 		return;
 	}
 
+	// Determine login __user fields
+	const fields = [ 'username', 'email' ];
+
+	if (request.userType && 'tempEmail' in new request.userType()) {
+		fields.push('tempEmail');
+	}
+
+	// Create where query
+	let where = '';
+
+	for (const field of fields) {
+		where += `user.${field}=:name OR `;
+	}
+	where = where.replace(/ OR +$/, '');
+
 	// Load users
 	const foundUsers = await request.repository
 		.createQueryBuilder('user')
-		.where('user.username=:name OR user.email=:name')
+		.where(where)
 		.setParameters({ name: request.body.__user })
 		.getMany()
 		.catch((error) => response.error(error));
