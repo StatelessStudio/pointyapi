@@ -1,5 +1,12 @@
 # PointyApi Changelog
 
+## [1.2.1] Mar-11-2019
+
+### Fixes
+
+- [Issue #151] loginEndpoint() allows tempPassword
+- [Issue #150] loginEndpoint does not try tempEmail
+
 ## [1.2.0] Mar-08-2019
 
 ### Additions
