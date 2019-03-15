@@ -1,5 +1,11 @@
 # PointyApi Changelog
 
+## [1.2.2] Mar-14-2019
+
+### Fixes
+
+- [Issue #153] runHook beforePatch must set model type
+
 ## [1.2.1] Mar-11-2019
 
 ### Fixes

@@ -1,6 +1,6 @@
 {
 	"name": "pointyapi",
-	"version": "1.2.1",
+	"version": "1.2.2",
 	"author": "stateless-studio",
 	"license": "MIT",
 	"scripts": {
@@ -22,12 +22,12 @@
 		"coveralls": "cat ./coverage/lcov.info | coveralls"
 	},
 	"dependencies": {
-		"@types/atob": "^2.1.1",
+		"@types/atob": "^2.1.2",
 		"@types/btoa": "^1.2.2",
 		"@types/express": "^4.16.1",
 		"@types/jasmine": "^2.8.16",
 		"@types/jsonwebtoken": "^7.2.8",
-		"@types/node": "^10.12.30",
+		"@types/node": "^10.14.1",
 		"@types/request": "^2.48.1",
 		"atob": "^2.1.2",
 		"bcryptjs": "^2.4.3",
@@ -42,9 +42,9 @@
 		"reflect-metadata": "^0.1.13",
 		"request": "^2.88.0",
 		"sinon": "^7.2.7",
-		"tslint": "^5.13.1",
+		"tslint": "^5.14.0",
 		"tslint-eslint-rules": "^5.4.0",
-		"typeorm": "^0.2.14",
+		"typeorm": "^0.2.15",
 		"typescript": "^3.3.3333",
 		"validator": "^10.11.0"
 	},
@@ -54,7 +54,7 @@
 		"coveralls": "^3.0.3",
 		"istanbul": "^0.4.5",
 		"nyc": "^13.3.0",
-		"source-map-support": "^0.5.10",
+		"source-map-support": "^0.5.11",
 		"ts-node": "^7.0.1",
 		"typedoc": "^0.13.0"
 	},
