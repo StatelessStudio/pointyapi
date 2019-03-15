@@ -18,7 +18,7 @@ import { Request, Response } from 'express';
 import { BaseModelInterface } from './models';
 import { getRepository } from 'typeorm';
 import { getQuery, loadEntity } from './middleware';
-import { runHook, isKeyInModel } from './utils';
+import { runHook, isKeyInModel, deleteUndefinedMembers } from './utils';
 import { queryValidator } from './query-tools/query-validator';
 
 /**
@@ -142,6 +142,10 @@ export async function setModel(
 		if (!await loadEntity(request, response)) {
 			return false;
 		}
+
+		// Set model type
+		request.body = Object.assign(new request.payloadType(), request.body);
+		request.body = deleteUndefinedMembers(request.body);
 
 		// Run model hook
 		if (!await runHook('beforePatch', request.body, request, response)) {
