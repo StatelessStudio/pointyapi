@@ -5,7 +5,7 @@
 Typescript RESTful Server Architecture
 
 [![Build Status](https://travis-ci.org/StatelessStudio/pointyapi.svg?branch=master)](https://travis-ci.org/StatelessStudio/pointyapi)
-[![Coverage Status](https://coveralls.io/repos/github/StatelessStudio/pointyapi/badge.svg?branch=v1.0.0)](https://coveralls.io/github/StatelessStudio/pointyapi?branch=v1.0.0)
+[![Coverage Status](https://coveralls.io/repos/github/StatelessStudio/pointyapi/badge.svg?branch=master)](https://coveralls.io/github/StatelessStudio/pointyapi?branch=master)
 
 ## Introduction
 
