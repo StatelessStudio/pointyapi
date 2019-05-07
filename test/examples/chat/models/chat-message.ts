@@ -107,6 +107,12 @@ export class ChatMessage extends BaseModel {
 	@OnlySelfCanWrite()
 	public toStatus: ChatStatus = undefined;
 
+	// Boolean test
+	@Column({ nullable: true })
+	@OnlySelfCanRead()
+	@OnlySelfCanWrite()
+	public booleanTest: boolean = undefined;
+
 	public async beforePost(request: Request, response: Response) {
 		if (request.user) {
 			this.from = request.user;
