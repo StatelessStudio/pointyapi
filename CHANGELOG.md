@@ -1,5 +1,15 @@
 # PointyApi Changelog
 
+## [1.2.3] May-07-2019
+
+### Fixes
+
+- npm update
+- [Issue #149] Boolean model members don't save properly
+- [Issue #155] Search query should be case-insensitive
+- [Issue #157] Remove database credentials from log
+- [Issue #160] Update coveralls branch
+
 ## [1.2.2] Mar-14-2019
 
 ### Fixes

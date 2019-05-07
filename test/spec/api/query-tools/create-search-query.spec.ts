@@ -43,8 +43,8 @@ describe('[Utils] createSearchQuery()', () => {
 		const { queryString, queryParams } = createSearchQuery(BaseUser, query);
 
 		expect(queryString).toBe(
-			'(obj.username LIKE :search OR obj.fname LIKE :search OR' +
-				' obj.lname LIKE :search OR obj.email LIKE :search)'
+			'(LOWER(obj.username) LIKE :search OR LOWER(obj.fname) LIKE :search OR' +
+				' LOWER(obj.lname) LIKE :search OR LOWER(obj.email) LIKE :search)'
 		);
 		expect(queryParams).toEqual({ search: '%hello%world%' });
 	});
@@ -56,7 +56,7 @@ describe('[Utils] createSearchQuery()', () => {
 
 		const { queryString, queryParams } = createSearchQuery(BaseUser, query);
 
-		expect(queryString).toBe('(obj.fname LIKE :search_fname)');
+		expect(queryString).toBe('(LOWER(obj.fname) LIKE :search_fname)');
 		expect(queryParams).toEqual({ search_fname: '%hello%world%' });
 	});
 
@@ -70,7 +70,7 @@ describe('[Utils] createSearchQuery()', () => {
 			query
 		);
 
-		expect(queryString).toBe('(owner.username LIKE :search)');
+		expect(queryString).toBe('(LOWER(owner.username) LIKE :search)');
 		expect(queryParams).toEqual({ search: '%hello%world%' });
 	});
 

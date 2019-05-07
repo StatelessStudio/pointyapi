@@ -58,29 +58,35 @@ export function createSearchQuery(
 			if (typeof obj[field] === 'string') {
 				searchableFields.forEach((key) => {
 					// Append searchable key to queryString
-					queryString += `${objKey}.${key} LIKE :search OR `;
+					queryString += `LOWER(${objKey}.${key}) LIKE :search OR `;
 
 					// Append parameter to queryParams (with wildcards)
-					const value = obj['search'].replace(/[\s]+/, '%');
+					const value = obj['search']
+						.replace(/[\s]+/, '%')
+						.toLowerCase();
 					queryParams['search'] = `%${value}%`;
 				});
 
 				searchableRelations.forEach((key) => {
 					// Append searchable key to queryString
-					queryString += `${key} LIKE :search OR `;
+					queryString += `LOWER(${key}) LIKE :search OR `;
 
 					// Append parameter to queryParams (with wildcards)
-					const value = obj['search'].replace(/[\s]+/, '%');
+					const value = obj['search']
+						.replace(/[\s]+/, '%')
+						.toLowerCase();
 					queryParams['search'] = `%${value}%`;
 				});
 			}
 			else if (typeof obj[field] === 'object') {
 				for (const key in obj[field]) {
 					// Append searchable key to queryString
-					queryString += `${objKey}.${key} LIKE :search_${key} OR `;
+					queryString += `LOWER(${objKey}.${key}) LIKE :search_${key} OR `;
 
 					// Append parameter to queryParams (with wildcards)
-					const value = obj[field][key].replace(/[\s]+/, '%');
+					const value = obj[field][key]
+						.replace(/[\s]+/, '%')
+						.toLowerCase();
 					queryParams['search_' + key] = `%${value}%`;
 				}
 			}

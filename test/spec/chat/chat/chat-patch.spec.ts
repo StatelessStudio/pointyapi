@@ -128,4 +128,45 @@ describe('[Chat] Chat API Patch', () => {
 			fail('Could not authenticate user');
 		}
 	});
+
+	it('can update boolean values', async () => {
+		const result = await http
+			.post(
+				'/api/v1/chat',
+				{
+					to: { id: this.user2.body.id },
+					body: 'test'
+				},
+				[ 200, 204 ],
+				this.token.body.token
+			)
+			.catch((error) => fail(JSON.stringify(error)));
+
+		if (result) {
+			await http
+				.patch(
+					`/api/v1/chat/${result.body['id']}`,
+					{
+						booleanTest: true
+					},
+					[ 200, 204 ],
+					this.token.body.token
+				)
+				.catch((error) => fail(JSON.stringify(error)));
+
+			const chat = await http
+				.get(
+					`/api/v1/chat`,
+					{ id: result.body['id'] },
+					[ 200 ],
+					this.token.body.token
+				)
+				.catch((error) => fail(JSON.stringify(error)));
+
+			expect(chat['body']['booleanTest']).toBe(true);
+		}
+		else {
+			fail('Could not create base chat');
+		}
+	});
 });

@@ -53,7 +53,7 @@ export class PointyPostgres extends BaseDb {
 			);
 			pgOptions.type = 'postgres';
 
-			this.logger('Using database', pgOptions);
+			this.logger('Using production database');
 			this.logger(
 				'Using database driver',
 				process.env.TYPEORM_DRIVER_TYPE || pgOptions.type
@@ -71,7 +71,7 @@ export class PointyPostgres extends BaseDb {
 				pgOptions = options;
 			}
 
-			this.logger('Using development database', pgOptions);
+			this.logger('Using development database');
 			this.logger(
 				'Using database driver',
 				process.env.TYPEORM_DRIVER_TYPE || pgOptions.type
