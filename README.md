@@ -366,6 +366,16 @@ npm i pointyapi
 
 	Notice that now we get a `204 No Content` (which means deleted successfully!).
 
+9. **Production**
+
+To launch in production mode, please make sure the following variables are set (environment variables/.env)
+
+- **SITE_TITLE** - Set the site title
+- **CLIENT_URL** - Set your client URL to add the client to the CORS policy
+- **JWT_KEY** - Set your token key to make JWT cryptographically secure
+- **JWT_TTL** - Set your token time-to-live. Default is 4 hours
+
+
 ### Continued Reading
 
 #### PointyAPI
