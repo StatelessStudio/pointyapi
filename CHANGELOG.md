@@ -1,5 +1,12 @@
 # PointyApi Changelog
 
+## [1.2.4] May-29-2019
+
+### Fixes
+
+- [Issue #163] Remove SESS_KEY & SESS_TTL environment variables
+- [Issue #162] HttpClient::port should accept number or string
+
 ## [1.2.3] May-07-2019
 
 ### Fixes
