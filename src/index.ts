@@ -11,8 +11,8 @@ import { Repository } from 'typeorm';
 const sessionTTL = 4 * 60 * 60; // 4 hour JWT
 
 process.env['PORT'] = process.env.PORT || '8080';
-process.env['JWT_KEY'] = process.env.SESS_KEY || 'dev_key';
-process.env['JWT_TTL'] = process.env.SESS_TTL || `${sessionTTL}`;
+process.env['JWT_KEY'] = process.env.JWT_KEY || 'dev_key';
+process.env['JWT_TTL'] = process.env.JWT_TTL || `${sessionTTL}`;
 
 // Extend Express
 declare global {

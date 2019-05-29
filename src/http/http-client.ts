@@ -20,7 +20,7 @@ export class HttpClient {
 	public url = 'http://localhost';
 
 	// Server PORT
-	public port = process.env.PORT;
+	public port: number | string = process.env.PORT;
 
 	/**
 	 * Send a POST http request to the server
