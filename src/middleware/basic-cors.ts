@@ -11,7 +11,29 @@ export function basicCors(
 	response: Response,
 	next: NextFunction
 ): void {
-	response.setHeader('Access-Control-Allow-Origin', '*');
+	// Set Access-Control-Allow-Origin
+	let origin = '*';
+
+	if ('CLIENT_URL' in process.env && process.env.CLIENT_URL) {
+		if (process.env.CLIENT_URL.includes(', ')) {
+			// Array of Client URLs
+			const host = request.header('host').toLowerCase();
+			const clientUrls = process.env.CLIENT_URL.split(', ');
+
+			if (clientUrls.includes(host)) {
+				origin = host;
+			}
+			else {
+				origin = clientUrls[0];
+			}
+		}
+		else if (typeof process.env.CLIENT_URL === 'string') {
+			// Single Client Url
+			origin = process.env.CLIENT_URL;
+		}
+	}
+	response.setHeader('Access-Control-Allow-Origin', origin);
+
 	response.setHeader(
 		'Access-Control-Allow-Methods',
 		'POST, GET, PATCH, DELETE, OPTIONS'

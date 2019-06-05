@@ -23,6 +23,7 @@ export function createMockRequest(
 	request.payloadType = BaseUser;
 	request.joinMembers = [];
 	request.identifier = 'id';
+	request.header = (key) => (key === 'host' ? 'localhost' : false);
 
 	// Create response
 	const response = mockResponse();
