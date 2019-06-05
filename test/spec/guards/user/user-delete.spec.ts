@@ -129,7 +129,7 @@ describe('[Guards] User API Delete', () => {
 			await http
 				.delete(
 					`/api/v1/user/${user.body['id']}`,
-					[ 401 ],
+					[ 403 ],
 					token.body['token']
 				)
 				.catch((error) => fail(JSON.stringify(error)));

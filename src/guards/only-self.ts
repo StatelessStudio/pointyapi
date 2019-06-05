@@ -8,7 +8,7 @@ import { isSelf } from '../utils';
 import { BaseModel } from '../models/base-model';
 
 /**
- * Only Self Guard: Return 401 Unauthorized if the User does not
+ * Only Self Guard: Return 403 Forbidden if the User does not
  * 	own the resource
  * @param request Request object to query by
  * @param response Response object to call responder with
@@ -101,13 +101,19 @@ export function onlySelf(
 			}
 		}
 	}
+	else {
+		// User is not authenticated, respond with 401 Unauthorized
+		response.unauthorizedResponder('not self');
+
+		return false;
+	}
 
 	if (authorized) {
 		// User is self
 		next();
 	}
 	else {
-		// User is not authenticated or self, respond with 401 Unauthorized
+		// User is not authenticated or self, respond with 403 Forbidden
 		response.forbiddenResponder('not self');
 
 		return false;

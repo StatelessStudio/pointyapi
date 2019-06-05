@@ -287,7 +287,7 @@ npm i pointyapi
 	So we can get and post users, but what if we try to delete or update a user? Let's try it:
 	![postman](https://github.com/StatelessStudio/pointyapi/blob/master/readme/img/step8.JPG "Postman DELETE Request")
 
-	So the server responded with `401 Unauthorized`, and a body of `"not self"`. What gives?
+	So the server responded with `403 Unauthorized`, and a body of `"not self"`. What gives?
 
 	Open at our user router (`/src/routes/user.ts`). Look at our DELETE route:
 

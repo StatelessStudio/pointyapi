@@ -44,7 +44,7 @@ describe('[Guards] onlySelf (Delete)', async () => {
 
 		// Test onlySelf()
 		let result = false;
-		response.forbiddenResponder = () => {
+		response.unauthorizedResponder = () => {
 			result = true;
 		};
 

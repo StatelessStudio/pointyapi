@@ -19,6 +19,6 @@ export function onlyUser(
 	}
 	else {
 		// User is not logged in, respond with 401 Unauthorized
-		response.forbiddenResponder('not user');
+		response.unauthorizedResponder('not user');
 	}
 }

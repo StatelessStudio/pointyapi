@@ -171,7 +171,7 @@ describe('[Chat] Chat API Delete', () => {
 			await http
 				.delete(
 					`/api/v1/chat/${chat.body['id']}`,
-					[ 401 ],
+					[ 403 ],
 					wrongToken.body['token']
 				)
 				.catch((error) => fail(JSON.stringify(error)));

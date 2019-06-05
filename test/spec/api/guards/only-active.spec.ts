@@ -37,7 +37,7 @@ describe('[Guards] onlyActive', async () => {
 
 		// Test onlyActive()
 		let result = false;
-		response.forbiddenResponder = () => {
+		response.unauthorizedResponder = () => {
 			result = true;
 		};
 
