@@ -108,7 +108,7 @@ export function onlySelf(
 	}
 	else {
 		// User is not authenticated or self, respond with 401 Unauthorized
-		response.unauthorizedResponder('not self');
+		response.forbiddenResponder('not self');
 
 		return false;
 	}

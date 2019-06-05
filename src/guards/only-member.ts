@@ -25,6 +25,6 @@ export function onlyMember(
 	}
 	else {
 		// User is not authenticated or member, respond with 401 Unauthorized
-		response.unauthorizedResponder('not member');
+		response.forbiddenResponder('not member');
 	}
 }

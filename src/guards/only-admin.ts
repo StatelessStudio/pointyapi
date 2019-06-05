@@ -21,6 +21,6 @@ export function onlyAdmin(
 	}
 	else {
 		// User is not authenticated or admin, respond with 401 Unauthorized
-		response.unauthorizedResponder('not admin');
+		response.forbiddenResponder('not admin');
 	}
 }

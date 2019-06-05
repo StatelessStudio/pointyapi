@@ -26,6 +26,6 @@ export function onlyActive(
 	}
 	else {
 		// User is not authenticated or active, respond with 401 Unauthorized
-		response.unauthorizedResponder('not active');
+		response.forbiddenResponder('not active');
 	}
 }

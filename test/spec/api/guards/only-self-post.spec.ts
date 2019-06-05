@@ -42,7 +42,7 @@ describe('[Guards] onlySelf (Post)', async () => {
 
 		// Test onlySelf()
 		let result = false;
-		response.unauthorizedResponder = () => {
+		response.forbiddenResponder = () => {
 			result = true;
 		};
 
@@ -65,7 +65,7 @@ describe('[Guards] onlySelf (Post)', async () => {
 
 		// Test onlySelf()
 		let result = false;
-		response.unauthorizedResponder = () => {
+		response.forbiddenResponder = () => {
 			result = true;
 		};
 

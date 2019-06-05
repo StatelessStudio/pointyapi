@@ -42,7 +42,7 @@ describe('[Guards] onlySelf (Get Many)', async () => {
 
 		// Test onlySelf()
 		let result = false;
-		response.unauthorizedResponder = () => {
+		response.forbiddenResponder = () => {
 			result = true;
 		};
 
