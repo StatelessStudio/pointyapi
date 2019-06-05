@@ -63,6 +63,7 @@ export class PointyApi {
 
 	// Hooks
 	public before: Function = (app: any) => {};
+	public ready: Function = (app: any) => {};
 
 	// Initialize
 	constructor() {
@@ -101,6 +102,8 @@ export class PointyApi {
 
 		// Server listen
 		this.listen(this.app, process.env.PORT, this.log);
+
+		this.ready(this.app);
 	}
 }
 
