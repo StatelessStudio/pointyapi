@@ -314,8 +314,7 @@ describe('setModel', () => {
 			password: 'password123',
 			fname: 'before',
 			lnmae: 'patch',
-			email: 'beforePatch@example.com',
-			token: 'testtoken'
+			email: 'beforePatch@example.com'
 		});
 
 		// Create mock request/response
@@ -347,8 +346,7 @@ describe('setModel', () => {
 			password: 'password123',
 			fname: 'before',
 			lnmae: 'patch',
-			email: 'beforePatchFail@example.com',
-			token: 'testtoken'
+			email: 'beforePatchFail@example.com'
 		});
 
 		// Create mock request/response
@@ -381,8 +379,7 @@ describe('setModel', () => {
 			password: 'password123',
 			fname: 'before',
 			lnmae: 'delete',
-			email: 'beforeDelete@example.com',
-			token: 'testtoken'
+			email: 'beforeDelete@example.com'
 		});
 
 		// Create mock request/response
@@ -410,8 +407,7 @@ describe('setModel', () => {
 			password: 'password123',
 			fname: 'before',
 			lnmae: 'delete',
-			email: 'beforeDeleteFail@example.com',
-			token: 'testtoken'
+			email: 'beforeDeleteFail@example.com'
 		});
 
 		// Create mock request/response
@@ -485,8 +481,7 @@ describe('setModel', () => {
 			password: 'password123',
 			fname: 'before',
 			lnmae: 'logout',
-			email: 'beforeLogout@example.com',
-			token: 'testtoken'
+			email: 'beforeLogout@example.com'
 		});
 
 		// Create mock request/response
@@ -514,8 +509,7 @@ describe('setModel', () => {
 			password: 'password123',
 			fname: 'before',
 			lnmae: 'logout',
-			email: 'beforeLogoutFail@example.com',
-			token: 'testtoken'
+			email: 'beforeLogoutFail@example.com'
 		});
 
 		// Create mock request/response

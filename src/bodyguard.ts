@@ -83,10 +83,6 @@
  *		@AnyoneCanRead()
  *		public timeUpdated: Date = undefined;
  *
- *		// Access token (jwt)
- *		// NO BODYGUARD, NO READ/WRITE
- *		public token: string = undefined;
- *
  *		// Username
  *		@AnyoneCanRead()
  *		@OnlySelfCanWrite()

@@ -111,8 +111,7 @@ describe('[Endpoints] Patch', () => {
 				password: 'password123',
 				fname: 'patch',
 				lnmae: 'hook',
-				email: 'patch@example.com',
-				token: 'testtoken'
+				email: 'patch@example.com'
 			}).catch((error) =>
 				fail('Could not create user ' + JSON.stringify(error))
 			)
@@ -148,8 +147,7 @@ describe('[Endpoints] Patch', () => {
 				password: 'password123',
 				fname: 'patch',
 				lnmae: 'hook',
-				email: 'patchFail@example.com',
-				token: 'testtoken'
+				email: 'patchFail@example.com'
 			}).catch((error) =>
 				fail('Could not create user ' + JSON.stringify(error))
 			)

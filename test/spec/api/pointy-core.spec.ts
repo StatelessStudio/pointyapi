@@ -10,7 +10,7 @@ beforeAll(async () => {
 	// Initialize pointy-core
 	// Database
 	await pointy.db
-		.setEntities([ BaseUser, ExampleOwner, ExampleRelation, HookTestClass ])
+		.setEntities([BaseUser, ExampleOwner, ExampleRelation, HookTestClass])
 		.connect(ROOT_PATH)
 		.catch((error) =>
 			fail('Cannot start database' + JSON.stringify(error))
@@ -19,6 +19,7 @@ beforeAll(async () => {
 	await pointy.start();
 
 	process.env.PORT = '8081';
+	jasmine.DEFAULT_TIMEOUT_INTERVAL = 15000;
 });
 
 describe('Pointy Core', () => {

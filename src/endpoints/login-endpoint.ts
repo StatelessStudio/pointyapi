@@ -79,12 +79,6 @@ export async function loginEndpoint(
 		const token = jwtBearer.sign(match);
 
 		if (token) {
-			// Save token
-			match.token = token;
-			await request.repository
-				.save(match)
-				.catch((error) => response.error(error));
-
 			// Set request user
 			request.user = match;
 
