@@ -30,7 +30,7 @@ export async function loadUser(
 
 		// Verify
 		const result = await getRepository(request.userType)
-			.findOne({ id: token.id, token: tokenString })
+			.findOne({ id: token.id })
 			.catch(() => response.error(`Could not load user`));
 
 		if (result && result instanceof BaseUser) {
@@ -40,7 +40,7 @@ export async function loadUser(
 			return true;
 		}
 		else {
-			response.unauthorizedResponder(`Couldn't load user`);
+			response.unauthorizedResponder(`Could not load user`);
 
 			return false;
 		}

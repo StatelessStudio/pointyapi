@@ -36,7 +36,7 @@ export async function loadEntity(
 				}
 			}
 			else {
-				response.goneResponder(`Couldn't load entity`);
+				response.goneResponder(`Could not load entity`);
 				return false;
 			}
 		}

@@ -27,13 +27,6 @@ describe('[Middleware] loadUser()', async () => {
 
 		// Create token
 		this.token = jwtBearer.sign(this.user);
-
-		// Save user token
-		await getRepository(BaseUser)
-			.update({ id: this.user.id }, { token: this.token })
-			.catch((error) =>
-				fail('Could not update user: ' + JSON.stringify(error))
-			);
 	});
 
 	it('loads request.user on valid token', async () => {

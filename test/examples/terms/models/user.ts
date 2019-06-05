@@ -51,10 +51,6 @@ export class User extends BaseUser {
 	@AnyoneCanRead()
 	public timeUpdated: Date = undefined;
 
-	// Access token (jwt)
-	@Column({ nullable: true })
-	public token: string = undefined;
-
 	// Username
 	@Column({ unique: true })
 	@Length(4, 16)

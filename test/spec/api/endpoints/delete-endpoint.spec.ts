@@ -85,8 +85,7 @@ describe('[Endpoints] Delete', () => {
 				password: 'password123',
 				fname: 'delete',
 				lnmae: 'hook',
-				email: 'delete@example.com',
-				token: 'testtoken'
+				email: 'delete@example.com'
 			}).catch((error) =>
 				fail('Could not create user ' + JSON.stringify(error))
 			)
@@ -118,8 +117,7 @@ describe('[Endpoints] Delete', () => {
 				password: 'password123',
 				fname: 'delete',
 				lnmae: 'hook',
-				email: 'deleteFail@example.com',
-				token: 'testtoken'
+				email: 'deleteFail@example.com'
 			}).catch((error) =>
 				fail('Could not create user ' + JSON.stringify(error))
 			)

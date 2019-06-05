@@ -17,28 +17,13 @@ export async function logoutEndpoint(
 			return;
 		}
 
-		// Update token
-		request.user.token = '';
-
-		await request.repository
-			.save(request.user)
-			.then(async (result) => {
-				if (
-					!await runHook(
-						'afterLogout',
-						request.user,
-						request,
-						response
-					)
-				) {
-					return;
-				}
-
-				response.deleteResponder(result);
-			})
-			.catch((error) => response.error(error));
+		if (!await runHook('afterLogout', request.user, request, response)) {
+			return;
+		}
 
 		request.user = undefined;
+
+		response.deleteResponder({});
 	}
 	else {
 		// User is not logged in
