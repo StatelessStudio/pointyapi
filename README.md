@@ -375,6 +375,27 @@ To launch in production mode, please make sure the following variables are set (
 - **JWT_KEY** - Set your token key to make JWT cryptographically secure
 - **JWT_TTL** - Set your token time-to-live. Default is 4 hours
 
+#### UUID vs Auto-Incremented IDs
+
+It is a security risk to use auto-incremented IDs, and you should instead use UUID for all ID columns.
+
+To switch to using UUIDs:
+
+- Install the `pgcrypto` extension
+- Tell TypeORM to use pgcrypto by placing the line `uuidExtension: 'pgcrypto'` in `orm-cli.js`
+- Change all `PrimaryGeneratedColumn()` to `PrimaryGeneratedColumn('uuid')`
+- Change all `public id: number` members to `public id: string`
+- Make sure you remove `IsInt()` from all ID fields, if it exists
+- Ensure your front-end and anywhere you may access the ID is expecting a string
+
+Example:
+```typescript
+	// User ID
+	@PrimaryGeneratedColumn('uuid') // Primary column
+	@BodyguardKey() // Authentication - User must match this to be considered "self"
+	@AnyoneCanRead() // Authorization - Anyone is allowed to read this field
+	public id: string = undefined;
+```
 
 ### Continued Reading
 

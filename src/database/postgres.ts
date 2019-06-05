@@ -91,7 +91,10 @@ export class PointyPostgres extends BaseDb {
 			password: pgOptions.password,
 			database: pgOptions.database,
 			entities: this.entities,
-			synchronize: this.shouldSync
+			synchronize: this.shouldSync,
+			uuidExtension: pgOptions.uuidExtension
+				? pgOptions.uuidExtension
+				: 'pgcrypto'
 		}).catch((error) => this.errorHandler(error));
 	}
 }
