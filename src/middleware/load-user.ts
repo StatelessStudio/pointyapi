@@ -40,7 +40,7 @@ export async function loadUser(
 			return true;
 		}
 		else {
-			response.unauthorizedResponder(`Couldn't load user`);
+			response.unauthorizedResponder(`Could not load user`);
 
 			return false;
 		}
