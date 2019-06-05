@@ -14,8 +14,8 @@ PointyAPI is a library for quickly creating robust API servers.
 
 - **ORM** *(TypeORM)* Create models which automatically create and maintain your database
 - **Validation** *(Class Validator)* Use Typescript decorators to automatically validate fields
-- **Authorization** *(JWT)* JWT and `request.user` make authorization a breeze
-- **Authentication** Use `CanRead()` and `CanWrite()` fields to ensure the user can read/write specific fields
+- **Authentication** *(JWT)* JWT and `request.user` make authorization a breeze
+- **Authorization** Use Guards, `CanRead()`, and `CanWrite()` fields to ensure the user can read/write specific fields
 
 ### Models
 
@@ -28,8 +28,8 @@ class User extends BaseUser
 	// User ID
 	@PrimaryGeneratedColumn() // Primary column
 	@IsInt() // Validation - Value must be integer
-	@BodyguardKey() // Authorization - User must match this to be considered "self"
-	@AnyoneCanRead() // Authentication - Anyone is allowed to read this field
+	@BodyguardKey() // Authentication - User must match this to be considered "self"
+	@AnyoneCanRead() // Authorization - Anyone is allowed to read this field
 	public id: number = undefined;
 
 	// Username
@@ -37,7 +37,7 @@ class User extends BaseUser
 	@IsAlphanumeric() // Validation - must be alphanumeric
 	@Length(4, 16) // Validation - must be between 4-16 characters
 	@AnyoneCanRead() // Authentication - Anyone has read privelege to this member
-	@OnlySelfCanWrite() // Authentication - Only self can write this member
+	@OnlySelfCanWrite() // Authorization - Only self can write this member
 	public username: string = undefined;
 
 	// Password
@@ -287,7 +287,7 @@ npm i pointyapi
 	So we can get and post users, but what if we try to delete or update a user? Let's try it:
 	![postman](https://github.com/StatelessStudio/pointyapi/blob/master/readme/img/step8.JPG "Postman DELETE Request")
 
-	So the server responded with `403 Unauthorized`, and a body of `"not self"`. What gives?
+	So the server responded with `401 Unauthorized`, and a body of `"not self"`. What gives?
 
 	Open at our user router (`/src/routes/user.ts`). Look at our DELETE route:
 
