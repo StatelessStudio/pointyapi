@@ -33,7 +33,7 @@ export class HttpClient {
 	public post(
 		path: string,
 		data: object,
-		expect: number[] = [ 200 ],
+		expect: number[] = [ 200, 201, 202, 204 ],
 		bearer: boolean | string = false
 	): Promise<HttpClientResponse> {
 		const options = {
@@ -78,7 +78,7 @@ export class HttpClient {
 	public get(
 		path: string,
 		data: boolean | Object = false,
-		expect: number[] = [ 200 ],
+		expect: number[] = [ 200, 202 ],
 		bearer: boolean | string = false
 	): Promise<HttpClientResponse> {
 		return new Promise<HttpClientResponse>((accept, reject) => {
@@ -123,7 +123,7 @@ export class HttpClient {
 	public patch(
 		path: string,
 		data: object,
-		expect: number[] = [ 204 ],
+		expect: number[] = [ 200, 201, 202, 204 ],
 		bearer: boolean | string = false
 	): Promise<HttpClientResponse> {
 		const options = {
@@ -167,7 +167,7 @@ export class HttpClient {
 	 */
 	public delete(
 		path: string,
-		expect: number[] = [ 204 ],
+		expect: number[] = [ 200, 202, 204 ],
 		bearer: boolean | string = false
 	): Promise<HttpClientResponse> {
 		return new Promise<HttpClientResponse>((accept, reject) => {
