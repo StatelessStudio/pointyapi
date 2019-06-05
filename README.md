@@ -386,6 +386,7 @@ Read more about PointyAPI by cloning the repository and building the docs:
 git clone https://github.com/StatelessStudio/pointyapi
 cd pointyapi
 npm install --ignore-scripts
+npm i -g typedoc
 npm run docs
 ```
 
