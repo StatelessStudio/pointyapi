@@ -405,3 +405,7 @@ Read more about Class Validator: https://github.com/typestack/class-validator
 #### Express
 
 Read more about Express: https://www.express.com/
+
+#### Securing your Server
+
+Read the security checklist: https://github.com/shieldfy/API-Security-Checklist

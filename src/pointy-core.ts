@@ -76,6 +76,9 @@ export class PointyApi {
 
 	// Start
 	public async start() {
+		// Set proper headers
+		this.app.disable('x-powered-by');
+
 		// Apply middleware functions
 		this.app.use(
 			(request: Request, response: Response, next: NextFunction) => {
