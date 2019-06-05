@@ -13,7 +13,14 @@ export function errorHandler(error: any, code: number = 500): void {
 
 		if (error.code === 23502) {
 			// Not-null violation
-			this.response.validationResponder('Not null violation');
+			this.response.validationResponder([
+				{
+					property: error.column,
+					constraints: {
+						"isNotNull": error.message
+					}
+				}
+			]);
 			return;
 		}
 		else if (error.code === 23503) {
