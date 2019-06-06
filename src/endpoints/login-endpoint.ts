@@ -78,7 +78,10 @@ export async function loginEndpoint(
 		const expiration = jwtBearer.getExpiration();
 		const token = jwtBearer.sign(match);
 
-		if (token) {
+		const refreshExpiration = jwtBearer.getExpiration(true);
+		const refreshToken = jwtBearer.sign(match, true);
+
+		if (token && refreshToken) {
 			// Set request user
 			request.user = match;
 
@@ -92,6 +95,8 @@ export async function loginEndpoint(
 
 			match['expiration'] = expiration;
 			match['token'] = token;
+			match['refreshExpiration'] = refreshExpiration;
+			match['refreshToken'] = refreshToken;
 
 			// Send response
 			if (!await runHook('afterLogin', request.user, request, response)) {
