@@ -68,7 +68,7 @@ describe('[Guards] onlySelf (Patch)', async () => {
 
 		// Test onlySelf()
 		let result = false;
-		response.unauthorizedResponder = () => {
+		response.forbiddenResponder = () => {
 			result = true;
 		};
 

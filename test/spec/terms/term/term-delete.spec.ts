@@ -101,7 +101,7 @@ describe('[Term] Delete API', async () => {
 			await http
 				.delete(
 					`/api/v1/term/${term.body['id']}`,
-					[ 401 ],
+					[ 403 ],
 					this.token.body.token
 				)
 				.catch((error) => fail(JSON.stringify(error)));

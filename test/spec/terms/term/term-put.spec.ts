@@ -108,7 +108,7 @@ describe('[Term] Patch API', async () => {
 					{
 						description: 'update'
 					},
-					[ 401 ],
+					[ 403 ],
 					this.token.body.token
 				)
 				.catch((error) => fail(JSON.stringify(error)));

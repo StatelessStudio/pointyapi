@@ -66,3 +66,4 @@ export { postEndpoint } from './endpoints/post-endpoint';
 export { patchEndpoint } from './endpoints/patch-endpoint';
 export { loginEndpoint } from './endpoints/login-endpoint';
 export { logoutEndpoint } from './endpoints/logout-endpoint';
+export { refreshTokenEndpoint } from './endpoints/refresh-token-endpoint';

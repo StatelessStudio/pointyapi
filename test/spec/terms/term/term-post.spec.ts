@@ -86,7 +86,7 @@ describe('[Term] Post API', async () => {
 					title: 'Language Arts',
 					description: 'Language Arts'
 				},
-				[ 401 ],
+				[ 403 ],
 				this.token.body.token
 			)
 			.catch((error) => fail(JSON.stringify(error)));

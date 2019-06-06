@@ -150,7 +150,7 @@ describe('[Chat] Chat API Get', async () => {
 				.get(
 					'/api/v1/chat',
 					{ id: this.chat.body['id'] },
-					[ 401 ],
+					[ 403 ],
 					wrongToken.body['token']
 				)
 				.catch((error) => fail(JSON.stringify(error)));

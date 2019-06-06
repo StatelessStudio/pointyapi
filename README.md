@@ -14,8 +14,8 @@ PointyAPI is a library for quickly creating robust API servers.
 
 - **ORM** *(TypeORM)* Create models which automatically create and maintain your database
 - **Validation** *(Class Validator)* Use Typescript decorators to automatically validate fields
-- **Authorization** *(JWT)* JWT and `request.user` make authorization a breeze
-- **Authentication** Use `CanRead()` and `CanWrite()` fields to ensure the user can read/write specific fields
+- **Authentication** *(JWT)* JWT and `request.user` make authorization a breeze
+- **Authorization** Use Guards, `CanRead()`, and `CanWrite()` fields to ensure the user can read/write specific fields
 
 ### Models
 
@@ -28,8 +28,8 @@ class User extends BaseUser
 	// User ID
 	@PrimaryGeneratedColumn() // Primary column
 	@IsInt() // Validation - Value must be integer
-	@BodyguardKey() // Authorization - User must match this to be considered "self"
-	@AnyoneCanRead() // Authentication - Anyone is allowed to read this field
+	@BodyguardKey() // Authentication - User must match this to be considered "self"
+	@AnyoneCanRead() // Authorization - Anyone is allowed to read this field
 	public id: number = undefined;
 
 	// Username
@@ -37,7 +37,7 @@ class User extends BaseUser
 	@IsAlphanumeric() // Validation - must be alphanumeric
 	@Length(4, 16) // Validation - must be between 4-16 characters
 	@AnyoneCanRead() // Authentication - Anyone has read privelege to this member
-	@OnlySelfCanWrite() // Authentication - Only self can write this member
+	@OnlySelfCanWrite() // Authorization - Only self can write this member
 	public username: string = undefined;
 
 	// Password
@@ -366,6 +366,14 @@ npm i pointyapi
 
 	Notice that now we get a `204 No Content` (which means deleted successfully!).
 
+	**What about the refreshToken?**
+	You may notice you got two tokens back: `token` and `refreshToken`.
+
+	The `token` is short-lived - it only lasts 15 minutes or so.
+	The `refreshToken` is long-living - it lasts about a week.
+
+	You can use the `refreshToken` to issue a new `accessToken` when it expires.
+
 9. **Production**
 
 To launch in production mode, please make sure the following variables are set (environment variables/.env)
@@ -373,8 +381,30 @@ To launch in production mode, please make sure the following variables are set (
 - **SITE_TITLE** - Set the site title
 - **CLIENT_URL** - Set your client URL to add the client to the CORS policy
 - **JWT_KEY** - Set your token key to make JWT cryptographically secure
-- **JWT_TTL** - Set your token time-to-live. Default is 4 hours
+- **JWT_TTL** - Set your token time-to-live (seconds). Default is 15 minutes
+- **JWT_REFRESH_TTL** - Set your refresh token time-to-live (seconds). Default is 7 days.
 
+#### UUID vs Auto-Incremented IDs
+
+It is a security risk to use auto-incremented IDs, and you should instead use UUID for all ID columns.
+
+To switch to using UUIDs:
+
+- Install the `pgcrypto` extension
+- Tell TypeORM to use pgcrypto by placing the line `uuidExtension: 'pgcrypto'` in `orm-cli.js`
+- Change all `PrimaryGeneratedColumn()` to `PrimaryGeneratedColumn('uuid')`
+- Change all `public id: number` members to `public id: string`
+- Make sure you remove `IsInt()` from all ID fields, if it exists
+- Ensure your front-end and anywhere you may access the ID is expecting a string
+
+Example:
+```typescript
+	// User ID
+	@PrimaryGeneratedColumn('uuid') // Primary column
+	@BodyguardKey() // Authentication - User must match this to be considered "self"
+	@AnyoneCanRead() // Authorization - Anyone is allowed to read this field
+	public id: string = undefined;
+```
 
 ### Continued Reading
 

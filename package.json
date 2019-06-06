@@ -1,6 +1,6 @@
 {
 	"name": "pointyapi",
-	"version": "1.2.4",
+	"version": "2.0.0",
 	"author": "stateless-studio",
 	"license": "MIT",
 	"scripts": {
@@ -57,5 +57,18 @@
 		"nyc": "^14.1.1",
 		"source-map-support": "^0.5.12",
 		"ts-node": "^7.0.1"
-	}
+	},
+	"description": "*\"Stop writing endpoints\"*",
+	"directories": {
+		"lib": "lib",
+		"test": "test"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/statelessstudio/pointyapi.git"
+	},
+	"bugs": {
+		"url": "https://github.com/statelessstudio/pointyapi/issues"
+	},
+	"homepage": "https://github.com/statelessstudio/pointyapi#readme"
 }

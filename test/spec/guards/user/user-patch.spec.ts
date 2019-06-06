@@ -149,7 +149,7 @@ describe('[Guards] User API Update', () => {
 					{
 						fname: 'wrongToken'
 					},
-					[ 401 ],
+					[ 403 ],
 					this.token.body.token
 				)
 				.catch((error) => fail(JSON.stringify(error)));

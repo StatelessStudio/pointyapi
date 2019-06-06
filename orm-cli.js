@@ -8,5 +8,6 @@ module.exports = {
 	user: dbSettings.user,
 	password: dbSettings.password,
 	database: dbSettings.database,
-	entities: [ 'lib/src/models/base-user.ts' ]
+	entities: [ 'lib/src/models/base-user.ts' ],
+	uuidExtension: 'pgcrypto'
 };

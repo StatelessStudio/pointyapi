@@ -1,5 +1,30 @@
 # PointyApi Changelog
 
+## [2.0.0] Jun-06-2019
+
+### Breaking Changes (See migration.md)
+
+- [Issue #167] Auth token should remain stateless
+- [Issue #170] Guards should use forbiddenResponder instead of unauthorizedResponder
+- [Issue #174] Don't use auto-increment id
+- [Issue #175] Issue refresh tokens
+
+### Additions
+
+- [Issue #93] Add security checks to test-suite
+- [Issue #168] Add pointy.ready hook to fire when server is listening
+- [Issue #169] CORS function should utilize process.env.CLIENT_URL
+- [Issue #173] Package.json should include repository info
+
+### Fixes
+
+- npm update
+- Removed typedoc from dependencies
+- [Issue #165] loadUser() should use uniform Could not/Couldn't
+- [Issue #166] validationResponder() "Not null violation" should specify field name
+- [Issue #171] Http expect should accept success codes
+- [Issue #172] [README] Misidentifies Authentication/Authorization
+
 ## [1.2.4] May-29-2019
 
 ### Fixes

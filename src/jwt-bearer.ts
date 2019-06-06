@@ -46,8 +46,15 @@ export class JwtBearer {
 	 * Get expiration of the token
 	 * @return Returns the expiration epoch time
 	 */
-	public getExpiration(): number {
-		return Date.now() + parseInt(process.env.JWT_TTL, 10) * 1000;
+	public getExpiration(isRefresh: boolean = false): number {
+		return (
+			Date.now() +
+			parseInt(
+				isRefresh ? process.env.JWT_TTL : process.env.JWT_REFRESH_TTL,
+				10
+			) *
+				1000
+		);
 	}
 
 	/**
@@ -55,10 +62,15 @@ export class JwtBearer {
 	 * @param user User to sign the JWT for
 	 * @return Returns the signed, base64-encoded token
 	 */
-	public sign(user: BaseUser): string {
+	public sign(user: BaseUser, isRefresh: boolean = false): string {
 		return btoa(
-			JWT.sign({ id: user.id }, this.key, {
-				expiresIn: parseInt(process.env.JWT_TTL, 10)
+			JWT.sign({ id: user.id, isRefresh: isRefresh }, this.key, {
+				expiresIn: parseInt(
+					isRefresh
+						? process.env.JWT_TTL
+						: process.env.JWT_REFRESH_TTL,
+					10
+				)
 			})
 		);
 	}

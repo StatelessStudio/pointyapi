@@ -119,7 +119,7 @@ describe('[Chat] Chat API Patch', () => {
 					{
 						fromStatus: ChatStatus.Read
 					},
-					[ 401 ],
+					[ 403 ],
 					wrongToken.body['token']
 				)
 				.catch((error) => fail(JSON.stringify(error)));
