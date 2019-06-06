@@ -104,3 +104,17 @@
 	Get queries no longer require a `search` key to access other query keys
 18. All mdoel members must be initialized to undefined, including relational arrays
 19. Queries may no longer pass special keys with `__` or `___`.  You should now put these queries in the `additionalParameters` query object
+
+## Version 1.x.x -> 2.x.x
+
+1. Auth tokens are now completely stateless. Remove the `token` field from your User entity.
+2. Login now issues a refresh token.
+   1. Make a POST endpoint in your auth router:
+		`router.post('/refresh', refreshTokenEndpoint);` 
+   2. Update your front-end auth service to save the `refreshToken` and `refreshExpiration` from the `loginEndpoint`
+   3. Set a timeout to call the `refreshTokenEndpoint` route when the access token expires. `refreshTokenEndpoint` will return an updated user object, including a new access token & expiration time.
+3. **(Optional)** PointyAPI now supports `UUID`. Follow the steps in the Readme to enable UUID (strongly recommended for production).
+
+   **NOTE** If you are already in production and decide to migrate to UUID, you must make sure to update relations etc
+
+4. **(Optional)** Guards will now issue a `401` only if a token is not present/valid, otherwise will issue a `403`. This may help determine if the user is authenticated/authorized on the front-end.
