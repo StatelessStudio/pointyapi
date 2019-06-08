@@ -27,19 +27,18 @@ export async function loginEndpoint(
 	}
 
 	// Create where query
-	let where = '';
+	const where = [];
 
 	for (const field of fields) {
-		where += `user.${field}=:name OR `;
+		const pair = {};
+		pair[field] = request.body.__user;
+		where.push(pair);
 	}
-	where = where.replace(/ OR +$/, '');
 
-	// Load users
 	const foundUsers = await request.repository
-		.createQueryBuilder('user')
-		.where(where)
-		.setParameters({ name: request.body.__user })
-		.getMany()
+		.find({
+			where: where
+		})
 		.catch((error) => response.error(error));
 
 	// Check users
