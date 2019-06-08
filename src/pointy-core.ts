@@ -75,6 +75,35 @@ export class PointyApi {
 		this.app.on('error', (error) => this.error(error));
 	}
 
+	// Ready check
+	public readycheck() {
+		// Check pointy.userType
+		if (!this.userType) {
+			console.warn('[PointyAPI] pointy.userType has not been set!');
+
+			return false;
+		}
+
+		// Check database connection
+		if (!this.db || !this.db.conn) {
+			console.warn(
+				'[PointyAPI] Database connection has not been established'
+			);
+
+			return false;
+		}
+
+		// Check database entities
+		if (!this.db.entities || !this.db.entities.length) {
+			console.warn('[PointyAPI] Database does not contain any entities');
+
+			return false;
+		}
+
+		// Checks passed
+		return true;
+	}
+
 	// Start
 	public async start() {
 		// Set proper headers
@@ -97,13 +126,19 @@ export class PointyApi {
 		this.app.use(bodyParser.json());
 		this.app.use(bodyParser.urlencoded({ extended: true }));
 
-		// Run start function
+		// Run before function
 		await this.before(this.app);
 
-		// Server listen
-		this.listen(this.app, process.env.PORT, this.log);
+		// Ready check
+		if (this.readycheck()) {
+			// Server listen
+			this.listen(this.app, process.env.PORT, this.log);
 
-		this.ready(this.app);
+			this.ready(this.app);
+		}
+		else {
+			process.exit();
+		}
 	}
 }
 
