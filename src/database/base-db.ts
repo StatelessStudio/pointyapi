@@ -1,5 +1,5 @@
 import { Connection } from 'typeorm';
-import { BaseUser } from '../models';
+import { ExampleUser } from '../models/example-user';
 
 /**
  * Base Database class
@@ -12,7 +12,7 @@ export class BaseDb {
 	public errorHandler: Function = (error) => console.error(error);
 
 	// Database entities
-	public entities = [ BaseUser ];
+	public entities: any[] = [ ExampleUser ];
 
 	// Connection name.  Default is "default"
 	public connectionName = 'default';

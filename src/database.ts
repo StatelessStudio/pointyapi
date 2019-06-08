@@ -15,13 +15,13 @@
  * this in your `pointy.before` function.**
  * ```typescript
  * import { pointy } from 'pointyapi';
- * import { BaseUser } from 'pointyapi/models';
+ * import { ExampleUser } from 'pointyapi/models';
  * const ROOT_PATH = require('app-root-path');
  *
  * // Database
  * pointy.before = async (app) => {
  * 		await pointy.db
- * 			.setEntities([ BaseUser ])
+ * 			.setEntities([ ExampleUser ])
  * 			.connect(ROOT_PATH)
  * 			.catch((error) => pointy.error(error));
  * });

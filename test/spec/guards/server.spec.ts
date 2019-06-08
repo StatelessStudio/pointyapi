@@ -2,6 +2,7 @@ import 'jasmine';
 
 import { pointy } from '../../../src/';
 import { forkServer } from '../../../src/utils/fork-server';
+import { ExampleUser } from '../../../src/models';
 const ROOT_PATH = require('app-root-path').toString();
 
 const http = pointy.http;
@@ -13,6 +14,7 @@ beforeAll(async () => {
 
 	// Database
 	await pointy.db
+		.setEntities([ ExampleUser ])
 		.connect(ROOT_PATH)
 		.catch((error) =>
 			fail('Cannot start database' + JSON.stringify(error))

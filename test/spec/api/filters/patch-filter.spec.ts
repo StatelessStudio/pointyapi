@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
 
 import { createMockRequest } from '../../../../src/test-probe';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { patchFilter } from '../../../../src/filters';
 
 /**
@@ -11,14 +11,14 @@ import { patchFilter } from '../../../../src/filters';
 describe('[Guards] patchFilter', async () => {
 	beforeAll(async () => {
 		// Create mock user
-		this.user = new BaseUser();
+		this.user = new ExampleUser();
 		this.user.fname = 'tom';
 		this.user.lname = 'doe';
 		this.user.username = 'tomFilter3';
 		this.user.email = 'tomFilter3@example.com';
 		this.user.password = 'password123';
 
-		await getRepository(BaseUser)
+		await getRepository(ExampleUser)
 			.save(this.user)
 			.catch((error) => fail(error));
 	});

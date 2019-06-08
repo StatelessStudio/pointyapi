@@ -1,5 +1,5 @@
 import { onlySelf } from '../../../../src/guards';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 
 import { createMockRequest } from '../../../../src/test-probe';
 import { UserRole } from '../../../../src/enums';
@@ -14,7 +14,7 @@ describe('[Guards] onlySelf (Get One)', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create user
-		const user = new BaseUser();
+		const user = new ExampleUser();
 		user.id = 1;
 
 		request.user = user;
@@ -38,7 +38,7 @@ describe('[Guards] onlySelf (Get One)', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create user
-		request.payload = new BaseUser();
+		request.payload = new ExampleUser();
 		request.payload.id = 1;
 
 		request.query = { id: 1 };
@@ -59,10 +59,10 @@ describe('[Guards] onlySelf (Get One)', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create user
-		request.user = new BaseUser();
+		request.user = new ExampleUser();
 		request.user.id = 1;
 
-		request.payload = new BaseUser();
+		request.payload = new ExampleUser();
 		request.payload.id = 2;
 
 		request.query = { id: 2 };
@@ -83,11 +83,11 @@ describe('[Guards] onlySelf (Get One)', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create user
-		request.user = new BaseUser();
+		request.user = new ExampleUser();
 		request.user.id = 1;
 		request.user.role = UserRole.Admin;
 
-		request.payload = new BaseUser();
+		request.payload = new ExampleUser();
 		request.payload.id = 2;
 
 		request.query = { id: 2 };

@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { createMockRequest } from '../../../../src/test-probe';
 import { loadEntity } from '../../../../src/middleware';
 
@@ -10,7 +10,7 @@ import { loadEntity } from '../../../../src/middleware';
 describe('[Middleware] loadEntity()', async () => {
 	beforeAll(async () => {
 		// Create user
-		this.user = new BaseUser();
+		this.user = new ExampleUser();
 		this.user.fname = 'tom';
 		this.user.lname = 'doe';
 		this.user.username = 'tomLoadEntity';
@@ -18,7 +18,7 @@ describe('[Middleware] loadEntity()', async () => {
 		this.user.password = 'password123';
 
 		// Save user
-		await getRepository(BaseUser)
+		await getRepository(ExampleUser)
 			.save(this.user)
 			.catch(() => fail('Could not save user.'));
 	});

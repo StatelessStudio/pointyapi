@@ -1,5 +1,5 @@
 import * as PostgressConnectionStringParser from 'pg-connection-string';
-import { createConnection, ConnectionOptions } from 'typeorm';
+import { createConnection, ConnectionOptions, Connection } from 'typeorm';
 import * as path from 'path';
 
 import { BaseDb } from './base-db';
@@ -14,7 +14,7 @@ export class PointyPostgres extends BaseDb {
 	 * 	a string to load from file, or pass the object directly).  Database
 	 * 	will rely on `process.env.DATABASE_URL` if this is not set.
 	 */
-	public async connect(options?: string | Object): Promise<any> {
+	public async connect(options?: string | Object): Promise<Connection> {
 		let pgOptions: any;
 
 		if (process.env.DATABASE_URL) {

@@ -1,9 +1,19 @@
 import { Request, Response } from 'express';
 import { BaseUser } from '../../../../src/models';
-import { Entity } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { BodyguardKey, AnyoneCanRead } from '../../../../src/bodyguard';
 
-@Entity('HookTestClass')
+@Entity()
 export class HookTestClass extends BaseUser {
+	@PrimaryGeneratedColumn()
+	@BodyguardKey()
+	@AnyoneCanRead()
+	public id: number = undefined;
+
+	@Column() public username: string = undefined;
+	@Column() public password: string = undefined;
+	@Column() public email: string = undefined;
+
 	public async beforePost(request: Request, response: Response) {
 		expect(this.id).toBe(undefined);
 		expect(this.username).toBe('beforePost');

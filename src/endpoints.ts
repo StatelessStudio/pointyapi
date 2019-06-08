@@ -20,7 +20,7 @@
  *
  * ```typescript
  * import { setModel } from 'pointyapi/set-model';
- * import { BaseUser } from 'pointyapi/models';
+ * import { ExampleUser } from 'pointyapi/models';
  *
  * // Guards
  * import { onlySelf } from 'pointyapi/guards';
@@ -41,7 +41,7 @@
  *
  * // Set model
  * async function loader(request, response, next) {
- * 		if (await setModel(request, BaseUser)) {
+ * 		if (await setModel(request, ExampleUser)) {
  * 			next();
  * 		}
  * }

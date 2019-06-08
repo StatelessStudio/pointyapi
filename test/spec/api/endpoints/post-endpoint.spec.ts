@@ -1,5 +1,5 @@
 import { setModel } from '../../../../src';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { postEndpoint } from '../../../../src/endpoints';
 import { createMockRequest } from '../../../../src/test-probe';
 import { HookTestClass } from '../../../examples/api/models/hook-test-class';
@@ -25,7 +25,7 @@ describe('[Endpoints] Post', () => {
 		const { request, response } = createMockRequest('POST');
 
 		// Create users
-		const user = new BaseUser();
+		const user = new ExampleUser();
 		user.fname = 'Post';
 		user.lname = 'Endpoint';
 		user.username = 'postEndpoint';
@@ -35,7 +35,7 @@ describe('[Endpoints] Post', () => {
 		request.body = user;
 
 		// Set model
-		if (!await setModel(request, response, BaseUser)) {
+		if (!await setModel(request, response, ExampleUser)) {
 			fail('Could not set model');
 		}
 
@@ -58,7 +58,7 @@ describe('[Endpoints] Post', () => {
 		const { request, response } = createMockRequest('POST');
 
 		// Create user
-		const user = new BaseUser();
+		const user = new ExampleUser();
 		user.fname = 'Post';
 		user.lname = 'Endpoint';
 		user.username = 'postEndpoint2';
@@ -68,7 +68,7 @@ describe('[Endpoints] Post', () => {
 		request.body = user;
 
 		// Set model
-		if (!await setModel(request, response, BaseUser)) {
+		if (!await setModel(request, response, ExampleUser)) {
 			fail('Could not set model');
 		}
 
@@ -91,14 +91,14 @@ describe('[Endpoints] Post', () => {
 		const { request, response } = createMockRequest('POST');
 
 		// Create users
-		const user1 = new BaseUser();
+		const user1 = new ExampleUser();
 		user1.fname = 'Post';
 		user1.lname = 'Endpoint';
 		user1.username = 'postEndpoint3';
 		user1.password = 'password123';
 		user1.email = 'post3@example.com';
 
-		const user2 = new BaseUser();
+		const user2 = new ExampleUser();
 		user2.fname = 'Post';
 		user2.lname = 'Endpoint';
 		user2.username = 'postEndpoint4';
@@ -108,7 +108,7 @@ describe('[Endpoints] Post', () => {
 		request.body = [ user1, user2 ];
 
 		// Set model
-		if (!await setModel(request, response, BaseUser)) {
+		if (!await setModel(request, response, ExampleUser)) {
 			fail('Could not set model');
 		}
 
@@ -131,14 +131,14 @@ describe('[Endpoints] Post', () => {
 		const { request, response } = createMockRequest('POST');
 
 		// Create user
-		const user1 = new BaseUser();
+		const user1 = new ExampleUser();
 		user1.fname = 'Post';
 		user1.lname = 'Endpoint';
 		user1.username = 'postEndpoint5';
 		user1.password = 'password123';
 		user1.email = 'testy';
 
-		const user2 = new BaseUser();
+		const user2 = new ExampleUser();
 		user2.fname = 'Post';
 		user2.lname = 'Endpoint';
 		user2.username = 'postEndpoint6';
@@ -148,7 +148,7 @@ describe('[Endpoints] Post', () => {
 		request.body = [ user1, user2 ];
 
 		// Set model
-		if (!await setModel(request, response, BaseUser)) {
+		if (!await setModel(request, response, ExampleUser)) {
 			fail('Could not set model');
 		}
 

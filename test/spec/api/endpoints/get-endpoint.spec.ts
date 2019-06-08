@@ -1,5 +1,5 @@
 import { setModel } from '../../../../src';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { getEndpoint } from '../../../../src/endpoints';
 
 import { createMockRequest } from '../../../../src/test-probe';
@@ -23,14 +23,14 @@ describe('[Endpoints] Get', () => {
 
 	beforeAll(() => {
 		// Create users
-		this.user1 = new BaseUser();
+		this.user1 = new ExampleUser();
 		this.user1.fname = 'Get';
 		this.user1.lname = 'Endpoint';
 		this.user1.username = 'getEndpoint1';
 		this.user1.password = 'password123';
 		this.user1.email = 'get1@example.com';
 
-		this.user2 = new BaseUser();
+		this.user2 = new ExampleUser();
 		this.user2.fname = 'Get';
 		this.user2.lname = 'Endpoint';
 		this.user2.username = 'getEndpoint2';
@@ -44,7 +44,7 @@ describe('[Endpoints] Get', () => {
 		request.query.search = 'Get';
 
 		// Set model
-		if (!await setModel(request, response, BaseUser)) {
+		if (!await setModel(request, response, ExampleUser)) {
 			fail('Could not set model');
 		}
 
@@ -70,7 +70,7 @@ describe('[Endpoints] Get', () => {
 		request.query.count = true;
 
 		// Set model
-		if (!await setModel(request, response, BaseUser)) {
+		if (!await setModel(request, response, ExampleUser)) {
 			fail('Could not set model');
 		}
 
@@ -94,7 +94,7 @@ describe('[Endpoints] Get', () => {
 		request.query.search = 'Get';
 
 		// Set model
-		if (!await setModel(request, response, BaseUser)) {
+		if (!await setModel(request, response, ExampleUser)) {
 			fail('Could not set model');
 		}
 
@@ -103,7 +103,7 @@ describe('[Endpoints] Get', () => {
 
 		// Check for getResponder()
 		response.getResponder = (result) => {
-			expect(result).toEqual(jasmine.any(BaseUser));
+			expect(result).toEqual(jasmine.any(ExampleUser));
 		};
 
 		// Run request

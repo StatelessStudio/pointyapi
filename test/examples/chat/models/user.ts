@@ -26,7 +26,7 @@ import {
 import { BaseUser } from '../../../../src/models';
 import { BodyguardOwner, UserRole, UserStatus } from '../../../../src/enums';
 
-@Entity('User')
+@Entity()
 export class User extends BaseUser {
 	// ID
 	@PrimaryGeneratedColumn()
@@ -84,26 +84,12 @@ export class User extends BaseUser {
 	@CanSearch()
 	public email: string = undefined;
 
-	// Email (temporary)
-	@Column({ nullable: true })
-	@IsEmail()
-	@IsOptional()
-	@OnlySelfCanWrite()
-	public tempEmail: string = undefined;
-
 	// Password
 	@Column({ nullable: true })
 	@Length(1, 250)
 	@IsOptional()
 	@OnlySelfCanWrite()
 	public password: string = undefined;
-
-	// Password (temporary)
-	@Column({ nullable: true })
-	@Length(1, 250)
-	@IsOptional()
-	@OnlySelfCanWrite()
-	public tempPassword: string = undefined;
 
 	// BaseUser Role
 	@Column({ default: UserRole.Basic })
@@ -122,7 +108,6 @@ export class User extends BaseUser {
 	public status: UserStatus = undefined;
 
 	// Biography
-	// TODO: Validate
 	@Column({ type: 'text', nullable: true })
 	@IsOptional()
 	@AnyoneCanRead()

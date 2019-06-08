@@ -1,6 +1,6 @@
 import { createMockRequest } from '../../../src/test-probe';
 import { setModel } from '../../../src';
-import { BaseUser } from '../../../src/models';
+import { ExampleUser } from '../../../src/models';
 import { HookTestClass } from '../../examples/api/models/hook-test-class';
 import { getRepository } from 'typeorm';
 import { addResource } from '../../../src/utils';
@@ -21,14 +21,14 @@ describe('setModel', () => {
 
 	beforeAll(async () => {
 		// Create user
-		this.user = new BaseUser();
+		this.user = new ExampleUser();
 		this.user.fname = 'Set';
 		this.user.lname = 'Model';
 		this.user.username = 'setmodel';
 		this.user.password = 'model';
 		this.user.email = 'setmodel@example.com';
 
-		await getRepository(BaseUser)
+		await getRepository(ExampleUser)
 			.save(this.user)
 			.catch((error) => fail(JSON.stringify(error)));
 	});
@@ -38,12 +38,12 @@ describe('setModel', () => {
 		const { request, response } = createMockRequest('');
 
 		// Set model
-		if (!await setModel(request, response, BaseUser)) {
+		if (!await setModel(request, response, ExampleUser)) {
 			fail('Could not set model');
 		}
 
 		// Expect payload to be a User
-		expect(request.payload).toEqual(jasmine.any(BaseUser));
+		expect(request.payload).toEqual(jasmine.any(ExampleUser));
 	});
 
 	it('sets the identifier', async () => {
@@ -51,7 +51,9 @@ describe('setModel', () => {
 		const { request, response } = createMockRequest('');
 
 		// Set model
-		if (!await setModel(request, response, BaseUser, false, 'username')) {
+		if (
+			!await setModel(request, response, ExampleUser, false, 'username')
+		) {
 			fail('Could not set model');
 		}
 
@@ -62,13 +64,13 @@ describe('setModel', () => {
 	it('sets request.params to request.user on auth delete route', async () => {
 		// Create mock request/response
 		const { request, response } = createMockRequest('DELETE');
-		request.user = new BaseUser();
+		request.user = new ExampleUser();
 		request.user.id = 1;
 
 		response.goneResponder = () => {};
 
 		// Set model
-		await setModel(request, response, BaseUser, true);
+		await setModel(request, response, ExampleUser, true);
 
 		// Expect identifier to have been set
 		expect(request.user).toEqual(request.params);
@@ -82,7 +84,7 @@ describe('setModel', () => {
 		response.unauthorizedResponder = () => (result = true);
 
 		// Set model
-		if (await setModel(request, response, BaseUser, true)) {
+		if (await setModel(request, response, ExampleUser, true)) {
 			fail('Should not set model');
 		}
 
@@ -107,7 +109,7 @@ describe('setModel', () => {
 		];
 
 		// Set model
-		if (!await setModel(request, response, BaseUser)) {
+		if (!await setModel(request, response, ExampleUser)) {
 			fail('Could not set model');
 		}
 	});
@@ -122,7 +124,7 @@ describe('setModel', () => {
 		};
 
 		// Set model
-		if (!await setModel(request, response, BaseUser)) {
+		if (!await setModel(request, response, ExampleUser)) {
 			fail('Could not set model');
 		}
 	});
@@ -148,7 +150,7 @@ describe('setModel', () => {
 		response.validationResponder = () => (result = true);
 
 		// Set model
-		if (await setModel(request, response, BaseUser)) {
+		if (await setModel(request, response, ExampleUser)) {
 			fail('Should not set model');
 		}
 
@@ -169,7 +171,7 @@ describe('setModel', () => {
 		response.validationResponder = () => (result = true);
 
 		// Set model
-		if (await setModel(request, response, BaseUser)) {
+		if (await setModel(request, response, ExampleUser)) {
 			fail('Should not set model');
 		}
 
@@ -182,7 +184,7 @@ describe('setModel', () => {
 		request.query = {};
 
 		// Set model
-		if (!await setModel(request, response, BaseUser)) {
+		if (!await setModel(request, response, ExampleUser)) {
 			fail('Could not set model');
 		}
 
@@ -203,7 +205,7 @@ describe('setModel', () => {
 		response.validationResponder = () => (result = true);
 
 		// Set model
-		if (await setModel(request, response, BaseUser)) {
+		if (await setModel(request, response, ExampleUser)) {
 			fail('Should not set model');
 		}
 
@@ -224,7 +226,7 @@ describe('setModel', () => {
 		response.validationResponder = () => (result = true);
 
 		// Set model
-		if (await setModel(request, response, BaseUser)) {
+		if (await setModel(request, response, ExampleUser)) {
 			fail('Should not set model');
 		}
 
@@ -240,7 +242,7 @@ describe('setModel', () => {
 		response.goneResponder = () => (result = true);
 
 		// Set model
-		if (await setModel(request, response, BaseUser)) {
+		if (await setModel(request, response, ExampleUser)) {
 			fail('Should not set model');
 		}
 
@@ -256,7 +258,7 @@ describe('setModel', () => {
 		response.goneResponder = () => (result = true);
 
 		// Set model
-		if (await setModel(request, response, BaseUser)) {
+		if (await setModel(request, response, ExampleUser)) {
 			fail('Should not set model');
 		}
 

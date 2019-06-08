@@ -1,7 +1,7 @@
-import { getRepository } from 'typeorm';
+import { getConnection, getRepository } from 'typeorm';
 import { hashSync } from 'bcryptjs';
 
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { loginEndpoint } from '../../../../src/endpoints';
 import { createMockRequest } from '../../../../src/test-probe';
 import { HookTestClass } from '../../../examples/api/models/hook-test-class';
@@ -23,14 +23,14 @@ describe('[Endpoints] Login', async () => {
 
 	beforeAll(async () => {
 		// Create user
-		const user = new BaseUser();
+		const user = new ExampleUser();
 		user.fname = 'Login';
 		user.lname = 'Test';
 		user.username = 'logintest';
 		user.password = hashSync('password123', 12);
 		user.email = 'logintest@example.com';
 
-		await getRepository(BaseUser)
+		await getRepository(ExampleUser)
 			.save(user)
 			.catch((error) => fail(JSON.stringify(error)));
 	});
@@ -54,9 +54,9 @@ describe('[Endpoints] Login', async () => {
 		await loginEndpoint(request, response);
 
 		if (match) {
-			expect(match).toEqual(jasmine.any(BaseUser));
+			expect(match).toEqual(jasmine.any(ExampleUser));
 			expect(match['username']).toEqual('logintest');
-			expect(request.user).toEqual(jasmine.any(BaseUser));
+			expect(request.user).toEqual(jasmine.any(ExampleUser));
 			expect(request.user['username']).toEqual('logintest');
 		}
 		else {
@@ -108,10 +108,10 @@ describe('[Endpoints] Login', async () => {
 
 	it('runs login hook', async () => {
 		await addResource(HookTestClass, {
-			username: 'login',
+			username: 'loginHook',
 			password: hashSync('password123'),
 			fname: 'login',
-			lnmae: 'hook',
+			lname: 'hook',
 			email: 'login@example.com'
 		}).catch((error) =>
 			fail('Could not create user ' + JSON.stringify(error))
@@ -124,14 +124,17 @@ describe('[Endpoints] Login', async () => {
 		request.hookShouldPass = true;
 		request.hookCallback = (name) => (result = name);
 
+		request.userType = HookTestClass;
 		request.payloadType = HookTestClass;
 		request.repository = getRepository(HookTestClass);
 		request.body = Object.assign(new HookTestClass(), {
-			__user: 'login',
+			__user: 'loginHook',
 			password: 'password123'
 		});
 
-		await loginEndpoint(request, response);
+		await loginEndpoint(request, response).catch((error) =>
+			fail(JSON.stringify(error))
+		);
 
 		expect(result).toBe('login');
 	});

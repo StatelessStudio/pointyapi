@@ -1,5 +1,5 @@
 import { onlyAdmin } from '../../../../src/guards';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { UserRole } from '../../../../src/enums';
 
 import { createMockRequest } from '../../../../src/test-probe';
@@ -14,7 +14,7 @@ describe('[Guards] onlyAdmin', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create user
-		request.user = new BaseUser();
+		request.user = new ExampleUser();
 		request.user.role = UserRole.Admin;
 
 		// Test onlyAdmin()
@@ -51,7 +51,7 @@ describe('[Guards] onlyAdmin', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create user
-		request.user = new BaseUser();
+		request.user = new ExampleUser();
 		request.user.role = UserRole.Basic;
 
 		// Test onlyAdmin()

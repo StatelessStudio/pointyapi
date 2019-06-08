@@ -31,7 +31,7 @@
 	```typescript
 	// Set model
 	router.use((request, response, next) => {
-		if (await setModel(request, response, BaseUser)) {
+		if (await setModel(request, response, ExampleUser)) {
 			// Note that this next() call is now in an if-statement around the setModel()
 			next();
 		}
@@ -51,7 +51,7 @@
 	// Set model
 	router.use((request, response, next) => {
 		//                                               vvv add this for auth routes
-		if (await setModel(request, response, BaseUser, true)) {
+		if (await setModel(request, response, ExampleUser, true)) {
 			// Note that this next() call is now in an if-statement around the setModel()
 			next();
 		}

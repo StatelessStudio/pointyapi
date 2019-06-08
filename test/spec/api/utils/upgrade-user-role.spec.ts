@@ -1,4 +1,4 @@
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { UserRole } from '../../../../src/enums';
 import { upgradeUserRole } from '../../../../src/utils/upgrade-user-role';
 import { getRepository } from 'typeorm';
@@ -10,8 +10,8 @@ import { getRepository } from 'typeorm';
 describe('upgradeUserRole()', () => {
 	beforeAll(async () => {
 		// Create user
-		this.user = new BaseUser();
-		this.user.fname = 'BaseUser';
+		this.user = new ExampleUser();
+		this.user.fname = 'ExampleUser';
 		this.user.lname = 'Upgrade';
 		this.user.username = 'baseUserUpgrade';
 		this.user.password = 'password123';
@@ -19,7 +19,7 @@ describe('upgradeUserRole()', () => {
 		this.user.role = UserRole.Basic;
 
 		// Save user
-		this.user = await getRepository(BaseUser)
+		this.user = await getRepository(ExampleUser)
 			.save(this.user)
 			.catch((error) => fail(JSON.stringify(error)));
 	});
@@ -28,14 +28,14 @@ describe('upgradeUserRole()', () => {
 		// Upgrade role to admin
 		await upgradeUserRole(
 			'baseUserUpgrade',
-			BaseUser,
+			ExampleUser,
 			UserRole.Admin
 		).catch((error) =>
 			fail('Could not upgrade user role: ' + JSON.stringify(error))
 		);
 
 		// Pull user back from database
-		this.user = await getRepository(BaseUser)
+		this.user = await getRepository(ExampleUser)
 			.findOne(this.user.id)
 			.catch((error) => fail(JSON.stringify(error)));
 
@@ -47,7 +47,7 @@ describe('upgradeUserRole()', () => {
 		let result = false;
 
 		// Upgrade role to admin
-		await upgradeUserRole('nobody', BaseUser, UserRole.Admin)
+		await upgradeUserRole('nobody', ExampleUser, UserRole.Admin)
 			.then((error) =>
 				fail('Upgraded nobodies user role: ' + JSON.stringify(error))
 			)

@@ -4,11 +4,11 @@ import {
 	getReadableRelations,
 	CanReadRelation
 } from '../../../../src/bodyguard';
-import { BaseModel, BaseUser } from '../../../../src/models';
+import { BaseModel, ExampleUser } from '../../../../src/models';
 import { UserRole } from '../../../../src/enums';
 
 class AnyoneCanReadRelationModel extends BaseModel {
-	@CanReadRelation() public anyoneCanRead: BaseUser = undefined;
+	@CanReadRelation() public anyoneCanRead: ExampleUser = undefined;
 }
 
 /**

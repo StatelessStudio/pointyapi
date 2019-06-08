@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
 import { hashSync } from 'bcryptjs';
 
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { logoutEndpoint, loginEndpoint } from '../../../../src/endpoints';
 import { createMockRequest } from '../../../../src/test-probe';
 import { HookTestClass } from '../../../examples/api/models/hook-test-class';
@@ -23,14 +23,14 @@ describe('[Endpoints] Logout', async () => {
 
 	beforeAll(async () => {
 		// Create user
-		const user = new BaseUser();
+		const user = new ExampleUser();
 		user.fname = 'Logout';
 		user.lname = 'Test';
 		user.username = 'logouttest';
 		user.password = hashSync('password123', 12);
 		user.email = 'logouttest@example.com';
 
-		await getRepository(BaseUser)
+		await getRepository(ExampleUser)
 			.save(user)
 			.catch((error) => fail(JSON.stringify(error)));
 	});

@@ -1,41 +1,38 @@
-import {
-	Entity,
-	PrimaryGeneratedColumn,
-	Column,
-	OneToMany,
-	ManyToMany,
-	JoinTable
-} from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+
+// Validation
 import {
 	Length,
+	IsEmail,
 	IsAlphanumeric,
 	IsDate,
-	IsOptional,
-	Matches
+	IsOptional
 } from 'class-validator';
 
+// Bodyguards
 import {
-	BodyguardKey,
 	AnyoneCanRead,
 	OnlySelfCanRead,
 	OnlySelfCanWrite,
 	OnlyAdminCanWrite,
-	CanSearch,
-	CanReadRelation
-} from '../../../../src/bodyguard';
+	BodyguardKey,
+	CanSearch
+} from '../bodyguard';
 
-import { BaseUser } from '../../../../src/models';
-import { UserRole, UserStatus, BodyguardOwner } from '../../../../src/enums';
+// Models
+import { BaseUser } from './base-user';
+import { UserRole, UserStatus } from '../enums';
 
-import { Term } from './term';
-
+/**
+ * Base User
+ */
 @Entity()
-export class User extends BaseUser {
+export class ExampleUser extends BaseUser {
 	// ID
 	@PrimaryGeneratedColumn()
 	@BodyguardKey()
 	@AnyoneCanRead()
-	public id: number = undefined;
+	public id: any = undefined;
 
 	// Time created
 	@Column({ type: 'timestamp', default: new Date() })
@@ -44,7 +41,7 @@ export class User extends BaseUser {
 	@AnyoneCanRead()
 	public timeCreated: Date = undefined;
 
-	// Time last accessed
+	// Time last updated
 	@Column({ type: 'timestamp', default: new Date() })
 	@IsDate()
 	@IsOptional()
@@ -62,8 +59,6 @@ export class User extends BaseUser {
 
 	// First name
 	@Column({ nullable: true })
-	@Length(1, 250)
-	@IsOptional()
 	@AnyoneCanRead()
 	@OnlySelfCanWrite()
 	@CanSearch()
@@ -71,8 +66,6 @@ export class User extends BaseUser {
 
 	// Last name
 	@Column({ nullable: true })
-	@Length(1, 250)
-	@IsOptional()
 	@AnyoneCanRead()
 	@OnlySelfCanWrite()
 	@CanSearch()
@@ -80,7 +73,7 @@ export class User extends BaseUser {
 
 	// Email
 	@Column({ nullable: true, unique: true })
-	@Matches(/^\w+@[0-9a-zA-Z_]+?\.[a-zA-Z]+$/i)
+	@IsEmail()
 	@IsOptional()
 	@OnlySelfCanRead()
 	@OnlySelfCanWrite()
@@ -89,42 +82,36 @@ export class User extends BaseUser {
 
 	// Password
 	@Column({ nullable: true })
-	@Length(1, 250)
-	@IsOptional()
 	@OnlySelfCanWrite()
-	@Matches(/[A-za-z0-9!@#$%^&*()-_+={};:'",<.>/?]{8,20}/)
 	public password: string = undefined;
 
-	// BaseUser Role
+	// ExampleUser Role
 	@Column({ default: UserRole.Basic })
-	@Length(1, 250)
-	@IsOptional()
 	@AnyoneCanRead()
 	@OnlyAdminCanWrite()
 	public role: UserRole = undefined;
 
-	// BaseUser Status
+	// ExampleUser Status
 	@Column({ default: UserStatus.Pending })
-	@Length(1, 250)
-	@IsOptional()
 	@AnyoneCanRead()
 	@OnlyAdminCanWrite()
 	public status: UserStatus = undefined;
 
 	// Biography
 	@Column({ type: 'text', nullable: true })
-	@Length(1, 5000)
-	@IsOptional()
 	@AnyoneCanRead()
 	@OnlySelfCanWrite()
 	public biography: string = undefined;
 
-	@OneToMany((type) => Term, (term) => term.author)
-	public terms: Term[] = undefined;
-
-	@ManyToMany((type) => Term, (term) => term.users)
-	@JoinTable()
-	@CanReadRelation()
+	// Geographical Location
+	@Column({ nullable: true })
+	@AnyoneCanRead()
 	@OnlySelfCanWrite()
-	public termRelations: Term[] = undefined;
+	public location: string = undefined;
+
+	// Thumbnail image
+	@Column({ nullable: true })
+	@AnyoneCanRead()
+	@OnlySelfCanWrite()
+	public thumbnail: string = undefined;
 }

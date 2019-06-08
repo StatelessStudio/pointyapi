@@ -4,7 +4,7 @@ import {
 	OnlySelfCanRead
 } from '../../../../src/bodyguard';
 
-import { BaseModel, BaseUser } from '../../../../src/models';
+import { BaseModel, ExampleUser } from '../../../../src/models';
 import { UserRole } from '../../../../src/enums';
 import { ChatMessage } from '../../../examples/chat/models/chat-message';
 import { User } from '../../../examples/chat/models/user';
@@ -18,9 +18,9 @@ describe('[Bodyguard] writeFilter', () => {
 		// Filter user object
 		const result = writeFilter(
 			{ email: 'test@example.com' },
-			new BaseUser(),
-			BaseUser,
-			BaseUser,
+			new ExampleUser(),
+			ExampleUser,
+			ExampleUser,
 			false
 		);
 
@@ -32,9 +32,9 @@ describe('[Bodyguard] writeFilter', () => {
 		// Filter user object
 		const result = writeFilter(
 			{ email: 'test@example.com' },
-			new BaseUser(),
-			BaseUser,
-			BaseUser,
+			new ExampleUser(),
+			ExampleUser,
+			ExampleUser,
 			true
 		);
 
@@ -44,7 +44,7 @@ describe('[Bodyguard] writeFilter', () => {
 
 	it('bypasses admin requests', () => {
 		// Create admin user
-		const admin = new BaseUser();
+		const admin = new ExampleUser();
 		admin.id = 1;
 		admin.role = UserRole.Admin;
 
@@ -52,8 +52,8 @@ describe('[Bodyguard] writeFilter', () => {
 		const result = writeFilter(
 			{ email: 'test@example.com' },
 			admin,
-			BaseUser,
-			BaseUser
+			ExampleUser,
+			ExampleUser
 		);
 
 		// Expect the result to be unfiltered
@@ -84,7 +84,7 @@ describe('[Bodyguard] writeFilter', () => {
 
 		// Filter resources
 		const results = [ test1, test2 ];
-		const result = writeFilter(results, user3, BaseUser, BaseUser);
+		const result = writeFilter(results, user3, ExampleUser, ExampleUser);
 
 		// Expect result to be filtered properly
 		expect(result).toBe('[#0]id');

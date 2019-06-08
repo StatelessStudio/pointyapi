@@ -6,7 +6,7 @@ import {
 	deleteEndpoint,
 	getEndpoint
 } from '../../../../src/endpoints';
-import { BaseUser } from '../../../../src/models/base-user';
+import { ExampleUser } from '../../../../src/models/example-user';
 
 import { setModel } from '../../../../src/';
 
@@ -16,7 +16,7 @@ import { onlySelf } from '../../../../src/guards';
 const router: Router = Router();
 
 async function loader(request, response, next) {
-	if (await setModel(request, response, BaseUser)) {
+	if (await setModel(request, response, ExampleUser)) {
 		next();
 	}
 }

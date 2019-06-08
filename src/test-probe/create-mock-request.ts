@@ -1,6 +1,6 @@
 import { mockRequest, mockResponse } from 'mock-req-res';
 import { getRepository } from 'typeorm';
-import { BaseUser } from '../models/base-user';
+import { ExampleUser } from '../models';
 
 declare var fail;
 
@@ -16,11 +16,11 @@ export function createMockRequest(
 ) {
 	// Create request
 	const request = mockRequest();
-	request.repository = getRepository(BaseUser);
+	request.repository = getRepository(ExampleUser);
 	request.method = method;
 	request.baseUrl = url;
-	request.userType = BaseUser;
-	request.payloadType = BaseUser;
+	request.userType = ExampleUser;
+	request.payloadType = ExampleUser;
 	request.joinMembers = [];
 	request.identifier = 'id';
 	request.header = (key) => (key === 'host' ? 'localhost' : false);

@@ -1,7 +1,7 @@
 import { hashSync } from 'bcryptjs';
 
 import { addResource } from '../../../../src/utils';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { UserRole } from '../../../../src/enums';
 import { getRepository } from 'typeorm';
 
@@ -19,7 +19,7 @@ describe('[Utils] addResource()', () => {
 	});
 
 	beforeAll(async () => {
-		await addResource(BaseUser, {
+		await addResource(ExampleUser, {
 			fname: 'Drew',
 			lname: 'Immerman',
 			username: 'AddDrew1',
@@ -30,7 +30,7 @@ describe('[Utils] addResource()', () => {
 	});
 
 	it('can add a new resource', async () => {
-		const user = await getRepository(BaseUser)
+		const user = await getRepository(ExampleUser)
 			.findOne({ username: 'AddDrew1' })
 			.catch(fail);
 
@@ -40,7 +40,7 @@ describe('[Utils] addResource()', () => {
 	});
 
 	it('can add an existing resource', async () => {
-		await addResource(BaseUser, {
+		await addResource(ExampleUser, {
 			fname: 'DrewOverride',
 			lname: 'Immerman',
 			username: 'AddDrew1',
@@ -49,7 +49,7 @@ describe('[Utils] addResource()', () => {
 			role: UserRole.Member
 		}).catch(fail);
 
-		const user = await getRepository(BaseUser)
+		const user = await getRepository(ExampleUser)
 			.findOne({ username: 'AddDrew1' })
 			.catch(fail);
 

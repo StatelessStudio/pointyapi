@@ -1,5 +1,5 @@
 import { onlySelf } from '../../../../src/guards';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 
 import { createMockRequest } from '../../../../src/test-probe';
 
@@ -13,7 +13,7 @@ describe('[Guards] onlySelf (Get Many)', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create user
-		const user = new BaseUser();
+		const user = new ExampleUser();
 		user.id = 1;
 
 		request.user = user;
@@ -35,7 +35,7 @@ describe('[Guards] onlySelf (Get Many)', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create user
-		const user = new BaseUser();
+		const user = new ExampleUser();
 		user.id = 1;
 
 		request.payload = [ user ];
@@ -56,10 +56,10 @@ describe('[Guards] onlySelf (Get Many)', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create user
-		request.user = new BaseUser();
+		request.user = new ExampleUser();
 		request.user.id = 1;
 
-		const payload = new BaseUser();
+		const payload = new ExampleUser();
 		payload.id = 2;
 
 		request.payload = [ payload ];

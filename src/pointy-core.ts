@@ -29,7 +29,7 @@ import { logHandler, errorHandler } from './handlers';
 import { bindResponders } from './utils/bind-responders';
 
 // Base Models
-import { BaseUser, BaseUserInterface } from './models';
+import { BaseUserInterface, ExampleUser, BaseUser } from './models';
 
 /**
  * PointyAPI App Instance
@@ -42,7 +42,7 @@ export class PointyApi {
 	public listen: Function = listen;
 	public db: BaseDb;
 	public http = new HttpClient();
-	public userType: BaseUserInterface = BaseUser;
+	public userType: BaseUserInterface = ExampleUser;
 
 	// Middleware
 
@@ -96,6 +96,13 @@ export class PointyApi {
 		// Check database entities
 		if (!this.db.entities || !this.db.entities.length) {
 			console.warn('[PointyAPI] Database does not contain any entities');
+
+			return false;
+		}
+
+		// Check for database entity of BaseUser
+		if (this.db.entities.includes(BaseUser)) {
+			console.warn('[PointyAPI] BaseUser is not a valid database entity');
 
 			return false;
 		}

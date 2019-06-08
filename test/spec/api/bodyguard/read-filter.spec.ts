@@ -4,7 +4,7 @@ import {
 	OnlySelfCanRead
 } from '../../../../src/bodyguard';
 
-import { BaseModel, BaseUser } from '../../../../src/models';
+import { BaseModel, ExampleUser } from '../../../../src/models';
 import { UserRole } from '../../../../src/enums';
 import { ChatMessage } from '../../../examples/chat/models/chat-message';
 import { User } from '../../../examples/chat/models/user';
@@ -16,12 +16,12 @@ import { User } from '../../../examples/chat/models/user';
 describe('[Bodyguard] readFilter', () => {
 	it('filters unauthorized requests', () => {
 		// Create user
-		let user = new BaseUser();
+		let user = new ExampleUser();
 		user.id = 1;
 		user.email = 'test@example.com';
 
 		// Filter user object
-		user = readFilter(user, new BaseUser(), BaseUser, BaseUser);
+		user = readFilter(user, new ExampleUser(), ExampleUser, ExampleUser);
 
 		// Check if filtered
 		expect(user.email).toEqual(undefined);
@@ -29,12 +29,12 @@ describe('[Bodyguard] readFilter', () => {
 
 	it('bypasses authorized requests', () => {
 		// Create user
-		let user = new BaseUser();
+		let user = new ExampleUser();
 		user.id = 1;
 		user.email = 'test@example.com';
 
 		// Filter user object
-		user = readFilter(user, user, BaseUser, BaseUser);
+		user = readFilter(user, user, ExampleUser, ExampleUser);
 
 		// Expect the object to be unfiltered
 		expect(user.email).toEqual('test@example.com');
@@ -42,18 +42,18 @@ describe('[Bodyguard] readFilter', () => {
 
 	it('bypasses admin requests', () => {
 		// Create admin user
-		const user1 = new BaseUser();
+		const user1 = new ExampleUser();
 		user1.id = 1;
 		user1.role = UserRole.Admin;
 
 		// Create basic user
-		let user2 = new BaseUser();
+		let user2 = new ExampleUser();
 		user2.id = 2;
 		user2.role = UserRole.Basic;
 		user2.email = 'test@example.com';
 
 		// Filter user object
-		user2 = readFilter(user2, user1, BaseUser, BaseUser);
+		user2 = readFilter(user2, user1, ExampleUser, ExampleUser);
 
 		// Expect the result to be unfiltered
 		expect(user2.email).toEqual('test@example.com');
@@ -83,7 +83,7 @@ describe('[Bodyguard] readFilter', () => {
 
 		// Filter resources
 		let results = [ test1, test2 ];
-		results = readFilter(results, user3, BaseUser, BaseUser);
+		results = readFilter(results, user3, ExampleUser, ExampleUser);
 
 		// Expect result to be filtered properly
 		expect(results).toEqual(jasmine.any(Array));

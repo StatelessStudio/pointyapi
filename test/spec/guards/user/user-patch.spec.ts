@@ -1,7 +1,7 @@
 import { pointy } from '../../../../src';
 import { UserRole } from '../../../../src/enums/user-role';
 import { upgradeUserRole } from '../../../../src/utils/upgrade-user-role';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 
 const http = pointy.http;
 
@@ -19,7 +19,7 @@ describe('[Guards] User API Update', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		await upgradeUserRole('adminGuardPatch1', BaseUser, UserRole.Admin);
+		await upgradeUserRole('adminGuardPatch1', ExampleUser, UserRole.Admin);
 
 		this.adminToken = await http
 			.post('/api/v1/auth', {

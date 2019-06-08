@@ -7,7 +7,7 @@ import { getSearchableRelations } from '../../../../src/bodyguard';
  * pointyapi/bodyguard
  */
 describe('[Bodyguard] getSearchableRelations', () => {
-	it('returns an array of one key for BaseUser', () => {
+	it('returns an array of one key for ExampleUser', () => {
 		// Create user
 		const user = new User();
 		user.id = 1;
