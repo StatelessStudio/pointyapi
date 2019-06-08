@@ -2,7 +2,6 @@ import * as PostgressConnectionStringParser from 'pg-connection-string';
 import { createConnection, ConnectionOptions } from 'typeorm';
 import * as path from 'path';
 
-import { BaseUser } from '../models/base-user';
 import { BaseDb } from './base-db';
 
 /**
@@ -53,7 +52,7 @@ export class PointyPostgres extends BaseDb {
 		}
 
 		// Create connection
-		await createConnection(<ConnectionOptions>{
+		this.conn = await createConnection(<ConnectionOptions>{
 			name: this.connectionName,
 			type: process.env.TYPEORM_DRIVER_TYPE || pgOptions.type,
 			driver: process.env.TYPEORM_DRIVER_TYPE || pgOptions.type,
@@ -68,5 +67,7 @@ export class PointyPostgres extends BaseDb {
 				? pgOptions.uuidExtension
 				: 'pgcrypto'
 		}).catch((error) => this.errorHandler(error));
+
+		return this.conn;
 	}
 }

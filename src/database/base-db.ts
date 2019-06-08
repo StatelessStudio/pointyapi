@@ -1,3 +1,4 @@
+import { Connection } from 'typeorm';
 import { BaseUser } from '../models';
 
 /**
@@ -18,6 +19,9 @@ export class BaseDb {
 
 	// Auto-sync (Empties database on restart, not for production!)
 	public shouldSync = false;
+
+	// Connection
+	public conn: Connection;
 
 	/**
 	 * Constructor
