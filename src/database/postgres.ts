@@ -9,34 +9,6 @@ import { BaseDb } from './base-db';
  * Postgres Database Handler
  */
 export class PointyPostgres extends BaseDb {
-	// Connection name.  Default is "default"
-	public connectionName = 'default';
-
-	// Auto-sync (Empties database on restart, not for production!)
-	public shouldSync = false;
-
-	// Database entities
-	public entities: any[];
-
-	/**
-	 * Constructor
-	 */
-	constructor() {
-		super();
-
-		this.entities = [ BaseUser ];
-	}
-
-	/**
-	 * Set ORM entities
-	 * @param entities Array of entities
-	 */
-	public setEntities(entities: any[]) {
-		this.entities = entities;
-
-		return this;
-	}
-
 	/**
 	 * Connect to the database
 	 * @param options Database credentials (pass

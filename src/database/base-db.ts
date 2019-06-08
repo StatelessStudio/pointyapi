@@ -1,3 +1,5 @@
+import { Connection } from 'typeorm';
+
 /**
  * Base Database class
  */
@@ -8,6 +10,15 @@ export class BaseDb {
 	// Database error function
 	public errorHandler: Function = (error) => console.error(error);
 
+	// Database entities
+	public entities = [];
+
+	// Connection name.  Default is "default"
+	public connectionName = 'default';
+
+	// Auto-sync (Empties database on restart, not for production!)
+	public shouldSync = false;
+
 	/**
 	 * Constructor
 	 */
@@ -17,7 +28,9 @@ export class BaseDb {
 	 * Set ORM entities
 	 * @param entities Array of entities
 	 */
-	public setEntities(entities: any[]): BaseDb {
+	public setEntities(entities: any[]) {
+		this.entities = entities;
+
 		return this;
 	}
 
