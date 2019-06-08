@@ -1,4 +1,4 @@
-import { Connection } from 'typeorm';
+import { BaseUser } from '../models';
 
 /**
  * Base Database class
@@ -11,7 +11,7 @@ export class BaseDb {
 	public errorHandler: Function = (error) => console.error(error);
 
 	// Database entities
-	public entities = [];
+	public entities = [ BaseUser ];
 
 	// Connection name.  Default is "default"
 	public connectionName = 'default';
