@@ -26,7 +26,7 @@ import { UserRole, UserStatus } from '../enums';
 /**
  * Base User
  */
-@Entity()
+@Entity('User')
 export class ExampleUser extends BaseUser {
 	// ID
 	@PrimaryGeneratedColumn()
