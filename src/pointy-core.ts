@@ -43,6 +43,7 @@ export class PointyApi {
 	public db: BaseDb;
 	public http = new HttpClient();
 	public userType: BaseUserInterface = ExampleUser;
+	public testmode: boolean = false;
 
 	// Middleware
 
@@ -71,6 +72,10 @@ export class PointyApi {
 		this.db = new PointyPostgres();
 		this.db.logger = this.log;
 		this.db.errorHandler = this.error;
+
+		if (process.argv.includes('testmode')) {
+			this.testmode = true;
+		}
 
 		this.app.on('error', (error) => this.error(error));
 	}
