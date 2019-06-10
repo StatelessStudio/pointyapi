@@ -25,7 +25,15 @@ beforeAll(async () => {
 			);
 	};
 
+	// Intercept IPC messages
+	const _send = process.send;
+	process.send = (message) => (this.ipcMessage = message);
+
+	// Start server
 	await pointy.start();
+
+	// Release IPC message interceptor
+	process.send = _send;
 
 	process.env.PORT = '8081';
 });
@@ -46,5 +54,9 @@ describe('Pointy Core', () => {
 		pointy.app.emit('error', '');
 
 		expect(result).toBe(true);
+	});
+
+	it('sends an ipc message "server-ready"', async () => {
+		expect(this.ipcMessage).toBe('server-ready');
 	});
 });
