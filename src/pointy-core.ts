@@ -141,6 +141,12 @@ export class PointyApi {
 			// Server listen
 			this.listen(this.app, process.env.PORT, this.log);
 
+			// Send IPC notification
+			if ('send' in process && process.send) {
+				process.send('server-ready');
+			}
+
+			// Run ready callback
 			this.ready(this.app);
 		}
 		else {

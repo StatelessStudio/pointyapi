@@ -23,10 +23,5 @@ export async function listen(
 	await app.listen(port, () => {
 		logger('Server started.');
 		logger(`Server listening on port ${port}`);
-
-		// Send IPC notification
-		if ('send' in process && process.send) {
-			process.send('server-ready');
-		}
 	});
 }
