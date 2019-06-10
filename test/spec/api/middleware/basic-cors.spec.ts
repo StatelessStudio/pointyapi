@@ -7,7 +7,7 @@ import { createMockRequest } from '../../../../src/test-probe';
  */
 describe('[Middleware] basicCors()', () => {
 	it('sets the headers', () => {
-		delete process.env.CLIENT_URL;
+		delete process.env.ALLOW_ORIGIN;
 		const headers = {};
 		const { request, response } = createMockRequest();
 
@@ -27,8 +27,8 @@ describe('[Middleware] basicCors()', () => {
 		});
 	});
 
-	it('accepts environment CLIENT_URL', () => {
-		process.env.CLIENT_URL = 'test.com';
+	it('accepts environment ALLOW_ORIGIN', () => {
+		process.env.ALLOW_ORIGIN = 'test.com';
 		const headers = {};
 		const { request, response } = createMockRequest();
 
@@ -38,13 +38,13 @@ describe('[Middleware] basicCors()', () => {
 
 		basicCors(request, response, () => {
 			expect(headers['Access-Control-Allow-Origin']).toEqual(
-				process.env.CLIENT_URL
+				process.env.ALLOW_ORIGIN
 			);
 		});
 	});
 
-	it('accepts environment CLIENT_URL as array', () => {
-		process.env.CLIENT_URL = 'test.com, localhost, test2.com';
+	it('accepts environment ALLOW_ORIGIN as array', () => {
+		process.env.ALLOW_ORIGIN = 'test.com, localhost, test2.com';
 		const headers = {};
 		const { request, response } = createMockRequest();
 
@@ -57,8 +57,8 @@ describe('[Middleware] basicCors()', () => {
 		});
 	});
 
-	it('rejects environment CLIENT_URL as array without match', () => {
-		process.env.CLIENT_URL = 'test.com, test2.com';
+	it('rejects environment ALLOW_ORIGIN as array without match', () => {
+		process.env.ALLOW_ORIGIN = 'test.com, test2.com';
 		const headers = {};
 		const { request, response } = createMockRequest();
 

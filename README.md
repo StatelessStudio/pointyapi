@@ -380,7 +380,7 @@ npm i pointyapi
 To launch in production mode, please make sure the following variables are set (environment variables/.env)
 
 - **SITE_TITLE** - Set the site title
-- **CLIENT_URL** - Set your client URL to add the client to the CORS policy
+- **ALLOW_ORIGIN** - Set your client URL to add the client to the CORS policy
 - **JWT_KEY** - Set your token key to make JWT cryptographically secure
 - **JWT_TTL** - Set your token time-to-live (seconds). Default is 15 minutes
 - **JWT_REFRESH_TTL** - Set your refresh token time-to-live (seconds). Default is 7 days.

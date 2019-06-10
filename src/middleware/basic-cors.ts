@@ -14,11 +14,17 @@ export function basicCors(
 	// Set Access-Control-Allow-Origin
 	let origin = '*';
 
-	if ('CLIENT_URL' in process.env && process.env.CLIENT_URL) {
-		if (process.env.CLIENT_URL.includes(', ')) {
+	// Backwards compatability
+	// TODO: Remove in v3.0.0
+	if (!('ALLOW_ORIGIN' in process.env) && 'CLIENT_URL' in process.env) {
+		process.env.ALLOW_ORIGIN = process.env.CLIENT_URL;
+	}
+
+	if ('ALLOW_ORIGIN' in process.env && process.env.ALLOW_ORIGIN) {
+		if (process.env.ALLOW_ORIGIN.includes(', ')) {
 			// Array of Client URLs
 			const host = request.header('host').toLowerCase();
-			const clientUrls = process.env.CLIENT_URL.split(', ');
+			const clientUrls = process.env.ALLOW_ORIGIN.split(', ');
 
 			if (clientUrls.includes(host)) {
 				origin = host;
@@ -27,9 +33,9 @@ export function basicCors(
 				origin = clientUrls[0];
 			}
 		}
-		else if (typeof process.env.CLIENT_URL === 'string') {
+		else if (typeof process.env.ALLOW_ORIGIN === 'string') {
 			// Single Client Url
-			origin = process.env.CLIENT_URL;
+			origin = process.env.ALLOW_ORIGIN;
 		}
 	}
 	response.setHeader('Access-Control-Allow-Origin', origin);
