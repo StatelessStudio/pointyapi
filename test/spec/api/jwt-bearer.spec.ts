@@ -18,6 +18,17 @@ describe('[JWT]', () => {
 		expect(jwt.key).toBe('test-key');
 	});
 
+	it('can sign a token with a payload', () => {
+		const user = new BaseUser();
+		user.id = 1;
+
+		const jwtString = jwtBearer.sign(user, false, { hasPayload: true });
+		const result = jwtBearer.dryVerify(jwtString);
+
+		expect('hasPayload' in result).toBeTruthy();
+		expect(result.hasPayload).toBeTruthy();
+	});
+
 	it('can can verify a token', () => {
 		const jwtString = jwtBearer.sign(new BaseUser());
 

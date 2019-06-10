@@ -62,9 +62,18 @@ export class JwtBearer {
 	 * @param user User to sign the JWT for
 	 * @return Returns the signed, base64-encoded token
 	 */
-	public sign(user: BaseUser, isRefresh: boolean = false): string {
+	public sign(
+		user: BaseUser,
+		isRefresh: boolean = false,
+		data: Object = {}
+	): string {
+		const payload = Object.assign(data, {
+			id: user.id,
+			isRefresh: isRefresh
+		});
+
 		return btoa(
-			JWT.sign({ id: user.id, isRefresh: isRefresh }, this.key, {
+			JWT.sign(payload, this.key, {
 				expiresIn: parseInt(
 					isRefresh
 						? process.env.JWT_TTL
