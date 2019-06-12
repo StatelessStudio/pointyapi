@@ -61,11 +61,7 @@ describe('[Guards] User API Delete', () => {
 
 		if (user && token) {
 			await http
-				.delete(
-					`/api/v1/user/${user.body['id']}`,
-					[ 204 ],
-					token.body['token']
-				)
+				.delete(`/api/v1/user/${user.body['id']}`, token.body['token'])
 				.catch((error) => fail(JSON.stringify(error)));
 		}
 		else {
@@ -86,7 +82,7 @@ describe('[Guards] User API Delete', () => {
 
 		if (result) {
 			await http
-				.delete(`/api/v1/user/${result.body['id']}`, [ 401 ])
+				.delete(`/api/v1/user/${result.body['id']}`, undefined, [ 401 ])
 				.catch((error) => fail(JSON.stringify(error)));
 		}
 	});
@@ -129,8 +125,8 @@ describe('[Guards] User API Delete', () => {
 			await http
 				.delete(
 					`/api/v1/user/${user.body['id']}`,
-					[ 403 ],
-					token.body['token']
+					token.body['token'],
+					[ 403 ]
 				)
 				.catch((error) => fail(JSON.stringify(error)));
 		}
@@ -154,7 +150,6 @@ describe('[Guards] User API Delete', () => {
 			await http
 				.delete(
 					`/api/v1/user/${result.body['id']}`,
-					[ 204 ],
 					this.adminToken.body.token
 				)
 				.catch((error) => fail(JSON.stringify(error)));

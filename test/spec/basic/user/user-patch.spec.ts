@@ -18,22 +18,14 @@ describe('User API Update', () => {
 
 	it('can update', async () => {
 		await http
-			.patch(
-				`/api/v1/user/${this.user1.body.id}`,
-				{
-					lname: 'testLast'
-				},
-				[ 204 ]
-			)
+			.patch(`/api/v1/user/${this.user1.body.id}`, {
+				lname: 'testLast'
+			})
 			.then((result) => {
 				http
-					.get(
-						`/api/v1/user`,
-						{
-							id: this.user1.body.id
-						},
-						[ 200 ]
-					)
+					.get(`/api/v1/user`, {
+						id: this.user1.body.id
+					})
 					.then((getResult) =>
 						expect(getResult.body['lname']).toEqual('testLast')
 					)
@@ -62,17 +54,14 @@ describe('User API Update', () => {
 					{
 						email: ''
 					},
+					undefined,
 					[ 204 ]
 				)
 				.then((result) => {
 					http
-						.get(
-							`/api/v1/user`,
-							{
-								id: user.body['id']
-							},
-							[ 200 ]
-						)
+						.get(`/api/v1/user`, {
+							id: user.body['id']
+						})
 						.then((getResult) =>
 							expect(getResult.body['email']).toEqual(null)
 						)
@@ -92,17 +81,14 @@ describe('User API Update', () => {
 				{
 					lname: 'testLast'
 				},
+				undefined,
 				[ 204 ]
 			)
 			.then((result) => {
 				http
-					.get(
-						`/api/v1/user`,
-						{
-							id: this.user1.body.id
-						},
-						[ 200 ]
-					)
+					.get(`/api/v1/user`, {
+						id: this.user1.body.id
+					})
 					.then((getResult) =>
 						expect(getResult.body['email']).toEqual(
 							'basicUserPatch1@test.com'
@@ -120,6 +106,7 @@ describe('User API Update', () => {
 				{
 					username: 'tom<tester5'
 				},
+				undefined,
 				[ 400 ]
 			)
 			.catch((error) => fail(JSON.stringify(error)));
@@ -132,6 +119,7 @@ describe('User API Update', () => {
 				{
 					email: 'drew3test.com'
 				},
+				undefined,
 				[ 400 ]
 			)
 			.catch((error) => fail(JSON.stringify(error)));
@@ -139,13 +127,9 @@ describe('User API Update', () => {
 
 	it('removes undefined members', async () => {
 		await http
-			.patch(
-				`/api/v1/user/${this.user1.body.id}`,
-				{
-					biography: undefined
-				},
-				[ 204 ]
-			)
+			.patch(`/api/v1/user/${this.user1.body.id}`, {
+				biography: undefined
+			})
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 });

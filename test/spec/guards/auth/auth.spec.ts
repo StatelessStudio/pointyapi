@@ -38,6 +38,7 @@ describe('[Guards] User Api Login/Logout', () => {
 					__user: 'userAuth1',
 					password: 'invalid'
 				},
+				undefined,
 				[ 401 ]
 			)
 			.catch((error) => fail(JSON.stringify(error)));
@@ -45,13 +46,13 @@ describe('[Guards] User Api Login/Logout', () => {
 
 	it('can log out', async () => {
 		await http
-			.delete('/api/v1/auth', [ 204 ], this.token.body.token)
+			.delete('/api/v1/auth', this.token.body.token)
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('cannot log out without a token', async () => {
 		await http
-			.delete('/api/v1/auth', [ 401 ])
+			.delete('/api/v1/auth', undefined, [ 401 ])
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 });

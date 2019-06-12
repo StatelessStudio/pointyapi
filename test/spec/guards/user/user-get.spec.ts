@@ -72,7 +72,7 @@ describe('[Guards] User API Read', () => {
 
 	it('can read all', async () => {
 		await http
-			.get('/api/v1/user', {}, [ 200 ], this.getUser1Token.body.token)
+			.get('/api/v1/user', {}, this.getUser1Token.body.token)
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Array));
 				expect(result.body['length']).toBeGreaterThanOrEqual(2);
@@ -87,7 +87,6 @@ describe('[Guards] User API Read', () => {
 				{
 					id: this.getUser2.body.id
 				},
-				[ 200 ],
 				this.getUser1Token.body.token
 			)
 			.then((result) => {

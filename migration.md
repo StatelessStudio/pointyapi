@@ -118,3 +118,5 @@
    **NOTE** If you are already in production and decide to migrate to UUID, you must make sure to update relations etc
 
 4. **(Optional)** Guards will now issue a `401` only if a token is not present/valid, otherwise will issue a `403`. This may help determine if the user is authenticated/authorized on the front-end.
+
+5. HTTP Client has swapped the `bearer` and `expect` parameters. You must swap these in your code, if used

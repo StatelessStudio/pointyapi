@@ -53,7 +53,6 @@ describe('[Chat] Chat API Get', async () => {
 					to: { id: this.user2.body.id },
 					body: 'test'
 				},
-				[ 200 ],
 				this.token.body.token
 			)
 			.catch((error) =>
@@ -67,7 +66,6 @@ describe('[Chat] Chat API Get', async () => {
 					to: { id: this.user.body.id },
 					body: 'test2'
 				},
-				[ 200 ],
 				this.token2.body.token
 			)
 			.catch((error) =>
@@ -82,7 +80,6 @@ describe('[Chat] Chat API Get', async () => {
 				{
 					id: this.chat.body.id
 				},
-				[ 200 ],
 				this.token.body.token
 			)
 			.then((result) => {
@@ -99,7 +96,6 @@ describe('[Chat] Chat API Get', async () => {
 				{
 					id: this.chat2.body.id
 				},
-				[ 200 ],
 				this.token.body.token
 			)
 			.then((result) => {
@@ -116,6 +112,7 @@ describe('[Chat] Chat API Get', async () => {
 				{
 					id: this.chat2.body.id
 				},
+				undefined,
 				[ 401 ]
 			)
 			.catch((error) =>
@@ -150,8 +147,8 @@ describe('[Chat] Chat API Get', async () => {
 				.get(
 					'/api/v1/chat',
 					{ id: this.chat.body['id'] },
-					[ 403 ],
-					wrongToken.body['token']
+					wrongToken.body['token'],
+					[ 403 ]
 				)
 				.catch((error) => fail(JSON.stringify(error)));
 		}
@@ -171,7 +168,6 @@ describe('[Chat] Chat API Get', async () => {
 						from: this.user2.body.id
 					}
 				},
-				[ 200 ],
 				this.token.body.token
 			)
 			.then((result) => {
@@ -193,7 +189,6 @@ describe('[Chat] Chat API Get', async () => {
 					search: 'chatGet1',
 					join: [ 'inbox' ]
 				},
-				[ 200 ],
 				this.token.body.token
 			)
 			.then((result) => {
@@ -218,7 +213,6 @@ describe('[Chat] Chat API Get', async () => {
 						from: +this.user.body.id
 					}
 				},
-				[ 200 ],
 				this.token.body.token
 			)
 			.then((result) => {
@@ -241,7 +235,6 @@ describe('[Chat] Chat API Get', async () => {
 						from: this.user.body.id
 					}
 				},
-				[ 200 ],
 				this.token.body.token
 			)
 			.then((result) => {
@@ -293,7 +286,6 @@ describe('[Chat] Chat API Get', async () => {
 							from: this.user.body.id
 						}
 					},
-					[ 200 ],
 					token.body['token']
 				)
 				.then((result) => {
@@ -314,7 +306,6 @@ describe('[Chat] Chat API Get', async () => {
 						from: this.user.body.id
 					}
 				},
-				[ 200 ],
 				this.token.body.token
 			)
 			.then((result) => {
@@ -353,7 +344,6 @@ describe('[Chat] Chat API Get', async () => {
 						to: { id: user.body['id'] },
 						body: 'test'
 					},
-					[ 200 ],
 					token.body['token']
 				)
 				.catch((error) =>
@@ -369,7 +359,6 @@ describe('[Chat] Chat API Get', async () => {
 					{
 						search: 'nestedGet1'
 					},
-					[ 200 ],
 					token.body['token']
 				)
 				.then((result) => {
@@ -401,7 +390,6 @@ describe('[Chat] Chat API Get', async () => {
 						'from.username': 'DESC'
 					}
 				},
-				[ 200 ],
 				this.token.body.token
 			)
 			.then((result) => {
@@ -439,7 +427,6 @@ describe('[Chat] Chat API Get', async () => {
 						id: 'ASC'
 					}
 				},
-				[ 200 ],
 				this.token.body.token
 			)
 			.then((result) => {

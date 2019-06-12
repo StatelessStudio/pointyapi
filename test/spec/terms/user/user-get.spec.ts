@@ -42,7 +42,6 @@ describe('[User] API Read', () => {
 				{
 					title: 'User Term'
 				},
-				[ 200 ],
 				this.adminToken.body.token
 			)
 			.then((result) => {

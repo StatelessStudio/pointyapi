@@ -50,6 +50,7 @@ describe('[Guards] User API Create', () => {
 					email: 'postUser1@test.com',
 					role: UserRole.Admin
 				},
+				undefined,
 				[ 403 ]
 			)
 			.catch((error) => fail(JSON.stringify(error)));
@@ -57,37 +58,29 @@ describe('[Guards] User API Create', () => {
 
 	it('can write underscored keys', async () => {
 		await http
-			.post(
-				'/api/v1/user',
-				{
-					fname: 'postUser1',
-					lname: 'postUser1',
-					username: 'postUser1',
-					password: 'password123',
-					email: 'postUser1@test.com',
-					__ignore: 'test',
-					___ignore: 'test'
-				},
-				[ 200 ]
-			)
+			.post('/api/v1/user', {
+				fname: 'postUser1',
+				lname: 'postUser1',
+				username: 'postUser1',
+				password: 'password123',
+				email: 'postUser1@test.com',
+				__ignore: 'test',
+				___ignore: 'test'
+			})
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
 	it('cannot reveal sensitve fields', async () => {
 		await http
-			.post(
-				'/api/v1/user',
-				{
-					fname: 'sensitveUser1',
-					lname: 'sensitveUser1',
-					username: 'sensitveUser1',
-					password: 'password123',
-					email: 'sensitveUser1@test.com',
-					__ignore: 'test',
-					___ignore: 'test'
-				},
-				[ 200 ]
-			)
+			.post('/api/v1/user', {
+				fname: 'sensitveUser1',
+				lname: 'sensitveUser1',
+				username: 'sensitveUser1',
+				password: 'password123',
+				email: 'sensitveUser1@test.com',
+				__ignore: 'test',
+				___ignore: 'test'
+			})
 			.then((result) => {
 				expect(result.body['username']).toEqual(jasmine.any(String));
 

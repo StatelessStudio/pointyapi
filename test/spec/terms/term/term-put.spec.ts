@@ -66,7 +66,6 @@ describe('[Term] Patch API', async () => {
 					title: 'test',
 					description: 'test'
 				},
-				[ 200 ],
 				this.adminToken.body.token
 			)
 			.catch((error) => fail(JSON.stringify(error)));
@@ -78,7 +77,6 @@ describe('[Term] Patch API', async () => {
 					{
 						description: 'update'
 					},
-					[ 204 ],
 					this.adminToken.body.token
 				)
 				.catch((error) => fail(JSON.stringify(error)));
@@ -96,7 +94,6 @@ describe('[Term] Patch API', async () => {
 					title: 'test2',
 					description: 'test2'
 				},
-				[ 200 ],
 				this.adminToken.body.token
 			)
 			.catch((error) => fail(JSON.stringify(error)));
@@ -108,8 +105,8 @@ describe('[Term] Patch API', async () => {
 					{
 						description: 'update'
 					},
-					[ 403 ],
-					this.token.body.token
+					this.token.body.token,
+					[ 403 ]
 				)
 				.catch((error) => fail(JSON.stringify(error)));
 		}

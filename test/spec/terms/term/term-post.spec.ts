@@ -67,7 +67,6 @@ describe('[Term] Post API', async () => {
 					title: 'Social Studies',
 					description: 'Social Studies'
 				},
-				[ 200 ],
 				this.adminToken.body.token
 			)
 			.then((result) => {
@@ -86,8 +85,8 @@ describe('[Term] Post API', async () => {
 					title: 'Language Arts',
 					description: 'Language Arts'
 				},
-				[ 403 ],
-				this.token.body.token
+				this.token.body.token,
+				[ 403 ]
 			)
 			.catch((error) => fail(JSON.stringify(error)));
 	});

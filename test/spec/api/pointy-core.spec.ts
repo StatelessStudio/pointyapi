@@ -35,6 +35,7 @@ beforeAll(async () => {
 	// Release IPC message interceptor
 	process.send = _send;
 
+	jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
 	process.env.PORT = '8081';
 });
 

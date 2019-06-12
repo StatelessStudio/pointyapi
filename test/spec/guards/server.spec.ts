@@ -30,7 +30,7 @@ afterAll(() => {
 describe('API Server', () => {
 	it('is running', async () => {
 		await http
-			.get('/', {}, [ 200, 404 ])
+			.get('/', {}, undefined, [ 200, 404 ])
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 });

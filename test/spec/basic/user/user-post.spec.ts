@@ -36,6 +36,7 @@ describe('User API Create', () => {
 					password: 'password123',
 					email: 'dupeUserTest1@test.com'
 				},
+				undefined,
 				[ 409 ]
 			)
 			.catch((error) => fail(JSON.stringify(error)));
@@ -52,6 +53,7 @@ describe('User API Create', () => {
 					password: 'password123',
 					email: 'basicPostUser1@test.com'
 				},
+				undefined,
 				[ 409 ]
 			)
 			.catch((error) => fail(JSON.stringify(error)));
@@ -67,6 +69,7 @@ describe('User API Create', () => {
 					password: 'password123',
 					email: 'requiredUser1@test.com'
 				},
+				undefined,
 				[ 400 ]
 			)
 			.catch((error) => fail(JSON.stringify(error)));
@@ -82,6 +85,7 @@ describe('User API Create', () => {
 					username: 'requiredPass1',
 					email: 'requiredPass1@test.com'
 				},
+				undefined,
 				[ 400 ]
 			)
 			.catch((error) => fail(JSON.stringify(error)));
@@ -98,6 +102,7 @@ describe('User API Create', () => {
 					password: 'password123',
 					email: 'invalidUser1@test.com'
 				},
+				undefined,
 				[ 400 ]
 			)
 			.catch((error) => fail(JSON.stringify(error)));
@@ -114,6 +119,7 @@ describe('User API Create', () => {
 					password: 'password123',
 					email: 'drew3test.com'
 				},
+				undefined,
 				[ 400 ]
 			)
 			.catch((error) => fail(JSON.stringify(error)));
@@ -131,6 +137,7 @@ describe('User API Create', () => {
 					email: 'basicPost400@test.com',
 					memberThatDoesNotExist: 'fail'
 				},
+				undefined,
 				[ 400 ]
 			)
 			.catch((error) => fail(JSON.stringify(error)));
@@ -138,18 +145,14 @@ describe('User API Create', () => {
 
 	it('removes undefined members', async () => {
 		await http
-			.post(
-				'/api/v1/user',
-				{
-					fname: 'post400',
-					lname: 'post400',
-					username: 'basicPost400',
-					password: 'password123',
-					email: 'basicPost400@test.com',
-					biography: undefined
-				},
-				[ 200 ]
-			)
+			.post('/api/v1/user', {
+				fname: 'post400',
+				lname: 'post400',
+				username: 'basicPost400',
+				password: 'password123',
+				email: 'basicPost400@test.com',
+				biography: undefined
+			})
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 });

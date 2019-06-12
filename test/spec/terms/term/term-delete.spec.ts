@@ -61,7 +61,6 @@ describe('[Term] Delete API', async () => {
 					title: 'Math',
 					description: 'Math'
 				},
-				[ 200 ],
 				this.adminToken.body.token
 			)
 			.catch((error) => {
@@ -72,7 +71,6 @@ describe('[Term] Delete API', async () => {
 			await http
 				.delete(
 					`/api/v1/term/${term.body['id']}`,
-					[ 204 ],
 					this.adminToken.body.token
 				)
 				.catch((error) => fail(JSON.stringify(error)));
@@ -90,7 +88,6 @@ describe('[Term] Delete API', async () => {
 					title: 'Science',
 					description: 'Science'
 				},
-				[ 200 ],
 				this.adminToken.body.token
 			)
 			.catch((error) => {
@@ -101,8 +98,8 @@ describe('[Term] Delete API', async () => {
 			await http
 				.delete(
 					`/api/v1/term/${term.body['id']}`,
-					[ 403 ],
-					this.token.body.token
+					this.token.body.token,
+					[ 403 ]
 				)
 				.catch((error) => fail(JSON.stringify(error)));
 		}
