@@ -14,6 +14,17 @@ export async function loginEndpoint(
 	request: Request,
 	response: Response
 ): Promise<void> {
+	// Check input
+	if (!('__user' in request.body)) {
+		response.validationResponder('__user is required');
+		return;
+	}
+
+	if (!('password' in request.body)) {
+		response.validationResponder('password is required');
+		return;
+	}
+
 	// Run model hook
 	if (!await runHook('login', request.body, request, response)) {
 		return;
