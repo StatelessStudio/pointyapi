@@ -110,9 +110,9 @@
 1. Auth tokens are now completely stateless. Remove the `token` field from your User entity.
 2. Login now issues a refresh token.
    1. Make a POST endpoint in your auth router:
-		`router.post('/refresh', refreshTokenEndpoint);` 
-   2. Update your front-end auth service to save the `refreshToken` and `refreshExpiration` from the `loginEndpoint`
-   3. Set a timeout to call the `refreshTokenEndpoint` route when the access token expires. `refreshTokenEndpoint` will return an updated user object, including a new access token & expiration time.
+		`router.post('/refresh', loader, refreshTokenEndpoint);` 
+   2. Update your front-end auth refreshTokenservice to save the `refreshToken` and `refreshExpiration` from the `loginEndpoint`
+   3. Set a timeout to call the `refreshTokenEndpoint` route when the access token expires. Setup the body like this: `{ __refreshToken: myRefreshToken }`.  This will return an updated user object, including a new access token & expiration time.
 3. **(Optional)** PointyAPI now supports `UUID`. Follow the steps in the Readme to enable UUID (strongly recommended for production).
 
    **NOTE** If you are already in production and decide to migrate to UUID, you must make sure to update relations etc

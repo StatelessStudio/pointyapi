@@ -71,7 +71,7 @@ describe('[Endpoints] Refresh Token', async () => {
 		const { request, response } = createMockRequest();
 
 		request.body = {
-			refreshToken: this.credentials.refreshToken
+			__refreshToken: this.credentials.refreshToken
 		};
 
 		// Run login endpoint
@@ -99,7 +99,7 @@ describe('[Endpoints] Refresh Token', async () => {
 		const { request, response } = createMockRequest();
 
 		request.body = {
-			refreshToken: 'wrong'
+			__refreshToken: 'wrong'
 		};
 
 		// Run refreshToken endpoint
@@ -122,7 +122,7 @@ describe('[Endpoints] Refresh Token', async () => {
 		user.id = 0;
 
 		request.body = {
-			refreshToken: jwtBearer.sign(user, true)
+			__refreshToken: jwtBearer.sign(user, true)
 		};
 
 		// Run refreshToken endpoint
