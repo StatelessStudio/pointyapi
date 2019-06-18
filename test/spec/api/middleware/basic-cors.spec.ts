@@ -53,7 +53,7 @@ describe('[Middleware] basicCors()', () => {
 		};
 
 		basicCors(request, response, () => {
-			expect(headers['Access-Control-Allow-Origin']).toEqual('localhost');
+			expect(headers['Access-Control-Allow-Origin']).toEqual('test.com');
 		});
 	});
 

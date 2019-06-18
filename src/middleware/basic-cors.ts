@@ -23,8 +23,12 @@ export function basicCors(
 	if ('ALLOW_ORIGIN' in process.env && process.env.ALLOW_ORIGIN) {
 		if (process.env.ALLOW_ORIGIN.includes(', ')) {
 			// Array of Client URLs
-			const host = request.header('host').toLowerCase();
+			let host = request.headers.origin;
 			const clientUrls = process.env.ALLOW_ORIGIN.split(', ');
+
+			if (host instanceof Array) {
+				host = host[0];
+			}
 
 			if (clientUrls.includes(host)) {
 				origin = host;
