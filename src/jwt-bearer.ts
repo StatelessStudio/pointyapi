@@ -50,7 +50,7 @@ export class JwtBearer {
 		return (
 			Date.now() +
 			parseInt(
-				isRefresh ? process.env.JWT_TTL : process.env.JWT_REFRESH_TTL,
+				isRefresh ? process.env.REFRESH_TTL : process.env.JWT_TTL,
 				10
 			) *
 				1000
