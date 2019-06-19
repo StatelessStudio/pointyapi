@@ -76,8 +76,8 @@ export class JwtBearer {
 			JWT.sign(payload, this.key, {
 				expiresIn: parseInt(
 					isRefresh
-						? process.env.JWT_TTL
-						: process.env.JWT_REFRESH_TTL,
+						? process.env.JWT_REFRESH_TTL
+						: process.env.JWT_TTL,
 					10
 				)
 			})
