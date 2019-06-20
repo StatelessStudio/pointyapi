@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
 import { hashSync } from 'bcryptjs';
 
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { loginEndpoint, refreshTokenEndpoint } from '../../../../src/endpoints';
 import { createMockRequest } from '../../../../src/test-probe';
 import { jwtBearer } from '../../../../src/jwt-bearer';
@@ -22,14 +22,14 @@ describe('[Endpoints] Refresh Token', async () => {
 
 	beforeAll(async () => {
 		// Create user
-		const user = new BaseUser();
+		const user = new ExampleUser();
 		user.fname = 'RefreshToken';
 		user.lname = 'Test';
 		user.username = 'refreshTokentest';
 		user.password = hashSync('password123', 12);
 		user.email = 'refreshTokentest@example.com';
 
-		await getRepository(BaseUser)
+		await getRepository(ExampleUser)
 			.save(user)
 			.catch((error) => fail(JSON.stringify(error)));
 
@@ -53,7 +53,7 @@ describe('[Endpoints] Refresh Token', async () => {
 
 	it('[Login] can create a refresh token', async () => {
 		if (this.credentials) {
-			expect(this.credentials).toEqual(jasmine.any(BaseUser));
+			expect(this.credentials).toEqual(jasmine.any(ExampleUser));
 			expect('refreshToken' in this.credentials).toBeTruthy();
 			expect('refreshExpiration' in this.credentials).toBeTruthy();
 			expect(typeof this.credentials['refreshToken']).toEqual('string');
@@ -71,7 +71,7 @@ describe('[Endpoints] Refresh Token', async () => {
 		const { request, response } = createMockRequest();
 
 		request.body = {
-			refreshToken: this.credentials.refreshToken
+			__refreshToken: this.credentials.refreshToken
 		};
 
 		// Run login endpoint
@@ -83,7 +83,7 @@ describe('[Endpoints] Refresh Token', async () => {
 		await refreshTokenEndpoint(request, response);
 
 		if (match) {
-			expect(match).toEqual(jasmine.any(BaseUser));
+			expect(match).toEqual(jasmine.any(ExampleUser));
 			expect('token' in match).toBeTruthy();
 			expect('expiration' in match).toBeTruthy();
 			expect(typeof match['token']).toEqual('string');
@@ -99,7 +99,7 @@ describe('[Endpoints] Refresh Token', async () => {
 		const { request, response } = createMockRequest();
 
 		request.body = {
-			refreshToken: 'wrong'
+			__refreshToken: 'wrong'
 		};
 
 		// Run refreshToken endpoint
@@ -118,11 +118,11 @@ describe('[Endpoints] Refresh Token', async () => {
 		// Create mock request/response
 		const { request, response } = createMockRequest();
 
-		const user = new BaseUser();
+		const user = new ExampleUser();
 		user.id = 0;
 
 		request.body = {
-			refreshToken: jwtBearer.sign(user, true)
+			__refreshToken: jwtBearer.sign(user, true)
 		};
 
 		// Run refreshToken endpoint

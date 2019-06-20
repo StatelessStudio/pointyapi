@@ -1,6 +1,6 @@
 import { pointy } from '../../../../src';
 import { upgradeUserRole } from '../../../../src/utils/upgrade-user-role';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { UserRole } from '../../../../src/enums/user-role';
 
 const http = pointy.http;
@@ -63,7 +63,7 @@ describe('[Guards] User API Read', () => {
 
 		await upgradeUserRole(
 			'adminGuardGet1',
-			BaseUser,
+			ExampleUser,
 			UserRole.Admin
 		).catch((error) =>
 			fail('Could not upgrade user role' + JSON.stringify(error))
@@ -72,7 +72,7 @@ describe('[Guards] User API Read', () => {
 
 	it('can read all', async () => {
 		await http
-			.get('/api/v1/user', {}, [ 200 ], this.getUser1Token.body.token)
+			.get('/api/v1/user', {}, this.getUser1Token.body.token)
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Array));
 				expect(result.body['length']).toBeGreaterThanOrEqual(2);
@@ -87,7 +87,6 @@ describe('[Guards] User API Read', () => {
 				{
 					id: this.getUser2.body.id
 				},
-				[ 200 ],
 				this.getUser1Token.body.token
 			)
 			.then((result) => {

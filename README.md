@@ -157,6 +157,7 @@ npm i pointyapi
 			.setEntities(
 				[
 					/* TODO: We will set our models here */
+					ExampleUser
 				]
 			)
 			.connect(ROOT_PATH)
@@ -168,7 +169,7 @@ npm i pointyapi
 	```
 3. **Create a user route**
   
-	By default, PointyAPI will use `BaseUser` as the user model. Let's create a route for this model, so that we can access this model through our API:
+	By default, PointyAPI will use `ExampleUser` as the user model. Let's create a route for this model, so that we can access this model through our API:
    - Create a folder for routes, `src/routes/`
    - Create a new router file, `src/routes/user.ts`
    - Copy & paste router code:
@@ -178,7 +179,7 @@ npm i pointyapi
 
 	import { Router } from 'express';
 	import { setModel } from 'pointyapi';
-	import { BaseUser } from 'pointyapi/models';
+	import { ExampleUser } from 'pointyapi/models';
 	import { postFilter, getFilter, patchFilter } from 'pointyapi/filters';
 	import { onlySelf } from 'pointyapi/guards';
 	import {
@@ -190,9 +191,9 @@ npm i pointyapi
 
 	const router: Router = Router();
 
-	// Set the route model to BaseUser
+	// Set the route model to ExampleUser
 	async function loader(request, response, next) {
-		if (await setModel(request, response, BaseUser)) {
+		if (await setModel(request, response, ExampleUser)) {
 			next();
 		}
 	}
@@ -211,7 +212,7 @@ npm i pointyapi
 	Open `src/index.ts` up again, and let's import our new User route.
 
 	```typescript
-	import { BaseUser } from 'pointyapi/models'; // Add import to our user model
+	import { ExampleUser } from 'pointyapi/models'; // Add import to our user model
 
 	...
 	// Routes
@@ -229,7 +230,7 @@ npm i pointyapi
 		.setEntities(
 			[
 				/* TODO: We will set our models here */
-				BaseUser // Add our BaseModel model to the database
+				ExampleUser // Add our BaseModel model to the database
 			]
 		)
 
@@ -304,14 +305,14 @@ npm i pointyapi
 
 	import { Router } from 'express';
 	import { loginEndpoint, logoutEndpoint } from 'pointyapi/endpoints';
-	import { BaseUser } from 'pointyapi/models';
+	import { ExampleUser } from 'pointyapi/models';
 	import { setModel } from 'pointyapi';
 
 	const router: Router = Router();
 
 	// Set our route model & activate auth route
 	async function loader(request, response, next) {
-		if (await setModel(request, response, BaseUser, true)) {
+		if (await setModel(request, response, ExampleUser, true)) {
 			next();
 		}
 	}
@@ -344,7 +345,7 @@ npm i pointyapi
 		.setEntities(
 			[
 				/* TODO: We will set our models here */
-				BaseUser
+				ExampleUser
 			]
 		)
 
@@ -379,7 +380,7 @@ npm i pointyapi
 To launch in production mode, please make sure the following variables are set (environment variables/.env)
 
 - **SITE_TITLE** - Set the site title
-- **CLIENT_URL** - Set your client URL to add the client to the CORS policy
+- **ALLOW_ORIGIN** - Set your client URL to add the client to the CORS policy
 - **JWT_KEY** - Set your token key to make JWT cryptographically secure
 - **JWT_TTL** - Set your token time-to-live (seconds). Default is 15 minutes
 - **JWT_REFRESH_TTL** - Set your refresh token time-to-live (seconds). Default is 7 days.

@@ -13,13 +13,13 @@ export async function patchEndpoint(
 	request: Request,
 	response: Response
 ): Promise<void> {
-	// Merge payload
-	request.body = Object.assign(request.payload, request.body);
-
 	// Run model hook
 	if (!await runHook('patch', request.body, request, response)) {
 		return;
 	}
+
+	// Merge payload
+	request.body = Object.assign(request.payload, request.body);
 
 	// Pass null in place of empty strings
 	for (const key in request.payload) {

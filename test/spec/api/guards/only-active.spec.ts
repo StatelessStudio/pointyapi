@@ -1,5 +1,5 @@
 import { onlyActive } from '../../../../src/guards';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { UserStatus } from '../../../../src/enums';
 
 import { createMockRequest } from '../../../../src/test-probe';
@@ -14,7 +14,7 @@ describe('[Guards] onlyActive', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create user
-		request.user = new BaseUser();
+		request.user = new ExampleUser();
 		request.user.status = UserStatus.Active;
 
 		// Test onlyActive()
@@ -51,7 +51,7 @@ describe('[Guards] onlyActive', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create user
-		request.user = new BaseUser();
+		request.user = new ExampleUser();
 		request.user.status = UserStatus.Pending;
 
 		// Test onlyActive()

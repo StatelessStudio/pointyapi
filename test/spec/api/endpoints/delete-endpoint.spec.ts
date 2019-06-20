@@ -1,11 +1,13 @@
 import { setModel } from '../../../../src';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { deleteEndpoint } from '../../../../src/endpoints';
 
 import { createMockRequest } from '../../../../src/test-probe';
 import { HookTestClass } from '../../../examples/api/models/hook-test-class';
 import { addResource } from '../../../../src/utils';
 import { getRepository } from 'typeorm';
+
+const errorHandler = (error) => fail(JSON.stringify(error));
 
 /**
  * deleteEndpoint()
@@ -26,7 +28,7 @@ describe('[Endpoints] Delete', () => {
 		const { request, response } = createMockRequest('DELETE');
 
 		// Create base user
-		const user = new BaseUser();
+		const user = new ExampleUser();
 		user.fname = 'Delete';
 		user.lname = 'Endpoint';
 		user.username = 'deleteEndpoint';
@@ -34,24 +36,20 @@ describe('[Endpoints] Delete', () => {
 		user.email = 'delete@example.com';
 
 		// Get user repo
-		const result = await request.repository
-			.save(user)
-			.catch((error) => fail(JSON.stringify(error)));
+		const result = await request.repository.save(user).catch(errorHandler);
 
 		// Setup request
 		request.identifier = 'id';
 		request.params = result;
 
 		// Set model
-		if (!await setModel(request, response, BaseUser)) {
+		if (!await setModel(request, response, ExampleUser)) {
 			fail('Could not set model');
 		}
 
 		// Test delete responder
 		response.deleteResponder = () => {};
-		await deleteEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await deleteEndpoint(request, response).catch(errorHandler);
 	});
 
 	it('calls response.goneResponder() if object not found', async () => {

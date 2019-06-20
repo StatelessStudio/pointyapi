@@ -1,7 +1,7 @@
 import { pointy } from '../../../../src';
 import { UserRole } from '../../../../src/enums/user-role';
 import { upgradeUserRole } from '../../../../src/utils/upgrade-user-role';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 
 const http = pointy.http;
 
@@ -19,7 +19,7 @@ describe('[Guards] User API Update', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		await upgradeUserRole('adminGuardPatch1', BaseUser, UserRole.Admin);
+		await upgradeUserRole('adminGuardPatch1', ExampleUser, UserRole.Admin);
 
 		this.adminToken = await http
 			.post('/api/v1/auth', {
@@ -81,19 +81,14 @@ describe('[Guards] User API Update', () => {
 					{
 						fname: 'updatedName'
 					},
-					[ 204 ],
 					token.body['token']
 				)
 				.catch((error) => fail(JSON.stringify(error)));
 
 			const getResult = await http
-				.get(
-					`/api/v1/user`,
-					{
-						id: user.body['id']
-					},
-					[ 200 ]
-				)
+				.get(`/api/v1/user`, {
+					id: user.body['id']
+				})
 				.catch((error) => fail(JSON.stringify(error)));
 
 			if (result && getResult) {
@@ -123,6 +118,7 @@ describe('[Guards] User API Update', () => {
 					{
 						fname: 'noToken'
 					},
+					undefined,
 					[ 401 ]
 				)
 				.catch((error) => fail(JSON.stringify(error)));
@@ -149,8 +145,8 @@ describe('[Guards] User API Update', () => {
 					{
 						fname: 'wrongToken'
 					},
-					[ 403 ],
-					this.token.body.token
+					this.token.body.token,
+					[ 403 ]
 				)
 				.catch((error) => fail(JSON.stringify(error)));
 		}
@@ -166,8 +162,8 @@ describe('[Guards] User API Update', () => {
 				{
 					role: UserRole.Admin
 				},
-				[ 403 ],
-				this.token.body.token
+				this.token.body.token,
+				[ 403 ]
 			)
 			.catch((error) => fail(JSON.stringify(error)));
 	});
@@ -179,7 +175,6 @@ describe('[Guards] User API Update', () => {
 				{
 					fname: 'adminUpdate'
 				},
-				[ 204 ],
 				this.adminToken.body.token
 			)
 			.catch((error) => fail(JSON.stringify(error)));
@@ -190,7 +185,6 @@ describe('[Guards] User API Update', () => {
 				{
 					id: this.user.body.id
 				},
-				[ 200 ],
 				this.token.body.token
 			)
 			.catch((error) => fail(JSON.stringify(error)));

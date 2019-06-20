@@ -1,5 +1,5 @@
 import { onlySelf } from '../../../../src/guards';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 
 import { createMockRequest } from '../../../../src/test-probe';
 
@@ -13,7 +13,7 @@ describe('[Guards] onlySelf (Delete)', async () => {
 		const { request, response } = createMockRequest('DELETE');
 
 		// Create user
-		const user = new BaseUser();
+		const user = new ExampleUser();
 		user.id = 1;
 
 		request.user = user;
@@ -37,7 +37,7 @@ describe('[Guards] onlySelf (Delete)', async () => {
 		const { request, response } = createMockRequest('DELETE');
 
 		// Create user
-		request.payload = new BaseUser();
+		request.payload = new ExampleUser();
 		request.payload.id = 1;
 
 		request.params = { id: 1 };
@@ -58,10 +58,10 @@ describe('[Guards] onlySelf (Delete)', async () => {
 		const { request, response } = createMockRequest('DELETE');
 
 		// Create user
-		request.user = new BaseUser();
+		request.user = new ExampleUser();
 		request.user.id = 1;
 
-		request.payload = new BaseUser();
+		request.payload = new ExampleUser();
 		request.payload.id = 2;
 
 		request.params = { id: 2 };

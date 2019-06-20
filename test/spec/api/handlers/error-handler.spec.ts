@@ -1,7 +1,7 @@
 import { createMockRequest } from '../../../../src/test-probe';
 import { errorHandler } from '../../../../src/handlers';
 import { getRepository } from 'typeorm';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { ExampleOwner } from '../../../examples/api/models/example-owner';
 import { ExampleRelation } from '../../../examples/api/models/example-relation';
 
@@ -61,7 +61,7 @@ describe('[Handlers] errorHandler', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create user
-		const user = new BaseUser();
+		const user = new ExampleUser();
 
 		// Override validation responder
 		let result;
@@ -70,7 +70,7 @@ describe('[Handlers] errorHandler', async () => {
 		};
 
 		// Save user && test error handler
-		await getRepository(BaseUser)
+		await getRepository(ExampleUser)
 			.save(user)
 			.then(() => fail('Saved with null violation'))
 			.catch((error) => {
@@ -131,14 +131,14 @@ describe('[Handlers] errorHandler', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create user
-		const user1 = new BaseUser();
+		const user1 = new ExampleUser();
 		user1.fname = 'tom';
 		user1.lname = 'doe';
 		user1.username = 'tomDuplicate';
 		user1.email = 'tomDuplicate@example.com';
 		user1.password = 'password123';
 
-		const user2 = new BaseUser();
+		const user2 = new ExampleUser();
 		user2.fname = 'tom';
 		user2.lname = 'doe';
 		user2.username = 'tomDuplicate';
@@ -152,7 +152,7 @@ describe('[Handlers] errorHandler', async () => {
 		};
 
 		// Save user && test error handler
-		const repo = getRepository(BaseUser);
+		const repo = getRepository(ExampleUser);
 		await repo.save(user1).catch((error) => fail(error));
 
 		await repo

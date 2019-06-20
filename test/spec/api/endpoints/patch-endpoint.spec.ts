@@ -1,5 +1,5 @@
 import { setModel } from '../../../../src';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { patchEndpoint } from '../../../../src/endpoints';
 import { createMockRequest } from '../../../../src/test-probe';
 import { HookTestClass } from '../../../examples/api/models/hook-test-class';
@@ -25,7 +25,7 @@ describe('[Endpoints] Patch', () => {
 		const { request, response } = createMockRequest('PATCH');
 
 		// Create user
-		const user = new BaseUser();
+		const user = new ExampleUser();
 		user.fname = 'Patch';
 		user.lname = 'Endpoint';
 		user.username = 'patchEndpoint';
@@ -44,7 +44,7 @@ describe('[Endpoints] Patch', () => {
 		request.params.id = user.id;
 
 		// Set model
-		if (!await setModel(request, response, BaseUser)) {
+		if (!await setModel(request, response, ExampleUser)) {
 			fail('Could not set model');
 		}
 
@@ -68,7 +68,7 @@ describe('[Endpoints] Patch', () => {
 		const { request, response } = createMockRequest('PATCH');
 
 		// Create user
-		const user = new BaseUser();
+		const user = new ExampleUser();
 		user.fname = 'Patch';
 		user.lname = 'Endpoint';
 		user.username = 'patchEndpoint2';
@@ -86,7 +86,7 @@ describe('[Endpoints] Patch', () => {
 		request.params.id = user.id;
 
 		// Set model
-		if (!await setModel(request, response, BaseUser)) {
+		if (!await setModel(request, response, ExampleUser)) {
 			fail('Could not set model');
 		}
 

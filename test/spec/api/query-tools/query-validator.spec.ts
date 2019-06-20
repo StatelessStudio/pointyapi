@@ -1,6 +1,6 @@
 import { queryValidator } from '../../../../src/query-tools/query-validator';
 import { createMockRequest } from '../../../../src/test-probe';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 
 /**
  * queryValidator()
@@ -10,8 +10,8 @@ describe('[Utils] queryValidator()', () => {
 	it('returns true if the query is valid', () => {
 		const { request, response } = createMockRequest();
 		request.query = { where: { id: 1 } };
-		request.payloadType = BaseUser;
-		request.payload = new BaseUser();
+		request.payloadType = ExampleUser;
+		request.payload = new ExampleUser();
 
 		let hasValidationResponder = false;
 		response.validationResponder = () => (hasValidationResponder = true);
@@ -27,8 +27,8 @@ describe('[Utils] queryValidator()', () => {
 			not: undefined,
 			join: [ undefined ]
 		};
-		request.payloadType = BaseUser;
-		request.payload = new BaseUser();
+		request.payloadType = ExampleUser;
+		request.payload = new ExampleUser();
 
 		let hasValidationResponder = false;
 		response.validationResponder = () => (hasValidationResponder = true);
@@ -43,8 +43,8 @@ describe('[Utils] queryValidator()', () => {
 	it('fires validation responder if the query type is invalid', () => {
 		const { request, response } = createMockRequest();
 		request.query = { were: { id: 1 } };
-		request.payloadType = BaseUser;
-		request.payload = new BaseUser();
+		request.payloadType = ExampleUser;
+		request.payload = new ExampleUser();
 
 		let hasValidationResponder = false;
 		response.validationResponder = () => (hasValidationResponder = true);
@@ -56,8 +56,8 @@ describe('[Utils] queryValidator()', () => {
 	it('fires validation responder if the query has invalid value type', () => {
 		const { request, response } = createMockRequest();
 		request.query = { where: [ 1 ] };
-		request.payloadType = BaseUser;
-		request.payload = new BaseUser();
+		request.payloadType = ExampleUser;
+		request.payload = new ExampleUser();
 
 		let hasValidationResponder = false;
 		response.validationResponder = () => (hasValidationResponder = true);
@@ -69,8 +69,8 @@ describe('[Utils] queryValidator()', () => {
 	it('fires validation responder if a key is not in the model (object)', () => {
 		const { request, response } = createMockRequest();
 		request.query = { where: { notInModel: 'test' } };
-		request.payloadType = BaseUser;
-		request.payload = new BaseUser();
+		request.payloadType = ExampleUser;
+		request.payload = new ExampleUser();
 
 		let hasValidationResponder = false;
 		response.validationResponder = () => (hasValidationResponder = true);
@@ -82,8 +82,8 @@ describe('[Utils] queryValidator()', () => {
 	it('fires validation responder if a key is not in the model (array)', () => {
 		const { request, response } = createMockRequest();
 		request.query = { join: [ 'notInModel' ] };
-		request.payloadType = BaseUser;
-		request.payload = new BaseUser();
+		request.payloadType = ExampleUser;
+		request.payload = new ExampleUser();
 
 		let hasValidationResponder = false;
 		response.validationResponder = () => (hasValidationResponder = true);
@@ -100,8 +100,8 @@ describe('[Utils] queryValidator()', () => {
 				categories: [ 1, 2, 3 ]
 			}
 		};
-		request.payloadType = BaseUser;
-		request.payload = new BaseUser();
+		request.payloadType = ExampleUser;
+		request.payload = new ExampleUser();
 
 		let hasValidationResponder = false;
 		response.validationResponder = (result) =>

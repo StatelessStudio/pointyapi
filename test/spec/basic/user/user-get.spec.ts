@@ -26,7 +26,7 @@ describe('User API Read', () => {
 
 	it('can read all', async () => {
 		await http
-			.get('/api/v1/user', {}, [ 200 ])
+			.get('/api/v1/user', {})
 			.then((result) => expect(result.body).toEqual(jasmine.any(Array)))
 			.catch((error) => fail(JSON.stringify(error)));
 	});
@@ -64,6 +64,7 @@ describe('User API Read', () => {
 				{
 					id: 12345
 				},
+				undefined,
 				[ 410 ]
 			)
 			.catch((error) => fail(JSON.stringify(error)));
@@ -122,6 +123,7 @@ describe('User API Read', () => {
 				{
 					select: [ 'password' ]
 				},
+				undefined,
 				[ 403 ]
 			)
 			.catch((error) => fail(JSON.stringify(error)));

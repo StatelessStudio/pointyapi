@@ -55,7 +55,7 @@
  * You will need to add the appropriate bodyguards on your model:
  *
  * ```typescript
- * import { BaseUser } from 'pointyapi/models';
+ * import { ExampleUser } from 'pointyapi/models';
  * import {
  * 	CanRead,
  * 	AnyoneCanRead,
@@ -69,7 +69,7 @@
  * } from 'pointyapi/bodyguards';
  * import { UserRole, UserStatus, BodyguardOwner } from 'pointyapi/enums';
  *
- * export class User extends BaseUser() {
+ * export class User extends BaseUser {
  *		// ID
  *		@BodyguardKey() // Determine who can read/write from here
  *		@AnyoneCanRead()

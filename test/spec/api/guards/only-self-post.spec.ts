@@ -1,5 +1,5 @@
 import { onlySelf } from '../../../../src/guards';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 
 import { createMockRequest } from '../../../../src/test-probe';
 
@@ -14,7 +14,7 @@ describe('[Guards] onlySelf (Post)', async () => {
 		request.method = 'POST';
 
 		// Create user
-		const user = new BaseUser();
+		const user = new ExampleUser();
 		user.id = 1;
 
 		request.user = user;
@@ -37,7 +37,7 @@ describe('[Guards] onlySelf (Post)', async () => {
 		request.method = 'POST';
 
 		// Create user
-		request.body = new BaseUser();
+		request.body = new ExampleUser();
 		request.body.id = 1;
 
 		// Test onlySelf()
@@ -57,10 +57,10 @@ describe('[Guards] onlySelf (Post)', async () => {
 		request.method = 'POST';
 
 		// Create user
-		request.user = new BaseUser();
+		request.user = new ExampleUser();
 		request.user.id = 1;
 
-		request.body = new BaseUser();
+		request.body = new ExampleUser();
 		request.body.id = 2;
 
 		// Test onlySelf()

@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
 
 import { createMockRequest } from '../../../../src/test-probe';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { postFilter } from '../../../../src/filters';
 
 /**
@@ -11,14 +11,14 @@ import { postFilter } from '../../../../src/filters';
 describe('[Guards] postFilter', async () => {
 	beforeAll(async () => {
 		// Create mock user
-		this.user = new BaseUser();
+		this.user = new ExampleUser();
 		this.user.fname = 'tom';
 		this.user.lname = 'doe';
 		this.user.username = 'tomFilter2';
 		this.user.email = 'tomFilter2@example.com';
 		this.user.password = 'password123';
 
-		this.user = await getRepository(BaseUser)
+		this.user = await getRepository(ExampleUser)
 			.save(this.user)
 			.catch((error) => fail(error));
 	});

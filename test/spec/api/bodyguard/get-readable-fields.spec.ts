@@ -1,4 +1,4 @@
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { getReadableFields } from '../../../../src/bodyguard';
 
 /**
@@ -6,9 +6,9 @@ import { getReadableFields } from '../../../../src/bodyguard';
  * pointyapi/bodyguard
  */
 describe('[Bodyguard] getReadableFields', () => {
-	it('returns an array of one key for BaseUser', () => {
+	it('returns an array of one key for ExampleUser', () => {
 		// Create user
-		const user = new BaseUser();
+		const user = new ExampleUser();
 		user.id = 1;
 
 		// Get readable fields

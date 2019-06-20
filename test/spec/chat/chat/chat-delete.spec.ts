@@ -86,7 +86,6 @@ describe('[Chat] Chat API Delete', () => {
 					to: { id: this.user2.body.id },
 					body: 'test'
 				},
-				[ 200 ],
 				this.token.body.token
 			)
 			.catch((error) =>
@@ -97,7 +96,6 @@ describe('[Chat] Chat API Delete', () => {
 			await http
 				.delete(
 					`/api/v1/chat/${chat.body['id']}`,
-					[ 204 ],
 					this.token.body.token
 				)
 				.catch((error) => fail(JSON.stringify(error)));
@@ -115,14 +113,13 @@ describe('[Chat] Chat API Delete', () => {
 					to: { id: this.user2.body.id },
 					body: 'test'
 				},
-				[ 200 ],
 				this.token.body.token
 			)
 			.catch((error) => fail(JSON.stringify(error)));
 
 		if (result) {
 			await http
-				.delete(`/api/v1/chat/${result.body['id']}`, [ 401 ])
+				.delete(`/api/v1/chat/${result.body['id']}`, undefined, [ 401 ])
 				.catch((error) => fail(JSON.stringify(error)));
 		}
 	});
@@ -159,7 +156,6 @@ describe('[Chat] Chat API Delete', () => {
 					to: { id: this.user2.body.id },
 					body: 'test'
 				},
-				[ 200 ],
 				this.token.body.token
 			)
 			.catch((error) =>
@@ -171,8 +167,8 @@ describe('[Chat] Chat API Delete', () => {
 			await http
 				.delete(
 					`/api/v1/chat/${chat.body['id']}`,
-					[ 403 ],
-					wrongToken.body['token']
+					wrongToken.body['token'],
+					[ 403 ]
 				)
 				.catch((error) => fail(JSON.stringify(error)));
 		}
@@ -189,7 +185,6 @@ describe('[Chat] Chat API Delete', () => {
 					to: { id: this.user2.body.id },
 					body: 'test'
 				},
-				[ 200 ],
 				this.token.body.token
 			)
 			.catch((error) => fail(JSON.stringify(error)));
@@ -198,7 +193,6 @@ describe('[Chat] Chat API Delete', () => {
 			await http
 				.delete(
 					`/api/v1/chat/${result.body['id']}`,
-					[ 204 ],
 					this.adminToken.body.token
 				)
 				.catch((error) => fail(JSON.stringify(error)));

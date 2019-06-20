@@ -1,5 +1,5 @@
 import { PointyPostgres } from '../../../../src/database';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import * as path from 'path';
 const ROOT_PATH = require('app-root-path').toString();
 
@@ -24,7 +24,7 @@ describe('[Database: Postgres]', async () => {
 	});
 
 	it('can set entities', () => {
-		this.db.setEntities([ BaseUser ]);
+		this.db.setEntities([ ExampleUser ]);
 	});
 
 	it('can connect', async () => {
@@ -35,7 +35,6 @@ describe('[Database: Postgres]', async () => {
 	it('can connect with json options', async () => {
 		const db = new PointyPostgres();
 		db.connectionName = 'jsonconn';
-		db.errorHandler = (error) => fail(error);
 		db.logger = () => {};
 
 		// Database

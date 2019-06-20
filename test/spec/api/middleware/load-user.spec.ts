@@ -1,5 +1,5 @@
 import { getRepository } from 'typeorm';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { createMockRequest } from '../../../../src/test-probe';
 import { loadUser } from '../../../../src/middleware';
 import { jwtBearer } from '../../../../src/jwt-bearer';
@@ -11,7 +11,7 @@ import { jwtBearer } from '../../../../src/jwt-bearer';
 describe('[Middleware] loadUser()', async () => {
 	beforeAll(async () => {
 		// Create user
-		this.user = new BaseUser();
+		this.user = new ExampleUser();
 		this.user.fname = 'tom';
 		this.user.lname = 'doe';
 		this.user.username = 'tomLoadUser';
@@ -19,7 +19,7 @@ describe('[Middleware] loadUser()', async () => {
 		this.user.password = 'password123';
 
 		// Save user
-		await getRepository(BaseUser)
+		await getRepository(ExampleUser)
 			.save(this.user)
 			.catch((error) =>
 				fail('Could not save user: ' + JSON.stringify(error))
@@ -54,7 +54,7 @@ describe('[Middleware] loadUser()', async () => {
 		const returnValue = await loadUser(request, response, next);
 
 		expect(returnValue).toBe(true);
-		expect(result).toEqual(jasmine.any(BaseUser));
+		expect(result).toEqual(jasmine.any(ExampleUser));
 		expect(result['id']).toEqual(this.user.id);
 	});
 
@@ -91,7 +91,7 @@ describe('[Middleware] loadUser()', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create bad user & token
-		const badUser = new BaseUser();
+		const badUser = new ExampleUser();
 		badUser.id = 99999;
 
 		const badToken = jwtBearer.sign(badUser);

@@ -1,4 +1,4 @@
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { getBodyguardKeys, compareIdToUser } from '../../../../src/bodyguard';
 
 /**
@@ -8,11 +8,11 @@ import { getBodyguardKeys, compareIdToUser } from '../../../../src/bodyguard';
 describe('[Bodyguard] compareIdToUser', () => {
 	beforeAll(() => {
 		// Create user
-		this.user = new BaseUser();
+		this.user = new ExampleUser();
 		this.user.id = 2;
 
 		// Get bodyguard keys
-		this.guardKeys = getBodyguardKeys(new BaseUser());
+		this.guardKeys = getBodyguardKeys(new ExampleUser());
 	});
 
 	it('returns true if the user matches', () => {

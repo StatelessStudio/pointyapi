@@ -1,5 +1,5 @@
 import { onlyUser } from '../../../../src/guards';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { UserRole } from '../../../../src/enums';
 
 import { createMockRequest } from '../../../../src/test-probe';
@@ -14,7 +14,7 @@ describe('[Guards] onlyUser', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create user
-		request.user = new BaseUser();
+		request.user = new ExampleUser();
 
 		// Test onlyUser()
 		let result = false;

@@ -23,7 +23,7 @@ describe('[HTTP] HTTP Client', () => {
 
 	it('can get', async () => {
 		const result: void | HttpClientResponse = await http
-			.get('/', {}, [ 404 ], 'Bearer: test')
+			.get('/', {}, 'Bearer: test', [ 404 ])
 			.catch((error) => fail(JSON.stringify(error)));
 
 		if (result) {
@@ -38,7 +38,7 @@ describe('[HTTP] HTTP Client', () => {
 		let hasError = false;
 
 		const result: boolean | HttpClientResponse = await http
-			.get('/', {}, [ 200 ])
+			.get('/', {})
 			.catch((error) => (hasError = true));
 
 		expect(hasError).toBe(true);
@@ -46,7 +46,7 @@ describe('[HTTP] HTTP Client', () => {
 
 	it('can post', async () => {
 		const result: void | HttpClientResponse = await http
-			.post('/', {}, [ 404 ], 'Bearer: test')
+			.post('/', {}, 'Bearer: test', [ 404 ])
 			.catch((error) => fail(JSON.stringify(error)));
 
 		if (result) {
@@ -61,7 +61,7 @@ describe('[HTTP] HTTP Client', () => {
 		let hasError = false;
 
 		const result: boolean | HttpClientResponse = await http
-			.post('/', {}, [ 200 ])
+			.post('/', {})
 			.catch((error) => (hasError = true));
 
 		expect(hasError).toBe(true);
@@ -69,7 +69,7 @@ describe('[HTTP] HTTP Client', () => {
 
 	it('can patch', async () => {
 		const result: void | HttpClientResponse = await http
-			.patch('/', {}, [ 404 ], 'Bearer: test')
+			.patch('/', {}, 'Bearer: test', [ 404 ])
 			.catch((error) => fail(JSON.stringify(error)));
 
 		if (result) {
@@ -84,7 +84,7 @@ describe('[HTTP] HTTP Client', () => {
 		let hasError = false;
 
 		const result: boolean | HttpClientResponse = await http
-			.patch('/', {}, [ 200 ])
+			.patch('/', {})
 			.catch((error) => (hasError = true));
 
 		expect(hasError).toBe(true);
@@ -92,7 +92,7 @@ describe('[HTTP] HTTP Client', () => {
 
 	it('can delete', async () => {
 		const result: void | HttpClientResponse = await http
-			.delete('/', [ 404 ], 'Bearer: test')
+			.delete('/', 'Bearer: test', [ 404 ])
 			.catch((error) => fail(JSON.stringify(error)));
 
 		if (result) {
@@ -107,7 +107,7 @@ describe('[HTTP] HTTP Client', () => {
 		let hasError = false;
 
 		const result: boolean | HttpClientResponse = await http
-			.delete('/', [ 200 ])
+			.delete('/')
 			.catch((error) => (hasError = true));
 
 		expect(hasError).toBe(true);

@@ -29,7 +29,7 @@ import { User } from './user';
 import { ChatStatus } from '../enums/chat-status';
 import { BodyguardOwner } from '../../../../src/enums';
 
-@Entity('ChatMessage')
+@Entity()
 export class ChatMessage extends BaseModel {
 	// ID
 	@PrimaryGeneratedColumn()
@@ -83,8 +83,6 @@ export class ChatMessage extends BaseModel {
 	public timeUpdated: Date = undefined;
 
 	// Message body
-	// TODO: Validate
-
 	@Column({ type: 'text' })
 	@OnlySelfCanRead()
 	@OnlySelfCanWrite()

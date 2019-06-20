@@ -54,7 +54,6 @@ describe('[Chat] Chat API Post', () => {
 					to: { id: this.user2.body.id },
 					body: 'test'
 				},
-				[ 200 ],
 				this.token.body.token
 			)
 			.then((result) => {
@@ -78,7 +77,6 @@ describe('[Chat] Chat API Post', () => {
 						body: 'test array 2'
 					}
 				],
-				[ 200 ],
 				this.token.body.token
 			)
 			.then((result) => {
@@ -97,6 +95,7 @@ describe('[Chat] Chat API Post', () => {
 					to: { id: this.user2.body.id },
 					body: 'test'
 				},
+				undefined,
 				[ 401 ]
 			)
 			.catch((error) =>
@@ -112,7 +111,6 @@ describe('[Chat] Chat API Post', () => {
 					to: { id: this.user2.body.id },
 					body: 'test'
 				},
-				[ 200 ],
 				this.token.body.token
 			)
 			.then((result) => {

@@ -44,6 +44,7 @@ export async function runHook(
 		})
 		.catch((error) => {
 			hookResult = false;
+			console.error(error);
 		});
 
 	if (!hookResult) {

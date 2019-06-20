@@ -1,5 +1,5 @@
 import { createSearchQuery } from '../../../../src/utils';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 import { ExampleRelation } from '../../../examples/api/models/example-relation';
 
 /**
@@ -15,7 +15,10 @@ describe('[Utils] createSearchQuery()', () => {
 			}
 		};
 
-		const { queryString, queryParams } = createSearchQuery(BaseUser, query);
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
 
 		expect(queryString).toBe('(obj.fname=:fname AND obj.lname=:lname)');
 		expect(queryParams).toEqual(query.where);
@@ -29,7 +32,10 @@ describe('[Utils] createSearchQuery()', () => {
 			}
 		};
 
-		const { queryString, queryParams } = createSearchQuery(BaseUser, query);
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
 
 		expect(queryString).toBe('(obj.fname=:fname OR obj.lname=:lname)');
 		expect(queryParams).toEqual(query.whereAnyOf);
@@ -40,11 +46,14 @@ describe('[Utils] createSearchQuery()', () => {
 			search: 'hello world'
 		};
 
-		const { queryString, queryParams } = createSearchQuery(BaseUser, query);
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
 
 		expect(queryString).toBe(
-			'(LOWER(obj.username) LIKE :search OR LOWER(obj.fname) LIKE :search OR' +
-				' LOWER(obj.lname) LIKE :search OR LOWER(obj.email) LIKE :search)'
+			'(LOWER(obj.username) LIKE :search OR LOWER(obj.email) LIKE :search OR' +
+				' LOWER(obj.fname) LIKE :search OR LOWER(obj.lname) LIKE :search)'
 		);
 		expect(queryParams).toEqual({ search: '%hello%world%' });
 	});
@@ -54,7 +63,10 @@ describe('[Utils] createSearchQuery()', () => {
 			search: { fname: 'hello world' }
 		};
 
-		const { queryString, queryParams } = createSearchQuery(BaseUser, query);
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
 
 		expect(queryString).toBe('(LOWER(obj.fname) LIKE :search_fname)');
 		expect(queryParams).toEqual({ search_fname: '%hello%world%' });
@@ -81,7 +93,10 @@ describe('[Utils] createSearchQuery()', () => {
 			}
 		};
 
-		const { queryString, queryParams } = createSearchQuery(BaseUser, query);
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
 
 		expect(queryString).toBe('(obj.id BETWEEN 0 AND 250)');
 		expect(queryParams).toEqual({});
@@ -94,7 +109,10 @@ describe('[Utils] createSearchQuery()', () => {
 			}
 		};
 
-		const { queryString, queryParams } = createSearchQuery(BaseUser, query);
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
 
 		expect(queryString).toBe('obj.id < :id');
 		expect(queryParams).toEqual({ id: '100' });
@@ -107,7 +125,10 @@ describe('[Utils] createSearchQuery()', () => {
 			}
 		};
 
-		const { queryString, queryParams } = createSearchQuery(BaseUser, query);
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
 
 		expect(queryString).toBe('obj.id <= :id');
 		expect(queryParams).toEqual({ id: '100' });
@@ -120,7 +141,10 @@ describe('[Utils] createSearchQuery()', () => {
 			}
 		};
 
-		const { queryString, queryParams } = createSearchQuery(BaseUser, query);
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
 
 		expect(queryString).toBe('obj.id > :id');
 		expect(queryParams).toEqual({ id: '100' });
@@ -133,7 +157,10 @@ describe('[Utils] createSearchQuery()', () => {
 			}
 		};
 
-		const { queryString, queryParams } = createSearchQuery(BaseUser, query);
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
 
 		expect(queryString).toBe('obj.id >= :id');
 		expect(queryParams).toEqual({ id: '100' });
@@ -147,7 +174,10 @@ describe('[Utils] createSearchQuery()', () => {
 			}
 		};
 
-		const { queryString, queryParams } = createSearchQuery(BaseUser, query);
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
 
 		expect(queryString).toBe('obj.fname!=:fname AND obj.lname!=:lname');
 		expect(queryParams).toEqual(query.not);
@@ -164,7 +194,10 @@ describe('[Utils] createSearchQuery()', () => {
 			}
 		};
 
-		const { queryString, queryParams } = createSearchQuery(BaseUser, query);
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
 
 		expect(queryString).toBe(
 			'(obj.status=:status) AND obj.fname!=:fname AND obj.lname!=:lname'

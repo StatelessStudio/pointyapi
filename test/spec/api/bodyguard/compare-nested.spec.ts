@@ -1,4 +1,4 @@
-import { BaseModel, BaseUser } from '../../../../src/models';
+import { BaseModel, ExampleUser } from '../../../../src/models';
 import {
 	getBodyguardKeys,
 	compareNestedBodyguards,
@@ -6,7 +6,7 @@ import {
 } from '../../../../src/bodyguard';
 
 class TestModel extends BaseModel {
-	@BodyguardKey() public owner: BaseUser = undefined;
+	@BodyguardKey() public owner: ExampleUser = undefined;
 }
 
 /**
@@ -16,7 +16,7 @@ class TestModel extends BaseModel {
 describe('[Bodyguard] compareNested()', () => {
 	it('returns true if the object matches', () => {
 		// Create base user
-		const user = new BaseUser();
+		const user = new ExampleUser();
 		user.id = 2;
 
 		// Create comparator user
@@ -40,11 +40,11 @@ describe('[Bodyguard] compareNested()', () => {
 
 	it('returns false if the object does not match', () => {
 		// Create base user
-		const user = new BaseUser();
+		const user = new ExampleUser();
 		user.id = 2;
 
 		// Create another base user
-		const user2 = new BaseUser();
+		const user2 = new ExampleUser();
 		user.id = 3;
 
 		// Create a resource belonging to user

@@ -57,7 +57,6 @@ describe('[Chat] Chat API Patch', () => {
 					to: { id: this.user2.body.id },
 					body: 'test'
 				},
-				[ 200 ],
 				this.token.body.token
 			)
 			.catch((error) => fail(JSON.stringify(error)));
@@ -69,7 +68,6 @@ describe('[Chat] Chat API Patch', () => {
 					{
 						fromStatus: ChatStatus.Read
 					},
-					[ 204 ],
 					this.token.body.token
 				)
 				.catch((error) => fail(JSON.stringify(error)));
@@ -105,7 +103,6 @@ describe('[Chat] Chat API Patch', () => {
 					to: { id: this.user2.body.id },
 					body: 'test'
 				},
-				[ 200 ],
 				this.token.body.token
 			)
 			.catch((error) =>
@@ -119,8 +116,8 @@ describe('[Chat] Chat API Patch', () => {
 					{
 						fromStatus: ChatStatus.Read
 					},
-					[ 403 ],
-					wrongToken.body['token']
+					wrongToken.body['token'],
+					[ 403 ]
 				)
 				.catch((error) => fail(JSON.stringify(error)));
 		}
@@ -137,7 +134,6 @@ describe('[Chat] Chat API Patch', () => {
 					to: { id: this.user2.body.id },
 					body: 'test'
 				},
-				[ 200, 204 ],
 				this.token.body.token
 			)
 			.catch((error) => fail(JSON.stringify(error)));
@@ -149,7 +145,6 @@ describe('[Chat] Chat API Patch', () => {
 					{
 						booleanTest: true
 					},
-					[ 200, 204 ],
 					this.token.body.token
 				)
 				.catch((error) => fail(JSON.stringify(error)));
@@ -158,7 +153,6 @@ describe('[Chat] Chat API Patch', () => {
 				.get(
 					`/api/v1/chat`,
 					{ id: result.body['id'] },
-					[ 200 ],
 					this.token.body.token
 				)
 				.catch((error) => fail(JSON.stringify(error)));

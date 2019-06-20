@@ -14,6 +14,17 @@ export async function loginEndpoint(
 	request: Request,
 	response: Response
 ): Promise<void> {
+	// Check input
+	if (!('__user' in request.body)) {
+		response.validationResponder('__user is required');
+		return;
+	}
+
+	if (!('password' in request.body)) {
+		response.validationResponder('password is required');
+		return;
+	}
+
 	// Run model hook
 	if (!await runHook('login', request.body, request, response)) {
 		return;
@@ -27,19 +38,18 @@ export async function loginEndpoint(
 	}
 
 	// Create where query
-	let where = '';
+	const where = [];
 
 	for (const field of fields) {
-		where += `user.${field}=:name OR `;
+		const pair = {};
+		pair[field] = request.body.__user;
+		where.push(pair);
 	}
-	where = where.replace(/ OR +$/, '');
 
-	// Load users
 	const foundUsers = await request.repository
-		.createQueryBuilder('user')
-		.where(where)
-		.setParameters({ name: request.body.__user })
-		.getMany()
+		.find({
+			where: where
+		})
 		.catch((error) => response.error(error));
 
 	// Check users

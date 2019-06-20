@@ -1,7 +1,7 @@
 import { getRepository } from 'typeorm';
 
 import { createMockRequest } from '../../../../src/test-probe';
-import { BaseUser, BaseModel } from '../../../../src/models';
+import { ExampleUser, BaseModel } from '../../../../src/models';
 import { getFilter } from '../../../../src/filters';
 import { OnlySelfCanRead, OnlyAdminCanRead } from '../../../../src/bodyguard';
 
@@ -24,14 +24,14 @@ class NobodyCanReadMember extends BaseModel {
 describe('[Guards] getFilter', async () => {
 	beforeAll(async () => {
 		// Create mock user
-		this.user = new BaseUser();
+		this.user = new ExampleUser();
 		this.user.fname = 'tom';
 		this.user.lname = 'doe';
 		this.user.username = 'tomFilter';
 		this.user.email = 'tomFilter@example.com';
 		this.user.password = 'password123';
 
-		await getRepository(BaseUser)
+		await getRepository(ExampleUser)
 			.save(this.user)
 			.catch((error) => fail(error));
 	});
@@ -53,7 +53,7 @@ describe('[Guards] getFilter', async () => {
 		getFilter(request, response, next);
 
 		expect(result).toBe(true);
-		expect(request.payload[0]).toEqual(jasmine.any(BaseUser));
+		expect(request.payload[0]).toEqual(jasmine.any(ExampleUser));
 		expect(request.payload[0].fname).toEqual('tom');
 		expect(request.payload[0].password).toEqual(undefined);
 	});

@@ -1,14 +1,14 @@
 import { Router } from 'express';
 
 import { loginEndpoint, logoutEndpoint } from '../../../../src/endpoints';
-import { BaseUser } from '../../../../src/models/base-user';
+import { ExampleUser } from '../../../../src/models/example-user';
 
 import { setModel } from '../../../../src/';
 
 const router: Router = Router();
 
 async function loader(request, response, next) {
-	if (await setModel(request, response, BaseUser, true)) {
+	if (await setModel(request, response, ExampleUser, true)) {
 		next();
 	}
 }

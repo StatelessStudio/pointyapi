@@ -26,15 +26,15 @@ export class HttpClient {
 	 * Send a POST http request to the server
 	 * @param path Path to send to (e.g. /users)
 	 * @param data Data to send as query
-	 * @param expect Array of status codes to expect
 	 * @param bearer Bearer token to send
+	 * @param expect Array of status codes to expect
 	 * @return Returns a promise of HttpClientResponse
 	 */
 	public post(
 		path: string,
 		data: object,
-		expect: number[] = [ 200, 201, 202, 204 ],
-		bearer: boolean | string = false
+		bearer: boolean | string = false,
+		expect: number[] = [ 200, 201, 202, 204 ]
 	): Promise<HttpClientResponse> {
 		const options = {
 			method: 'POST',
@@ -71,15 +71,15 @@ export class HttpClient {
 	 * Send a GET http request to the server
 	 * @param path Path to send to (e.g. /users)
 	 * @param data Data to send as query
-	 * @param expect Array of status codes to expect
 	 * @param bearer Bearer token to send
+	 * @param expect Array of status codes to expect
 	 * @return Returns a promise of HttpClientResponse
 	 */
 	public get(
 		path: string,
 		data: boolean | Object = false,
-		expect: number[] = [ 200, 202 ],
-		bearer: boolean | string = false
+		bearer: boolean | string = false,
+		expect: number[] = [ 200, 202 ]
 	): Promise<HttpClientResponse> {
 		return new Promise<HttpClientResponse>((accept, reject) => {
 			const options = {
@@ -116,15 +116,15 @@ export class HttpClient {
 	 * Send a PATCH http request to the server
 	 * @param path Path to send to (e.g. /users)
 	 * @param data Data to send as query
-	 * @param expect Array of status codes to expect
 	 * @param bearer Bearer token to send
+	 * @param expect Array of status codes to expect
 	 * @return Returns a promise of HttpClientResponse
 	 */
 	public patch(
 		path: string,
 		data: object,
-		expect: number[] = [ 200, 201, 202, 204 ],
-		bearer: boolean | string = false
+		bearer: boolean | string = false,
+		expect: number[] = [ 200, 201, 202, 204 ]
 	): Promise<HttpClientResponse> {
 		const options = {
 			method: 'PATCH',
@@ -161,14 +161,14 @@ export class HttpClient {
 	 * Send a DELETE http request to the server
 	 * @param path Path to send to (e.g. /users)
 	 * @param data Data to send as query
-	 * @param expect Array of status codes to expect
 	 * @param bearer Bearer token to send
+	 * @param expect Array of status codes to expect
 	 * @return Returns a promise of HttpClientResponse
 	 */
 	public delete(
 		path: string,
-		expect: number[] = [ 200, 202, 204 ],
-		bearer: boolean | string = false
+		bearer: boolean | string = false,
+		expect: number[] = [ 200, 202, 204 ]
 	): Promise<HttpClientResponse> {
 		return new Promise<HttpClientResponse>((accept, reject) => {
 			const options = {

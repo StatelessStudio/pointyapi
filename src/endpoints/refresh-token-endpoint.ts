@@ -15,9 +15,9 @@ export async function refreshTokenEndpoint(
 	response: Response
 ): Promise<void> {
 	// Check request body
-	if ('refreshToken' in request.body) {
+	if ('__refreshToken' in request.body) {
 		// Check refresh token
-		const token = jwtBearer.dryVerify(request.body.refreshToken);
+		const token = jwtBearer.dryVerify(request.body.__refreshToken);
 
 		if (token && 'isRefresh' in token && token.isRefresh) {
 			// Load user

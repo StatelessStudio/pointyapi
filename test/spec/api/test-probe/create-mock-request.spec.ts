@@ -1,5 +1,5 @@
 import { createMockRequest } from '../../../../src/test-probe';
-import { BaseUser } from '../../../../src/models';
+import { ExampleUser } from '../../../../src/models';
 
 declare var fail;
 
@@ -22,7 +22,7 @@ describe('[Test Probe] createMockRequest()', () => {
 		expect(request.repository).toEqual(jasmine.any(Object));
 		expect(request.method).toEqual('GET');
 		expect(request.baseUrl).toEqual('/api/v1/user');
-		expect(request.payloadType).toEqual(BaseUser);
+		expect(request.payloadType).toEqual(ExampleUser);
 		expect(request.joinMembers).toEqual(jasmine.any(Array));
 		expect(request.identifier).toEqual('id');
 	});
