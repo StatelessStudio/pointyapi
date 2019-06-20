@@ -37,15 +37,4 @@ describe('[BaseDb]', () => {
 		this.baseDb.logger();
 		expect(result).toBe(true);
 	});
-
-	it('can log an error', () => {
-		let result = false;
-
-		console.error = () => {
-			result = true;
-		};
-
-		this.baseDb.errorHandler();
-		expect(result).toBe(true);
-	});
 });

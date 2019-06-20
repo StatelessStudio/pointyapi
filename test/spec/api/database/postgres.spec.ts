@@ -35,7 +35,6 @@ describe('[Database: Postgres]', async () => {
 	it('can connect with json options', async () => {
 		const db = new PointyPostgres();
 		db.connectionName = 'jsonconn';
-		db.errorHandler = (error) => fail(error);
 		db.logger = () => {};
 
 		// Database

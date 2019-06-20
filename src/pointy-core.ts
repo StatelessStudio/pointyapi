@@ -71,7 +71,6 @@ export class PointyApi {
 		// Default db
 		this.db = new PointyPostgres();
 		this.db.logger = this.log;
-		this.db.errorHandler = this.error;
 
 		if (process.argv.includes('testmode')) {
 			this.testmode = true;

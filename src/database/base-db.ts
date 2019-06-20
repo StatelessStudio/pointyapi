@@ -8,9 +8,6 @@ export class BaseDb {
 	// Database logging function
 	public logger: Function = (message, body?) => console.log(message, body);
 
-	// Database error function
-	public errorHandler: Function = (error) => console.error(error);
-
 	// Database entities
 	public entities: any[] = [ ExampleUser ];
 
