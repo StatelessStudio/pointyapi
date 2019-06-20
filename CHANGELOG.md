@@ -1,5 +1,33 @@
 # PointyApi Changelog
 
+## [3.0.0] Jun-20-2019
+
+### Breaking Changes (See migration.md)
+- [Issue #179] Swap http expect & token param
+- Removed database error handler
+- Changed `refreshToken` to `__refreshToken` in post endpoints
+- Changed `CLIENT_URL` to `ALLOW_ORIGIN`
+
+### Additions
+- Added jwtBearer::sign argument
+- Added pointy::testmode
+- Added new ipc message test
+- Added ExampleUser class
+- Added ready-check prior to starting server
+- Added BaseDb::conn
+- Moved Postgres members to BaseDB
+
+### Fixes
+- Error handling
+- Fixed a bug which mixed up `JWT_TTL` and `JWT_REFRESH_TTL`
+- runHook should log error
+- patchEndpoint should merge payload after patch hook
+- Login endpoint should check validation
+- npm update
+- Simplified login endpoint
+- Fixed default entities bug
+- Moved "server-ready" ipc from listen() to pointy::start()
+
 ## [2.0.0] Jun-06-2019
 
 ### Breaking Changes (See migration.md)

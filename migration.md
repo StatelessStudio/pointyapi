@@ -1,5 +1,11 @@
 # Migration Guide
 
+## What version do you have?
+> Choose the version you have before upgrading, and follow the guide to the bottom from there.
+- [Version 0.x.x](#version-0.x.x-->-1.x.x)
+- [Version 1.x.x](#version-1.x.x-->-2.x.x)
+- [Version 2.x.x](#version-2.x.x-->-3.x.x)
+
 ## Version 0.x.x -> 1.x.x
 
 1. Remove `response` parameter from responders and handlers
@@ -119,4 +125,15 @@
 
 4. **(Optional)** Guards will now issue a `401` only if a token is not present/valid, otherwise will issue a `403`. This may help determine if the user is authenticated/authorized on the front-end.
 
-5. HTTP Client has swapped the `bearer` and `expect` parameters. You must swap these in your code, if used
+## Version 2.x.x -> 3.x.x
+
+1. If you use the PointyAPI HTTP Client, the functions have swapped the `bearer` and `expect` parameters. You must swap these in your code.
+2. If your code uses a custom database error handler, this should be removed and the pointyapi error handler used instead.
+3. `CLIENT_URL` is no longer used for CORS policy. Now you should use `ALLOW_ORIGINS`. **However, `CLIENT_URL` is still used for links, etc - so don't remove it**.
+	Example:
+	
+	`/.env`
+	```
+	CLIENT_URL=http://example.com/
+	ALLOW_ORIGINS=http://example.com/, http://cool-example.com/
+	```
