@@ -15,7 +15,7 @@ export async function getQuery(
 ): Promise<any> {
 	if ('query' in request && 'id' in request.query && request.query.id) {
 		// Read one
-		return await request.repository.findOne(request.query.id);
+		return request.repository.findOne(request.query.id);
 	}
 	else if ('query' in request && Object.keys(request.query).length) {
 		// Read query
@@ -172,12 +172,12 @@ export async function getQuery(
 		}
 
 		if ('raw' in request.query && request.query.raw) {
-			return await query.getRawMany();
+			return query.getRawMany();
 		}
 		else if (groupByKeys.length) {
 			const prestring = `obj_`;
 
-			return await query.getRawMany().then((result) => {
+			return query.getRawMany().then((result) => {
 				if (result instanceof Array && result.length) {
 					result = result.map((resource) => {
 						const obj = new request.payloadType();
@@ -194,11 +194,11 @@ export async function getQuery(
 			});
 		}
 		else {
-			return await query.getMany();
+			return query.getMany();
 		}
 	}
 	else {
 		// Read all
-		return await request.repository.find();
+		return request.repository.find();
 	}
 }
