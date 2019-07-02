@@ -1,5 +1,9 @@
 # PointyApi Changelog
 
+## [3.0.1] Jul-02-2019
+
+### Fixes
+
 ## [3.0.0] Jun-20-2019
 
 ### Breaking Changes (See migration.md)
