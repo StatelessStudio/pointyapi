@@ -37,6 +37,10 @@ function queryFieldValidator(
 				}
 
 				if (!isKeyInModel(key, request.payload, response)) {
+					response.validationResponder(
+						'Member "' + key + '" does not exist in model'
+					);
+
 					return false;
 				}
 
@@ -63,6 +67,10 @@ function queryFieldValidator(
 				}
 
 				if (!isKeyInModel(key, request.payload, response)) {
+					response.validationResponder(
+						'Member "' + key + '" does not exist in model'
+					);
+
 					return false;
 				}
 
@@ -72,7 +80,7 @@ function queryFieldValidator(
 						key && key.indexOf('.') ? key.split('.')[0] : key
 					)
 				) {
-					response.validationResponder(
+					response.forbiddenResponder(
 						'Cannot "' + type + '" by member "' + key + '"'
 					);
 

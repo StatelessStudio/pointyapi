@@ -3,6 +3,7 @@
 ## [3.0.1] Jul-02-2019
 
 ### Fixes
+- [Issue #181] queryValidator() isKeyInModel fail does not send response
 
 ## [3.0.0] Jun-20-2019
 
