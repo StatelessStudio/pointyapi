@@ -169,7 +169,15 @@ function queryFieldValidator(
 				}
 			}
 
-			if (type !== 'between') {
+			if (
+				type === 'where' ||
+				type === 'whereAnyOf' ||
+				type === 'not' ||
+				type === 'lessThan' ||
+				type === 'lessThanOrEqual' ||
+				type === 'greaterThan' ||
+				type === 'greaterThanOrEqual'
+			) {
 				const testObject = Object.assign(
 					new request.payloadType(),
 					request.query[type]
