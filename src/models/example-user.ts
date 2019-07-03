@@ -6,7 +6,8 @@ import {
 	IsEmail,
 	IsAlphanumeric,
 	IsDate,
-	IsOptional
+	IsOptional,
+	IsInt
 } from 'class-validator';
 
 // Bodyguards
@@ -30,9 +31,11 @@ import { UserRole, UserStatus } from '../enums';
 export class ExampleUser extends BaseUser {
 	// ID
 	@PrimaryGeneratedColumn()
+	@IsInt()
+	@IsOptional()
 	@BodyguardKey()
 	@AnyoneCanRead()
-	public id: any = undefined;
+	public id: number = undefined;
 
 	// Time created
 	@Column({ type: 'timestamp', default: new Date() })

@@ -66,6 +66,32 @@ describe('[Utils] queryValidator()', () => {
 		expect(hasValidationResponder).toBe(true);
 	});
 
+	it('fires validation responder if ID query has invalid value type', () => {
+		const { request, response } = createMockRequest();
+		request.query = { id: 'a' };
+		request.payloadType = ExampleUser;
+		request.payload = new ExampleUser();
+
+		let hasValidationResponder = false;
+		response.validationResponder = () => (hasValidationResponder = true);
+
+		expect(queryValidator(request, response)).toBe(false);
+		expect(hasValidationResponder).toBe(true);
+	});
+
+	it('fires validation responder if the query key has invalid value type', () => {
+		const { request, response } = createMockRequest();
+		request.query = { where: { id: 'a' } };
+		request.payloadType = ExampleUser;
+		request.payload = new ExampleUser();
+
+		let hasValidationResponder = false;
+		response.validationResponder = () => (hasValidationResponder = true);
+
+		expect(queryValidator(request, response)).toBe(false);
+		expect(hasValidationResponder).toBe(true);
+	});
+
 	it('fires validation responder if a key is not in the model (object)', () => {
 		const { request, response } = createMockRequest();
 		request.query = { where: { notInModel: 'test' } };
@@ -106,6 +132,19 @@ describe('[Utils] queryValidator()', () => {
 		let hasValidationResponder = false;
 		response.validationResponder = (result) =>
 			(hasValidationResponder = result);
+
+		expect(queryValidator(request, response)).toBe(true);
+		expect(hasValidationResponder).toBe(false);
+	});
+
+	it('can get by id', () => {
+		const { request, response } = createMockRequest();
+		request.query = { id: 1 };
+		request.payloadType = ExampleUser;
+		request.payload = new ExampleUser();
+
+		let hasValidationResponder = false;
+		response.validationResponder = () => (hasValidationResponder = true);
 
 		expect(queryValidator(request, response)).toBe(true);
 		expect(hasValidationResponder).toBe(false);

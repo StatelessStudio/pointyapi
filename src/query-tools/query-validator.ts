@@ -2,6 +2,59 @@ import { Request, Response } from 'express';
 import { isKeyInModel } from '../utils';
 import { queryTypes, queryTypeKeys } from './query-types';
 import { getReadableFields, getReadableRelations } from '../bodyguard';
+import {
+	validateSync,
+	MetadataStorage,
+	getFromContainer
+} from 'class-validator';
+
+/**
+ * Get class-validator constraints for a class
+ * @param someClass BaseModel class(e.g `request.payloadType`)
+ * @param key (Optional) Key to get constraints for. If unset, constraints for
+ * 	all keys will be returned.
+ */
+function getValidationConstraints(someClass: Function, key?: string) {
+	const container = <MetadataStorage>getFromContainer(MetadataStorage);
+	const metadata = container.getTargetValidationMetadatas(
+		someClass,
+		JSON.stringify(someClass)
+	);
+	const properties = container.groupByPropertyName(metadata);
+
+	const validators = Object.keys(properties).reduce((schema, property) => {
+		schema[property] = properties[
+			property
+		].reduce((propertySchema, { type, constraints }) => {
+			if (Array.isArray(constraints) && constraints.length === 1) {
+				constraints = constraints[0];
+			}
+
+			if (typeof constraints === 'undefined') {
+				propertySchema[type] = true;
+			}
+			else {
+				propertySchema[type] = constraints;
+			}
+
+			return propertySchema;
+		}, {});
+
+		return schema;
+	}, {});
+
+	if (key) {
+		if (key in validators) {
+			return validators[key];
+		}
+		else {
+			return false;
+		}
+	}
+	else {
+		return validators;
+	}
+}
 
 /**
  * Validate a GET query type
@@ -37,6 +90,10 @@ function queryFieldValidator(
 				}
 
 				if (!isKeyInModel(key, request.payload, response)) {
+					response.validationResponder(
+						'Member "' + key + '" does not exist in model'
+					);
+
 					return false;
 				}
 
@@ -55,14 +112,22 @@ function queryFieldValidator(
 			}
 		}
 		else if (request.query[type] instanceof Object) {
+			const validators = getValidationConstraints(request.payloadType);
+
 			for (const key in request.query[type]) {
-				if (request.query[type][key] === undefined) {
+				const value = request.query[type][key];
+
+				if (value === undefined) {
 					delete request.query[type][key];
 
 					continue;
 				}
 
 				if (!isKeyInModel(key, request.payload, response)) {
+					response.validationResponder(
+						'Member "' + key + '" does not exist in model'
+					);
+
 					return false;
 				}
 
@@ -72,12 +137,88 @@ function queryFieldValidator(
 						key && key.indexOf('.') ? key.split('.')[0] : key
 					)
 				) {
-					response.validationResponder(
+					response.forbiddenResponder(
 						'Cannot "' + type + '" by member "' + key + '"'
 					);
 
 					return false;
 				}
+
+				// Cast to int if need be
+				if (
+					key in validators &&
+					'isInt' in validators[key] &&
+					validators[key]['isInt'] === true
+				) {
+					if (Array.isArray(value)) {
+						for (let i = 0; i < value.length; i++) {
+							const asInt = parseInt(value[i], 10);
+
+							if (!isNaN(asInt)) {
+								value[i] = asInt;
+							}
+						}
+					}
+					else {
+						const asInt = parseInt(value, 10);
+
+						if (!isNaN(asInt)) {
+							request.query[type][key] = asInt;
+						}
+					}
+				}
+			}
+
+			if (
+				type === 'where' ||
+				type === 'whereAnyOf' ||
+				type === 'not' ||
+				type === 'lessThan' ||
+				type === 'lessThanOrEqual' ||
+				type === 'greaterThan' ||
+				type === 'greaterThanOrEqual'
+			) {
+				const testObject = Object.assign(
+					new request.payloadType(),
+					request.query[type]
+				);
+
+				const validationErrors = validateSync(testObject, {
+					skipMissingProperties: true
+				});
+				if (validationErrors && validationErrors.length) {
+					response.validationResponder(validationErrors);
+
+					return false;
+				}
+			}
+		}
+		else if (type === 'id') {
+			const validator = getValidationConstraints(
+				request.payloadType,
+				'id'
+			);
+
+			if (validator && 'isInt' in validator && validator.isInt === true) {
+				const asInt = parseInt(request.query.id, 10);
+
+				if (!isNaN(asInt)) {
+					request.query.id = asInt;
+				}
+			}
+
+			const testObject = Object.assign(new request.payloadType(), {
+				id: request.query[type]
+			});
+
+			const validationErrors = validateSync(testObject, {
+				skipMissingProperties: true
+			});
+
+			if (validationErrors && validationErrors.length) {
+				response.validationResponder(validationErrors);
+
+				return false;
 			}
 		}
 	}
