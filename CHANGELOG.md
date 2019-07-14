@@ -1,5 +1,11 @@
 # PointyApi Changelog
 
+## [3.0.2] Jul-14-2019
+
+### Fixes
+- Updated dependencies
+- Updated dependency with security fix `lodash`
+
 ## [3.0.1] Jul-02-2019
 
 ### Fixes
