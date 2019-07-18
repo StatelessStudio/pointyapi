@@ -31,7 +31,7 @@ export function errorHandler(error: any, code: number = 500): void {
 		else if (error.code === 23505) {
 			// Duplicate key value
 			this.response.conflictResponder(
-				'Duplicate Key Value ' + error.column
+				'Duplicate Key Value: ' + error.detail
 			);
 			return;
 		}
