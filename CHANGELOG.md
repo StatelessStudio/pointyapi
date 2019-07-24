@@ -1,5 +1,11 @@
 # PointyApi Changelog
 
+## [3.0.3] Jul-23-2019
+
+### Fixes
+- runHook should return result set
+- Duplicate Key Value should output column name
+
 ## [3.0.2] Jul-14-2019
 
 ### Fixes
