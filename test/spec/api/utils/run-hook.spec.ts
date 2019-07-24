@@ -58,7 +58,7 @@ describe('[Utils] runHook()', () => {
 			response
 		);
 
-		expect(result).toBe(true);
+		expect(result).toBeTruthy();
 	});
 
 	it('calls response.error if the hook does not return true', async () => {
@@ -143,7 +143,7 @@ describe('[Utils] runHook()', () => {
 			response
 		);
 
-		expect(result).toBe(true);
+		expect(result).toBeTruthy();
 		expect(tester.password).toEqual('bob');
 	});
 
@@ -158,7 +158,7 @@ describe('[Utils] runHook()', () => {
 			response
 		);
 
-		expect(result).toBe(true);
+		expect(result).toBeTruthy();
 		expect(testers[0].password).toEqual('bob');
 		expect(testers[1].password).toEqual('bob');
 	});

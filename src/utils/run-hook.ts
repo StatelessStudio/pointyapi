@@ -17,6 +17,7 @@ export async function runHook(
 ): Promise<boolean> {
 	// Run model hook
 	let hookResult = false;
+	let resultset;
 	const promises = [];
 
 	if (obj instanceof Array) {
@@ -33,6 +34,7 @@ export async function runHook(
 	await Promise.all(promises)
 		.then((results) => {
 			hookResult = true;
+			resultset = results;
 
 			for (let i = 0; i < results.length; i++) {
 				if (!results[i]) {
@@ -57,5 +59,5 @@ export async function runHook(
 		console.warn('Could not complete hook "' + name + '" on object: ', obj);
 	}
 
-	return hookResult;
+	return hookResult ? resultset : false;
 }
