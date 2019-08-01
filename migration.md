@@ -9,7 +9,7 @@
 ## Version 0.x.x -> 1.x.x
 
 1. Remove `response` parameter from responders and handlers
-	Responders and handlers no longer take a `response` parameter, so you just need to remove the parameter from all calls to the following functions.  This is easiest via find and replace (pro tip: use regex!)
+	Responders and handlers no longer take a `response` parameter, so you just need to remove the parameter from all calls to the following functions. This is easiest via find and replace (pro tip: use regex!)
 	- `response.error()`
 	- `response.conflictResponder()`
 	- `response.deleteResponder()`
@@ -21,7 +21,7 @@
 	- `response.unauthorizedResponder()`
 	- `response.validationResponder()`
 2. Rename hooks
-	Hooks have been renamed for clarity.  Rename all hooks in your models (pro tip: project-wide find & replace).  **Make sure you go in order, and replace all occourences before moving on, because some hook names conflict with old hook names!**
+	Hooks have been renamed for clarity. Rename all hooks in your models (pro tip: project-wide find & replace). **Make sure you go in order, and replace all occourences before moving on, because some hook names conflict with old hook names!**
     - `beforePut()` -> `beforePatch()`
     - `beforeGet()` -> REMOVED
     - `beforeDelete()` -> `delete()`
@@ -43,7 +43,7 @@
 		}
 	});
 	```
-4. Remove `deleteFilter`.  This filter does not have any value
+4. Remove `deleteFilter`. This filter does not have any value
 5. Update import directories
    - `/fork-server` -> `/utils`
    - `/get-identifier-value` -> `/utils`
@@ -51,7 +51,7 @@
    - `/run-hooks` -> `/utils`
    - `/upgrade-user-role` -> `/utils`
 6. Update `setModel()` for auth routers
-	Previously, `setModel()` would run the incorrect hooks for auth routers, and may even lead to deleting the wrong user's token.  This has been fixed by passing `true` to the fourth parameter (`isAuth`)
+	Previously, `setModel()` would run the incorrect hooks for auth routers, and may even lead to deleting the wrong user's token. This has been fixed by passing `true` to the fourth parameter (`isAuth`)
 
 	```typescript
 	// Set model
@@ -64,14 +64,14 @@
 	});
 	```
 7. Make sure all hooks are `async` functions
-	Hooks must now be async functions.  Search through hooks, and replace with `public async HOOK_NAME()`
+	Hooks must now be async functions. Search through hooks, and replace with `public async HOOK_NAME()`
 8. Make sure hooks utilize this.
 	Hooks are now bound to the resource, and should utilize `this.` notation
 9. Make sure hooks don't loop
     Hooks are called once per object, therefore they should only take care of one resource at a time
 11. Default resources can now be added via `addResource(User, {...})`
 12. Update GET queries.
-	GET queries have been reworked.  The following field names have changed:
+	GET queries have been reworked. The following field names have changed:
 	- `__select` => `select`
 	- `__whereAnyOf` => `whereAnyOf`
 	- `__search` => `search`
@@ -109,7 +109,7 @@
 17. Remove empty searches.
 	Get queries no longer require a `search` key to access other query keys
 18. All mdoel members must be initialized to undefined, including relational arrays
-19. Queries may no longer pass special keys with `__` or `___`.  You should now put these queries in the `additionalParameters` query object
+19. Queries may no longer pass special keys with `__` or `___`. You should now put these queries in the `additionalParameters` query object
 
 ## Version 1.x.x -> 2.x.x
 
@@ -118,7 +118,7 @@
    1. Make a POST endpoint in your auth router:
 		`router.post('/refresh', loader, refreshTokenEndpoint);` 
    2. Update your front-end auth refreshTokenservice to save the `refreshToken` and `refreshExpiration` from the `loginEndpoint`
-   3. Set a timeout to call the `refreshTokenEndpoint` route when the access token expires. Setup the body like this: `{ __refreshToken: myRefreshToken }`.  This will return an updated user object, including a new access token & expiration time.
+   3. Set a timeout to call the `refreshTokenEndpoint` route when the access token expires. Setup the body like this: `{ __refreshToken: myRefreshToken }`. This will return an updated user object, including a new access token & expiration time.
 3. **(Optional)** PointyAPI now supports `UUID`. Follow the steps in the Readme to enable UUID (strongly recommended for production).
 
    **NOTE** If you are already in production and decide to migrate to UUID, you must make sure to update relations etc

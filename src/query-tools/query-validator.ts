@@ -271,7 +271,7 @@ export function queryValidator(request: Request, response: Response): boolean {
 						queryTypes[type].join() +
 						']. It is: ' +
 						queryTypeConstructor +
-						'.  Value: ' +
+						'. Value: ' +
 						request.query[type]
 				);
 			}

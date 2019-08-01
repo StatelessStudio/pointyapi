@@ -4,7 +4,7 @@ import { createTimestamp } from '../utils/create-timestamp';
  * Default error handler
  * @param error Error message/object to send to the client (or
  * 	database error object to check)
- * @param code Error response code to send.  Default is 500
+ * @param code Error response code to send. Default is 500
  */
 export function errorHandler(error: any, code: number = 500): void {
 	// Check for known errors

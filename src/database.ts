@@ -11,7 +11,7 @@
  *
  * ## Setting Entities
  *
- * You will need to tell the database what entities to use.  **You should do
+ * You will need to tell the database what entities to use. **You should do
  * this in your `pointy.before` function.**
  * ```typescript
  * import { pointy } from 'pointyapi';
@@ -30,7 +30,7 @@
  * ## Creating Custom Database Drivers
  *
  * You can create a custom database driver class by extending the BaseDb class.
- * You will also need to set the pointyapi database.  You must run
+ * You will also need to set the pointyapi database. You must run
  * TypeORM's `createConnection` function in your `Database::connect()`
  *
  * ```typescript

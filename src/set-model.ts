@@ -1,13 +1,13 @@
 /**
  * # Set Model
  *
- * Set model sets the entity the request should use.  You can also
- * set the route parameter (e.g. ':id').  This function should
+ * Set model sets the entity the request should use. You can also
+ * set the route parameter (e.g. ':id'). This function should
  * be called in a middleware function BEFORE your endpoints.
  *
  * ## Auth Routes
  *
- * Auth routes must specify to `setModel` that it is an auth route.  Do
+ * Auth routes must specify to `setModel` that it is an auth route. Do
  * this by passing `true` to the `isAuth` (fourth) parameter.
  */
 
@@ -30,7 +30,7 @@ import { queryValidator } from './query-tools/query-validator';
  * 	Default is false.
  * 	Will run beforeLogin() and beforeLogout() posts instead of post/delete hook
  * @param identifier URL parameter name, for
- * 	example `/users/:id`.  Default is `id`.  Although this parameter
+ * 	example `/users/:id`. Default is `id`. Although this parameter
  * 	is optional, you **must** set it to the same string as in your routes.
  * @return Returns a Promise
  */

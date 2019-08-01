@@ -1,7 +1,7 @@
 /**
  * # HttpClient
  *
- * HttpClient can be used to mock requests in your test-suite.  There are
+ * HttpClient can be used to mock requests in your test-suite. There are
  * 4 functions: post(), get(), patch(), delete()
  *
  * **Before using, set HttpClient.url and HttpClient.port**

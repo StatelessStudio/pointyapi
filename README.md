@@ -296,9 +296,9 @@ npm i pointyapi
 	router.delete(`/:id`, loader, onlySelf, deleteEndpoint);
 	```
 
-	Notice `onlySelf` - that means only the user can access this route.  We're not logged in yet, so we're certainly not "self"
+	Notice `onlySelf` - that means only the user can access this route. We're not logged in yet, so we're certainly not "self"
 
-	Create another router file, `src/routes/auth.ts`.  This will be our authentication route so that we can log-in.
+	Create another router file, `src/routes/auth.ts`. This will be our authentication route so that we can log-in.
 
 	```typescript
 	// src/routes/auth.ts

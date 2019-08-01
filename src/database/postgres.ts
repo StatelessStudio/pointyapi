@@ -11,7 +11,7 @@ export class PointyPostgres extends BaseDb {
 	/**
 	 * Connect to the database
 	 * @param options Database credentials (pass
-	 * 	a string to load from file, or pass the object directly).  Database
+	 * 	a string to load from file, or pass the object directly). Database
 	 * 	will rely on `process.env.DATABASE_URL` if this is not set.
 	 */
 	public connect(options?: string | Object): Promise<Connection> {

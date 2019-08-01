@@ -8,4 +8,4 @@ Please use our issue-tracker: https://github.com/StatelessStudio/pointyapi/issue
 
 ## Contributing Code
 
-You can contribute code by creating a pull request.  Please create/find an issue for the problem first, and discuss with an administrator.
+You can contribute code by creating a pull request. Please create/find an issue for the problem first, and discuss with an administrator.

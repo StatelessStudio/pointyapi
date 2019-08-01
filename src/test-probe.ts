@@ -10,12 +10,12 @@
  *
  * ## Request Test Probe
  *
- * Troubleshoot incoming requests with the request test probe.  This
+ * Troubleshoot incoming requests with the request test probe. This
  * logs information about the current request & body
  *
  * ## User Test Probe
  *
- * Troubleshoot incoming requests by user with the user test probe.  This
+ * Troubleshoot incoming requests by user with the user test probe. This
  * logs information about the auth token & authorized user
  */
 

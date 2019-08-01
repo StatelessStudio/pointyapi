@@ -2,7 +2,7 @@
  * # Bodyguards
  *
  * Bodyguards are guards that operate on the body (*request.query,
- * request.body*).  Bodyguards come in two forms:
+ * request.body*). Bodyguards come in two forms:
  * - Guards
  *	- Guards block incoming requests, e.g. a basic user
  *	who tries to delete an admin
@@ -11,7 +11,7 @@
  *
  * ## Decorators
  *
- * Decorators are used to set read/write privelages on your model.  There
+ * Decorators are used to set read/write privelages on your model. There
  * are several decorators already available for you:
  * - Read
  *  - CanRead(who?)
@@ -34,16 +34,16 @@
  *
  * ### BodyguardKey
  *
- * There is one additional decorator: `BodyguardKey`.  This key will be
- * presented to the guards/filters to authorize the request.  For example, the
+ * There is one additional decorator: `BodyguardKey`. This key will be
+ * presented to the guards/filters to authorize the request. For example, the
  * `userId` of a User would be the BodyguardKey, or the `fromUserId` and
- * `toUserId` would be the BodyguardKeys on a Chat model.  When the
+ * `toUserId` would be the BodyguardKeys on a Chat model. When the
  * bodyguard runs, it will compare the authenticated user with the
  * BodyguardKey of the resource.
  *
  * ## How to Use?
  *
- * Guards, Endpoints, and Responders contain bodyguards underneath.  If you
+ * Guards, Endpoints, and Responders contain bodyguards underneath. If you
  * are not writing custom guards or responders, you will only need to set the
  * decorators on your model.
  *

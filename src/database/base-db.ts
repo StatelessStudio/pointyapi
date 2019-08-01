@@ -11,7 +11,7 @@ export class BaseDb {
 	// Database entities
 	public entities: any[] = [ ExampleUser ];
 
-	// Connection name.  Default is "default"
+	// Connection name. Default is "default"
 	public connectionName = 'default';
 
 	// Auto-sync (Empties database on restart, not for production!)

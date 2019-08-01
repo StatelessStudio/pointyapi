@@ -2,7 +2,7 @@
  * # Endpoints
  *
  * Endpoints are where the action of a route actually takes place,
- * for example posting a resource or logging in.  The following
+ * for example posting a resource or logging in. The following
  * endpoints come premade:
  * - CRUD
  *  - postEndpoint
@@ -15,7 +15,7 @@
  *
  * ## Using endpoints
  *
- * Endpoints go in your route, after any guards.  You'll have to
+ * Endpoints go in your route, after any guards. You'll have to
  * set a model so the guards and endpoints know what you're working with.
  *
  * ```typescript

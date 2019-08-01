@@ -3,14 +3,14 @@ import { LogHandlerFunction } from '../method-interface';
 /**
  * # Start listening
  *
- * Start listening on the desired port.  This is called in the default
+ * Start listening on the desired port. This is called in the default
  * pointy start() method.
  */
 
 /**
  * Start listening
  * @param app Express app to listen on
- * @param port Port number to listen to.  Default is process.env.PORT or 8080
+ * @param port Port number to listen to. Default is process.env.PORT or 8080
  * @param logger Logger function to log to
  */
 export async function listen(
