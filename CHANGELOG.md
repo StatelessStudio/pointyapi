@@ -1,5 +1,16 @@
 # PointyApi Changelog
 
+## [3.1.0] Aug-06-2019
+
+### Additions
+- [Issue #187] Add HttpClient::request for proxy
+- [Issue #183] Move getValidationConstraints() to exported module
+
+### Fixes
+- npm update
+- Cleaned up query-tools
+- Move imports to query-tools
+
 ## [3.0.3] Jul-23-2019
 
 ### Fixes

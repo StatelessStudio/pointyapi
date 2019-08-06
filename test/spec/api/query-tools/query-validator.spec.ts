@@ -4,9 +4,9 @@ import { ExampleUser } from '../../../../src/models';
 
 /**
  * queryValidator()
- * pointyapi/utils
+ * pointyapi/QueryTools
  */
-describe('[Utils] queryValidator()', () => {
+describe('[QueryTools] queryValidator()', () => {
 	it('returns true if the query is valid', () => {
 		const { request, response } = createMockRequest();
 		request.query = { where: { id: 1 } };

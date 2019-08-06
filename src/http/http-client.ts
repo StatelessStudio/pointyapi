@@ -16,6 +16,8 @@ import * as request from 'request';
 import { HttpClientResponse } from './http-client-response';
 
 export class HttpClient {
+	public request = request;
+
 	// Server URL
 	public url = 'http://localhost';
 
@@ -48,7 +50,7 @@ export class HttpClient {
 		}
 
 		return new Promise<HttpClientResponse>((accept, reject) => {
-			request(options, (error, response, body) => {
+			this.request(options, (error, response, body) => {
 				if (error) {
 					reject(new HttpClientResponse(response, error));
 				}
@@ -93,7 +95,7 @@ export class HttpClient {
 				options['auth'] = { bearer: `${bearer}` };
 			}
 
-			request(options, (error, response, body) => {
+			this.request(options, (error, response, body) => {
 				if (error) {
 					reject(new HttpClientResponse(response, error));
 				}
@@ -138,7 +140,7 @@ export class HttpClient {
 		}
 
 		return new Promise<HttpClientResponse>((accept, reject) => {
-			request(options, (error, response, body) => {
+			this.request(options, (error, response, body) => {
 				if (error) {
 					reject(new HttpClientResponse(response, error));
 				}
@@ -180,7 +182,7 @@ export class HttpClient {
 				options['auth'] = { bearer: `${bearer}` };
 			}
 
-			request(options, (error, response, body) => {
+			this.request(options, (error, response, body) => {
 				if (error) {
 					reject(new HttpClientResponse(response, error));
 				}

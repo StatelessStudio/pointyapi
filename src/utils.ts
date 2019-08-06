@@ -1,5 +1,6 @@
 export { addResource } from './utils/add-resource';
 export { bindResponders } from './utils/bind-responders';
+// TODO: Remove in v4 vvv
 export { createSearchQuery } from './query-tools/create-search-query';
 export { createTimestamp } from './utils/create-timestamp';
 export { deleteUndefinedMembers } from './utils/delete-undefined-members';
