@@ -2,6 +2,9 @@
 
 ## [3.1.0] Aug-06-2019
 
+### Fixes
+- npm update
+
 ## [3.0.3] Jul-23-2019
 
 ### Fixes
