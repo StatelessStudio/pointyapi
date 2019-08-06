@@ -7,6 +7,7 @@
 /**
  * Middleware
  */
+// TODO: Remove in v4 vvv
 export { getQuery } from './query-tools/get-query';
 export { loadEntity } from './middleware/load-entity';
 export { loadUser } from './middleware/load-user';

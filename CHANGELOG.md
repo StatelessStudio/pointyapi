@@ -9,6 +9,7 @@
 ### Fixes
 - npm update
 - Cleaned up query-tools
+- Move imports to query-tools
 
 ## [3.0.3] Jul-23-2019
 
