@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
 import { getReadableFields, getBodyguardKeys } from '../bodyguard';
-import { UserRole } from '../enums/user-role';
 
 import { createSearchQuery } from '../utils';
+
 /**
  * Get the objects represented by the request query
  * @param request Request to query by

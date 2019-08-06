@@ -4,9 +4,9 @@ import { ExampleRelation } from '../../../examples/api/models/example-relation';
 
 /**
  * createSearchQuery()
- * pointyapi/utils
+ * pointyapi/query-tools
  */
-describe('[Utils] createSearchQuery()', () => {
+describe('[QueryTools] createSearchQuery()', () => {
 	it('can run where query', () => {
 		const query = {
 			where: {

@@ -10,9 +10,9 @@ import { UserRole } from '../../../../src/enums';
 
 /**
  * getQuery()
- * pointyapi/middleware
+ * pointyapi/query-tools
  */
-describe('[Middleware] GetQuery', () => {
+describe('[QueryTools] GetQuery', () => {
 	beforeAll(async () => {
 		// Create users
 		this.user1 = new ExampleUser();
