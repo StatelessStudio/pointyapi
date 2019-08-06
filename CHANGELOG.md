@@ -2,6 +2,9 @@
 
 ## [3.1.0] Aug-06-2019
 
+### Additions
+- [Issue #187] Add HttpClient::request for proxy
+
 ### Fixes
 - npm update
 
