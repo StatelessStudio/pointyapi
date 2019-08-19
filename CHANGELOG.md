@@ -1,5 +1,10 @@
 # PointyApi Changelog
 
+## [3.2.0] Aug-19-2019
+
+### Additions
+
+
 ## [3.1.0] Aug-06-2019
 
 ### Additions
