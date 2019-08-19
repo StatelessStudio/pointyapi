@@ -1,5 +1,13 @@
 # PointyApi Changelog
 
+## [3.2.0] Aug-19-2019
+
+### Additions
+- [Issue #189] Add CanReadAll() and CanWriteAll()
+
+### Fixes
+- npm update
+
 ## [3.1.0] Aug-06-2019
 
 ### Additions
