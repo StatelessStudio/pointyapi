@@ -135,6 +135,8 @@
 import 'reflect-metadata';
 import { BodyguardOwner, UserRole } from './enums';
 
+const CanReadAllSymbol = Symbol('CanReadAll');
+const CanWriteAllSymbol = Symbol('CanWriteAll');
 const CanReadSymbol = Symbol('CanRead');
 const CanWriteSymbol = Symbol('CanWrite');
 const BodyguardKeySymbol = Symbol('BodyguardKey');
@@ -153,19 +155,19 @@ const CanReadRelationSymbol = Symbol('CanReadRelationSymbol');
  * 			function will ignore. Use getCanRead() instead for authorization.
  * @param target Object to test
  */
-export function getCanReadAll(target: any) {
-	return target.canReadAll;
+export function getCanReadAll(target: any): string {
+	return Reflect.getMetadata(CanReadAllSymbol, target.constructor);
 }
 
 /**
- * Get if all members are writable
+ * Get if all members are writableF
  * NOTE:	This function only checks if the CanWriteAll() decorator is present.
  * 			Individual fields may have fine-grain access rights, which this
  * 			function will ignore. Use getCanWrite() instead for authorization.
  * @param target Object to test
  */
-export function getCanWriteAll(target: any) {
-	return target.canWriteAll;
+export function getCanWriteAll(target: any): string {
+	return Reflect.getMetadata(CanWriteAllSymbol, target.constructor);
 }
 
 /**
@@ -175,9 +177,7 @@ export function getCanWriteAll(target: any) {
 export function CanReadAll(
 	who: BodyguardOwner | UserRole = BodyguardOwner.Anyone
 ) {
-	return (constructor) => {
-		constructor.prototype.canReadAll = who;
-	};
+	return Reflect.metadata(CanReadAllSymbol, who);
 }
 
 /**
@@ -187,9 +187,7 @@ export function CanReadAll(
 export function CanWriteAll(
 	who: BodyguardOwner | UserRole = BodyguardOwner.Anyone
 ) {
-	return (constructor) => {
-		constructor.prototype.canWriteAll = who;
-	};
+	return Reflect.metadata(CanWriteAllSymbol, who);
 }
 
 /**
