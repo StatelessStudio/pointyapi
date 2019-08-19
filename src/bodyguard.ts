@@ -130,7 +130,7 @@
  */
 
 /**
- * Bodyguard Decorators
+ * # Bodyguard Decorators
  */
 import 'reflect-metadata';
 import { BodyguardOwner, UserRole } from './enums';
@@ -141,6 +141,60 @@ const BodyguardKeySymbol = Symbol('BodyguardKey');
 const CanSearchSymbol = Symbol('CanSearch');
 const CanSearchRelationSymbol = Symbol('CanSearchRelation');
 const CanReadRelationSymbol = Symbol('CanReadRelationSymbol');
+
+/**
+ * ## Class Decorators
+ */
+
+/**
+ * Get if all members are readable
+ * NOTE:	This function only checks if the CanReadAll() decorator is present.
+ * 			Individual fields may have fine-grain access rights, which this
+ * 			function will ignore. Use getCanRead() instead for authorization.
+ * @param target Object to test
+ */
+export function getCanReadAll(target: any) {
+	return target.canReadAll;
+}
+
+/**
+ * Get if all members are writable
+ * NOTE:	This function only checks if the CanWriteAll() decorator is present.
+ * 			Individual fields may have fine-grain access rights, which this
+ * 			function will ignore. Use getCanWrite() instead for authorization.
+ * @param target Object to test
+ */
+export function getCanWriteAll(target: any) {
+	return target.canWriteAll;
+}
+
+/**
+ * All class members are readable
+ * @param who Who can read the fields. Default is anyone
+ */
+export function CanReadAll(
+	who: BodyguardOwner | UserRole = BodyguardOwner.Anyone
+) {
+	return (constructor) => {
+		constructor.prototype.canReadAll = who;
+	};
+}
+
+/**
+ * All class members are readable
+ * @param who Who can read the fields. Default is anyone
+ */
+export function CanWriteAll(
+	who: BodyguardOwner | UserRole = BodyguardOwner.Anyone
+) {
+	return (constructor) => {
+		constructor.prototype.canWriteAll = who;
+	};
+}
+
+/**
+ * ## Member Decorators
+ */
 
 /**
  * Check if the key is a bodyguard key
@@ -157,7 +211,10 @@ export function isBodyguardKey(target: any, propertyKey: string): boolean {
  * @param propertyKey Key to check
  */
 export function getCanRead(target: any, propertyKey: string): string {
-	return Reflect.getMetadata(CanReadSymbol, target, propertyKey);
+	return (
+		Reflect.getMetadata(CanReadSymbol, target, propertyKey) ||
+		getCanReadAll(target)
+	);
 }
 
 /**
@@ -166,7 +223,10 @@ export function getCanRead(target: any, propertyKey: string): string {
  * @param propertyKey Key to check
  */
 export function getCanWrite(target: any, propertyKey: string): string {
-	return Reflect.getMetadata(CanWriteSymbol, target, propertyKey);
+	return (
+		Reflect.getMetadata(CanWriteSymbol, target, propertyKey) ||
+		getCanWriteAll(target)
+	);
 }
 
 /**

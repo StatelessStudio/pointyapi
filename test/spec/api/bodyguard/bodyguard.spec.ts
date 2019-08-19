@@ -14,10 +14,14 @@ import {
 	CanRead,
 	CanWrite,
 	CanSearch,
-	CanSearchRelation
+	CanSearchRelation,
+	CanReadAll,
+	CanWriteAll,
+	getCanReadAll,
+	getCanWriteAll
 } from '../../../../src/bodyguard';
 import { BaseModel } from '../../../../src/models';
-import { BodyguardOwner } from '../../../../src/enums';
+import { BodyguardOwner, UserRole } from '../../../../src/enums';
 
 class ExampleModel extends BaseModel {
 	@BodyguardKey() public bodyguardKey: number = undefined;
@@ -47,6 +51,76 @@ class ExampleModel extends BaseModel {
 	public canSearchRelation: Object = {};
 }
 const example = new ExampleModel();
+
+@CanReadAll()
+class ExampleReadableModel extends BaseModel {
+	public testField1: string = undefined;
+}
+const exampleReadable = new ExampleReadableModel();
+
+@CanWriteAll()
+class ExampleWritableModel extends BaseModel {
+	public testField1: string = undefined;
+}
+const exampleWritable = new ExampleWritableModel();
+
+@CanReadAll(UserRole.Admin)
+class AdminReadableModel extends BaseModel {
+	public testField1: string = undefined;
+}
+const adminReadable = new AdminReadableModel();
+
+@CanWriteAll(UserRole.Admin)
+class AdminWritableModel extends BaseModel {
+	public testField1: string = undefined;
+}
+const adminWritable = new AdminWritableModel();
+
+@CanReadAll()
+class MixedReadableModel extends BaseModel {
+	public anyoneCanReadThisField: string = undefined;
+
+	@CanRead(UserRole.Admin)
+	public butOnlyAdminCanReadThisOne: string = undefined;
+}
+const mixedReadable = new MixedReadableModel();
+
+@CanWriteAll()
+class MixedWritableModel extends BaseModel {
+	public anyoneCanWriteThisField: string = undefined;
+
+	@CanWrite(UserRole.Admin)
+	public butOnlyAdminCanWriteThisOne: string = undefined;
+}
+const mixedWritable = new MixedWritableModel();
+
+/**
+ * getCanReadAll()
+ * pointyapi/bodyguard
+ */
+describe('getCanReadAll()', () => {
+	it('returns anyone if no parameter is set', () => {
+		expect(getCanReadAll(exampleReadable)).toEqual(BodyguardOwner.Anyone);
+	});
+
+	it('returns role if set as parameter', () => {
+		expect(getCanReadAll(adminReadable)).toEqual(UserRole.Admin);
+	});
+});
+
+/**
+ * getCanWriteAll()
+ * pointyapi/bodyguard
+ */
+describe('getCanWriteAll()', () => {
+	it('returns anyone if no parameter is set', () => {
+		expect(getCanWriteAll(exampleWritable)).toEqual(BodyguardOwner.Anyone);
+	});
+
+	it('returns role if set as parameter', () => {
+		expect(getCanWriteAll(adminWritable)).toEqual(UserRole.Admin);
+	});
+});
 
 /**
  * isBodyguardKey()
@@ -91,8 +165,16 @@ describe('getCanRead()', () => {
 		);
 	});
 
-	it('returns undefined if the member is not readable', () => {
-		expect(getCanRead(example, 'bodyguardKey')).toBe(undefined);
+	it('returns anyone if the class has CanReadAll()', () => {
+		expect(getCanRead(mixedReadable, 'anyoneCanReadThisField')).toEqual(
+			BodyguardOwner.Anyone
+		);
+	});
+
+	it('returns UserRole.Admin if CanReadAll() has been overridden', () => {
+		expect(getCanRead(mixedReadable, 'butOnlyAdminCanReadThisOne')).toEqual(
+			UserRole.Admin
+		);
 	});
 });
 
@@ -127,6 +209,18 @@ describe('getCanWrite()', () => {
 
 	it('returns undefined if the member is not writeable', () => {
 		expect(getCanWrite(example, 'bodyguardKey')).toBe(undefined);
+	});
+
+	it('returns anyone if the class has CanWriteAll()', () => {
+		expect(getCanWrite(mixedWritable, 'anyoneCanWriteThisField')).toEqual(
+			BodyguardOwner.Anyone
+		);
+	});
+
+	it('returns UserRole.Admin if CanWriteAll() has been overridden', () => {
+		expect(
+			getCanWrite(mixedWritable, 'butOnlyAdminCanWriteThisOne')
+		).toEqual(UserRole.Admin);
 	});
 });
 
