@@ -59,7 +59,7 @@ export class HttpClient {
 		}
 
 		if (customOptions) {
-			options = Object.assign(options, options);
+			options = Object.assign(options, customOptions);
 		}
 
 		return new Promise<HttpClientResponse>((accept, reject) => {
@@ -115,7 +115,7 @@ export class HttpClient {
 			}
 
 			if (customOptions) {
-				options = Object.assign(options, options);
+				options = Object.assign(options, customOptions);
 			}
 
 			this.request(options, (error, response, body) => {
@@ -169,7 +169,7 @@ export class HttpClient {
 		}
 
 		if (customOptions) {
-			options = Object.assign(options, options);
+			options = Object.assign(options, customOptions);
 		}
 
 		return new Promise<HttpClientResponse>((accept, reject) => {
@@ -222,7 +222,7 @@ export class HttpClient {
 			}
 
 			if (customOptions) {
-				options = Object.assign(options, options);
+				options = Object.assign(options, customOptions);
 			}
 
 			this.request(options, (error, response, body) => {
