@@ -19,7 +19,7 @@ export function getReadableRelations(
 
 	// Traverse members of payload, and append the member to
 	// readable fields if the CanRead() key allows
-	for (let member in payload) {
+	for (const member in payload) {
 		if (member && !(payload[member] instanceof Function)) {
 			const canRead = getCanReadRelation(payload, member);
 

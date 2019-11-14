@@ -5,9 +5,6 @@ import { ExampleUser } from '../models/example-user';
  * Base Database class
  */
 export class BaseDb {
-	// Database logging function
-	public logger: Function = (message, body?) => console.log(message, body);
-
 	// Database entities
 	public entities: any[] = [ ExampleUser ];
 
@@ -24,6 +21,9 @@ export class BaseDb {
 	 * Constructor
 	 */
 	constructor() {}
+
+	// Database logging function
+	public logger: Function = (message, body?) => console.log(message, body);
 
 	/**
 	 * Set ORM entities

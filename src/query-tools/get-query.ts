@@ -97,11 +97,11 @@ export async function getQuery(
 
 			// Append to where clause
 			// TODO: [Issue #146] The following code creates a bug, where if a user is authenticated
-			//	and not admin, they will be unable to view the resource, including AnyoneCanRead()
-			//	keys.
-			//	Although the initial purpose for the exact code is scarcely documented, it is believed
-			//	to be used to prevent the database from pulling enourmous payloads that will be filtered
-			//	extensively (to dramatically reduce runtime of the guards and filters).
+			// 	and not admin, they will be unable to view the resource, including AnyoneCanRead()
+			// 	keys.
+			// 	Although the initial purpose for the exact code is scarcely documented, it is believed
+			// 	to be used to prevent the database from pulling enourmous payloads that will be filtered
+			// 	extensively (to dramatically reduce runtime of the guards and filters).
 			/*
 			if (
 				bodyguardKeys &&
