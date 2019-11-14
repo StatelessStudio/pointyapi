@@ -13,25 +13,28 @@ import { UserRole } from '../../../../src/enums';
  * pointyapi/query-tools
  */
 describe('[QueryTools] GetQuery', () => {
+	let user1;
+	let user2;
+
 	beforeAll(async () => {
 		// Create users
-		this.user1 = new ExampleUser();
-		this.user1.fname = 'Get';
-		this.user1.lname = 'Endpoint';
-		this.user1.username = 'getEndpoint1';
-		this.user1.password = 'password123';
-		this.user1.email = 'get1@example.com';
+		user1 = new ExampleUser();
+		user1.fname = 'Get';
+		user1.lname = 'Endpoint';
+		user1.username = 'getEndpoint1';
+		user1.password = 'password123';
+		user1.email = 'get1@example.com';
 
-		this.user2 = new ExampleUser();
-		this.user2.fname = 'Get';
-		this.user2.lname = 'Endpoint';
-		this.user2.username = 'getEndpoint2';
-		this.user2.password = 'password123';
-		this.user2.email = 'get2@example.com';
+		user2 = new ExampleUser();
+		user2.fname = 'Get';
+		user2.lname = 'Endpoint';
+		user2.username = 'getEndpoint2';
+		user2.password = 'password123';
+		user2.email = 'get2@example.com';
 
 		// Save users
 		await getRepository(ExampleUser)
-			.save([ this.user1, this.user2 ])
+			.save([ user1, user2 ])
 			.catch((error) =>
 				fail('Could not save users: ' + JSON.stringify(error))
 			);
@@ -278,7 +281,7 @@ describe('[QueryTools] GetQuery', () => {
 
 		// Create request
 		request.query = {
-			id: this.user1.id
+			id: user1.id
 		};
 
 		// Set model

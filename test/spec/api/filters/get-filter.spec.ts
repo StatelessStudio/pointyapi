@@ -22,17 +22,19 @@ class NobodyCanReadMember extends BaseModel {
  * pointyapi/guards
  */
 describe('[Guards] getFilter', async () => {
+	let user;
+
 	beforeAll(async () => {
 		// Create mock user
-		this.user = new ExampleUser();
-		this.user.fname = 'tom';
-		this.user.lname = 'doe';
-		this.user.username = 'tomFilter';
-		this.user.email = 'tomFilter@example.com';
-		this.user.password = 'password123';
+		user = new ExampleUser();
+		user.fname = 'tom';
+		user.lname = 'doe';
+		user.username = 'tomFilter';
+		user.email = 'tomFilter@example.com';
+		user.password = 'password123';
 
 		await getRepository(ExampleUser)
-			.save(this.user)
+			.save(user)
 			.catch((error) => fail(error));
 	});
 
@@ -42,7 +44,7 @@ describe('[Guards] getFilter', async () => {
 
 		// Create request
 		request.query = { where: { fname: 'tom' } };
-		request.payload = [ this.user ];
+		request.payload = [ user ];
 
 		// Filter
 		let result = false;
@@ -64,7 +66,7 @@ describe('[Guards] getFilter', async () => {
 
 		// Create request
 		request.query = { where: { password: 'password123' } };
-		request.payload = [ this.user ];
+		request.payload = [ user ];
 
 		// Filter
 		let result = false;
@@ -143,7 +145,7 @@ describe('[Guards] getFilter', async () => {
 
 		// Create request
 		request.query = { orderBy: { 'relations.id': 'ASC' } };
-		request.payload = [ this.user ];
+		request.payload = [ user ];
 		response.forbiddenResponder = (message) => {
 			expect(message).toBe('Cannot get by member relations');
 		};
@@ -157,7 +159,7 @@ describe('[Guards] getFilter', async () => {
 
 		// Create request
 		request.query = { select: [ 'password' ] };
-		request.payload = [ this.user ];
+		request.payload = [ user ];
 
 		// Filter
 		let result = false;
@@ -236,7 +238,7 @@ describe('[Guards] getFilter', async () => {
 
 		// Create request
 		request.query = { select: [ 'relations.id' ] };
-		request.payload = [ this.user ];
+		request.payload = [ user ];
 		response.forbiddenResponder = (message) => {
 			expect(message).toBe('Cannot get by member relations');
 		};

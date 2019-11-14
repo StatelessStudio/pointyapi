@@ -5,8 +5,11 @@ import { ExampleUser } from '../../../../src/models';
 const http = pointy.http;
 
 describe('[Guards] User API Create', () => {
+	let userAdmin;
+	let adminToken;
+
 	beforeAll(async () => {
-		this.userAdmin = await http
+		userAdmin = await http
 			.post('/api/v1/user', {
 				fname: 'userAdmin1',
 				lname: 'userAdmin1',
@@ -26,7 +29,7 @@ describe('[Guards] User API Create', () => {
 			fail('Could not upgrade user role' + JSON.stringify(error))
 		);
 
-		this.adminToken = await http
+		adminToken = await http
 			.post('/api/v1/auth', {
 				__user: 'adminGuardPost1',
 				password: 'password123'
@@ -35,7 +38,7 @@ describe('[Guards] User API Create', () => {
 	});
 
 	it('works', () => {
-		expect(this.userAdmin.body).toEqual(jasmine.any(Object));
+		expect(userAdmin.body).toEqual(jasmine.any(Object));
 	});
 
 	it('cannot set role', async () => {

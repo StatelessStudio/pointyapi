@@ -6,6 +6,9 @@ import { HookTestClass } from '../../examples/api/models/hook-test-class';
 
 const ROOT_PATH = require('app-root-path').toString();
 
+let ipcMessage;
+let errorHandler;
+
 beforeAll(async () => {
 	// Initialize pointy-core
 	pointy.userType = ExampleUser;
@@ -27,7 +30,7 @@ beforeAll(async () => {
 
 	// Intercept IPC messages
 	const _send = process.send;
-	process.send = (message) => (this.ipcMessage = message);
+	process.send = (message) => (ipcMessage = message);
 
 	// Start server
 	await pointy.start();
@@ -41,11 +44,11 @@ beforeAll(async () => {
 
 describe('Pointy Core', () => {
 	beforeEach(() => {
-		this.errorHandler = pointy.error;
+		errorHandler = pointy.error;
 	});
 
 	afterEach(() => {
-		pointy.error = this.errorHandler;
+		pointy.error = errorHandler;
 	});
 
 	it('Handles Express error events', () => {
@@ -58,6 +61,6 @@ describe('Pointy Core', () => {
 	});
 
 	it('sends an ipc message "server-ready"', async () => {
-		expect(this.ipcMessage).toBe('server-ready');
+		expect(ipcMessage).toBe('server-ready');
 	});
 });

@@ -10,10 +10,13 @@ import { ExampleRelation } from '../../../examples/api/models/example-relation';
  * pointyapi/handlers
  */
 describe('[Handlers] errorHandler', async () => {
+	let cerr;
+	let clog;
+
 	beforeAll(() => {
 		// Store console in buffer
-		this.cerr = console.error;
-		this.clog = console.log;
+		cerr = console.error;
+		clog = console.log;
 
 		// Disable clog && cerr
 		console.log = () => {};
@@ -22,8 +25,8 @@ describe('[Handlers] errorHandler', async () => {
 
 	afterAll(() => {
 		// Release console
-		console.error = this.cerr;
-		console.log = this.clog;
+		console.error = cerr;
+		console.log = clog;
 	});
 
 	it('sends a 500 status code', async () => {

@@ -1,9 +1,18 @@
 import { pointy } from '../../../../src';
+import { User } from '../../../examples/chat/models/user';
+import { HttpClientResponse } from 'http/http-client-response';
 
 const http = pointy.http;
 describe('[Chat] Chat API Get', async () => {
+	let user: any;
+	let user2: any;
+	let token;
+	let token2;
+	let chat;
+	let chat2;
+
 	beforeAll(async () => {
-		this.user = await http
+		user = await http
 			.post('/api/v1/user', {
 				fname: 'Chat',
 				lname: 'Tester',
@@ -15,7 +24,7 @@ describe('[Chat] Chat API Get', async () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.user2 = await http
+		user2 = await http
 			.post('/api/v1/user', {
 				fname: 'jim',
 				lname: 'Tester',
@@ -27,7 +36,7 @@ describe('[Chat] Chat API Get', async () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.token = await http
+		token = await http
 			.post('/api/v1/auth', {
 				__user: 'chatGet1',
 				password: 'password123'
@@ -36,7 +45,7 @@ describe('[Chat] Chat API Get', async () => {
 				fail('Could not create User API Token' + JSON.stringify(error))
 			);
 
-		this.token2 = await http
+		token2 = await http
 			.post('/api/v1/auth', {
 				__user: 'chatGet2',
 				password: 'password123'
@@ -46,27 +55,27 @@ describe('[Chat] Chat API Get', async () => {
 			);
 
 		// make chats to read
-		this.chat = await http
+		chat = await http
 			.post(
 				'/api/v1/chat',
 				{
-					to: { id: this.user2.body.id },
+					to: { id: user2.body.id },
 					body: 'test'
 				},
-				this.token.body.token
+				token.body.token
 			)
 			.catch((error) =>
 				fail('Could not create chat-message: ' + JSON.stringify(error))
 			);
 
-		this.chat2 = await http
+		chat2 = await http
 			.post(
 				'/api/v1/chat',
 				{
-					to: { id: this.user.body.id },
+					to: { id: user.body.id },
 					body: 'test2'
 				},
-				this.token2.body.token
+				token2.body.token
 			)
 			.catch((error) =>
 				fail('Could not create chat-message: ' + JSON.stringify(error))
@@ -78,9 +87,9 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/chat',
 				{
-					id: this.chat.body.id
+					id: chat.body.id
 				},
-				this.token.body.token
+				token.body.token
 			)
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Object));
@@ -94,9 +103,9 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/chat',
 				{
-					id: this.chat2.body.id
+					id: chat2.body.id
 				},
-				this.token.body.token
+				token.body.token
 			)
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Object));
@@ -110,7 +119,7 @@ describe('[Chat] Chat API Get', async () => {
 			.get(
 				'/api/v1/chat',
 				{
-					id: this.chat2.body.id
+					id: chat2.body.id
 				},
 				undefined,
 				[ 401 ]
@@ -142,11 +151,11 @@ describe('[Chat] Chat API Get', async () => {
 				fail('Could not create User API Token' + JSON.stringify(error))
 			);
 
-		if (this.chat && wrongToken) {
+		if (chat && wrongToken) {
 			await http
 				.get(
 					'/api/v1/chat',
-					{ id: this.chat.body['id'] },
+					{ id: chat.body['id'] },
 					wrongToken.body['token'],
 					[ 403 ]
 				)
@@ -164,11 +173,11 @@ describe('[Chat] Chat API Get', async () => {
 				{
 					search: 'test',
 					where: {
-						to: this.user.body.id,
-						from: this.user2.body.id
+						to: user.body.id,
+						from: user2.body.id
 					}
 				},
-				this.token.body.token
+				token.body.token
 			)
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Array));
@@ -189,7 +198,7 @@ describe('[Chat] Chat API Get', async () => {
 					search: 'chatGet1',
 					join: [ 'inbox' ]
 				},
-				this.token.body.token
+				token.body.token
 			)
 			.then((result) => {
 				expect(result.body['length']).toEqual(1);
@@ -209,11 +218,11 @@ describe('[Chat] Chat API Get', async () => {
 				{
 					search: 'test',
 					whereAnyOf: {
-						to: +this.user.body.id,
-						from: +this.user.body.id
+						to: +user.body.id,
+						from: +user.body.id
 					}
 				},
-				this.token.body.token
+				token.body.token
 			)
 			.then((result) => {
 				expect(result.body['length']).toEqual(2);
@@ -231,11 +240,11 @@ describe('[Chat] Chat API Get', async () => {
 				'/api/v1/chat',
 				{
 					whereAnyOf: {
-						to: this.user.body.id,
-						from: this.user.body.id
+						to: user.body.id,
+						from: user.body.id
 					}
 				},
-				this.token.body.token
+				token.body.token
 			)
 			.then((result) => {
 				expect(result.body['length']).toBeGreaterThanOrEqual(1);
@@ -255,7 +264,7 @@ describe('[Chat] Chat API Get', async () => {
 	});
 
 	it('does not return chats the user does not own', async () => {
-		const user = await http
+		const user: any = await http
 			.post('/api/v1/user', {
 				fname: 'Chat',
 				lname: 'Hacker',
@@ -282,8 +291,8 @@ describe('[Chat] Chat API Get', async () => {
 					'/api/v1/chat',
 					{
 						whereAnyOf: {
-							to: this.user.body.id,
-							from: this.user.body.id
+							to: user.body.id,
+							from: user.body.id
 						}
 					},
 					token.body['token']
@@ -302,11 +311,11 @@ describe('[Chat] Chat API Get', async () => {
 				{
 					count: true,
 					whereAnyOf: {
-						to: this.user.body.id,
-						from: this.user.body.id
+						to: user.body.id,
+						from: user.body.id
 					}
 				},
-				this.token.body.token
+				token.body.token
 			)
 			.then((result) => {
 				expect(result.body['count']).toBeGreaterThanOrEqual(2);
@@ -390,7 +399,7 @@ describe('[Chat] Chat API Get', async () => {
 						'from.username': 'DESC'
 					}
 				},
-				this.token.body.token
+				token.body.token
 			)
 			.then((result) => {
 				if (result.body instanceof Array) {
@@ -427,7 +436,7 @@ describe('[Chat] Chat API Get', async () => {
 						id: 'ASC'
 					}
 				},
-				this.token.body.token
+				token.body.token
 			)
 			.then((result) => {
 				if (result.body instanceof Array) {

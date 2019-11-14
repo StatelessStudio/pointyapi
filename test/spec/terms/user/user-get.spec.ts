@@ -6,8 +6,13 @@ import { upgradeUserRole } from '../../../../src/utils';
 const http = pointy.http;
 
 describe('[User] API Read', () => {
+	let userAdmin;
+	let adminToken;
+	let term;
+	
+
 	beforeAll(async () => {
-		this.userAdmin = await http
+		userAdmin = await http
 			.post('/api/v1/user', {
 				fname: 'userAdmin',
 				lname: 'userAdmin',
@@ -19,7 +24,7 @@ describe('[User] API Read', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.adminToken = await http
+		adminToken = await http
 			.post('/api/v1/auth', {
 				__user: 'adminGuardGet1',
 				password: 'password123'
@@ -36,13 +41,13 @@ describe('[User] API Read', () => {
 			fail('Could not upgrade user role' + JSON.stringify(error))
 		);
 
-		this.term = await http
+		term = await http
 			.post(
 				'/api/v1/term',
 				{
 					title: 'User Term'
 				},
-				this.adminToken.body.token
+				adminToken.body.token
 			)
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Object));
@@ -62,7 +67,7 @@ describe('[User] API Read', () => {
 				username: 'termUserGetOne',
 				password: 'password123',
 				email: 'termUserGetOne@test.com',
-				termRelations: [ this.term.body ]
+				termRelations: [ term.body ]
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))
@@ -93,7 +98,7 @@ describe('[User] API Read', () => {
 				username: 'relationPatch',
 				password: 'password123',
 				email: 'relationPatch@test.com',
-				termRelations: [ this.term.body ]
+				termRelations: [ term.body ]
 			})
 			.catch((error) =>
 				fail('Could not create base user: ' + JSON.stringify(error))

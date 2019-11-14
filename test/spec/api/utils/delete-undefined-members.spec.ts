@@ -5,18 +5,20 @@ import { deleteUndefinedMembers } from '../../../../src/utils';
  * pointyapi/utils
  */
 describe('[Utils] deleteUndefinedMembers()', () => {
+	let obj;
+
 	beforeAll(() => {
-		this.obj = deleteUndefinedMembers({ first: 1, second: undefined });
+		obj = deleteUndefinedMembers({ first: 1, second: undefined });
 	});
 
 	it('deletes undefined members', () => {
-		if ('second' in this.obj) {
+		if ('second' in obj) {
 			fail('Did not delete undefined member');
 		}
 	});
 
 	it('leaves defined members', () => {
-		if (!('first' in this.obj)) {
+		if (!('first' in obj)) {
 			fail('Deleted defined member');
 		}
 	});

@@ -7,59 +7,63 @@ import { PointyApi } from '../../../../src/pointy-core';
  * pointyapi/utils
  */
 describe('[Utils] bindResponders()', () => {
-	beforeAll(() => {
-		this.request = {};
-		this.response = {};
-		this.api = new PointyApi();
+	let request;
+	let response;
+	let api;
 
-		bindResponders(this.api, this.request, this.response);
+	beforeAll(() => {
+		request = {};
+		response = {};
+		api = new PointyApi();
+
+		bindResponders(api, request, response);
 	});
 
 	it('binds the error handler', () => {
-		expect(this.response.error).toEqual(jasmine.any(Function));
+		expect(response.error).toEqual(jasmine.any(Function));
 	});
 
 	it('binds the log handler', () => {
-		expect(this.response.log).toEqual(jasmine.any(Function));
+		expect(response.log).toEqual(jasmine.any(Function));
 	});
 
 	it('binds the conflictResponder', () => {
-		expect(this.response.conflictResponder).toEqual(jasmine.any(Function));
+		expect(response.conflictResponder).toEqual(jasmine.any(Function));
 	});
 
 	it('binds the forbiddenResponder', () => {
-		expect(this.response.forbiddenResponder).toEqual(jasmine.any(Function));
+		expect(response.forbiddenResponder).toEqual(jasmine.any(Function));
 	});
 
 	it('binds the goneResponder', () => {
-		expect(this.response.goneResponder).toEqual(jasmine.any(Function));
+		expect(response.goneResponder).toEqual(jasmine.any(Function));
 	});
 
 	it('binds the unauthorizedResponder', () => {
-		expect(this.response.unauthorizedResponder).toEqual(
+		expect(response.unauthorizedResponder).toEqual(
 			jasmine.any(Function)
 		);
 	});
 
 	it('binds the validationResponder', () => {
-		expect(this.response.validationResponder).toEqual(
+		expect(response.validationResponder).toEqual(
 			jasmine.any(Function)
 		);
 	});
 
 	it('binds the deleteResponder', () => {
-		expect(this.response.deleteResponder).toEqual(jasmine.any(Function));
+		expect(response.deleteResponder).toEqual(jasmine.any(Function));
 	});
 
 	it('binds the getResponder', () => {
-		expect(this.response.getResponder).toEqual(jasmine.any(Function));
+		expect(response.getResponder).toEqual(jasmine.any(Function));
 	});
 
 	it('binds the postResponder', () => {
-		expect(this.response.postResponder).toEqual(jasmine.any(Function));
+		expect(response.postResponder).toEqual(jasmine.any(Function));
 	});
 
 	it('binds the patchResponder', () => {
-		expect(this.response.patchResponder).toEqual(jasmine.any(Function));
+		expect(response.patchResponder).toEqual(jasmine.any(Function));
 	});
 });

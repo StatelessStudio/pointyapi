@@ -2,8 +2,11 @@ import { pointy } from '../../../../src';
 const http = pointy.http;
 
 describe('User API Read', () => {
+	let user1;
+	let user2;
+
 	beforeAll(async () => {
-		this.user1 = await http
+		user1 = await http
 			.post('/api/v1/user', {
 				fname: 'getUser1',
 				lname: 'getUser',
@@ -13,7 +16,7 @@ describe('User API Read', () => {
 			})
 			.catch((error) => fail(JSON.stringify(error)));
 
-		this.user2 = await http
+		user2 = await http
 			.post('/api/v1/user', {
 				fname: 'getUser2',
 				lname: 'getUser',
@@ -48,7 +51,7 @@ describe('User API Read', () => {
 	it('can read one', async () => {
 		await http
 			.get('/api/v1/user', {
-				id: this.user1.body.id
+				id: user1.body.id
 			})
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Object));

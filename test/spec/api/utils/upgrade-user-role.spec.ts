@@ -8,19 +8,21 @@ import { getRepository } from 'typeorm';
  * pointyapi/utils
  */
 describe('upgradeUserRole()', () => {
+	let user;
+
 	beforeAll(async () => {
 		// Create user
-		this.user = new ExampleUser();
-		this.user.fname = 'ExampleUser';
-		this.user.lname = 'Upgrade';
-		this.user.username = 'baseUserUpgrade';
-		this.user.password = 'password123';
-		this.user.email = 'baseUserUpgrade@test.com';
-		this.user.role = UserRole.Basic;
+		user = new ExampleUser();
+		user.fname = 'ExampleUser';
+		user.lname = 'Upgrade';
+		user.username = 'baseUserUpgrade';
+		user.password = 'password123';
+		user.email = 'baseUserUpgrade@test.com';
+		user.role = UserRole.Basic;
 
 		// Save user
-		this.user = await getRepository(ExampleUser)
-			.save(this.user)
+		user = await getRepository(ExampleUser)
+			.save(user)
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
@@ -35,12 +37,12 @@ describe('upgradeUserRole()', () => {
 		);
 
 		// Pull user back from database
-		this.user = await getRepository(ExampleUser)
-			.findOne(this.user.id)
+		user = await getRepository(ExampleUser)
+			.findOne(user.id)
 			.catch((error) => fail(JSON.stringify(error)));
 
 		// Check value
-		expect(this.user.role).toEqual(UserRole.Admin);
+		expect(user.role).toEqual(UserRole.Admin);
 	});
 
 	it('rejects if the user is not found', async () => {

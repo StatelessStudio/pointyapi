@@ -6,13 +6,15 @@ import { createMockRequest } from '../../../../src/test-probe';
  * pointyapi/test-probe
  */
 describe('[Test Probe] coreTestProbe()', () => {
+	let clog;
+
 	beforeAll(() => {
-		this.clog = console.log;
+		clog = console.log;
 		console.log = () => {};
 	});
 
 	afterAll(() => {
-		console.log = this.clog;
+		console.log = clog;
 	});
 
 	it('logs', () => {

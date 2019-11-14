@@ -9,24 +9,27 @@ import { jwtBearer } from '../../../../src/jwt-bearer';
  * pointyapi/middleware
  */
 describe('[Middleware] loadUser()', async () => {
+	let user;
+	let token;
+
 	beforeAll(async () => {
 		// Create user
-		this.user = new ExampleUser();
-		this.user.fname = 'tom';
-		this.user.lname = 'doe';
-		this.user.username = 'tomLoadUser';
-		this.user.email = 'tomLoadUser@example.com';
-		this.user.password = 'password123';
+		user = new ExampleUser();
+		user.fname = 'tom';
+		user.lname = 'doe';
+		user.username = 'tomLoadUser';
+		user.email = 'tomLoadUser@example.com';
+		user.password = 'password123';
 
 		// Save user
 		await getRepository(ExampleUser)
-			.save(this.user)
+			.save(user)
 			.catch((error) =>
 				fail('Could not save user: ' + JSON.stringify(error))
 			);
 
 		// Create token
-		this.token = jwtBearer.sign(this.user);
+		token = jwtBearer.sign(user);
 	});
 
 	it('loads request.user on valid token', async () => {
@@ -43,7 +46,7 @@ describe('[Middleware] loadUser()', async () => {
 		request._header = request.header;
 		request.header = (header) => {
 			if (header === 'Authorization') {
-				return 'Bearer ' + this.token;
+				return 'Bearer ' + token;
 			}
 			else {
 				return request._header(header);
@@ -55,7 +58,7 @@ describe('[Middleware] loadUser()', async () => {
 
 		expect(returnValue).toBe(true);
 		expect(result).toEqual(jasmine.any(ExampleUser));
-		expect(result['id']).toEqual(this.user.id);
+		expect(result['id']).toEqual(user.id);
 	});
 
 	it('calls unauthorizedResponder on bad token', async () => {

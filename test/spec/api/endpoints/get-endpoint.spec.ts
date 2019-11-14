@@ -12,30 +12,34 @@ import { getRepository } from 'typeorm';
  * pointyapi/endpoints
  */
 describe('[Endpoints] Get', () => {
+	let cwarn;
+	let user1;
+	let user2;
+
 	beforeEach(() => {
-		this.cwarn = console.warn;
+		cwarn = console.warn;
 		console.warn = () => {};
 	});
 
 	afterEach(() => {
-		console.warn = this.cwarn;
+		console.warn = cwarn;
 	});
 
 	beforeAll(() => {
 		// Create users
-		this.user1 = new ExampleUser();
-		this.user1.fname = 'Get';
-		this.user1.lname = 'Endpoint';
-		this.user1.username = 'getEndpoint1';
-		this.user1.password = 'password123';
-		this.user1.email = 'get1@example.com';
+		user1 = new ExampleUser();
+		user1.fname = 'Get';
+		user1.lname = 'Endpoint';
+		user1.username = 'getEndpoint1';
+		user1.password = 'password123';
+		user1.email = 'get1@example.com';
 
-		this.user2 = new ExampleUser();
-		this.user2.fname = 'Get';
-		this.user2.lname = 'Endpoint';
-		this.user2.username = 'getEndpoint2';
-		this.user2.password = 'password123';
-		this.user2.email = 'get2@example.com';
+		user2 = new ExampleUser();
+		user2.fname = 'Get';
+		user2.lname = 'Endpoint';
+		user2.username = 'getEndpoint2';
+		user2.password = 'password123';
+		user2.email = 'get2@example.com';
 	});
 
 	it('returns the payload', async () => {
@@ -49,7 +53,7 @@ describe('[Endpoints] Get', () => {
 		}
 
 		// Set payload
-		request.payload = [ this.user1, this.user2 ];
+		request.payload = [ user1, user2 ];
 
 		// Check for getResponder()
 		response.getResponder = (result) => {
@@ -75,7 +79,7 @@ describe('[Endpoints] Get', () => {
 		}
 
 		// Set payload
-		request.payload = [ this.user1, this.user2 ];
+		request.payload = [ user1, user2 ];
 
 		// Check for getResponder()
 		response.getResponder = (result) => {
@@ -99,7 +103,7 @@ describe('[Endpoints] Get', () => {
 		}
 
 		// Set payload
-		request.payload = this.user1;
+		request.payload = user1;
 
 		// Check for getResponder()
 		response.getResponder = (result) => {

@@ -5,9 +5,11 @@ import { logHandler } from '../../../../src/handlers';
  * pointyapi/handlers
  */
 describe('[Handler] logHandler', () => {
+	let clog;
+
 	beforeAll(() => {
 		// Store console in buffer
-		this.clog = console.log;
+		clog = console.log;
 
 		// Disable clog && cerr
 		console.log = () => {};
@@ -15,7 +17,7 @@ describe('[Handler] logHandler', () => {
 
 	afterAll(() => {
 		// Release console
-		console.log = this.clog;
+		console.log = clog;
 	});
 
 	it('logs a message', () => {

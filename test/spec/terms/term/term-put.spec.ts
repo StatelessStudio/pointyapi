@@ -6,8 +6,13 @@ import { upgradeUserRole } from '../../../../src/utils';
 const http = pointy.http;
 
 describe('[Term] Patch API', async () => {
+	let userAdmin;
+	let user;
+	let adminToken;
+	let token;
+
 	beforeAll(async () => {
-		this.userAdmin = await http
+		userAdmin = await http
 			.post('/api/v1/user', {
 				fname: 'jim',
 				lname: 'Tester',
@@ -19,7 +24,7 @@ describe('[Term] Patch API', async () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.user = await http
+		user = await http
 			.post('/api/v1/user', {
 				fname: 'jim',
 				lname: 'Tester',
@@ -31,7 +36,7 @@ describe('[Term] Patch API', async () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.adminToken = await http
+		adminToken = await http
 			.post('/api/v1/auth', {
 				__user: 'adminTermPatch1',
 				password: 'password123'
@@ -40,7 +45,7 @@ describe('[Term] Patch API', async () => {
 				fail('Could not create token: ' + JSON.stringify(error))
 			);
 
-		this.token = await http
+		token = await http
 			.post('/api/v1/auth', {
 				__user: 'termPatch1',
 				password: 'password123'
@@ -66,18 +71,18 @@ describe('[Term] Patch API', async () => {
 					title: 'test',
 					description: 'test'
 				},
-				this.adminToken.body.token
+				adminToken.body.token
 			)
 			.catch((error) => fail(JSON.stringify(error)));
 
-		if (term && this.adminToken) {
+		if (term && adminToken) {
 			await http
 				.patch(
 					`/api/v1/term/${term.body['id']}`,
 					{
 						description: 'update'
 					},
-					this.adminToken.body.token
+					adminToken.body.token
 				)
 				.catch((error) => fail(JSON.stringify(error)));
 		}
@@ -94,18 +99,18 @@ describe('[Term] Patch API', async () => {
 					title: 'test2',
 					description: 'test2'
 				},
-				this.adminToken.body.token
+				adminToken.body.token
 			)
 			.catch((error) => fail(JSON.stringify(error)));
 
-		if (term && this.token) {
+		if (term && token) {
 			await http
 				.patch(
 					`/api/v1/term/${term.body['id']}`,
 					{
 						description: 'update'
 					},
-					this.token.body.token,
+					token.body.token,
 					[ 403 ]
 				)
 				.catch((error) => fail(JSON.stringify(error)));

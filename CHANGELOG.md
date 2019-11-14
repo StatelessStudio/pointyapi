@@ -5,6 +5,7 @@
 ### Additions
 
 ### Fixes
+- Test classes cannot use function `this`
 - npm update (includes audit & outdated)
 - Lint (on master)
 

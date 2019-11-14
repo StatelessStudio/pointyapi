@@ -6,8 +6,13 @@ import { upgradeUserRole } from '../../../../src/utils';
 const http = pointy.http;
 
 describe('[Term] Post API', async () => {
+	let userAdmin;
+	let user;
+	let adminToken;
+	let token;
+
 	beforeAll(async () => {
-		this.userAdmin = await http
+		userAdmin = await http
 			.post('/api/v1/user', {
 				fname: 'jim',
 				lname: 'Tester',
@@ -19,7 +24,7 @@ describe('[Term] Post API', async () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.user = await http
+		user = await http
 			.post('/api/v1/user', {
 				fname: 'jim',
 				lname: 'Tester',
@@ -31,7 +36,7 @@ describe('[Term] Post API', async () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.adminToken = await http
+		adminToken = await http
 			.post('/api/v1/auth', {
 				__user: 'adminTermPost1',
 				password: 'password123'
@@ -40,7 +45,7 @@ describe('[Term] Post API', async () => {
 				fail('Could not create token: ' + JSON.stringify(error))
 			);
 
-		this.token = await http
+		token = await http
 			.post('/api/v1/auth', {
 				__user: 'termPost1',
 				password: 'password123'
@@ -67,7 +72,7 @@ describe('[Term] Post API', async () => {
 					title: 'Social Studies',
 					description: 'Social Studies'
 				},
-				this.adminToken.body.token
+				adminToken.body.token
 			)
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Object));
@@ -85,7 +90,7 @@ describe('[Term] Post API', async () => {
 					title: 'Language Arts',
 					description: 'Language Arts'
 				},
-				this.token.body.token,
+				token.body.token,
 				[ 403 ]
 			)
 			.catch((error) => fail(JSON.stringify(error)));

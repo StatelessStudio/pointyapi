@@ -9,15 +9,17 @@ const http = pointy.http;
  * pointyapi/http
  */
 describe('[HTTP] HTTP Client', () => {
+	let serverfork;
+
 	beforeAll(async () => {
-		this.serverfork = await forkServer(
+		serverfork = await forkServer(
 			'./lib/test/examples/basic/server.js'
 		);
 	});
 
 	afterAll(() => {
-		if (this.serverfork) {
-			this.serverfork.kill();
+		if (serverfork) {
+			serverfork.kill();
 		}
 	});
 

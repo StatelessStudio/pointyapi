@@ -6,8 +6,12 @@ import { upgradeUserRole } from '../../../../src/utils';
 const http = pointy.http;
 
 describe('[Term] API Read', async () => {
+	let userAdmin;
+	let adminToken;
+	let term;
+
 	beforeAll(async () => {
-		this.userAdmin = await http
+		userAdmin = await http
 			.post('/api/v1/user', {
 				fname: 'jim',
 				lname: 'Tester',
@@ -19,7 +23,7 @@ describe('[Term] API Read', async () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.adminToken = await http
+		adminToken = await http
 			.post('/api/v1/auth', {
 				__user: 'adminTermGet1',
 				password: 'password123'
@@ -36,14 +40,14 @@ describe('[Term] API Read', async () => {
 			fail('Could not upgrade user role' + JSON.stringify(error))
 		);
 
-		this.term = await http
+		term = await http
 			.post(
 				'/api/v1/term',
 				{
 					title: 'History',
 					description: 'History'
 				},
-				this.adminToken.body.token
+				adminToken.body.token
 			)
 			.catch((error) => {
 				fail('Could not create term' + JSON.stringify(error));

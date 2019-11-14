@@ -8,29 +8,31 @@ import { loadEntity } from '../../../../src/middleware';
  * pointyapi/middleware
  */
 describe('[Middleware] loadEntity()', async () => {
+	let user;
+
 	beforeAll(async () => {
 		// Create user
-		this.user = new ExampleUser();
-		this.user.fname = 'tom';
-		this.user.lname = 'doe';
-		this.user.username = 'tomLoadEntity';
-		this.user.email = 'tomLoadEntity@example.com';
-		this.user.password = 'password123';
+		user = new ExampleUser();
+		user.fname = 'tom';
+		user.lname = 'doe';
+		user.username = 'tomLoadEntity';
+		user.email = 'tomLoadEntity@example.com';
+		user.password = 'password123';
 
 		// Save user
 		await getRepository(ExampleUser)
-			.save(this.user)
+			.save(user)
 			.catch(() => fail('Could not save user.'));
 	});
 
 	it('can load the entity', async () => {
 		// Create mock request/response
 		const { request, response } = createMockRequest();
-		request.params = { id: this.user.id };
+		request.params = { id: user.id };
 
 		// Load entity
 		await loadEntity(request, response, () => {
-			expect(request.payload.id).toEqual(this.user.id);
+			expect(request.payload.id).toEqual(user.id);
 		});
 	});
 

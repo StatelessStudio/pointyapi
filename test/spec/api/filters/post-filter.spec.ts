@@ -9,17 +9,19 @@ import { postFilter } from '../../../../src/filters';
  * pointyapi/guards
  */
 describe('[Guards] postFilter', async () => {
+	let user;
+
 	beforeAll(async () => {
 		// Create mock user
-		this.user = new ExampleUser();
-		this.user.fname = 'tom';
-		this.user.lname = 'doe';
-		this.user.username = 'tomFilter2';
-		this.user.email = 'tomFilter2@example.com';
-		this.user.password = 'password123';
+		user = new ExampleUser();
+		user.fname = 'tom';
+		user.lname = 'doe';
+		user.username = 'tomFilter2';
+		user.email = 'tomFilter2@example.com';
+		user.password = 'password123';
 
-		this.user = await getRepository(ExampleUser)
-			.save(this.user)
+		user = await getRepository(ExampleUser)
+			.save(user)
 			.catch((error) => fail(error));
 	});
 
@@ -28,8 +30,8 @@ describe('[Guards] postFilter', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create request
-		request.payload = this.user;
-		request.user = this.user;
+		request.payload = user;
+		request.user = user;
 		request.body = {
 			fname: 'tom'
 		};
@@ -50,7 +52,7 @@ describe('[Guards] postFilter', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create request
-		request.payload = this.user;
+		request.payload = user;
 		request.body = {
 			id: 12
 		};

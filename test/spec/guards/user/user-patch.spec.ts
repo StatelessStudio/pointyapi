@@ -6,8 +6,13 @@ import { ExampleUser } from '../../../../src/models';
 const http = pointy.http;
 
 describe('[Guards] User API Update', () => {
+	let userAdmin;
+	let adminToken;
+	let user;
+	let token;
+
 	beforeAll(async () => {
-		this.userAdmin = await http
+		userAdmin = await http
 			.post('/api/v1/user', {
 				fname: 'userAdmin',
 				lname: 'userAdmin',
@@ -21,7 +26,7 @@ describe('[Guards] User API Update', () => {
 
 		await upgradeUserRole('adminGuardPatch1', ExampleUser, UserRole.Admin);
 
-		this.adminToken = await http
+		adminToken = await http
 			.post('/api/v1/auth', {
 				__user: 'adminGuardPatch1',
 				password: 'password123'
@@ -30,7 +35,7 @@ describe('[Guards] User API Update', () => {
 				fail('Could not create User API Token' + JSON.stringify(error))
 			);
 
-		this.user = await http
+		user = await http
 			.post('/api/v1/user', {
 				fname: 'userPatch4',
 				lname: 'userPatch4',
@@ -42,7 +47,7 @@ describe('[Guards] User API Update', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.token = await http
+		token = await http
 			.post('/api/v1/auth', {
 				__user: 'userPatch4',
 				password: 'password123'
@@ -138,14 +143,14 @@ describe('[Guards] User API Update', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		if (user && this.token) {
+		if (user && token) {
 			await http
 				.patch(
 					`/api/v1/user/${user.body['id']}`,
 					{
 						fname: 'wrongToken'
 					},
-					this.token.body.token,
+					token.body.token,
 					[ 403 ]
 				)
 				.catch((error) => fail(JSON.stringify(error)));
@@ -158,11 +163,11 @@ describe('[Guards] User API Update', () => {
 	it('does not allow users to change their role', async () => {
 		await http
 			.patch(
-				`/api/v1/user/${this.user.body.id}`,
+				`/api/v1/user/${user.body.id}`,
 				{
 					role: UserRole.Admin
 				},
-				this.token.body.token,
+				token.body.token,
 				[ 403 ]
 			)
 			.catch((error) => fail(JSON.stringify(error)));
@@ -171,11 +176,11 @@ describe('[Guards] User API Update', () => {
 	it('allows for admin to update users', async () => {
 		const result = await http
 			.patch(
-				`/api/v1/user/${this.user.body.id}`,
+				`/api/v1/user/${user.body.id}`,
 				{
 					fname: 'adminUpdate'
 				},
-				this.adminToken.body.token
+				adminToken.body.token
 			)
 			.catch((error) => fail(JSON.stringify(error)));
 
@@ -183,9 +188,9 @@ describe('[Guards] User API Update', () => {
 			.get(
 				`/api/v1/user`,
 				{
-					id: this.user.body.id
+					id: user.body.id
 				},
-				this.token.body.token
+				token.body.token
 			)
 			.catch((error) => fail(JSON.stringify(error)));
 

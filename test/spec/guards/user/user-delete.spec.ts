@@ -6,8 +6,11 @@ import { UserRole } from '../../../../src/enums/user-role';
 const http = pointy.http;
 
 describe('[Guards] User API Delete', () => {
+	let userAdmin;
+	let adminToken;
+
 	beforeAll(async () => {
-		this.userAdmin = await http
+		userAdmin = await http
 			.post('/api/v1/user', {
 				fname: 'userAdmin',
 				lname: 'userAdmin',
@@ -19,7 +22,7 @@ describe('[Guards] User API Delete', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.adminToken = await http
+		adminToken = await http
 			.post('/api/v1/auth', {
 				__user: 'adminGuardDel1',
 				password: 'password123'
@@ -150,7 +153,7 @@ describe('[Guards] User API Delete', () => {
 			await http
 				.delete(
 					`/api/v1/user/${result.body['id']}`,
-					this.adminToken.body.token
+					adminToken.body.token
 				)
 				.catch((error) => fail(JSON.stringify(error)));
 		}
