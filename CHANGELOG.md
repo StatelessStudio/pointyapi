@@ -3,6 +3,7 @@
 ## [3.3.0] Nov-13-2019
 
 ### Additions
+- Add npm keywords
 - [Issue #192] HttpClient must allow for custom headers
 
 ### Fixes

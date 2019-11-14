@@ -69,5 +69,27 @@
 	"bugs": {
 		"url": "https://github.com/statelessstudio/pointyapi/issues"
 	},
-	"homepage": "https://github.com/statelessstudio/pointyapi#readme"
+	"homepage": "https://github.com/statelessstudio/pointyapi#readme",
+	"keywords": [
+		"api",
+		"server",
+		"framework",
+		"typescript",
+		"database",
+		"orm",
+		"endpoint",
+		"filter",
+		"guard",
+		"handler",
+		"http",
+		"middleware",
+		"model",
+		"query",
+		"request",
+		"response",
+		"util",
+		"jwt",
+		"authentication",
+		"authorization"
+	]
 }
