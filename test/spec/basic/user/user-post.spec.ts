@@ -2,8 +2,10 @@ import { pointy } from '../../../../src';
 const http = pointy.http;
 
 describe('User API Create', () => {
+	let user;
+
 	beforeAll(async () => {
-		this.user = await http
+		user = await http
 			.post('/api/v1/user', {
 				fname: 'post1',
 				lname: 'post1',
@@ -17,12 +19,12 @@ describe('User API Create', () => {
 	});
 
 	it('can create a user', () => {
-		expect(this.user.body).toEqual(jasmine.any(Object));
-		expect(this.user.body['fname']).toEqual('post1');
+		expect(user.body).toEqual(jasmine.any(Object));
+		expect(user.body['fname']).toEqual('post1');
 	});
 
 	it('returns an id', () => {
-		expect(this.user.body.id).toBeGreaterThanOrEqual(1);
+		expect(user.body.id).toBeGreaterThanOrEqual(1);
 	});
 
 	it('cannot create duplicate usernames', async () => {

@@ -6,8 +6,14 @@ import { UserRole } from '../../../../src/enums/user-role';
 const http = pointy.http;
 
 describe('[Guards] User API Read', () => {
+	let getUser1;
+	let getUser1Token;
+	let getUser2;
+	let userAdmin;
+	let adminToken;
+
 	beforeAll(async () => {
-		this.getUser1 = await http
+		getUser1 = await http
 			.post('/api/v1/user', {
 				fname: 'getUser1',
 				lname: 'getUser1',
@@ -19,7 +25,7 @@ describe('[Guards] User API Read', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.getUser1Token = await http
+		getUser1Token = await http
 			.post('/api/v1/auth', {
 				__user: 'guardUserGet1',
 				password: 'password123'
@@ -28,7 +34,7 @@ describe('[Guards] User API Read', () => {
 				fail('Could not create User API Token' + JSON.stringify(error));
 			});
 
-		this.getUser2 = await http
+		getUser2 = await http
 			.post('/api/v1/user', {
 				fname: 'getUser2',
 				lname: 'getUser2',
@@ -40,7 +46,7 @@ describe('[Guards] User API Read', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.userAdmin = await http
+		userAdmin = await http
 			.post('/api/v1/user', {
 				fname: 'userAdmin',
 				lname: 'userAdmin',
@@ -52,7 +58,7 @@ describe('[Guards] User API Read', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.adminToken = await http
+		adminToken = await http
 			.post('/api/v1/auth', {
 				__user: 'adminGuardGet1',
 				password: 'password123'
@@ -72,7 +78,7 @@ describe('[Guards] User API Read', () => {
 
 	it('can read all', async () => {
 		await http
-			.get('/api/v1/user', {}, this.getUser1Token.body.token)
+			.get('/api/v1/user', {}, getUser1Token.body.token)
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Array));
 				expect(result.body['length']).toBeGreaterThanOrEqual(2);
@@ -85,9 +91,9 @@ describe('[Guards] User API Read', () => {
 			.get(
 				'/api/v1/user',
 				{
-					id: this.getUser2.body.id
+					id: getUser2.body.id
 				},
-				this.getUser1Token.body.token
+				getUser1Token.body.token
 			)
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Object));
@@ -99,7 +105,7 @@ describe('[Guards] User API Read', () => {
 	it('cannot reveal sensitive information (one)', async () => {
 		await http
 			.get('/api/v1/user', {
-				id: this.getUser1.body.id
+				id: getUser1.body.id
 			})
 			.then((result) => {
 				expect(result.body['username']).toEqual(jasmine.any(String));

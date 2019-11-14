@@ -2,8 +2,10 @@ import { pointy } from '../../../../src';
 const http = pointy.http;
 
 describe('User API Update', () => {
+	let user1;
+
 	beforeAll(async () => {
-		this.user1 = await http
+		user1 = await http
 			.post('/api/v1/user', {
 				fname: 'userPatch',
 				lname: 'userPatch',
@@ -18,13 +20,13 @@ describe('User API Update', () => {
 
 	it('can update', async () => {
 		await http
-			.patch(`/api/v1/user/${this.user1.body.id}`, {
+			.patch(`/api/v1/user/${user1.body.id}`, {
 				lname: 'testLast'
 			})
 			.then((result) => {
 				http
 					.get(`/api/v1/user`, {
-						id: this.user1.body.id
+						id: user1.body.id
 					})
 					.then((getResult) =>
 						expect(getResult.body['lname']).toEqual('testLast')
@@ -77,7 +79,7 @@ describe('User API Update', () => {
 	it('maintains other fields on update', async () => {
 		await http
 			.patch(
-				`/api/v1/user/${this.user1.body.id}`,
+				`/api/v1/user/${user1.body.id}`,
 				{
 					lname: 'testLast'
 				},
@@ -87,7 +89,7 @@ describe('User API Update', () => {
 			.then((result) => {
 				http
 					.get(`/api/v1/user`, {
-						id: this.user1.body.id
+						id: user1.body.id
 					})
 					.then((getResult) =>
 						expect(getResult.body['email']).toEqual(
@@ -102,7 +104,7 @@ describe('User API Update', () => {
 	it('cannot accept a nonsense username', async () => {
 		await http
 			.patch(
-				`/api/v1/user/${this.user1.body.id}`,
+				`/api/v1/user/${user1.body.id}`,
 				{
 					username: 'tom<tester5'
 				},
@@ -115,7 +117,7 @@ describe('User API Update', () => {
 	it('cannot accept a nonsense email', async () => {
 		await http
 			.patch(
-				`/api/v1/user/${this.user1.body.id}`,
+				`/api/v1/user/${user1.body.id}`,
 				{
 					email: 'drew3test.com'
 				},
@@ -127,7 +129,7 @@ describe('User API Update', () => {
 
 	it('removes undefined members', async () => {
 		await http
-			.patch(`/api/v1/user/${this.user1.body.id}`, {
+			.patch(`/api/v1/user/${user1.body.id}`, {
 				biography: undefined
 			})
 			.catch((error) => fail(JSON.stringify(error)));

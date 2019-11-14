@@ -24,21 +24,26 @@ export class HttpClient {
 	// Server PORT
 	public port: number | string = process.env.PORT;
 
+	// Global headers
+	public headers?: Object;
+
 	/**
 	 * Send a POST http request to the server
 	 * @param path Path to send to (e.g. /users)
 	 * @param data Data to send as query
 	 * @param bearer Bearer token to send
 	 * @param expect Array of status codes to expect
+	 * @param customOptions Additional request options
 	 * @return Returns a promise of HttpClientResponse
 	 */
 	public post(
 		path: string,
 		data: object,
 		bearer: boolean | string = false,
-		expect: number[] = [ 200, 201, 202, 204 ]
+		expect: number[] = [ 200, 201, 202, 204 ],
+		customOptions?: object
 	): Promise<HttpClientResponse> {
-		const options = {
+		let options = {
 			method: 'POST',
 			url: `${this.url}:${this.port}${path}`,
 			body: data,
@@ -47,6 +52,14 @@ export class HttpClient {
 
 		if (bearer) {
 			options['auth'] = { bearer: `${bearer}` };
+		}
+		
+		if (this.headers) {
+			options['headers'] = this.headers;
+		}
+
+		if (customOptions) {
+			options = Object.assign(options, customOptions);
 		}
 
 		return new Promise<HttpClientResponse>((accept, reject) => {
@@ -75,16 +88,18 @@ export class HttpClient {
 	 * @param data Data to send as query
 	 * @param bearer Bearer token to send
 	 * @param expect Array of status codes to expect
+	 * @param customOptions Additional request options
 	 * @return Returns a promise of HttpClientResponse
 	 */
 	public get(
 		path: string,
 		data: boolean | Object = false,
 		bearer: boolean | string = false,
-		expect: number[] = [ 200, 202 ]
+		expect: number[] = [ 200, 202 ],
+		customOptions?: object
 	): Promise<HttpClientResponse> {
 		return new Promise<HttpClientResponse>((accept, reject) => {
-			const options = {
+			let options = {
 				method: 'GET',
 				url: `${this.url}:${this.port}${path}`,
 				json: true,
@@ -93,6 +108,14 @@ export class HttpClient {
 
 			if (bearer) {
 				options['auth'] = { bearer: `${bearer}` };
+			}
+		
+			if (this.headers) {
+				options['headers'] = this.headers;
+			}
+
+			if (customOptions) {
+				options = Object.assign(options, customOptions);
 			}
 
 			this.request(options, (error, response, body) => {
@@ -120,15 +143,17 @@ export class HttpClient {
 	 * @param data Data to send as query
 	 * @param bearer Bearer token to send
 	 * @param expect Array of status codes to expect
+	 * @param customOptions Additional request options
 	 * @return Returns a promise of HttpClientResponse
 	 */
 	public patch(
 		path: string,
 		data: object,
 		bearer: boolean | string = false,
-		expect: number[] = [ 200, 201, 202, 204 ]
+		expect: number[] = [ 200, 201, 202, 204 ],
+		customOptions?: object
 	): Promise<HttpClientResponse> {
-		const options = {
+		let options = {
 			method: 'PATCH',
 			url: `${this.url}:${this.port}${path}`,
 			body: data,
@@ -137,6 +162,14 @@ export class HttpClient {
 
 		if (bearer) {
 			options['auth'] = { bearer: `${bearer}` };
+		}
+		
+		if (this.headers) {
+			options['headers'] = this.headers;
+		}
+
+		if (customOptions) {
+			options = Object.assign(options, customOptions);
 		}
 
 		return new Promise<HttpClientResponse>((accept, reject) => {
@@ -165,21 +198,31 @@ export class HttpClient {
 	 * @param data Data to send as query
 	 * @param bearer Bearer token to send
 	 * @param expect Array of status codes to expect
+	 * @param customOptions Additional request options
 	 * @return Returns a promise of HttpClientResponse
 	 */
 	public delete(
 		path: string,
 		bearer: boolean | string = false,
-		expect: number[] = [ 200, 202, 204 ]
+		expect: number[] = [ 200, 202, 204 ],
+		customOptions?: object
 	): Promise<HttpClientResponse> {
 		return new Promise<HttpClientResponse>((accept, reject) => {
-			const options = {
+			let options = {
 				method: 'DELETE',
 				url: `${this.url}:${this.port}${path}`
 			};
 
 			if (bearer) {
 				options['auth'] = { bearer: `${bearer}` };
+			}
+		
+			if (this.headers) {
+				options['headers'] = this.headers;
+			}
+
+			if (customOptions) {
+				options = Object.assign(options, customOptions);
 			}
 
 			this.request(options, (error, response, body) => {

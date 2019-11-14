@@ -9,17 +9,19 @@ import { patchFilter } from '../../../../src/filters';
  * pointyapi/guards
  */
 describe('[Guards] patchFilter', async () => {
+	let user;
+
 	beforeAll(async () => {
 		// Create mock user
-		this.user = new ExampleUser();
-		this.user.fname = 'tom';
-		this.user.lname = 'doe';
-		this.user.username = 'tomFilter3';
-		this.user.email = 'tomFilter3@example.com';
-		this.user.password = 'password123';
+		user = new ExampleUser();
+		user.fname = 'tom';
+		user.lname = 'doe';
+		user.username = 'tomFilter3';
+		user.email = 'tomFilter3@example.com';
+		user.password = 'password123';
 
 		await getRepository(ExampleUser)
-			.save(this.user)
+			.save(user)
 			.catch((error) => fail(error));
 	});
 
@@ -28,8 +30,8 @@ describe('[Guards] patchFilter', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create request
-		request.payload = this.user;
-		request.user = this.user;
+		request.payload = user;
+		request.user = user;
 		request.body = {
 			fname: 'update'
 		};
@@ -50,8 +52,8 @@ describe('[Guards] patchFilter', async () => {
 		const { request, response } = createMockRequest();
 
 		// Create request
-		request.payload = this.user;
-		request.user = this.user;
+		request.payload = user;
+		request.user = user;
 		request.body = {
 			id: 12
 		};

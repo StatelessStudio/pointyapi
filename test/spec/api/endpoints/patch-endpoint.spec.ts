@@ -11,13 +11,15 @@ import { getRepository } from 'typeorm';
  * pointyapi/endpoints
  */
 describe('[Endpoints] Patch', () => {
+	let cwarn;
+
 	beforeEach(() => {
-		this.cwarn = console.warn;
+		cwarn = console.warn;
 		console.warn = () => {};
 	});
 
 	afterEach(() => {
-		console.warn = this.cwarn;
+		console.warn = cwarn;
 	});
 
 	it('can patch', async () => {

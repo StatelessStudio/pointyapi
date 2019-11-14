@@ -8,12 +8,14 @@ declare var fail;
  * pointyapi/test-probe
  */
 describe('[Test Probe] createMockRequest()', () => {
+	let mockFail;
+
 	beforeEach(() => {
-		this.fail = fail;
+		mockFail = fail;
 	});
 
 	afterEach(() => {
-		fail = this.fail;
+		fail = mockFail;
 	});
 
 	it('sets request', () => {

@@ -4,26 +4,32 @@ import { pointy } from '../../../../src/';
 import { HttpClientResponse } from '../../../../src/http/http-client-response';
 const http = pointy.http;
 
+http.headers = {
+	'CustomHeader': 'CustomValue'
+};
+
 /**
  * HTTP Client
  * pointyapi/http
  */
 describe('[HTTP] HTTP Client', () => {
+	let serverfork;
+
 	beforeAll(async () => {
-		this.serverfork = await forkServer(
+		serverfork = await forkServer(
 			'./lib/test/examples/basic/server.js'
 		);
 	});
 
 	afterAll(() => {
-		if (this.serverfork) {
-			this.serverfork.kill();
+		if (serverfork) {
+			serverfork.kill();
 		}
 	});
 
 	it('can get', async () => {
 		const result: void | HttpClientResponse = await http
-			.get('/', {}, 'Bearer: test', [ 404 ])
+			.get('/', {}, 'Bearer: test', [ 404 ], {})
 			.catch((error) => fail(JSON.stringify(error)));
 
 		if (result) {
@@ -46,7 +52,7 @@ describe('[HTTP] HTTP Client', () => {
 
 	it('can post', async () => {
 		const result: void | HttpClientResponse = await http
-			.post('/', {}, 'Bearer: test', [ 404 ])
+			.post('/', {}, 'Bearer: test', [ 404 ], {})
 			.catch((error) => fail(JSON.stringify(error)));
 
 		if (result) {
@@ -69,7 +75,7 @@ describe('[HTTP] HTTP Client', () => {
 
 	it('can patch', async () => {
 		const result: void | HttpClientResponse = await http
-			.patch('/', {}, 'Bearer: test', [ 404 ])
+			.patch('/', {}, 'Bearer: test', [ 404 ], {})
 			.catch((error) => fail(JSON.stringify(error)));
 
 		if (result) {
@@ -92,7 +98,7 @@ describe('[HTTP] HTTP Client', () => {
 
 	it('can delete', async () => {
 		const result: void | HttpClientResponse = await http
-			.delete('/', 'Bearer: test', [ 404 ])
+			.delete('/', 'Bearer: test', [ 404 ], {})
 			.catch((error) => fail(JSON.stringify(error)));
 
 		if (result) {

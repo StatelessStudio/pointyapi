@@ -5,26 +5,30 @@ import { BaseDb } from '../../../../src/database';
  * pointyapi/database
  */
 describe('[BaseDb]', () => {
+	let baseDb;
+	let clog;
+	let cerr;
+
 	beforeAll(() => {
-		this.baseDb = new BaseDb();
+		baseDb = new BaseDb();
 	});
 
 	beforeEach(() => {
-		this.clog = console.log;
-		this.cerr = console.error;
+		clog = console.log;
+		cerr = console.error;
 	});
 
 	afterEach(() => {
-		console.log = this.clog;
-		console.error = this.cerr;
+		console.log = clog;
+		console.error = cerr;
 	});
 
 	it('contains setEntities() & allows chaining', () => {
-		expect(this.baseDb.setEntities([])).toEqual(this.baseDb);
+		expect(baseDb.setEntities([])).toEqual(baseDb);
 	});
 
 	it('contains connect() & returns a promise', () => {
-		expect(this.baseDb.connect({})).toEqual(jasmine.any(Promise));
+		expect(baseDb.connect({})).toEqual(jasmine.any(Promise));
 	});
 
 	it('can log a message', () => {
@@ -34,7 +38,7 @@ describe('[BaseDb]', () => {
 			result = true;
 		};
 
-		this.baseDb.logger();
+		baseDb.logger();
 		expect(result).toBe(true);
 	});
 });

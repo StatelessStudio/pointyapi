@@ -2,8 +2,11 @@ import { pointy } from '../../../../src';
 const http = pointy.http;
 
 describe('[Guards] User Api Login/Logout', () => {
+	let user;
+	let token;
+
 	beforeAll(async () => {
-		this.user = await http
+		user = await http
 			.post('/api/v1/user', {
 				fname: 'userAuth',
 				lname: 'userAuth',
@@ -15,7 +18,7 @@ describe('[Guards] User Api Login/Logout', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.token = await http
+		token = await http
 			.post('/api/v1/auth', {
 				__user: 'userAuth1',
 				password: 'password123'
@@ -24,10 +27,10 @@ describe('[Guards] User Api Login/Logout', () => {
 	});
 
 	it('should log in', () => {
-		expect(this.token.body.token).toEqual(jasmine.any(String));
-		expect(this.token.body.token.length).toBeGreaterThanOrEqual(16);
-		expect(this.token.body.password).toBeUndefined();
-		expect(this.token.body.expiration).toBeGreaterThan(Date.now());
+		expect(token.body.token).toEqual(jasmine.any(String));
+		expect(token.body.token.length).toBeGreaterThanOrEqual(16);
+		expect(token.body.password).toBeUndefined();
+		expect(token.body.expiration).toBeGreaterThan(Date.now());
 	});
 
 	it('should not log in with the wrong password', async () => {
@@ -46,7 +49,7 @@ describe('[Guards] User Api Login/Logout', () => {
 
 	it('can log out', async () => {
 		await http
-			.delete('/api/v1/auth', this.token.body.token)
+			.delete('/api/v1/auth', token.body.token)
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 

@@ -11,13 +11,16 @@ import { jwtBearer } from '../../../../src/jwt-bearer';
  * pointyapi/endpoints
  */
 describe('[Endpoints] Refresh Token', async () => {
+	let cwarn;
+	let credentials;
+
 	beforeEach(() => {
-		this.cwarn = console.warn;
+		cwarn = console.warn;
 		console.warn = () => {};
 	});
 
 	afterEach(() => {
-		console.warn = this.cwarn;
+		console.warn = cwarn;
 	});
 
 	beforeAll(async () => {
@@ -43,21 +46,21 @@ describe('[Endpoints] Refresh Token', async () => {
 		};
 
 		// Run login endpoint
-		this.credentials = false;
+		credentials = false;
 		response.json = (result) => {
-			this.credentials = result;
+			credentials = result;
 		};
 
 		await loginEndpoint(request, response);
 	});
 
 	it('[Login] can create a refresh token', async () => {
-		if (this.credentials) {
-			expect(this.credentials).toEqual(jasmine.any(ExampleUser));
-			expect('refreshToken' in this.credentials).toBeTruthy();
-			expect('refreshExpiration' in this.credentials).toBeTruthy();
-			expect(typeof this.credentials['refreshToken']).toEqual('string');
-			expect(typeof this.credentials['refreshExpiration']).toEqual(
+		if (credentials) {
+			expect(credentials).toEqual(jasmine.any(ExampleUser));
+			expect('refreshToken' in credentials).toBeTruthy();
+			expect('refreshExpiration' in credentials).toBeTruthy();
+			expect(typeof credentials['refreshToken']).toEqual('string');
+			expect(typeof credentials['refreshExpiration']).toEqual(
 				'number'
 			);
 		}
@@ -71,7 +74,7 @@ describe('[Endpoints] Refresh Token', async () => {
 		const { request, response } = createMockRequest();
 
 		request.body = {
-			__refreshToken: this.credentials.refreshToken
+			__refreshToken: credentials.refreshToken
 		};
 
 		// Run login endpoint

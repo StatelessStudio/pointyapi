@@ -8,28 +8,31 @@ const ROOT_PATH = require('app-root-path').toString();
  * pointyapi/database
  */
 describe('[Database: Postgres]', async () => {
+	let db;
+	let clog;
+
 	beforeAll(() => {
-		this.db = new PointyPostgres();
-		this.db.connectionName = 'testconn';
-		this.db.errorHandler = (error) => fail(error);
-		this.db.logger = () => {};
+		db = new PointyPostgres();
+		db.connectionName = 'testconn';
+		db.errorHandler = (error) => fail(error);
+		db.logger = () => {};
 	});
 
 	beforeEach(() => {
-		this.clog = console.log;
+		clog = console.log;
 	});
 
 	afterEach(() => {
-		console.log = this.clog;
+		console.log = clog;
 	});
 
 	it('can set entities', () => {
-		this.db.setEntities([ ExampleUser ]);
+		db.setEntities([ ExampleUser ]);
 	});
 
 	it('can connect', async () => {
 		// Database
-		await this.db.connect(ROOT_PATH).catch((error) => fail(error));
+		await db.connect(ROOT_PATH).catch((error) => fail(error));
 	});
 
 	it('can connect with json options', async () => {

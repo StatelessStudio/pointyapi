@@ -1,6 +1,6 @@
 language: node_js
 node_js:
-  - "10.15.3"
+  - "12.13.0"
 before_script:
   - psql -c 'create database testdb;' -U postgres
   - cp local.config.travis.json local.config.json

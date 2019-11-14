@@ -10,26 +10,29 @@ import { addResource } from '../../../src/utils';
  * pointyapi/
  */
 describe('setModel', () => {
+	let cwarn;
+	let user;
+
 	beforeEach(() => {
-		this.cwarn = console.warn;
+		cwarn = console.warn;
 		console.warn = () => {};
 	});
 
 	afterEach(() => {
-		console.warn = this.cwarn;
+		console.warn = cwarn;
 	});
 
 	beforeAll(async () => {
 		// Create user
-		this.user = new ExampleUser();
-		this.user.fname = 'Set';
-		this.user.lname = 'Model';
-		this.user.username = 'setmodel';
-		this.user.password = 'model';
-		this.user.email = 'setmodel@example.com';
+		user = new ExampleUser();
+		user.fname = 'Set';
+		user.lname = 'Model';
+		user.username = 'setmodel';
+		user.password = 'model';
+		user.email = 'setmodel@example.com';
 
 		await getRepository(ExampleUser)
-			.save(this.user)
+			.save(user)
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 

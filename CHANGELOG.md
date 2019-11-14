@@ -1,11 +1,17 @@
 # PointyApi Changelog
 
-## [3.3.0] Nov-13-2019
+## [3.3.0] Nov-14-2019
 
 ### Additions
+- Add custom options object to HttpClient methods
+- Add npm keywords
+- [Issue #192] HttpClient must allow for custom headers
 
 ### Fixes
-- Lint
+- Node 12 Upgrade
+- Test classes cannot use function `this`
+- npm update (includes audit & outdated)
+- Lint (on master)
 
 ## [3.2.0] Aug-19-2019
 

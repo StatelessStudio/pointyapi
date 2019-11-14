@@ -10,12 +10,14 @@ import { getRepository } from 'typeorm';
  * pointyapi/utils
  */
 describe('[Utils] addResource()', () => {
+	let cwarn;
+
 	beforeEach(() => {
-		this.cwarn = console.warn;
+		cwarn = console.warn;
 	});
 
 	afterEach(() => {
-		console.warn = this.cwarn;
+		console.warn = cwarn;
 	});
 
 	beforeAll(async () => {

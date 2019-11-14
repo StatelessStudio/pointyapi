@@ -2,8 +2,13 @@ import { pointy } from '../../../../src';
 
 const http = pointy.http;
 describe('[Chat] Chat API Post', () => {
+	let user;
+	let user2;
+	let token;
+	let token2;
+
 	beforeAll(async () => {
-		this.user = await http
+		user = await http
 			.post('/api/v1/user', {
 				fname: 'Chat',
 				lname: 'Tester',
@@ -15,7 +20,7 @@ describe('[Chat] Chat API Post', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.user2 = await http
+		user2 = await http
 			.post('/api/v1/user', {
 				fname: 'jim',
 				lname: 'Tester',
@@ -27,7 +32,7 @@ describe('[Chat] Chat API Post', () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.token = await http
+		token = await http
 			.post('/api/v1/auth', {
 				__user: 'chatPost1',
 				password: 'password123'
@@ -36,7 +41,7 @@ describe('[Chat] Chat API Post', () => {
 				fail('Could not create User API Token' + JSON.stringify(error))
 			);
 
-		this.token2 = await http
+		token2 = await http
 			.post('/api/v1/auth', {
 				__user: 'chatPost2',
 				password: 'password123'
@@ -51,10 +56,10 @@ describe('[Chat] Chat API Post', () => {
 			.post(
 				'/api/v1/chat',
 				{
-					to: { id: this.user2.body.id },
+					to: { id: user2.body.id },
 					body: 'test'
 				},
-				this.token.body.token
+				token.body.token
 			)
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Object));
@@ -69,15 +74,15 @@ describe('[Chat] Chat API Post', () => {
 				'/api/v1/chat',
 				[
 					{
-						to: { id: this.user2.body.id },
+						to: { id: user2.body.id },
 						body: 'test array 1'
 					},
 					{
-						to: { id: this.user2.body.id },
+						to: { id: user2.body.id },
 						body: 'test array 2'
 					}
 				],
-				this.token.body.token
+				token.body.token
 			)
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Array));
@@ -92,7 +97,7 @@ describe('[Chat] Chat API Post', () => {
 			.post(
 				'/api/v1/chat',
 				{
-					to: { id: this.user2.body.id },
+					to: { id: user2.body.id },
 					body: 'test'
 				},
 				undefined,
@@ -108,10 +113,10 @@ describe('[Chat] Chat API Post', () => {
 			.post(
 				'/api/v1/chat',
 				{
-					to: { id: this.user2.body.id },
+					to: { id: user2.body.id },
 					body: 'test'
 				},
-				this.token.body.token
+				token.body.token
 			)
 			.then((result) => {
 				expect(result.body['id']).toBeGreaterThanOrEqual(1);

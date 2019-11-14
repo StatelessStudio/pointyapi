@@ -5,8 +5,13 @@ import { upgradeUserRole } from '../../../../src/utils';
 const http = pointy.http;
 
 describe('[Term] Delete API', async () => {
+	let userAdmin;
+	let user;
+	let adminToken;
+	let token;
+
 	beforeAll(async () => {
-		this.userAdmin = await http
+		userAdmin = await http
 			.post('/api/v1/user', {
 				fname: 'jim',
 				lname: 'Tester',
@@ -18,7 +23,7 @@ describe('[Term] Delete API', async () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.user = await http
+		user = await http
 			.post('/api/v1/user', {
 				fname: 'jim',
 				lname: 'Tester',
@@ -30,7 +35,7 @@ describe('[Term] Delete API', async () => {
 				fail('Could not create base user: ' + JSON.stringify(error))
 			);
 
-		this.adminToken = await http
+		adminToken = await http
 			.post('/api/v1/auth', {
 				__user: 'termDel1',
 				password: 'password123'
@@ -39,7 +44,7 @@ describe('[Term] Delete API', async () => {
 				fail('Could not create token: ' + JSON.stringify(error))
 			);
 
-		this.token = await http
+		token = await http
 			.post('/api/v1/auth', {
 				__user: 'termDel2',
 				password: 'password123'
@@ -61,17 +66,17 @@ describe('[Term] Delete API', async () => {
 					title: 'Math',
 					description: 'Math'
 				},
-				this.adminToken.body.token
+				adminToken.body.token
 			)
 			.catch((error) => {
 				fail('Could not create term' + JSON.stringify(error));
 			});
 
-		if (term && this.adminToken) {
+		if (term && adminToken) {
 			await http
 				.delete(
 					`/api/v1/term/${term.body['id']}`,
-					this.adminToken.body.token
+					adminToken.body.token
 				)
 				.catch((error) => fail(JSON.stringify(error)));
 		}
@@ -88,17 +93,17 @@ describe('[Term] Delete API', async () => {
 					title: 'Science',
 					description: 'Science'
 				},
-				this.adminToken.body.token
+				adminToken.body.token
 			)
 			.catch((error) => {
 				fail('Could not create term' + JSON.stringify(error));
 			});
 
-		if (term && this.token) {
+		if (term && token) {
 			await http
 				.delete(
 					`/api/v1/term/${term.body['id']}`,
-					this.token.body.token,
+					token.body.token,
 					[ 403 ]
 				)
 				.catch((error) => fail(JSON.stringify(error)));
