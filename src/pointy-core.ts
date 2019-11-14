@@ -43,7 +43,7 @@ export class PointyApi {
 	public db: BaseDb;
 	public http = new HttpClient();
 	public userType: BaseUserInterface = ExampleUser;
-	public testmode: boolean = false;
+	public testmode = false;
 
 	// Middleware
 

@@ -5,6 +5,7 @@
 ### Additions
 
 ### Fixes
+- Lint
 
 ## [3.2.0] Aug-19-2019
 
