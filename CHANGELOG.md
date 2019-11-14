@@ -5,6 +5,7 @@
 ### Additions
 
 ### Fixes
+- npm update (includes audit & outdated)
 - Lint (on master)
 
 ## [3.2.0] Aug-19-2019
