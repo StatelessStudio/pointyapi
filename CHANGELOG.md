@@ -1,6 +1,6 @@
 # PointyApi Changelog
 
-## [3.3.0] Nov-13-2019
+## [3.3.0] Nov-14-2019
 
 ### Additions
 - Add custom options object to HttpClient methods
