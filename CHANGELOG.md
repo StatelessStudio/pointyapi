@@ -5,6 +5,7 @@
 ### Additions
 
 ### Fixes
+- Node 12 Upgrade
 - Test classes cannot use function `this`
 - npm update (includes audit & outdated)
 - Lint (on master)
