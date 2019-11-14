@@ -3,6 +3,7 @@
 ## [3.3.0] Nov-13-2019
 
 ### Additions
+- [Issue #192] HttpClient must allow for custom headers
 
 ### Fixes
 - Node 12 Upgrade

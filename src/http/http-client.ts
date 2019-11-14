@@ -24,6 +24,9 @@ export class HttpClient {
 	// Server PORT
 	public port: number | string = process.env.PORT;
 
+	// Global headers
+	public headers?: Object;
+
 	/**
 	 * Send a POST http request to the server
 	 * @param path Path to send to (e.g. /users)
@@ -47,6 +50,10 @@ export class HttpClient {
 
 		if (bearer) {
 			options['auth'] = { bearer: `${bearer}` };
+		}
+		
+		if (this.headers) {
+			options['headers'] = this.headers;
 		}
 
 		return new Promise<HttpClientResponse>((accept, reject) => {
@@ -94,6 +101,10 @@ export class HttpClient {
 			if (bearer) {
 				options['auth'] = { bearer: `${bearer}` };
 			}
+		
+			if (this.headers) {
+				options['headers'] = this.headers;
+			}
 
 			this.request(options, (error, response, body) => {
 				if (error) {
@@ -138,6 +149,10 @@ export class HttpClient {
 		if (bearer) {
 			options['auth'] = { bearer: `${bearer}` };
 		}
+		
+		if (this.headers) {
+			options['headers'] = this.headers;
+		}
 
 		return new Promise<HttpClientResponse>((accept, reject) => {
 			this.request(options, (error, response, body) => {
@@ -180,6 +195,10 @@ export class HttpClient {
 
 			if (bearer) {
 				options['auth'] = { bearer: `${bearer}` };
+			}
+		
+			if (this.headers) {
+				options['headers'] = this.headers;
 			}
 
 			this.request(options, (error, response, body) => {

@@ -4,6 +4,10 @@ import { pointy } from '../../../../src/';
 import { HttpClientResponse } from '../../../../src/http/http-client-response';
 const http = pointy.http;
 
+http.headers = {
+	'CustomHeader': 'CustomValue'
+};
+
 /**
  * HTTP Client
  * pointyapi/http
