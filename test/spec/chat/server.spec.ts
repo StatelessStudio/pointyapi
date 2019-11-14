@@ -11,6 +11,8 @@ const http = pointy.http;
 let serverfork;
 
 beforeAll(async () => {
+	jasmine.DEFAULT_TIMEOUT_INTERVAL = 10000;
+
 	serverfork = await forkServer('./lib/test/examples/chat/server.js');
 
 	// Database
