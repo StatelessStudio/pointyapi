@@ -1,5 +1,10 @@
 # PointyApi Changelog
 
+## [3.3.1] Nov-22-2019
+
+### Fixes
+- npm update
+
 ## [3.3.0] Nov-14-2019
 
 ### Additions
