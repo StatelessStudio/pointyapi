@@ -37,12 +37,15 @@ export function readFilter(
 						!(obj[member] instanceof Date))
 				) {
 					const subObjType = obj[member].constructor;
-					obj[member] = readFilter(
-						obj[member],
-						user,
-						subObjType,
-						userType
-					);
+
+					if (subObjType !== {}.constructor) {
+						obj[member] = readFilter(
+							obj[member],
+							user,
+							subObjType,
+							userType
+						);
+					}
 				}
 				else if (member !== 'id') {
 					const canRead = getCanRead(new objType(), member);
