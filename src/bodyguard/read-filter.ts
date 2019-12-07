@@ -20,8 +20,8 @@ export function readFilter(
 ): any {
 	if (obj instanceof Array) {
 		for (let i = 0; i < obj.length; i++) {
-			const subObjTpye = obj[i].constructor;
-			obj[i] = readFilter(obj[i], user, subObjTpye, userType);
+			const subObjType = obj[i].constructor;
+			obj[i] = readFilter(obj[i], user, subObjType, userType);
 		}
 	}
 	else if (obj instanceof Object) {
@@ -36,11 +36,11 @@ export function readFilter(
 					(obj[member] instanceof Object &&
 						!(obj[member] instanceof Date))
 				) {
-					const subObjTpye = obj[member].constructor;
+					const subObjType = obj[member].constructor;
 					obj[member] = readFilter(
 						obj[member],
 						user,
-						subObjTpye,
+						subObjType,
 						userType
 					);
 				}
