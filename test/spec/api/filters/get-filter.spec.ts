@@ -1,9 +1,9 @@
-import { getRepository } from 'typeorm';
+import { getRepository, Entity } from 'typeorm';
 
 import { createMockRequest } from '../../../../src/test-probe';
 import { ExampleUser, BaseModel } from '../../../../src/models';
 import { getFilter } from '../../../../src/filters';
-import { OnlySelfCanRead, OnlyAdminCanRead } from '../../../../src/bodyguard';
+import { OnlySelfCanRead, OnlyAdminCanRead, AnyoneCanRead } from '../../../../src/bodyguard';
 
 class OnlySelfCanReadMember extends BaseModel {
 	@OnlySelfCanRead() public id: number = undefined;
@@ -15,6 +15,10 @@ class OnlyAdminCanReadMember extends BaseModel {
 
 class NobodyCanReadMember extends BaseModel {
 	public id: number = undefined;
+}
+
+class EntityWithJSONColumn extends BaseModel {
+	@AnyoneCanRead() public options: Object = undefined;
 }
 
 /**
@@ -244,5 +248,46 @@ describe('[Guards] getFilter', async () => {
 		};
 
 		getFilter(request, response, () => {});
+	});
+
+	// https://github.com/StatelessStudio/pointyapi/issues/197
+	it('allows JSON column value to pass', async () => {
+		// Create mock request/response
+		const { request, response } = createMockRequest();
+
+		// Create request
+		const entity: EntityWithJSONColumn = {
+			options: {
+				enableSomething: true
+			}
+		};
+
+		request.query = { select: [ 'options' ] };
+		request.payload = [ entity ];
+		request.payloadType = EntityWithJSONColumn;
+
+		// Filter
+		let result = false;
+
+		getFilter(request, response, () => {
+			if (request.payload && request.payload.length) {
+				if ('options' in request.payload[0]) {
+					if ('enableSomething' in request.payload[0].options) {
+						result = true;
+					}
+					else {
+						fail('enableSomething was removed from payload.');
+					}
+				}
+				else {
+					fail('No options column returned.');
+				}
+			}
+			else {
+				fail('No payload returned.');
+			}
+		});
+
+		expect(result).toBe(true);
 	});
 });

@@ -1,5 +1,13 @@
 # PointyApi Changelog
 
+## [3.3.2]
+
+### Additions
+
+### Fixes
+- npm update
+- [Issue #197] getFilter removes object properties
+
 ## [3.3.1] Nov-22-2019
 
 ### Fixes
