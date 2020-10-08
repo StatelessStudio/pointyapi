@@ -1,0 +1,8 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"outDir": "./dist-test"
+	},
+	"include": ["./test/*.spec.ts", "./test/*.d.ts", "./test/**/*.spec.ts", "./test/**/*.d.ts"],
+	"exclude": ["./src", "./dist"]
+}
