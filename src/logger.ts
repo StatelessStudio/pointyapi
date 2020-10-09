@@ -7,10 +7,10 @@ export class Logger
 	public warn: Function = console.log;
 	public error: Function = console.error;
 
-	public constructor(debug?)
+	public constructor(_debug?)
 	{
-		if (debug) {
-			debug = logger.info;
+		if (_debug) {
+			this.debug = this.info;
 		}
 	}
 };
