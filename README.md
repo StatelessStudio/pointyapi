@@ -19,6 +19,10 @@ To compile a build, run `npm run build`. The build output will appear in the `./
 
 ## More
 
+### Generating Docs
+
+`npm run doc` and browse docs/index.html!
+
 ### Environment Variables
 
 Environment variables should be set in .env

@@ -66,3 +66,6 @@ dist-test/
 
 # Environment Variables
 .env
+
+# Docs build
+docs/
