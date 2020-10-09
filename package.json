@@ -1,15 +1,15 @@
 {
 	"name": "MY_APP",
 	"version": "0.0.0",
-	"main": "dist/service.js",
-	"types": "dist/service.d.ts",
+	"main": "dist/main.js",
+	"types": "dist/main.d.ts",
 	"scripts": {
-		"test": "npm run build && npm run build:spec && jasmine --config=jasmine",
+		"test": "npm run build:spec && jasmine --config=jasmine",
 		"build": "tsc --p tsconfig.json",
-		"build:spec": "tsc --p tsconfig.json && tsc --p tsconfig.spec.json",
-		"dev": "ts-node src/service.ts",
+		"build:spec": "tsc --p tsconfig.spec.json",
+		"dev": "ts-node src/main.ts",
 		"prepare": "npm run build",
-		"doc": "typedoc --out docs src --excludeNotExported",
+		"doc": "typedoc --out docs src --excludeNotExported"
 	},
 	"directories": {
 		"test": "test"
@@ -18,7 +18,7 @@
 		"dist/*"
 	],
 	"dependencies": {
-		"dotenv": "^8.2.0",
+		"dotenv": "^8.2.0"
 	},
 	"devDependencies": {
 		"@types/node": "^12.12.58",
