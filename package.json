@@ -12,9 +12,8 @@
 		"build:prod": "npm run lint:prod && tsc --p tsconfig.json",
 		"prepare": "npm run build:prod",
 		"doc": "typedoc --out docs src --excludeNotExported",
-		"lint": "eslint . --ext .ts",
-		"lint:fix": "eslint . --ext .ts --fix",
-		"lint:prod": "eslint . --ext .ts --config=.eslintrc.prod.json",
+		"lint": "eslint . --ext .ts --fix",
+		"lint:prod": "eslint . --ext .ts --config=.eslintrc.prod.json --fix",
 		"coverage": "nyc npm run coverage-test",
 		"coverage-test": "jasmine --config=jasmine.json",
 		"coveralls": "cat ./coverage/lcov.info | coveralls"
