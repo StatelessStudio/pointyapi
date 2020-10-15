@@ -14,7 +14,7 @@
 		"prepare": "npm run build:prod",
 		"doc": "typedoc --out docs src --excludeNotExported",
 		"lint": "eslint . --ext .ts --fix",
-		"lint:prod": "eslint . --ext .ts --config=.eslintrc.prod.json --fix",
+		"lint:prod": "npm run lint && eslint . --ext .ts --config=.eslintrc.prod.json",
 		"coverage": "nyc npm run coverage-test",
 		"coverage-test": "jasmine --config=jasmine.json",
 		"coveralls": "cat ./coverage/lcov.info | coveralls"

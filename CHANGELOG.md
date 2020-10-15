@@ -10,6 +10,7 @@
 
 - Add `npm start` script
 - Add code coverage reporting and coveralls configuration
+- Add additional prod linting
 
 ### Fixes
 
