@@ -4,6 +4,7 @@
 	"main": "dist/main.js",
 	"types": "dist/main.d.ts",
 	"scripts": {
+		"start": "npm run dev",
 		"dev": "npm run lint && ts-node src/main.ts",
 		"test": "npm run build:spec && jasmine --config=jasmine",
 		"build": "npm run build:prod",

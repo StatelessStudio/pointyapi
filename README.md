@@ -7,7 +7,7 @@
 
 ## Development
 
-Run a dev test with `npm run dev`
+Run a dev test with `npm start`
 
 ## Running Tests
 
