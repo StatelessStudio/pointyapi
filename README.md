@@ -33,17 +33,16 @@ To add additional environment variables, edit `src/environment.ts`:
 /**
  * Environment Variables Schema
  */
-export interface Environment
-{
+export interface Environment {
 	APP_TITLE: string
 
 	// TODO: Add additional allowed variables
-};
+}
 
 /**
  * Default Values
  */
-var defaults: Environment = {
+const defaults: Environment = {
 	APP_TITLE: 'MY_APP'
 
 	// TODO: Set default variables here

@@ -16,6 +16,7 @@
 - Cleanup prettier config
 - Added unit tests for untested code
 - Linting should automatically fix
+- Update readme code samples
 
 ## [v0.0.0] - Oct-09-2020 - Initial Release
 
