@@ -14,6 +14,7 @@
 ### Fixes
 
 - Cleanup prettier config
+- Added unit tests for untested code
 
 ## [v0.0.0] - Oct-09-2020 - Initial Release
 
