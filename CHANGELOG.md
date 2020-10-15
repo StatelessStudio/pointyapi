@@ -9,6 +9,7 @@
 ### Additions
 
 - Add `npm start` script
+- Add code coverage reporting and coveralls configuration
 
 ### Fixes
 
