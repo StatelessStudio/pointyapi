@@ -4,12 +4,16 @@
 	"main": "dist/main.js",
 	"types": "dist/main.d.ts",
 	"scripts": {
+		"dev": "npm run lint && ts-node src/main.ts",
 		"test": "npm run build:spec && jasmine --config=jasmine",
-		"build": "tsc --p tsconfig.json",
-		"build:spec": "tsc --p tsconfig.spec.json",
-		"dev": "ts-node src/main.ts",
-		"prepare": "npm run build",
-		"doc": "typedoc --out docs src --excludeNotExported"
+		"build": "npm run build:prod",
+		"build:spec": "npm run lint && tsc --p tsconfig.spec.json",
+		"build:prod": "npm run lint:prod && tsc --p tsconfig.json",
+		"prepare": "npm run build:prod",
+		"doc": "typedoc --out docs src --excludeNotExported",
+		"lint": "eslint . --ext .ts",
+		"lint:fix": "eslint . --ext .ts --fix",
+		"lint:prod": "eslint . --ext .ts --config=.eslintrc.prod.json"
 	},
 	"directories": {
 		"test": "test"
@@ -21,12 +25,13 @@
 		"dotenv": "^8.2.0"
 	},
 	"devDependencies": {
-		"@types/node": "^12.12.58",
 		"@types/jasmine": "^3.5.14",
+		"@types/node": "^12.12.58",
+		"@typescript-eslint/eslint-plugin": "^4.4.0",
+		"@typescript-eslint/parser": "^4.4.0",
+		"eslint": "^7.11.0",
 		"jasmine": "^3.6.1",
 		"ts-node": "^9.0.0",
-		"tslint": "^6.1.3",
-		"tslint-eslint-rules": "^5.4.0",
 		"typedoc": "^0.19.2",
 		"typescript": "^4.0.2"
 	}

@@ -4,6 +4,8 @@
 
 ### Breaking Changes
 
+- Switched from tslint to eslint due to deprecation
+
 ### Additions
 
 ### Fixes
