@@ -11,7 +11,6 @@
 		"build": "npm run build:prod",
 		"build:spec": "npm run lint && tsc --p tsconfig.spec.json",
 		"build:prod": "npm run lint:prod && tsc --p tsconfig.json",
-		"prepare": "npm run build:prod",
 		"doc": "typedoc --out docs src --excludeNotExported",
 		"lint": "eslint . --ext .ts --fix",
 		"lint:prod": "npm run lint && eslint . --ext .ts --config=.eslintrc.prod.json",

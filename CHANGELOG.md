@@ -19,6 +19,7 @@
 - Linting should automatically fix
 - Update readme code samples
 - Add ts-project-version to package.json for version control
+- Don't build on prepare hook
 
 ## [v0.0.0] - Oct-09-2020 - Initial Release
 

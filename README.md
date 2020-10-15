@@ -3,7 +3,7 @@
 ## Installation
 
 1. Replace MY_APP with the name of your app project-wide
-2. `npm i --ignore-scripts`
+2. `npm i`
 
 ## Development
 
