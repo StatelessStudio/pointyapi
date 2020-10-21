@@ -1,5 +1,9 @@
 # PointyApi Changelog
 
+## [3.3.3]
+
+### Fixes
+
 ## [3.3.2]
 
 ### Additions
