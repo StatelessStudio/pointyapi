@@ -1,13 +1,13 @@
 {
 	"name": "pointyapi",
-	"version": "3.3.2",
+	"version": "3.3.3",
 	"author": "stateless-studio",
 	"license": "MIT",
 	"scripts": {
 		"start": "tsc --p tsconfig.json && node lib/test/examples/basic/server.js",
 		"build": "tsc --p tsconfig.json",
 		"build:spec": "tsc --p tsconfig.json && tsc --p tsconfig.spec.json",
-		"postinstall": "tsc --p tsconfig.dist.json",
+		"prepare": "tsc --p tsconfig.dist.json",
 		"test": "npm run build:spec && npm run coverage && npm run test-examples",
 		"test-examples": "npm run test:jasmine-basic && npm run test:jasmine-guards && npm run test:jasmine-chat && npm run test:jasmine-terms",
 		"test:jasmine-api": "npm run db:drop && jasmine --config=test/jasmine.api.json",

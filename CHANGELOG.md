@@ -1,5 +1,10 @@
 # PointyApi Changelog
 
+## [3.3.3]
+
+### Fixes
+- Change postinstall script to prepare
+
 ## [3.3.2]
 
 ### Additions
