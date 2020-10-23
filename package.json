@@ -1,15 +1,25 @@
 {
 	"name": "MY_APP",
-	"version": "0.0.0",
+	"version": "1.0.0",
+	"ts-project-version": "1.0.0",
 	"main": "dist/main.js",
 	"types": "dist/main.d.ts",
 	"scripts": {
-		"test": "npm run build:spec && jasmine --config=jasmine",
-		"build": "tsc --p tsconfig.json",
-		"build:spec": "tsc --p tsconfig.spec.json",
-		"dev": "ts-node src/main.ts",
-		"prepare": "npm run build",
-		"doc": "typedoc --out docs src --excludeNotExported"
+		"start": "npm run dev",
+		"dev": "npm run preprocess && npm run lint && ts-node src/main.ts",
+		"test": "npm run build:spec && npm run postprocess && npm run coverage",
+		"build": "npm run build:dev",
+		"build:dev": "npm run preprocess && npm run lint && tsc --p tsconfig.json && npm run postprocess",
+		"build:spec": "npm run preprocess && npm run lint && tsc --p tsconfig.json && npm run postprocess",
+		"build:prod": "npm run preprocess prod && npm run lint:prod && tsc --p tsconfig.prod.json && npm run postprocess prod",
+		"preprocess": "node preprocess.js",
+		"postprocess": "node postprocess.js",
+		"doc": "typedoc --out docs src --excludeNotExported",
+		"lint": "eslint . --ext .ts --fix",
+		"lint:prod": "eslint . --ext .ts --config=.eslintrc.prod.json",
+		"coverage": "nyc npm run coverage-test",
+		"coverage-test": "jasmine --config=jasmine.json",
+		"coveralls": "cat ./coverage/lcov.info | coveralls"
 	},
 	"directories": {
 		"test": "test"
@@ -21,12 +31,17 @@
 		"dotenv": "^8.2.0"
 	},
 	"devDependencies": {
-		"@types/node": "^12.12.58",
+		"@istanbuljs/nyc-config-typescript": "^1.0.1",
 		"@types/jasmine": "^3.5.14",
+		"@types/node": "^12.12.58",
+		"@typescript-eslint/eslint-plugin": "^4.4.0",
+		"@typescript-eslint/parser": "^4.4.0",
+		"coveralls": "^3.1.0",
+		"eslint": "^7.11.0",
 		"jasmine": "^3.6.1",
+		"nyc": "^15.1.0",
+		"source-map-support": "^0.5.19",
 		"ts-node": "^9.0.0",
-		"tslint": "^6.1.3",
-		"tslint-eslint-rules": "^5.4.0",
 		"typedoc": "^0.19.2",
 		"typescript": "^4.0.2"
 	}

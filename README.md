@@ -3,11 +3,11 @@
 ## Installation
 
 1. Replace MY_APP with the name of your app project-wide
-2. `npm i --ignore-scripts`
+2. `npm i`
 
 ## Development
 
-Run a dev test with `npm run dev`
+Run a dev test with `npm start`
 
 ## Running Tests
 
@@ -33,17 +33,16 @@ To add additional environment variables, edit `src/environment.ts`:
 /**
  * Environment Variables Schema
  */
-export interface Environment
-{
+export interface Environment {
 	APP_TITLE: string
 
 	// TODO: Add additional allowed variables
-};
+}
 
 /**
  * Default Values
  */
-var defaults: Environment = {
+const defaults: Environment = {
 	APP_TITLE: 'MY_APP'
 
 	// TODO: Set default variables here
