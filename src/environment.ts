@@ -16,5 +16,4 @@ const defaults: Environment = {
 };
 
 // Export
-const _env: Environment = Object.assign(defaults, envfile.parsed);
-export const env = _env;
+export const env: Environment = Object.assign(defaults, envfile.parsed);

@@ -12,6 +12,7 @@
 
 - Move `main.ts` to `index.ts` to better meet node standard & to allow loading by directory with implicit entrypoint
 - Max-line-length should be warning, not error
+- [TSTEMPLATE-2] Environment doesn't infer type of export 'env'
 
 ## [v1.0.0] - Oct-15-2020
 
