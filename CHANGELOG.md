@@ -6,6 +6,8 @@
 
 ### Fixes
 
+- Move `main.ts` to `index.ts` to better meet node standard & to allow loading by directory with implicit entrypoint
+
 ## [v1.0.0] - Oct-15-2020
 
 ### Breaking Changes
