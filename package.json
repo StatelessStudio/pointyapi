@@ -11,7 +11,7 @@
 		"build": "npm run build:dev",
 		"build:dev": "npm run preprocess && npm run lint && tsc --p tsconfig.json && npm run postprocess",
 		"build:spec": "npm run preprocess && npm run lint && tsc --p tsconfig.json && npm run postprocess",
-		"build:prod": "npm run preprocess prod && npm run lint:prod && tsc --p tsconfig.prod.json && npm run postprocess prod",
+		"build:prod": "npm run preprocess prod && npm run lint:prod && tsc --p tsconfig.json && npm run postprocess prod",
 		"preprocess": "node preprocess.js",
 		"postprocess": "node postprocess.js",
 		"doc": "typedoc --out docs src --excludeNotExported",
@@ -32,17 +32,17 @@
 	},
 	"devDependencies": {
 		"@istanbuljs/nyc-config-typescript": "^1.0.1",
-		"@types/jasmine": "^3.5.14",
-		"@types/node": "^12.12.58",
-		"@typescript-eslint/eslint-plugin": "^4.4.0",
-		"@typescript-eslint/parser": "^4.4.0",
+		"@types/jasmine": "^3.6.2",
+		"@types/node": "^12.19.13",
+		"@typescript-eslint/eslint-plugin": "^4.13.0",
+		"@typescript-eslint/parser": "^4.13.0",
 		"coveralls": "^3.1.0",
-		"eslint": "^7.11.0",
-		"jasmine": "^3.6.1",
+		"eslint": "^7.17.0",
+		"jasmine": "^3.6.3",
 		"nyc": "^15.1.0",
 		"source-map-support": "^0.5.19",
-		"ts-node": "^9.0.0",
+		"ts-node": "^9.1.1",
 		"typedoc": "^0.19.2",
-		"typescript": "^4.0.2"
+		"typescript": "^4.1.3"
 	}
 }
