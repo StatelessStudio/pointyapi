@@ -1,5 +1,18 @@
 # Typescript Project Template
 
+## [v1.1.0] - Jan-13-2021
+
+### Additions
+
+- Updated documentation for easier installation
+- Add webpack build chain
+- Add source mapping
+
+### Fixes
+
+- Move `main.ts` to `index.ts` to better meet node standard & to allow loading by directory with implicit entrypoint
+- Max-line-length should be warning, not error
+
 ## [v1.0.0] - Oct-15-2020
 
 ### Breaking Changes
