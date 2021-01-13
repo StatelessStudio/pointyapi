@@ -1,7 +1,7 @@
 {
 	"name": "MY_APP",
 	"version": "1.0.0",
-	"ts-project-version": "1.0.0",
+	"ts-project-version": "1.1.0",
 	"main": "dist/main.js",
 	"types": "dist/main.d.ts",
 	"scripts": {
