@@ -9,14 +9,16 @@
 		"dev": "npm run preprocess && npm run lint && ts-node src/index.ts",
 		"test": "npm run build:spec && npm run postprocess && npm run coverage",
 		"build": "npm run build:dev",
-		"build:dev": "npm run preprocess && npm run lint && tsc --p tsconfig.json && npm run postprocess",
-		"build:spec": "npm run preprocess && npm run lint && tsc --p tsconfig.json && npm run postprocess",
-		"build:prod": "npm run preprocess prod && npm run lint:prod && tsc --p tsconfig.json && npm run postprocess prod",
+		"build:dev": "npm run preprocess && npm run lint && npm run webpack:dev && npm run postprocess",
+		"build:spec": "npm run preprocess && npm run lint && tsc --p tsconfig.spec.json && npm run postprocess",
+		"build:prod": "npm run preprocess prod && npm run lint:prod && npm run webpack:prod && npm run postprocess prod",
+		"webpack:dev": "./node_modules/.bin/webpack --mode=development",
+		"webpack:prod": "./node_modules/.bin/webpack --mode=production",
 		"preprocess": "node preprocess.js",
 		"postprocess": "node postprocess.js",
 		"doc": "typedoc --out docs src --excludeNotExported",
 		"lint": "eslint . --ext .ts --fix",
-		"lint:prod": "eslint . --ext .ts --config=.eslintrc.prod.json",
+		"lint:prod": "eslint . --ext .ts --fix --config=.eslintrc.prod.json",
 		"coverage": "nyc npm run coverage-test",
 		"coverage-test": "jasmine --config=jasmine.json",
 		"coveralls": "cat ./coverage/lcov.info | coveralls"
@@ -28,7 +30,8 @@
 		"dist/*"
 	],
 	"dependencies": {
-		"dotenv": "^8.2.0"
+		"dotenv": "^8.2.0",
+		"source-map-support": "^0.5.19"
 	},
 	"devDependencies": {
 		"@istanbuljs/nyc-config-typescript": "^1.0.1",
@@ -40,9 +43,11 @@
 		"eslint": "^7.17.0",
 		"jasmine": "^3.6.3",
 		"nyc": "^15.1.0",
-		"source-map-support": "^0.5.19",
+		"ts-loader": "^8.0.12",
 		"ts-node": "^9.1.1",
 		"typedoc": "^0.19.2",
-		"typescript": "^4.1.3"
+		"typescript": "^4.1.3",
+		"webpack": "^5.10.1",
+		"webpack-cli": "^4.2.0"
 	}
 }

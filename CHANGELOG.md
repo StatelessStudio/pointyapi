@@ -4,6 +4,9 @@
 
 ### Additions
 
+- Add webpack build chain
+- Add source mapping
+
 ### Fixes
 
 - Move `main.ts` to `index.ts` to better meet node standard & to allow loading by directory with implicit entrypoint
