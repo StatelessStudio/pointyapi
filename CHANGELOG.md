@@ -4,6 +4,7 @@
 
 ### Additions
 
+- Updated documentation for easier installation
 - Add webpack build chain
 - Add source mapping
 
