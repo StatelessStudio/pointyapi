@@ -17,6 +17,7 @@ export class PointyPostgres extends BaseDb {
 	public connect(options?: string | Object): Promise<Connection> {
 		return new Promise(async (accept, reject) => {
 			let pgOptions: any;
+			let useSSL = false;
 
 			if (process.env.DATABASE_URL) {
 				// Live
@@ -24,6 +25,7 @@ export class PointyPostgres extends BaseDb {
 					process.env.DATABASE_URL
 				);
 				pgOptions.type = 'postgres';
+				useSSL = true;
 
 				this.logger('Using production database');
 				this.logger(
@@ -52,8 +54,7 @@ export class PointyPostgres extends BaseDb {
 				this.shouldSync = true;
 			}
 
-			// Create connection
-			const conn = await createConnection(<ConnectionOptions>{
+			options = {
 				name: this.connectionName,
 				type: process.env.TYPEORM_DRIVER_TYPE || pgOptions.type,
 				driver: process.env.TYPEORM_DRIVER_TYPE || pgOptions.type,
@@ -66,11 +67,17 @@ export class PointyPostgres extends BaseDb {
 				synchronize: this.shouldSync,
 				uuidExtension: pgOptions.uuidExtension
 					? pgOptions.uuidExtension
-					: 'pgcrypto',
-				ssl: {
+					: 'pgcrypto'
+			};
+
+			if (useSSL) {
+				options['ssl'] = {
 					rejectUnauthorized: false
-				}
-			}).catch((error) => {
+				};
+			}
+
+			// Create connection
+			const conn = await createConnection(<ConnectionOptions>options).catch((error) => {
 				reject(error);
 				return false;
 			});
