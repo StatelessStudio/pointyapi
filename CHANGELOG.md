@@ -1,5 +1,10 @@
 # PointyApi Changelog
 
+## [3.3.4] Mar-15-2021
+
+### Fixes
+- Use SSL for postgres production connections
+
 ## [3.3.3]
 
 ### Fixes
