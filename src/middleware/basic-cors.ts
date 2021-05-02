@@ -26,10 +26,6 @@ export function basicCors(
 			let host = request.headers.origin;
 			const clientUrls = process.env.ALLOW_ORIGIN.split(', ');
 
-			if (host instanceof Array) {
-				host = host[0];
-			}
-
 			if (clientUrls.includes(host)) {
 				origin = host;
 			}
