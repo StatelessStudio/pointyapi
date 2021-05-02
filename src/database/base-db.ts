@@ -37,6 +37,6 @@ export class BaseDb {
 
 	// Create database connection
 	public async connect(options: string | Object): Promise<any> {
-		return new Promise((accept) => accept());
+		return new Promise((accept) => accept(null));
 	}
 }

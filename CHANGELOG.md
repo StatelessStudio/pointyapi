@@ -4,6 +4,7 @@
 
 ### Fixes
 - npm update
+- Fix typescript build errors
 
 ## [3.3.4] Mar-15-2021
 

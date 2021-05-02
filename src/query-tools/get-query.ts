@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { getReadableFields, getBodyguardKeys } from '../bodyguard';
 
 import { createSearchQuery } from '../utils';
+import { Query } from './query';
 
 /**
  * Get the objects represented by the request query
@@ -13,14 +14,16 @@ export async function getQuery(
 	request: Request,
 	response: Response
 ): Promise<any> {
-	if ('query' in request && 'id' in request.query && request.query.id) {
+	const requestQueryParams: Query = request.query;
+
+	if ('id' in requestQueryParams && requestQueryParams.id) {
 		// Read one
-		return request.repository.findOne(request.query.id);
+		return request.repository.findOne(requestQueryParams.id);
 	}
-	else if ('query' in request && Object.keys(request.query).length) {
+	else if (Object.keys(requestQueryParams).length) {
 		// Read query
 
-		const shouldCount = 'count' in request.query && request.query.count;
+		const shouldCount = 'count' in requestQueryParams && requestQueryParams.count;
 
 		// Readable keys
 		let readableFields = getReadableFields(
@@ -31,8 +34,8 @@ export async function getQuery(
 
 		// Extract select query keys
 		const selectKeys = [];
-		if ('select' in request.query) {
-			for (let key of request.query.select) {
+		if ('select' in requestQueryParams) {
+			for (let key of requestQueryParams.select) {
 				key = `obj.${key}`;
 				selectKeys.push(key);
 			}
@@ -41,8 +44,8 @@ export async function getQuery(
 		}
 
 		// Extract Join join query keys
-		if ('join' in request.query) {
-			request.query.join.forEach((key) => {
+		if ('join' in requestQueryParams) {
+			requestQueryParams.join.forEach((key) => {
 				if (!request.joinMembers.includes(key)) {
 					request.joinMembers.push(key);
 				}
@@ -51,15 +54,15 @@ export async function getQuery(
 
 		// Extract Group By query keys
 		const groupByKeys = [];
-		if ('groupBy' in request.query) {
-			request.query.groupBy.forEach((key) => {
+		if ('groupBy' in requestQueryParams) {
+			requestQueryParams.groupBy.forEach((key) => {
 				groupByKeys.push(key);
 			});
 
 			// Add 'id' to array if not already
 			if (
 				readableFields.includes('obj.id') &&
-				!('id' in request.query.groupBy)
+				!('id' in requestQueryParams.groupBy)
 			) {
 				groupByKeys.push('id');
 			}
@@ -68,11 +71,11 @@ export async function getQuery(
 		// Extract order By query keys
 		const orderByKeys = [];
 		const orderByOrders = [];
-		if ('orderBy' in request.query) {
-			for (const key in request.query.orderBy) {
+		if ('orderBy' in requestQueryParams) {
+			for (const key in requestQueryParams.orderBy) {
 				orderByKeys.push(key);
 				orderByOrders.push(
-					request.query.orderBy[key] === 'DESC' ? 'DESC' : 'ASC'
+					requestQueryParams.orderBy[key] === 'DESC' ? 'DESC' : 'ASC'
 				);
 			}
 		}
@@ -81,7 +84,7 @@ export async function getQuery(
 		// tslint:disable-next-line:prefer-const
 		let { queryString, queryParams } = createSearchQuery(
 			request.payloadType,
-			request.query
+			requestQueryParams
 		);
 
 		// Join bodyguard keys, unless this is the User
@@ -161,17 +164,17 @@ export async function getQuery(
 			}
 
 			// Add limit
-			if ('limit' in request.query && request.query.limit) {
-				query.take(request.query.limit);
+			if ('limit' in requestQueryParams && requestQueryParams.limit) {
+				query.take(requestQueryParams.limit);
 			}
 
 			// Add offset
-			if ('offset' in request.query && request.query.offset) {
-				query.skip(request.query.offset);
+			if ('offset' in requestQueryParams && requestQueryParams.offset) {
+				query.skip(requestQueryParams.offset);
 			}
 		}
 
-		if ('raw' in request.query && request.query.raw) {
+		if ('raw' in requestQueryParams && requestQueryParams.raw) {
 			return query.getRawMany();
 		}
 		else if (groupByKeys.length) {
