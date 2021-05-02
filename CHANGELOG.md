@@ -1,6 +1,6 @@
 # PointyApi Changelog
 
-## [3.3.5] Apr-27-2021
+## [3.3.5] May-02-2021
 
 ### Fixes
 - npm update
