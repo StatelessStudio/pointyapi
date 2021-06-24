@@ -1,5 +1,9 @@
 # Typescript Project Template
 
+## [v1.2.0]
+
+### Additions
+
 ## [v1.1.0] - Jan-13-2021
 
 ### Additions
