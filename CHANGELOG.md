@@ -4,6 +4,8 @@
 
 ### Additions
 
+- Add nodemon support
+
 ## [v1.1.0] - Jan-13-2021
 
 ### Additions
