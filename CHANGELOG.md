@@ -1,5 +1,13 @@
 # Typescript Project Template
 
+## [v1.2.0]
+
+### Additions
+
+- Add nodemon support
+- Remove default pre&post process scripts
+- Add :clean scripts for rebuilding
+
 ## [v1.1.0] - Jan-13-2021
 
 ### Additions
