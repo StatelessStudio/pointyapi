@@ -1,5 +1,9 @@
 # Typescript Project Template
 
+## [v1.2.1]
+
+### Fixes
+
 ## [v1.2.0]
 
 ### Additions

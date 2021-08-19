@@ -1,7 +1,7 @@
 {
 	"name": "MY_APP",
 	"version": "1.0.0",
-	"ts-project-version": "1.2.0",
+	"ts-project-version": "1.2.1",
 	"main": "dist/index.js",
 	"types": "dist/index.d.ts",
 	"scripts": {
