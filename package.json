@@ -18,7 +18,7 @@
 		"webpack:prod": "./node_modules/.bin/webpack --mode=production",
 		"preprocess": "",
 		"postprocess": "",
-		"doc": "typedoc --out docs src --excludeNotExported",
+		"doc": "typedoc --out docs src",
 		"lint": "eslint . --ext .ts --fix",
 		"lint:prod": "eslint . --ext .ts --fix --config=.eslintrc.prod.json",
 		"coverage": "nyc npm run coverage-test",

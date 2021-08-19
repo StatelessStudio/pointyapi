@@ -3,6 +3,7 @@
 ## [v1.2.1]
 
 ### Fixes
+- [TSTEMPLATE-3][Docs] Typedoc --excludeNotExported switch is deprecated
 
 ## [v1.2.0]
 
