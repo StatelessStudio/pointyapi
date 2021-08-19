@@ -6,6 +6,7 @@
 - [TSTEMPLATE-3][Docs] Typedoc --excludeNotExported switch is deprecated
 - [TSTEMPLATE-4] Seperate index.ts from main.ts
 - [TSTEMPLATE-5] Source mapping should be loaded before imports
+- [TSTEMPLATE-6] main() entrypoint should have catch block
 
 ## [v1.2.0]
 
