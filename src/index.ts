@@ -1,13 +1,9 @@
-import { logger } from './logger';
-import { env } from './environment';
-
+// Bootstrap source mapping
 import * as sourceMapper from 'source-map-support';
 
 sourceMapper.install({
 	environment: 'node'
 });
 
-async function main() {
-	logger.info('Hello ' + env.APP_TITLE);
-}
-main();
+// Enter application
+import './main';

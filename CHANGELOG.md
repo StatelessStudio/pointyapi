@@ -4,6 +4,8 @@
 
 ### Fixes
 - [TSTEMPLATE-3][Docs] Typedoc --excludeNotExported switch is deprecated
+- [TSTEMPLATE-4] Seperate index.ts from main.ts
+- [TSTEMPLATE-5] Source mapping should be loaded before imports
 
 ## [v1.2.0]
 
