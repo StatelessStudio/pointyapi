@@ -3,7 +3,7 @@
 ## [v1.2.2]
 
 ### Fixes
-
+- [TSTEMPLATE-7] Source mapping references wrong line numbers when run in dev/ts-node
 
 ## [v1.2.1]
 
