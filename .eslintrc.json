@@ -9,6 +9,14 @@
 		"plugin:@typescript-eslint/eslint-recommended",
 		"plugin:@typescript-eslint/recommended"
 	],
+	"overrides": [
+		{
+			"files": ["*.ts"],
+			"parserOptions": {
+				"project": ["./tsconfig.json", "./tsconfig.spec.json"]
+			}
+		}
+	],
 	"rules": {
 		"curly": 2,
 		"indent": [2, "tab"],
@@ -30,6 +38,8 @@
 		"no-prototype-builtins": 1,
 		"no-useless-escape": 1,
 		"no-case-declarations": 1,
-		"@typescript-eslint/no-var-requires": 2
+		"@typescript-eslint/no-var-requires": 2,
+		"@typescript-eslint/promise-function-async": 1,
+		"@typescript-eslint/no-floating-promises": 2
 	}
 }

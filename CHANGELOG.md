@@ -8,6 +8,7 @@
 - [TSTEMPLATE-9] Filter stack traces for "just my code"
 - [TSTEMPLATE-10] Remove webpack from default build-chain
 - [TSTEMPLATE-11] Remove dist references from package.json
+- [TSTEMPLATE-12] Add lint rule for unresolved promises
 
 ## [v1.2.1]
 
