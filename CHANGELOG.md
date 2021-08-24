@@ -7,6 +7,7 @@
 - [TSTEMPLATE-8] Set stack trace limit to Infinity
 - [TSTEMPLATE-9] Filter stack traces for "just my code"
 - [TSTEMPLATE-10] Remove webpack from default build-chain
+- [TSTEMPLATE-11] Remove dist references from package.json
 
 ## [v1.2.1]
 

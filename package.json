@@ -2,8 +2,6 @@
 	"name": "MY_APP",
 	"version": "1.0.0",
 	"ts-project-version": "1.2.2",
-	"main": "dist/index.js",
-	"types": "dist/index.d.ts",
 	"scripts": {
 		"start": "npm run dev",
 		"dev": "npm run lint && ts-node src/index.ts",
@@ -25,12 +23,6 @@
 		"coverage-test": "jasmine --config=jasmine.json",
 		"coveralls": "cat ./coverage/lcov.info | coveralls"
 	},
-	"directories": {
-		"test": "test"
-	},
-	"files": [
-		"dist/*"
-	],
 	"dependencies": {
 		"dotenv": "^8.6.0",
 		"source-map-support": "^0.5.19"
