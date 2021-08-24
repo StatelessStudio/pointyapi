@@ -6,5 +6,8 @@ if (!process[Symbol.for('ts-node.register.instance')]) {
 	});
 }
 
+// Stack traces
+Error.stackTraceLimit = Infinity;
+
 // Enter application
 import './main';

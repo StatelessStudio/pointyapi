@@ -4,6 +4,7 @@
 
 ### Fixes
 - [TSTEMPLATE-7] Source mapping references wrong line numbers when run in dev/ts-node
+- [TSTEMPLATE-8] Set stack trace limit to Infinity
 
 ## [v1.2.1]
 
