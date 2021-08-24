@@ -6,6 +6,7 @@
 - [TSTEMPLATE-7] Source mapping references wrong line numbers when run in dev/ts-node
 - [TSTEMPLATE-8] Set stack trace limit to Infinity
 - [TSTEMPLATE-9] Filter stack traces for "just my code"
+- [TSTEMPLATE-10] Remove webpack from default build-chain
 
 ## [v1.2.1]
 
