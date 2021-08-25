@@ -1,21 +1,18 @@
 {
 	"name": "MY_APP",
 	"version": "1.0.0",
-	"ts-project-version": "1.2.1",
-	"main": "dist/index.js",
-	"types": "dist/index.d.ts",
+	"ts-project-version": "1.2.2",
 	"scripts": {
 		"start": "npm run dev",
 		"dev": "npm run lint && ts-node src/index.ts",
 		"test": "npm run build:dev && npm run build:spec && npm run coverage",
 		"clean": "rm -rf dist dist-test",
-		"build:dev": "npm run lint && npm run preprocess && npm run webpack:dev && npm run postprocess",
+		"build:dev": "npm run lint && npm run preprocess && npm run compile && npm run postprocess",
 		"build:dev:clean": "npm run clean && npm run build:dev",
 		"build:spec": "tsc --p tsconfig.spec.json",
-		"build:prod": "npm run preprocess prod && npm run lint:prod && npm run webpack:prod && npm run postprocess prod",
+		"build:prod": "npm run preprocess prod && npm run lint:prod && npm run compile && npm run postprocess prod",
 		"build:prod:clean": "npm run clean && npm run build:prod",
-		"webpack:dev": "./node_modules/.bin/webpack --mode=development",
-		"webpack:prod": "./node_modules/.bin/webpack --mode=production",
+		"compile": "./node_modules/.bin/tsc",
 		"preprocess": "",
 		"postprocess": "",
 		"doc": "typedoc --out docs src",
@@ -25,31 +22,22 @@
 		"coverage-test": "jasmine --config=jasmine.json",
 		"coveralls": "cat ./coverage/lcov.info | coveralls"
 	},
-	"directories": {
-		"test": "test"
-	},
-	"files": [
-		"dist/*"
-	],
 	"dependencies": {
 		"dotenv": "^8.6.0",
 		"source-map-support": "^0.5.19"
 	},
 	"devDependencies": {
 		"@istanbuljs/nyc-config-typescript": "^1.0.1",
-		"@types/jasmine": "^3.7.7",
-		"@types/node": "^12.20.15",
-		"@typescript-eslint/eslint-plugin": "^4.28.0",
-		"@typescript-eslint/parser": "^4.28.0",
-		"coveralls": "^3.1.0",
-		"eslint": "^7.29.0",
-		"jasmine": "^3.7.0",
+		"@types/jasmine": "^3.8.2",
+		"@types/node": "^12.20.20",
+		"@typescript-eslint/eslint-plugin": "^4.29.3",
+		"@typescript-eslint/parser": "^4.29.3",
+		"coveralls": "^3.1.1",
+		"eslint": "^7.32.0",
+		"jasmine": "^3.9.0",
 		"nyc": "^15.1.0",
-		"ts-loader": "^8.3.0",
-		"ts-node": "^10.0.0",
-		"typedoc": "^0.21.0",
-		"typescript": "^4.3.4",
-		"webpack": "^5.40.0",
-		"webpack-cli": "^4.7.2"
+		"ts-node": "^10.2.1",
+		"typedoc": "^0.21.6",
+		"typescript": "^4.3.5"
 	}
 }
