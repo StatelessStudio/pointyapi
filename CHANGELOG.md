@@ -1,5 +1,10 @@
 # Typescript Project Template
 
+## [v1.2.3]
+
+### Fixes
+- npm update
+
 ## [v1.2.2]
 
 ### Fixes

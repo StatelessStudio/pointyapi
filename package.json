@@ -1,7 +1,7 @@
 {
 	"name": "MY_APP",
 	"version": "1.0.0",
-	"ts-project-version": "1.2.2",
+	"ts-project-version": "1.2.3",
 	"scripts": {
 		"start": "npm run dev",
 		"dev": "npm run lint && ts-node src/index.ts",
@@ -24,20 +24,20 @@
 	},
 	"dependencies": {
 		"dotenv": "^8.6.0",
-		"source-map-support": "^0.5.19"
+		"source-map-support": "^0.5.20"
 	},
 	"devDependencies": {
 		"@istanbuljs/nyc-config-typescript": "^1.0.1",
-		"@types/jasmine": "^3.8.2",
-		"@types/node": "^12.20.20",
-		"@typescript-eslint/eslint-plugin": "^4.29.3",
-		"@typescript-eslint/parser": "^4.29.3",
+		"@types/jasmine": "^3.9.1",
+		"@types/node": "^12.20.28",
+		"@typescript-eslint/eslint-plugin": "^4.33.0",
+		"@typescript-eslint/parser": "^4.33.0",
 		"coveralls": "^3.1.1",
 		"eslint": "^7.32.0",
 		"jasmine": "^3.9.0",
 		"nyc": "^15.1.0",
 		"ts-node": "^10.2.1",
-		"typedoc": "^0.21.6",
-		"typescript": "^4.3.5"
+		"typedoc": "^0.21.9",
+		"typescript": "^4.4.3"
 	}
 }
