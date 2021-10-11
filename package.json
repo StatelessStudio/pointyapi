@@ -62,7 +62,6 @@
 	},
 	"description": "*\"Stop writing endpoints\"*",
 	"directories": {
-		"lib": "lib",
 		"test": "test"
 	},
 	"repository": {
