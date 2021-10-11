@@ -3,6 +3,7 @@
 ## [3.4.0]
 
 ### Additions
+- [Issue #195] addResource() should allow templating
 
 ### Fixes
 
