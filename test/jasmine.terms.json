@@ -1,5 +1,5 @@
 {
-	"spec_dir": "lib/test/spec/terms/",
+	"spec_dir": "dist/test/spec/terms/",
 	"spec_files": [ "**/*[sS]pec.js" ],
 	"helpers": [ "helpers/**/*.js" ],
 	"stopSpecOnExpectationFailure": false,

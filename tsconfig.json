@@ -2,7 +2,7 @@
 	"compileOnSave": false,
 	"compilerOptions": {
 		"baseUrl": "./src/",
-		"outDir": "./lib/",
+		"outDir": "./dist/",
 		"sourceMap": true,
 		"declaration": true,
 		"module": "commonjs",
@@ -13,5 +13,8 @@
 		"types": ["node"],
 		"typeRoots": ["node_modules/@types", "./lib"],
 		"lib": ["es2017"]
-	}
+	},
+	"exclude": [
+		"./scripts/"
+	]
 }

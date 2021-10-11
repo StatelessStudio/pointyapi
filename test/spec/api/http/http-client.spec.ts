@@ -17,7 +17,7 @@ describe('[HTTP] HTTP Client', () => {
 
 	beforeAll(async () => {
 		serverfork = await forkServer(
-			'./lib/test/examples/basic/server.js'
+			'./dist/test/examples/basic/server.js'
 		);
 	});
 
