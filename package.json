@@ -21,7 +21,7 @@
 		"test:jasmine-chat": "npm run db:drop && jasmine --config=test/jasmine.chat.json",
 		"test:jasmine-terms": "npm run db:drop && jasmine --config=test/jasmine.terms.json",
 		"db:drop": "typeorm schema:drop -f orm-cli",
-		"doc": "typedoc --out docs src --excludeNotExported",
+		"doc": "typedoc",
 		"coverage": "npm run db:drop && nyc npm run coverage-test",
 		"coverage-test": "jasmine --config=test/jasmine.api.json",
 		"coveralls": "cat ./coverage/lcov.info | coveralls"
@@ -58,6 +58,7 @@
 		"ts-node": "^8.10.2",
 		"tslint": "^5.20.1",
 		"tslint-eslint-rules": "^5.4.0",
+		"typedoc": "^0.22.5",
 		"typescript": "^3.9.10"
 	},
 	"description": "*\"Stop writing endpoints\"*",

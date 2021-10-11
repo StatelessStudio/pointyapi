@@ -16,5 +16,10 @@
 	},
 	"exclude": [
 		"./scripts/"
-	]
+	],
+    "typedocOptions": {
+        "entryPoints": ["src"],
+		"entryPointStrategy": "expand",
+        "out": "docs"
+    }
 }
