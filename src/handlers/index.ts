@@ -10,5 +10,5 @@
 /**
  * Handlers
  */
-export { errorHandler } from './handlers/error-handler';
-export { logHandler } from './handlers/log-handler';
+export { errorHandler } from './error-handler';
+export { logHandler } from './log-handler';

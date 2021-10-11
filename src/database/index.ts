@@ -42,5 +42,5 @@
 /**
  * Database classes
  */
-export { BaseDb } from './database/base-db';
-export { PointyPostgres } from './database/postgres';
+export { BaseDb } from './base-db';
+export { PointyPostgres } from './postgres';

@@ -19,8 +19,8 @@
  * logs information about the auth token & authorized user
  */
 
-export { coreTestProbe } from './test-probe/core-test-probe';
-export { requestTestProbe } from './test-probe/request-test-probe';
-export { userTestProbe } from './test-probe/user-test-probe';
+export { coreTestProbe } from './core-test-probe';
+export { requestTestProbe } from './request-test-probe';
+export { userTestProbe } from './user-test-probe';
 
-export { createMockRequest } from './test-probe/create-mock-request';
+export { createMockRequest } from './create-mock-request';

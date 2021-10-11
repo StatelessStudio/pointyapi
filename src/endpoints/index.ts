@@ -60,10 +60,10 @@
 /**
  * Endpoints
  */
-export { deleteEndpoint } from './endpoints/delete-endpoint';
-export { getEndpoint } from './endpoints/get-endpoint';
-export { postEndpoint } from './endpoints/post-endpoint';
-export { patchEndpoint } from './endpoints/patch-endpoint';
-export { loginEndpoint } from './endpoints/login-endpoint';
-export { logoutEndpoint } from './endpoints/logout-endpoint';
-export { refreshTokenEndpoint } from './endpoints/refresh-token-endpoint';
+export { deleteEndpoint } from './delete-endpoint';
+export { getEndpoint } from './get-endpoint';
+export { postEndpoint } from './post-endpoint';
+export { patchEndpoint } from './patch-endpoint';
+export { loginEndpoint } from './login-endpoint';
+export { logoutEndpoint } from './logout-endpoint';
+export { refreshTokenEndpoint } from './refresh-token-endpoint';
