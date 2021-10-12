@@ -42,10 +42,6 @@ function queryFieldValidator(
 				}
 
 				if (!isKeyInModel(key, request.payload, response)) {
-					response.validationResponder(
-						'Member "' + key + '" does not exist in model'
-					);
-
 					return false;
 				}
 
@@ -76,10 +72,6 @@ function queryFieldValidator(
 				}
 
 				if (!isKeyInModel(key, request.payload, response)) {
-					response.validationResponder(
-						'Member "' + key + '" does not exist in model'
-					);
-
 					return false;
 				}
 
