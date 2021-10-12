@@ -235,7 +235,7 @@ describe('User API Read', () => {
 		await http
 			.get('/api/v1/user', {
 				orderBy: {
-					lname: 'DESC'
+					lname: 'desc'
 				}
 			})
 			.then((result) => {

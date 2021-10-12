@@ -75,7 +75,9 @@ export async function getQuery(
 			for (const key in requestQueryParams.orderBy) {
 				orderByKeys.push(key);
 				orderByOrders.push(
-					requestQueryParams.orderBy[key] === 'DESC' ? 'DESC' : 'ASC'
+					requestQueryParams.orderBy[key].toUpperCase() === 'DESC' ?
+						'DESC' :
+						'ASC'
 				);
 			}
 		}

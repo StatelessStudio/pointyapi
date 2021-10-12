@@ -6,6 +6,7 @@
 - [Issue #195] addResource() should allow templating
 
 ### Fixes
+- [Issue #225] Order by is case sensitive
 
 ## [3.3.5] May-02-2021
 
