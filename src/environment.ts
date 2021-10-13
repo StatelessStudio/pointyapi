@@ -4,16 +4,12 @@ const envfile = dotenv.config();
 /**
  * Environment Variables Schema
  */
-export interface Environment {
-	APP_TITLE: string
+export class Environment {
+	APP_TITLE = 'MY_APP';
 }
 
-/**
- * Default Values
- */
-const defaults: Environment = {
-	APP_TITLE: 'MY_APP'
-};
-
 // Export
-export const env: Environment = Object.assign(defaults, envfile.parsed);
+export const env: Environment = Object.assign(
+	new Environment(),
+	envfile.parsed
+);
