@@ -5,11 +5,10 @@
 	"scripts": {
 		"start": "npm run dev",
 		"dev": "npm run lint && ts-node src/index.ts",
-		"test": "npm run build:dev && npm run build:spec && npm run coverage",
+		"test": "npm run build:dev && npm run coverage",
 		"clean": "rm -rf dist dist-test",
 		"build:dev": "npm run lint && npm run preprocess && npm run compile && npm run postprocess",
 		"build:dev:clean": "npm run clean && npm run build:dev",
-		"build:spec": "tsc --p tsconfig.spec.json",
 		"build:prod": "npm run preprocess prod && npm run lint:prod && npm run compile && npm run postprocess prod",
 		"build:prod:clean": "npm run clean && npm run build:prod",
 		"compile": "./node_modules/.bin/tsc",

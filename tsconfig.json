@@ -15,7 +15,11 @@
 		"lib": ["es2017"]
 	},
 	"exclude": [
-		"./test/",
 		"./dist/"
+	],
+	"include": [
+		"./example/",
+		"./src/",
+		"./test/"
 	]
 }

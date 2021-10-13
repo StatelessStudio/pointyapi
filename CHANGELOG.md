@@ -3,6 +3,7 @@
 ## [v1.2.4]
 
 ### Fixes
+- [TSTEMPLATE-14] Remove tsconfig.spec.json
 - [TSTEMPLATE-13] Switch tsconfig to output es6
 
 ## [v1.2.3]
