@@ -3,7 +3,7 @@
 ## Installation
 
 1. Fork this repo
-2. Replace MY_APP with the name of your app project-wide
+2. Replace MY_APP with the name of your app project-wide (**No Spaces or special characters!**)
 3. `npm i`
 4. Update the documentation, changelog, etc
 
