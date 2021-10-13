@@ -3,6 +3,7 @@
 ## [v1.2.4]
 
 ### Fixes
+- [TSTEMPLATE-16] Build should clear dist
 - [TSTEMPLATE-15] Set no-empty eslint rule to warn instead of error
 - [TSTEMPLATE-14] Remove tsconfig.spec.json
 - [TSTEMPLATE-13] Switch tsconfig to output es6
