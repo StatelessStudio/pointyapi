@@ -1,5 +1,15 @@
 # Typescript Project Template
 
+## [v1.2.4]
+
+### Fixes
+- [TSTEMPLATE-18] Add instructions in readme that MY_APP replacement should not contain spaces
+- [TSTEMPLATE-17] Environment file should merge declaration and definitions
+- [TSTEMPLATE-16] Build should clear dist
+- [TSTEMPLATE-15] Set no-empty eslint rule to warn instead of error
+- [TSTEMPLATE-14] Remove tsconfig.spec.json
+- [TSTEMPLATE-13] Switch tsconfig to output es6
+
 ## [v1.2.3]
 
 ### Fixes

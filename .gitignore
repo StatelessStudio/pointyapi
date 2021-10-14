@@ -62,7 +62,6 @@ typings/
 
 # Build directory
 dist/
-dist-test/
 
 # Environment Variables
 .env

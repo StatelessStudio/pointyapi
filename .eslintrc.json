@@ -13,7 +13,7 @@
 		{
 			"files": ["*.ts"],
 			"parserOptions": {
-				"project": ["./tsconfig.json", "./tsconfig.spec.json"]
+				"project": ["./tsconfig.json"]
 			}
 		}
 	],
@@ -21,7 +21,8 @@
 		"curly": 2,
 		"indent": [2, "tab"],
 		"max-len": [1, 80],
-		"no-empty": 2,
+		"no-empty": 1,
+		"@typescript-eslint/no-empty-interface": 1,
 		"no-eval": 2,
 		"@typescript-eslint/no-misused-new": "error",
 		"no-trailing-spaces": 2,
