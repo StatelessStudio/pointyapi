@@ -244,6 +244,17 @@ describe('User API Read', () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
+	it('can order rand', async () => {
+		await http
+			.get('/api/v1/user', {
+				order: 'random'
+			})
+			.then((result) => {
+				expect(result.body[0].lname).toBeTruthy();
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
+
 	it('can limit', async () => {
 		await http
 			.get('/api/v1/user', {

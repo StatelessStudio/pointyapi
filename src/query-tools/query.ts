@@ -7,6 +7,7 @@ export interface Query
 	join?: string[],
 	search?: string,
 	groupBy?: string[],
+	order?: 'random',
 	orderBy?: object,
 	limit?: number,
 	offset?: number

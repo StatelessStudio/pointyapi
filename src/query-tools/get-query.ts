@@ -153,6 +153,10 @@ export async function getQuery(
 			}
 
 			// Add order by keys
+			if (requestQueryParams.order === 'random') {
+				query.orderBy('random()');
+			}
+
 			for (let i = 0; i < orderByKeys.length; i++) {
 				let key = orderByKeys[i];
 
