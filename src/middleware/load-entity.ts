@@ -28,12 +28,9 @@ export async function loadEntity(
 
 				if (next) {
 					next();
+				}
 
-					return true;
-				}
-				else {
-					return true;
-				}
+				return true;
 			}
 			else {
 				response.goneResponder(`Could not load entity`);
