@@ -75,7 +75,7 @@ export function createSearchQuery(
 			else if (typeof query.search === 'object') {
 				for (const column in query.search) {
 					const key = 'search_' + column;
-	
+
 					// Append searchable key to queryString
 					queryString += `LOWER(${objKey}.${column}) LIKE :${key} OR `;
 
@@ -125,9 +125,7 @@ export function createSearchQuery(
 				const key = 'greaterThan_' + column;
 
 				queryString += `${objKey}.${column} > :${key} AND `;
-				queryParams[key] = `${query.greaterThan[
-					column
-				]}`;
+				queryParams[key] = `${query.greaterThan[column]}`;
 			}
 		}
 		else if (queryType === 'lessThanOrEqual') {
@@ -138,9 +136,7 @@ export function createSearchQuery(
 					`${objKey}.${column} <= ` +
 					`:${key} AND `;
 
-				queryParams[key] = `${query.lessThanOrEqual[
-					column
-				]}`;
+				queryParams[key] = `${query.lessThanOrEqual[column]}`;
 			}
 		}
 		else if (queryType === 'greaterThanOrEqual') {
