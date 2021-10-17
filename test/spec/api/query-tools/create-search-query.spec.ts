@@ -123,8 +123,8 @@ describe('[QueryTools] createSearchQuery()', () => {
 			query
 		);
 
-		expect(queryString).toBe('obj.id < :lessThan_id');
-		expect(queryParams).toEqual({ lessThan_id: '100' });
+		expect(queryString).toBe('obj.id < :lt_id');
+		expect(queryParams).toEqual({ lt_id: '100' });
 	});
 
 	it('can run lessThanOrEqual query', () => {
@@ -139,8 +139,8 @@ describe('[QueryTools] createSearchQuery()', () => {
 			query
 		);
 
-		expect(queryString).toBe('obj.id <= :lessThanOrEqual_id');
-		expect(queryParams).toEqual({ lessThanOrEqual_id: '100' });
+		expect(queryString).toBe('obj.id <= :lte_id');
+		expect(queryParams).toEqual({ lte_id: '100' });
 	});
 
 	it('can run greaterThan query', () => {
@@ -155,8 +155,8 @@ describe('[QueryTools] createSearchQuery()', () => {
 			query
 		);
 
-		expect(queryString).toBe('obj.id > :greaterThan_id');
-		expect(queryParams).toEqual({ greaterThan_id: '100' });
+		expect(queryString).toBe('obj.id > :gt_id');
+		expect(queryParams).toEqual({ gt_id: '100' });
 	});
 
 	it('can run greaterThanOrEqual query', () => {
@@ -171,8 +171,8 @@ describe('[QueryTools] createSearchQuery()', () => {
 			query
 		);
 
-		expect(queryString).toBe('obj.id >= :greaterThanOrEqual_id');
-		expect(queryParams).toEqual({ greaterThanOrEqual_id: '100' });
+		expect(queryString).toBe('obj.id >= :gte_id');
+		expect(queryParams).toEqual({ gte_id: '100' });
 	});
 
 	it('can run not query', () => {
@@ -252,15 +252,15 @@ describe('[QueryTools] createSearchQuery()', () => {
 		);
 
 		expect(queryString).toBe(
-			'obj.fname=:where_fname AND (obj.fname=:whereAnyOf_fname) AND obj.fname < :lessThan_fname AND obj.fname <= :lessThanOrEqual_fname AND obj.fname > :greaterThan_fname AND obj.fname >= :greaterThanOrEqual_fname AND obj.fname!=:not_fname'
+			'obj.fname=:where_fname AND (obj.fname=:whereAnyOf_fname) AND obj.fname < :lt_fname AND obj.fname <= :lte_fname AND obj.fname > :gt_fname AND obj.fname >= :gte_fname AND obj.fname!=:not_fname'
 		);
 		expect(queryParams).toEqual({
 			where_fname: query.where.fname,
 			whereAnyOf_fname: query.whereAnyOf.fname,
-			lessThan_fname: query.lessThan.fname,
-			lessThanOrEqual_fname: query.lessThanOrEqual.fname,
-			greaterThan_fname: query.greaterThan.fname,
-			greaterThanOrEqual_fname: query.greaterThanOrEqual.fname,
+			lt_fname: query.lessThan.fname,
+			lte_fname: query.lessThanOrEqual.fname,
+			gt_fname: query.greaterThan.fname,
+			gte_fname: query.greaterThanOrEqual.fname,
 			not_fname: query.not.fname
 		});
 	});

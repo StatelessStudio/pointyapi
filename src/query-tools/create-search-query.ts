@@ -116,7 +116,7 @@ export function createSearchQuery(
 		}
 		else if (queryType === 'lessThan') {
 			for (const column in query.lessThan) {
-				const key = 'lessThan_' + column;
+				const key = 'lt_' + column;
 
 				// Append key to queryString
 				queryString += `${objKey}.${column} < :${key} AND `;
@@ -125,7 +125,7 @@ export function createSearchQuery(
 		}
 		else if (queryType === 'greaterThan') {
 			for (const column in query.greaterThan) {
-				const key = 'greaterThan_' + column;
+				const key = 'gt_' + column;
 
 				queryString += `${objKey}.${column} > :${key} AND `;
 				queryParams[key] = `${query.greaterThan[column]}`;
@@ -133,7 +133,7 @@ export function createSearchQuery(
 		}
 		else if (queryType === 'lessThanOrEqual') {
 			for (const column in query.lessThanOrEqual) {
-				const key = 'lessThanOrEqual_' + column;
+				const key = 'lte_' + column;
 
 				queryString +=
 					`${objKey}.${column} <= ` +
@@ -144,7 +144,7 @@ export function createSearchQuery(
 		}
 		else if (queryType === 'greaterThanOrEqual') {
 			for (const column in query.greaterThanOrEqual) {
-				const key = 'greaterThanOrEqual_' + column;
+				const key = 'gte_' + column;
 
 				queryString +=
 					`${objKey}.${column} >= ` +
