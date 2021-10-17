@@ -19,28 +19,20 @@ export function createSearchQuery(
 
 	for (const queryType in query) {
 		if (queryType === 'where') {
-			// Loop through any of keys
 			for (const column in query.where) {
 				const key = 'where_' + column;
 
-				// Append key to queryString
 				queryString += `${objKey}.${column}=:${key} AND `;
-
-				// Append parameter to queryParams
 				queryParams[key] = `${query.where[column]}`;
 			}
 		}
 		else if (queryType === 'whereAnyOf') {
 			queryString += '(';
 
-			// Loop through any of keys
 			for (const column in query.whereAnyOf) {
 				const key = 'whereAnyOf_' + column;
 
-				// Append key to queryString
 				queryString += `${objKey}.${column}=:${key} OR `;
-
-				// Append parameter to queryParams
 				queryParams[key] = `${query.whereAnyOf[column]}`;
 			}
 
@@ -122,10 +114,9 @@ export function createSearchQuery(
 		else if (queryType === 'lessThan') {
 			for (const column in query.lessThan) {
 				const key = 'lessThan_' + column;
+
 				// Append key to queryString
 				queryString += `${objKey}.${column} < :${key} AND `;
-
-				// Append parameter to queryParams
 				queryParams[key] = `${query.lessThan[column]}`;
 			}
 		}
@@ -133,10 +124,7 @@ export function createSearchQuery(
 			for (const column in query.greaterThan) {
 				const key = 'greaterThan_' + column;
 
-				// Append key to queryString
 				queryString += `${objKey}.${column} > :${key} AND `;
-
-				// Append parameter to queryParams
 				queryParams[key] = `${query.greaterThan[
 					column
 				]}`;
@@ -146,12 +134,10 @@ export function createSearchQuery(
 			for (const column in query.lessThanOrEqual) {
 				const key = 'lessThanOrEqual_' + column;
 
-				// Append key to queryString
 				queryString +=
 					`${objKey}.${column} <= ` +
 					`:${key} AND `;
 
-				// Append parameter to queryParams
 				queryParams[key] = `${query.lessThanOrEqual[
 					column
 				]}`;
@@ -161,12 +147,10 @@ export function createSearchQuery(
 			for (const column in query.greaterThanOrEqual) {
 				const key = 'greaterThanOrEqual_' + column;
 
-				// Append key to queryString
 				queryString +=
 					`${objKey}.${column} >= ` +
 					`:${key} AND `;
 
-				// Append parameter to queryParams
 				queryParams[key] = `${query.greaterThanOrEqual[column]}`;
 			}
 		}
@@ -174,10 +158,7 @@ export function createSearchQuery(
 			for (const column in query.not) {
 				const key = 'not_' + column;
 
-				// Append key to queryString
 				queryString += `${objKey}.${column}!=:${key} AND `;
-
-				// Append parameter to queryParams
 				queryParams[key] = `${query.not[column]}`;
 			}
 		}
