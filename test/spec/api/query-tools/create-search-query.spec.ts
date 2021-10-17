@@ -104,8 +104,11 @@ describe('[QueryTools] createSearchQuery()', () => {
 			query
 		);
 
-		expect(queryString).toBe('(obj.id BETWEEN 0 AND 250)');
-		expect(queryParams).toEqual({});
+		expect(queryString).toBe('(obj.id BETWEEN :between_id1 AND :between_id2)');
+		expect(queryParams).toEqual({
+			between_id1: 0,
+			between_id2: 250
+		});
 	});
 
 	it('can run lessThan query', () => {

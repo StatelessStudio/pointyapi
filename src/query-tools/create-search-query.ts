@@ -96,18 +96,21 @@ export function createSearchQuery(
 
 				// Range should be an array of two
 				if ('length' in range && range.length === 2) {
+					const key = 'between_' + column;
+					const key1 = key + '1';
+					const key2 = key + '2';
+
 					// Range should be int
 					range.map((val) => {
 						return parseInt(val, 10);
 					});
 
 					// Append key to queryString
-					queryString +=
-						`(${objKey}.${column} BETWEEN ` +
-						range[0] +
-						' AND ' +
-						range[1] +
-						') AND ';
+					queryString += `(${objKey}.${column} BETWEEN ` +
+						`:${key1} AND :${key2}) AND `;
+
+					queryParams[key1] = range[0];
+					queryParams[key2] = range[1];
 				}
 			}
 		}
