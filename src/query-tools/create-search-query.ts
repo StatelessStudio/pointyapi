@@ -19,8 +19,6 @@ export function createSearchQuery(
 
 	for (const queryType in query) {
 		if (queryType === 'where') {
-			queryString += '(';
-
 			// Loop through any of keys
 			for (const whereKey in query.where) {
 				const key = 'where_' + whereKey;
@@ -31,9 +29,6 @@ export function createSearchQuery(
 				// Append parameter to queryParams
 				queryParams[key] = `${query.where[whereKey]}`;
 			}
-
-			queryString = queryString.replace(/ AND +$/, '');
-			queryString += ') AND ';
 		}
 		else if (queryType === 'whereAnyOf') {
 			queryString += '(';
