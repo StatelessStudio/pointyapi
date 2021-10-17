@@ -82,14 +82,16 @@ export function createSearchQuery(
 			}
 			else if (typeof query.search === 'object') {
 				for (const column in query.search) {
+					const key = 'search_' + column;
+	
 					// Append searchable key to queryString
-					queryString += `LOWER(${objKey}.${column}) LIKE :search_${column} OR `;
+					queryString += `LOWER(${objKey}.${column}) LIKE :${key} OR `;
 
 					// Append parameter to queryParams (with wildcards)
 					const value = query.search[column]
 						.replace(/[\s]+/, '%')
 						.toLowerCase();
-					queryParams['search_' + column] = `%${value}%`;
+					queryParams[key] = `%${value}%`;
 				}
 			}
 
