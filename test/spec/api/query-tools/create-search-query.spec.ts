@@ -20,7 +20,7 @@ describe('[QueryTools] createSearchQuery()', () => {
 			query
 		);
 
-		expect(queryString).toBe('(obj.fname=:where_fname AND obj.lname=:where_lname)');
+		expect(queryString).toBe('obj.fname=:where_fname AND obj.lname=:where_lname');
 		expect(queryParams).toEqual({
 			where_fname: query.where.fname,
 			where_lname: query.where.lname
@@ -209,7 +209,7 @@ describe('[QueryTools] createSearchQuery()', () => {
 		);
 
 		expect(queryString).toBe(
-			'(obj.status=:where_status) AND obj.fname!=:not_fname AND obj.lname!=:not_lname'
+			'obj.status=:where_status AND obj.fname!=:not_fname AND obj.lname!=:not_lname'
 		);
 		expect(queryParams).toEqual({
 			where_status: 'active',
@@ -249,7 +249,7 @@ describe('[QueryTools] createSearchQuery()', () => {
 		);
 
 		expect(queryString).toBe(
-			'(obj.fname=:where_fname) AND (obj.fname=:whereAnyOf_fname) AND obj.fname < :lessThan_fname AND obj.fname <= :lessThanOrEqual_fname AND obj.fname > :greaterThan_fname AND obj.fname >= :greaterThanOrEqual_fname AND obj.fname!=:not_fname'
+			'obj.fname=:where_fname AND (obj.fname=:whereAnyOf_fname) AND obj.fname < :lessThan_fname AND obj.fname <= :lessThanOrEqual_fname AND obj.fname > :greaterThan_fname AND obj.fname >= :greaterThanOrEqual_fname AND obj.fname!=:not_fname'
 		);
 		expect(queryParams).toEqual({
 			where_fname: query.where.fname,
