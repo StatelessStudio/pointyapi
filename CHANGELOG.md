@@ -8,6 +8,7 @@
 
 ### Fixes
 - [Issue #225] Order by is case sensitive
+- [Issue #227] Cannot query by same key in multiple query types
 
 ## [3.3.5] May-02-2021
 

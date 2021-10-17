@@ -22,11 +22,13 @@ export function createSearchQuery(
 
 			// Loop through any of keys
 			for (const whereKey in obj['where']) {
+				const key = 'where_' + whereKey;
+
 				// Append key to queryString
-				queryString += `${objKey}.${whereKey}=:${whereKey} AND `;
+				queryString += `${objKey}.${whereKey}=:${key} AND `;
 
 				// Append parameter to queryParams
-				queryParams[whereKey] = `${obj['where'][whereKey]}`;
+				queryParams[key] = `${obj['where'][whereKey]}`;
 			}
 
 			queryString = queryString.replace(/ AND +$/, '');
@@ -37,11 +39,13 @@ export function createSearchQuery(
 
 			// Loop through any of keys
 			for (const anyOfKey in obj['whereAnyOf']) {
+				const key = 'whereAnyOf_' + anyOfKey;
+
 				// Append key to queryString
-				queryString += `${objKey}.${anyOfKey}=:${anyOfKey} OR `;
+				queryString += `${objKey}.${anyOfKey}=:${key} OR `;
 
 				// Append parameter to queryParams
-				queryParams[anyOfKey] = `${obj['whereAnyOf'][anyOfKey]}`;
+				queryParams[key] = `${obj['whereAnyOf'][anyOfKey]}`;
 			}
 
 			queryString = queryString.replace(/ OR +$/, '');
@@ -117,57 +121,66 @@ export function createSearchQuery(
 		}
 		else if (field && field === 'lessThan') {
 			for (const lessThanKey in obj['lessThan']) {
+				const key = 'lessThan_' + lessThanKey;
 				// Append key to queryString
-				queryString += `${objKey}.${lessThanKey} < :${lessThanKey} AND `;
+				queryString += `${objKey}.${lessThanKey} < :${key} AND `;
 
 				// Append parameter to queryParams
-				queryParams[lessThanKey] = `${obj['lessThan'][lessThanKey]}`;
+				queryParams[key] = `${obj['lessThan'][lessThanKey]}`;
 			}
 		}
 		else if (field && field === 'greaterThan') {
 			for (const greaterThanKey in obj['greaterThan']) {
+				const key = 'greaterThan_' + greaterThanKey;
+
 				// Append key to queryString
-				queryString += `${objKey}.${greaterThanKey} > :${greaterThanKey} AND `;
+				queryString += `${objKey}.${greaterThanKey} > :${key} AND `;
 
 				// Append parameter to queryParams
-				queryParams[greaterThanKey] = `${obj['greaterThan'][
+				queryParams[key] = `${obj['greaterThan'][
 					greaterThanKey
 				]}`;
 			}
 		}
 		else if (field && field === 'lessThanOrEqual') {
 			for (const lessThanOrEqualKey in obj['lessThanOrEqual']) {
+				const key = 'lessThanOrEqual_' + lessThanOrEqualKey;
+
 				// Append key to queryString
 				queryString +=
 					`${objKey}.${lessThanOrEqualKey} <= ` +
-					`:${lessThanOrEqualKey} AND `;
+					`:${key} AND `;
 
 				// Append parameter to queryParams
-				queryParams[lessThanOrEqualKey] = `${obj['lessThanOrEqual'][
+				queryParams[key] = `${obj['lessThanOrEqual'][
 					lessThanOrEqualKey
 				]}`;
 			}
 		}
 		else if (field && field === 'greaterThanOrEqual') {
 			for (const greaterThanOrEqualKey in obj['greaterThanOrEqual']) {
+				const key = 'greaterThanOrEqual_' + greaterThanOrEqualKey;
+
 				// Append key to queryString
 				queryString +=
 					`${objKey}.${greaterThanOrEqualKey} >= ` +
-					`:${greaterThanOrEqualKey} AND `;
+					`:${key} AND `;
 
 				// Append parameter to queryParams
-				queryParams[greaterThanOrEqualKey] = `${obj[
+				queryParams[key] = `${obj[
 					'greaterThanOrEqual'
 				][greaterThanOrEqualKey]}`;
 			}
 		}
 		else if (field && field === 'not') {
 			for (const notKey in obj['not']) {
+				const key = 'not_' + notKey;
+
 				// Append key to queryString
-				queryString += `${objKey}.${notKey}!=:${notKey} AND `;
+				queryString += `${objKey}.${notKey}!=:${key} AND `;
 
 				// Append parameter to queryParams
-				queryParams[notKey] = `${obj['not'][notKey]}`;
+				queryParams[key] = `${obj['not'][notKey]}`;
 			}
 		}
 	}
