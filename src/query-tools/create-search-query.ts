@@ -1,6 +1,7 @@
 import { getSearchableFields, getSearchableRelations } from '../bodyguard';
 import { BaseModelInterface } from '../models/base-model';
 import { Query } from './query';
+import { QueryColumnReference } from './query-column-reference';
 
 /**
  * Create a SQL query string for a search
@@ -20,20 +21,36 @@ export function createSearchQuery(
 	for (const queryType in query) {
 		if (queryType === 'where') {
 			for (const column in query.where) {
-				const key = 'where_' + column;
+				const val = query.where[column];
+				const ref = new QueryColumnReference(val, objKey);
 
-				queryString += `${objKey}.${column}=:${key} AND `;
-				queryParams[key] = `${query.where[column]}`;
+				if (ref.isReference) {
+					queryString += `${objKey}.${column}=${ref.str()} AND `;
+				}
+				else {
+					const key = 'where_' + column;
+
+					queryString += `${objKey}.${column}=:${key} AND `;
+					queryParams[key] = `${val}`;
+				}
 			}
 		}
 		else if (queryType === 'whereAnyOf') {
 			queryString += '(';
 
 			for (const column in query.whereAnyOf) {
-				const key = 'whereAnyOf_' + column;
+				const val = query.whereAnyOf[column];
+				const ref = new QueryColumnReference(val, objKey);
 
-				queryString += `${objKey}.${column}=:${key} OR `;
-				queryParams[key] = `${query.whereAnyOf[column]}`;
+				if (ref.isReference) {
+					queryString += `${objKey}.${column}=${ref.str()} OR `;
+				}
+				else {
+					const key = 'whereAnyOf_' + column;
+
+					queryString += `${objKey}.${column}=:${key} OR `;
+					queryParams[key] = `${val}`;
+				}
 			}
 
 			queryString = queryString.replace(/ OR +$/, '');
@@ -96,69 +113,119 @@ export function createSearchQuery(
 
 				// Range should be an array of two
 				if ('length' in range && range.length === 2) {
-					const key = 'between_' + column;
-					const key1 = key + '1';
-					const key2 = key + '2';
+					queryString += `(${objKey}.${column} BETWEEN `;
 
-					// Range should be int
-					range.map((val) => {
-						return parseInt(val, 10);
-					});
+					for (let i = 0; i < 2; i++) {
+						const val = range[i];
+						const ref = new QueryColumnReference(val, objKey);
 
-					// Append key to queryString
-					queryString += `(${objKey}.${column} BETWEEN ` +
-						`:${key1} AND :${key2}) AND `;
+						if (ref.isReference) {
+							queryString += ref.str();
+						}
+						else {
+							const key = `between_${column}${i}`;
 
-					queryParams[key1] = range[0];
-					queryParams[key2] = range[1];
+							queryString += ':' + key;
+							queryParams[key] = val;
+						}
+	
+						queryString += ' AND ';
+					}
+
+					queryString = queryString.replace(/ AND +$/, '');
+					queryString += ') AND ';
+
 				}
 			}
 		}
 		else if (queryType === 'lessThan') {
 			for (const column in query.lessThan) {
-				const key = 'lt_' + column;
+				const val = query.lessThan[column];
+				const ref = new QueryColumnReference(val, objKey);
 
-				// Append key to queryString
-				queryString += `${objKey}.${column} < :${key} AND `;
-				queryParams[key] = `${query.lessThan[column]}`;
+				if (ref.isReference) {
+					queryString += `${objKey}.${column} < ${ref.str()} AND `;
+				}
+				else {
+					const key = 'lt_' + column;
+
+					// Append key to queryString
+					queryString += `${objKey}.${column} < :${key} AND `;
+					queryParams[key] = `${val}`;
+				}
 			}
 		}
 		else if (queryType === 'greaterThan') {
 			for (const column in query.greaterThan) {
-				const key = 'gt_' + column;
+				const val = query.greaterThan[column];
+				const ref = new QueryColumnReference(val, objKey);
 
-				queryString += `${objKey}.${column} > :${key} AND `;
-				queryParams[key] = `${query.greaterThan[column]}`;
+				if (ref.isReference) {
+					queryString += `${objKey}.${column} > ${ref.str()} AND `;
+				}
+				else {
+					const key = 'gt_' + column;
+	
+					queryString += `${objKey}.${column} > :${key} AND `;
+					queryParams[key] = `${val}`;
+				}
 			}
 		}
 		else if (queryType === 'lessThanOrEqual') {
 			for (const column in query.lessThanOrEqual) {
-				const key = 'lte_' + column;
+				const val = query.lessThanOrEqual[column];
+				const ref = new QueryColumnReference(val, objKey);
 
-				queryString +=
-					`${objKey}.${column} <= ` +
-					`:${key} AND `;
-
-				queryParams[key] = `${query.lessThanOrEqual[column]}`;
+				if (ref.isReference) {
+					queryString +=
+						`${objKey}.${column} <= ${ref.str()} AND `;
+				}
+				else {
+					const key = 'lte_' + column;
+	
+					queryString +=
+						`${objKey}.${column} <= ` +
+						`:${key} AND `;
+	
+					queryParams[key] = `${val}`;
+				}
 			}
 		}
 		else if (queryType === 'greaterThanOrEqual') {
 			for (const column in query.greaterThanOrEqual) {
-				const key = 'gte_' + column;
+				const val = query.greaterThanOrEqual[column];
+				const ref = new QueryColumnReference(val, objKey);
 
-				queryString +=
+				if (ref.isReference) {
+					queryString += 
 					`${objKey}.${column} >= ` +
-					`:${key} AND `;
+					`${ref.str()} AND `;
+				}
+				else {
+					const key = 'gte_' + column;
 
-				queryParams[key] = `${query.greaterThanOrEqual[column]}`;
+					queryString +=
+						`${objKey}.${column} >= ` +
+						`:${key} AND `;
+
+					queryParams[key] = `${val}`;
+				}
 			}
 		}
 		else if (queryType === 'not') {
 			for (const column in query.not) {
-				const key = 'not_' + column;
+				const val = query.not[column];
+				const ref = new QueryColumnReference(val, objKey);
 
-				queryString += `${objKey}.${column}!=:${key} AND `;
-				queryParams[key] = `${query.not[column]}`;
+				if (ref.isReference) {
+					queryString += `${objKey}.${column}!=${ref.str()} AND `;
+				}
+				else {
+					const key = 'not_' + column;
+
+					queryString += `${objKey}.${column}!=:${key} AND `;
+					queryParams[key] = `${val}`;
+				}
 			}
 		}
 	}

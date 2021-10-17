@@ -358,6 +358,31 @@ describe('User API Read', () => {
 			.catch((error) => fail(JSON.stringify(error)));
 	});
 
+	it('can search by greater than another column', async () => {
+		await http
+			.post('/api/v1/user', {
+				fname: 'greaterThanCTest',
+				lname: 'greaterThanCTest',
+				username: 'greaterThanCTest',
+				password: 'password123',
+				email: 'greaterThanCTest@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+
+		await http
+			.get('/api/v1/user', {
+				greaterThan: {
+					fname: {
+						column: 'lname'
+					}
+				}
+			})
+			.then((result) => {
+				expect(result.body['length']).toBeGreaterThanOrEqual(1);
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
+
 	it('can search by less than or equal to', async () => {
 		await http
 			.post('/api/v1/user', {

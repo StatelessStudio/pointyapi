@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { isKeyInModel } from '../utils';
+import { isKeyInModel, isJson } from '../utils';
 import { queryTypes, queryTypeKeys } from './query-types';
 import { getReadableFields, getReadableRelations } from '../bodyguard';
 import { validateSync } from 'class-validator';
@@ -199,13 +199,20 @@ export function queryValidator(request: Request, response: Response): boolean {
 		}
 
 		// Is query type proper (array, object, etc)?
-		let queryTypeConstructor: string = typeof requestQueryParams[type];
+		const value = requestQueryParams[type]
+		let queryTypeConstructor: string = typeof value;
 
 		if (
 			queryTypeConstructor === 'object' &&
 			'length' in requestQueryParams[type]
 		) {
 			queryTypeConstructor = 'array';
+		}
+
+		// Query param objects are passed as JSON
+		if (queryTypeConstructor === 'string' && isJson(value)) {
+			requestQueryParams[type] = JSON.parse(value);
+			queryTypeConstructor = 'object';
 		}
 
 		if (!queryTypes[type].includes(queryTypeConstructor)) {
@@ -218,7 +225,7 @@ export function queryValidator(request: Request, response: Response): boolean {
 						']. It is: ' +
 						queryTypeConstructor +
 						'. Value: ' +
-						requestQueryParams[type]
+						value
 				);
 			}
 

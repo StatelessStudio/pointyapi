@@ -27,6 +27,24 @@ describe('[QueryTools] createSearchQuery()', () => {
 		});
 	});
 
+	it('can run where on another column', () => {
+		const query = {
+			where: {
+				fname: {
+					column: 'lname'
+				}
+			}
+		};
+
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
+
+		expect(queryString).toBe('obj.fname="obj".lname');
+		expect(queryParams).toEqual({});
+	});
+
 	it('can run whereAnyOf query', () => {
 		const query = {
 			whereAnyOf: {
@@ -45,6 +63,27 @@ describe('[QueryTools] createSearchQuery()', () => {
 			whereAnyOf_fname: query.whereAnyOf.fname,
 			whereAnyOf_lname: query.whereAnyOf.lname
 		});
+	});
+
+	it('can run whereAnyOf on another column', () => {
+		const query = {
+			whereAnyOf: {
+				fname: {
+					column: 'lname'
+				},
+				email: {
+					column: 'fname'
+				}
+			}
+		};
+
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
+
+		expect(queryString).toBe('(obj.fname="obj".lname OR obj.email="obj".fname)');
+		expect(queryParams).toEqual({});
 	});
 
 	it('can run search string query', () => {
@@ -104,10 +143,33 @@ describe('[QueryTools] createSearchQuery()', () => {
 			query
 		);
 
-		expect(queryString).toBe('(obj.id BETWEEN :between_id1 AND :between_id2)');
+		expect(queryString).toBe('(obj.id BETWEEN :between_id0 AND :between_id1)');
 		expect(queryParams).toEqual({
-			between_id1: 0,
-			between_id2: 250
+			between_id0: 0,
+			between_id1: 250
+		});
+	});
+
+	it('can run between on another column', () => {
+		const query = {
+			between: {
+				id: [
+					{
+						column: 'fname'
+					},
+					250
+				]
+			}
+		};
+
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
+
+		expect(queryString).toBe('(obj.id BETWEEN "obj".fname AND :between_id1)');
+		expect(queryParams).toEqual({
+			between_id1: 250
 		});
 	});
 
@@ -127,6 +189,24 @@ describe('[QueryTools] createSearchQuery()', () => {
 		expect(queryParams).toEqual({ lt_id: '100' });
 	});
 
+	it('can run lessThan on another column', () => {
+		const query = {
+			lessThan: {
+				fname: {
+					column: 'lname'
+				}
+			}
+		};
+
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
+
+		expect(queryString).toBe('obj.fname < "obj".lname');
+		expect(queryParams).toEqual({});
+	});
+
 	it('can run lessThanOrEqual query', () => {
 		const query = {
 			lessThanOrEqual: {
@@ -141,6 +221,24 @@ describe('[QueryTools] createSearchQuery()', () => {
 
 		expect(queryString).toBe('obj.id <= :lte_id');
 		expect(queryParams).toEqual({ lte_id: '100' });
+	});
+
+	it('can run lessThanOrEqual on another column', () => {
+		const query = {
+			lessThanOrEqual: {
+				fname: {
+					column: 'lname'
+				}
+			}
+		};
+
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
+
+		expect(queryString).toBe('obj.fname <= "obj".lname');
+		expect(queryParams).toEqual({});
 	});
 
 	it('can run greaterThan query', () => {
@@ -159,6 +257,43 @@ describe('[QueryTools] createSearchQuery()', () => {
 		expect(queryParams).toEqual({ gt_id: '100' });
 	});
 
+	it('can run greaterThan on another column', () => {
+		const query = {
+			greaterThan: {
+				id: {
+					column: 'fname'
+				}
+			}
+		};
+
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
+
+		expect(queryString).toBe('obj.id > "obj".fname');
+		expect(queryParams).toEqual({});
+	});
+
+	it('can run greaterThan on another joined column', () => {
+		const query = {
+			greaterThan: {
+				id: {
+					column: 'fname',
+					table: 'user'
+				}
+			}
+		};
+
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
+
+		expect(queryString).toBe('obj.id > "user".fname');
+		expect(queryParams).toEqual({});
+	});
+
 	it('can run greaterThanOrEqual query', () => {
 		const query = {
 			greaterThanOrEqual: {
@@ -173,6 +308,24 @@ describe('[QueryTools] createSearchQuery()', () => {
 
 		expect(queryString).toBe('obj.id >= :gte_id');
 		expect(queryParams).toEqual({ gte_id: '100' });
+	});
+
+	it('can run greaterThanOrEqual on another column', () => {
+		const query = {
+			greaterThanOrEqual: {
+				id: {
+					column: 'fname'
+				}
+			}
+		};
+
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
+
+		expect(queryString).toBe('obj.id >= "obj".fname');
+		expect(queryParams).toEqual({});
 	});
 
 	it('can run not query', () => {
@@ -193,6 +346,24 @@ describe('[QueryTools] createSearchQuery()', () => {
 			not_fname: query.not.fname,
 			not_lname: query.not.lname
 		});
+	});
+
+	it('can run not on another column', () => {
+		const query = {
+			not: {
+				fname: {
+					column: 'lname'
+				}
+			}
+		};
+
+		const { queryString, queryParams } = createSearchQuery(
+			ExampleUser,
+			query
+		);
+
+		expect(queryString).toBe('obj.fname!="obj".lname');
+		expect(queryParams).toEqual({});
 	});
 
 	it('can run multiple queries', () => {

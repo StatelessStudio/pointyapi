@@ -5,6 +5,7 @@
 ### Additions
 - [Issue #195] addResource() should allow templating
 - [Issue #216] Add order string query to allow ordering by rand()
+- [Issue #217] Allow query fields to provide other fields as values
 
 ### Fixes
 - [Issue #225] Order by is case sensitive
