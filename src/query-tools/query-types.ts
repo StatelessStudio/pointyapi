@@ -15,6 +15,7 @@ export const queryTypes = {
 	greaterThan: [ 'object' ],
 	greaterThanOrEqual: [ 'object' ],
 	groupBy: [ 'array' ],
+	order: [ 'string' ],
 	orderBy: [ 'object' ],
 	limit: [ 'number', 'string' ],
 	offset: [ 'number', 'string' ],

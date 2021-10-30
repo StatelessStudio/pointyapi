@@ -14,6 +14,6 @@
 /**
  * Enums
  */
-export { BodyguardOwner } from './enums/bodyguard-owner';
-export { UserRole } from './enums/user-role';
-export { UserStatus } from './enums/user-status';
+export { BodyguardOwner } from './bodyguard-owner';
+export { UserRole } from './user-role';
+export { UserStatus } from './user-status';

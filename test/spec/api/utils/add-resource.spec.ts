@@ -41,6 +41,17 @@ describe('[Utils] addResource()', () => {
 		}
 	});
 
+	it('accepts template type', async () => {
+		await addResource<ExampleUser>(ExampleUser, {
+			fname: 'Template',
+			lname: 'Type',
+			username: 'templatetype',
+			password: hashSync('password123', 12),
+			email: 'Drew@test.com',
+			role: UserRole.Member
+		});
+	})
+
 	it('can add an existing resource', async () => {
 		await addResource(ExampleUser, {
 			fname: 'DrewOverride',

@@ -7,7 +7,7 @@ import { forkServer } from '../../../../src/utils';
 describe('[Utils] forkServer()', async () => {
 	it('starts a server', async () => {
 		const serverfork = await forkServer(
-			'./lib/test/examples/api/server.js'
+			'./dist/test/examples/api/server.js'
 		).catch((error) =>
 			fail('Could not start server: ' + JSON.stringify(error))
 		);

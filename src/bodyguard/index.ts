@@ -133,7 +133,7 @@
  * # Bodyguard Decorators
  */
 import 'reflect-metadata';
-import { BodyguardOwner, UserRole } from './enums';
+import { BodyguardOwner, UserRole } from '../enums';
 
 const CanReadAllSymbol = Symbol('CanReadAll');
 const CanWriteAllSymbol = Symbol('CanWriteAll');
@@ -355,13 +355,13 @@ export function CanReadRelation(
 	return Reflect.metadata(CanReadRelationSymbol, who);
 }
 
-export { compareNestedBodyguards } from './bodyguard/compare-nested';
-export { compareIdToUser } from './bodyguard/compare-id-to-user';
-export { getBodyguardKeys } from './bodyguard/get-bodyguard-keys';
-export { getSearchableFields } from './bodyguard/get-searchable-fields';
-export { getSearchableRelations } from './bodyguard/get-searchable-relations';
-export { getReadableFields } from './bodyguard/get-readable-fields';
-export { getReadableRelations } from './bodyguard/get-readable-relations';
+export { compareNestedBodyguards } from './compare-nested';
+export { compareIdToUser } from './compare-id-to-user';
+export { getBodyguardKeys } from './get-bodyguard-keys';
+export { getSearchableFields } from './get-searchable-fields';
+export { getSearchableRelations } from './get-searchable-relations';
+export { getReadableFields } from './get-readable-fields';
+export { getReadableRelations } from './get-readable-relations';
 
-export { readFilter } from './bodyguard/read-filter';
-export { writeFilter } from './bodyguard/write-filter';
+export { readFilter } from './read-filter';
+export { writeFilter } from './write-filter';

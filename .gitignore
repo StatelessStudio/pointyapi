@@ -61,7 +61,7 @@ typings/
 .next
 
 # Build directory
-lib
+dist/
 
 # Config
 local.config.json

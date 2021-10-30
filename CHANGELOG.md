@@ -1,5 +1,16 @@
 # PointyApi Changelog
 
+## [3.4.0]
+
+### Additions
+- [Issue #195] addResource() should allow templating
+- [Issue #216] Add order string query to allow ordering by rand()
+- [Issue #217] Allow query fields to provide other fields as values
+
+### Fixes
+- [Issue #225] Order by is case sensitive
+- [Issue #227] Cannot query by same key in multiple query types
+
 ## [3.3.5] May-02-2021
 
 ### Fixes

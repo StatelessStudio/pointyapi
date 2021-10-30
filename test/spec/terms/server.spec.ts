@@ -11,7 +11,7 @@ const http = pointy.http;
 let serverfork;
 
 beforeAll(async () => {
-	serverfork = await forkServer('./lib/test/examples/terms/server.js');
+	serverfork = await forkServer('./dist/test/examples/terms/server.js');
 
 	// Database
 	await pointy.db

@@ -235,11 +235,22 @@ describe('User API Read', () => {
 		await http
 			.get('/api/v1/user', {
 				orderBy: {
-					lname: 'DESC'
+					lname: 'desc'
 				}
 			})
 			.then((result) => {
 				expect(result.body[0].lname).toEqual('zorderBy');
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
+
+	it('can order rand', async () => {
+		await http
+			.get('/api/v1/user', {
+				order: 'random'
+			})
+			.then((result) => {
+				expect(result.body[0].lname).toBeTruthy();
 			})
 			.catch((error) => fail(JSON.stringify(error)));
 	});
@@ -339,6 +350,31 @@ describe('User API Read', () => {
 			.get('/api/v1/user', {
 				greaterThan: {
 					id: 1
+				}
+			})
+			.then((result) => {
+				expect(result.body['length']).toBeGreaterThanOrEqual(1);
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+	});
+
+	it('can search by greater than another column', async () => {
+		await http
+			.post('/api/v1/user', {
+				fname: 'greaterThanCTest',
+				lname: 'greaterThanCTest',
+				username: 'greaterThanCTest',
+				password: 'password123',
+				email: 'greaterThanCTest@get.com'
+			})
+			.catch((error) => fail(JSON.stringify(error)));
+
+		await http
+			.get('/api/v1/user', {
+				greaterThan: {
+					fname: {
+						column: 'lname'
+					}
 				}
 			})
 			.then((result) => {

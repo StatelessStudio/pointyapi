@@ -1,53 +1,62 @@
 import { getSearchableFields, getSearchableRelations } from '../bodyguard';
 import { BaseModelInterface } from '../models/base-model';
+import { Query } from './query';
+import { QueryColumnReference } from './query-column-reference';
 
 /**
  * Create a SQL query string for a search
  * @param payloadType Request payload type
- * @param obj Search query object
+ * @param query Search query object
  * @param objKey SQL query object alias. Default is `obj`
  * @return Returns { queryString, queryParams }
  */
 export function createSearchQuery(
 	payloadType: BaseModelInterface,
-	obj: Object,
+	query: Query,
 	objKey: string = 'obj'
 ): any {
 	let queryString = '';
 	const queryParams = {};
 
-	for (const field in obj) {
-		if (field && field === 'where') {
-			queryString += '(';
+	for (const queryType in query) {
+		if (queryType === 'where') {
+			for (const column in query.where) {
+				const val = query.where[column];
+				const ref = new QueryColumnReference(val, objKey);
 
-			// Loop through any of keys
-			for (const whereKey in obj['where']) {
-				// Append key to queryString
-				queryString += `${objKey}.${whereKey}=:${whereKey} AND `;
+				if (ref.isReference) {
+					queryString += `${objKey}.${column}=${ref.str()} AND `;
+				}
+				else {
+					const key = 'where_' + column;
 
-				// Append parameter to queryParams
-				queryParams[whereKey] = `${obj['where'][whereKey]}`;
+					queryString += `${objKey}.${column}=:${key} AND `;
+					queryParams[key] = `${val}`;
+				}
 			}
-
-			queryString = queryString.replace(/ AND +$/, '');
-			queryString += ') AND ';
 		}
-		else if (field && field === 'whereAnyOf') {
+		else if (queryType === 'whereAnyOf') {
 			queryString += '(';
 
-			// Loop through any of keys
-			for (const anyOfKey in obj['whereAnyOf']) {
-				// Append key to queryString
-				queryString += `${objKey}.${anyOfKey}=:${anyOfKey} OR `;
+			for (const column in query.whereAnyOf) {
+				const val = query.whereAnyOf[column];
+				const ref = new QueryColumnReference(val, objKey);
 
-				// Append parameter to queryParams
-				queryParams[anyOfKey] = `${obj['whereAnyOf'][anyOfKey]}`;
+				if (ref.isReference) {
+					queryString += `${objKey}.${column}=${ref.str()} OR `;
+				}
+				else {
+					const key = 'whereAnyOf_' + column;
+
+					queryString += `${objKey}.${column}=:${key} OR `;
+					queryParams[key] = `${val}`;
+				}
 			}
 
 			queryString = queryString.replace(/ OR +$/, '');
 			queryString += ') AND ';
 		}
-		else if (field && field === 'search') {
+		else if (queryType === 'search') {
 			const ptype = new payloadType();
 
 			const searchableFields = getSearchableFields(ptype);
@@ -55,119 +64,168 @@ export function createSearchQuery(
 
 			queryString += '(';
 
-			if (typeof obj[field] === 'string') {
-				searchableFields.forEach((key) => {
+			if (typeof query.search === 'string') {
+				const searchString = query.search as string;
+
+				searchableFields.forEach((column) => {
 					// Append searchable key to queryString
-					queryString += `LOWER(${objKey}.${key}) LIKE :search OR `;
+					queryString += `LOWER(${objKey}.${column}) LIKE :search OR `;
 
 					// Append parameter to queryParams (with wildcards)
-					const value = obj['search']
+					const value = searchString
 						.replace(/[\s]+/, '%')
 						.toLowerCase();
 					queryParams['search'] = `%${value}%`;
 				});
 
-				searchableRelations.forEach((key) => {
+				searchableRelations.forEach((column) => {
 					// Append searchable key to queryString
-					queryString += `LOWER(${key}) LIKE :search OR `;
+					queryString += `LOWER(${column}) LIKE :search OR `;
 
 					// Append parameter to queryParams (with wildcards)
-					const value = obj['search']
+					const value = searchString
 						.replace(/[\s]+/, '%')
 						.toLowerCase();
 					queryParams['search'] = `%${value}%`;
 				});
 			}
-			else if (typeof obj[field] === 'object') {
-				for (const key in obj[field]) {
+			else if (typeof query.search === 'object') {
+				for (const column in query.search) {
+					const key = 'search_' + column;
+
 					// Append searchable key to queryString
-					queryString += `LOWER(${objKey}.${key}) LIKE :search_${key} OR `;
+					queryString += `LOWER(${objKey}.${column}) LIKE :${key} OR `;
 
 					// Append parameter to queryParams (with wildcards)
-					const value = obj[field][key]
+					const value = query.search[column]
 						.replace(/[\s]+/, '%')
 						.toLowerCase();
-					queryParams['search_' + key] = `%${value}%`;
+					queryParams[key] = `%${value}%`;
 				}
 			}
 
 			queryString = queryString.replace(/ OR +$/, '');
 			queryString += ') AND ';
 		}
-		else if (field && field === 'between') {
-			for (const betweenKey in obj['between']) {
-				const range = obj['between'][betweenKey];
+		else if (queryType === 'between') {
+			for (const column in query.between) {
+				const range = query.between[column];
 
 				// Range should be an array of two
 				if ('length' in range && range.length === 2) {
-					// Range should be int
-					range.map((val) => {
-						return parseInt(val, 10);
-					});
+					queryString += `(${objKey}.${column} BETWEEN `;
 
-					// Append key to queryString
-					queryString +=
-						`(${objKey}.${betweenKey} BETWEEN ` +
-						range[0] +
-						' AND ' +
-						range[1] +
-						') AND ';
+					for (let i = 0; i < 2; i++) {
+						const val = range[i];
+						const ref = new QueryColumnReference(val, objKey);
+
+						if (ref.isReference) {
+							queryString += ref.str();
+						}
+						else {
+							const key = `between_${column}${i}`;
+
+							queryString += ':' + key;
+							queryParams[key] = val;
+						}
+	
+						queryString += ' AND ';
+					}
+
+					queryString = queryString.replace(/ AND +$/, '');
+					queryString += ') AND ';
+
 				}
 			}
 		}
-		else if (field && field === 'lessThan') {
-			for (const lessThanKey in obj['lessThan']) {
-				// Append key to queryString
-				queryString += `${objKey}.${lessThanKey} < :${lessThanKey} AND `;
+		else if (queryType === 'lessThan') {
+			for (const column in query.lessThan) {
+				const val = query.lessThan[column];
+				const ref = new QueryColumnReference(val, objKey);
 
-				// Append parameter to queryParams
-				queryParams[lessThanKey] = `${obj['lessThan'][lessThanKey]}`;
+				if (ref.isReference) {
+					queryString += `${objKey}.${column} < ${ref.str()} AND `;
+				}
+				else {
+					const key = 'lt_' + column;
+
+					// Append key to queryString
+					queryString += `${objKey}.${column} < :${key} AND `;
+					queryParams[key] = `${val}`;
+				}
 			}
 		}
-		else if (field && field === 'greaterThan') {
-			for (const greaterThanKey in obj['greaterThan']) {
-				// Append key to queryString
-				queryString += `${objKey}.${greaterThanKey} > :${greaterThanKey} AND `;
+		else if (queryType === 'greaterThan') {
+			for (const column in query.greaterThan) {
+				const val = query.greaterThan[column];
+				const ref = new QueryColumnReference(val, objKey);
 
-				// Append parameter to queryParams
-				queryParams[greaterThanKey] = `${obj['greaterThan'][
-					greaterThanKey
-				]}`;
+				if (ref.isReference) {
+					queryString += `${objKey}.${column} > ${ref.str()} AND `;
+				}
+				else {
+					const key = 'gt_' + column;
+	
+					queryString += `${objKey}.${column} > :${key} AND `;
+					queryParams[key] = `${val}`;
+				}
 			}
 		}
-		else if (field && field === 'lessThanOrEqual') {
-			for (const lessThanOrEqualKey in obj['lessThanOrEqual']) {
-				// Append key to queryString
-				queryString +=
-					`${objKey}.${lessThanOrEqualKey} <= ` +
-					`:${lessThanOrEqualKey} AND `;
+		else if (queryType === 'lessThanOrEqual') {
+			for (const column in query.lessThanOrEqual) {
+				const val = query.lessThanOrEqual[column];
+				const ref = new QueryColumnReference(val, objKey);
 
-				// Append parameter to queryParams
-				queryParams[lessThanOrEqualKey] = `${obj['lessThanOrEqual'][
-					lessThanOrEqualKey
-				]}`;
+				if (ref.isReference) {
+					queryString +=
+						`${objKey}.${column} <= ${ref.str()} AND `;
+				}
+				else {
+					const key = 'lte_' + column;
+	
+					queryString +=
+						`${objKey}.${column} <= ` +
+						`:${key} AND `;
+	
+					queryParams[key] = `${val}`;
+				}
 			}
 		}
-		else if (field && field === 'greaterThanOrEqual') {
-			for (const greaterThanOrEqualKey in obj['greaterThanOrEqual']) {
-				// Append key to queryString
-				queryString +=
-					`${objKey}.${greaterThanOrEqualKey} >= ` +
-					`:${greaterThanOrEqualKey} AND `;
+		else if (queryType === 'greaterThanOrEqual') {
+			for (const column in query.greaterThanOrEqual) {
+				const val = query.greaterThanOrEqual[column];
+				const ref = new QueryColumnReference(val, objKey);
 
-				// Append parameter to queryParams
-				queryParams[greaterThanOrEqualKey] = `${obj[
-					'greaterThanOrEqual'
-				][greaterThanOrEqualKey]}`;
+				if (ref.isReference) {
+					queryString += 
+					`${objKey}.${column} >= ` +
+					`${ref.str()} AND `;
+				}
+				else {
+					const key = 'gte_' + column;
+
+					queryString +=
+						`${objKey}.${column} >= ` +
+						`:${key} AND `;
+
+					queryParams[key] = `${val}`;
+				}
 			}
 		}
-		else if (field && field === 'not') {
-			for (const notKey in obj['not']) {
-				// Append key to queryString
-				queryString += `${objKey}.${notKey}!=:${notKey} AND `;
+		else if (queryType === 'not') {
+			for (const column in query.not) {
+				const val = query.not[column];
+				const ref = new QueryColumnReference(val, objKey);
 
-				// Append parameter to queryParams
-				queryParams[notKey] = `${obj['not'][notKey]}`;
+				if (ref.isReference) {
+					queryString += `${objKey}.${column}!=${ref.str()} AND `;
+				}
+				else {
+					const key = 'not_' + column;
+
+					queryString += `${objKey}.${column}!=:${key} AND `;
+					queryParams[key] = `${val}`;
+				}
 			}
 		}
 	}
