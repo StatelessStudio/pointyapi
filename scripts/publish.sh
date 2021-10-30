@@ -1,5 +1,5 @@
 #!/bin/bash
 npm test
-npm run build:prod
+npm run build
 cd dist/src/
 npm publish

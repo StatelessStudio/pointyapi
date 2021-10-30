@@ -1,8 +1,8 @@
 {
 	"compileOnSave": false,
 	"compilerOptions": {
-		"baseUrl": "./src/",
-		"outDir": "./dist/",
+		"baseUrl": "./",
+		"outDir": "./dist",
 		"sourceMap": true,
 		"declaration": true,
 		"module": "commonjs",
@@ -15,11 +15,16 @@
 		"lib": ["es2017"]
 	},
 	"exclude": [
-		"./scripts/"
+		"./dist/"
 	],
     "typedocOptions": {
         "entryPoints": ["src"],
 		"entryPointStrategy": "expand",
         "out": "docs"
-    }
+    },
+	"include": [
+		"./src/",
+		"./test/",
+		"./ts-package-config.ts"
+	]
 }
