@@ -1,6 +1,5 @@
 import { pointy } from '../../../../src';
 import { User } from '../../../examples/chat/models/user';
-import { HttpClientResponse } from 'http/http-client-response';
 
 const http = pointy.http;
 describe('[Chat] Chat API Get', async () => {
