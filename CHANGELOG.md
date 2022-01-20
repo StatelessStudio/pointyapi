@@ -7,6 +7,7 @@
 ### Additions
 
 ### Fixes
+- [TSTEMPLATE-19] Add console warnings to dev lint settings, so that test logging doesn't stay until the end
 
 ## [v1.2.4]
 
