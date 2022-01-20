@@ -1,5 +1,13 @@
 # Typescript Project Template
 
+## [v2.0.0]
+
+### Breaking Changes
+
+### Additions
+
+### Fixes
+
 ## [v1.2.4]
 
 ### Fixes
