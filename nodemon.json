@@ -7,6 +7,6 @@
 		"dist"
 	],
 	"watch": [ "src/", "*.*", ".env" ],
-	"exec": "npm start",
+	"exec": "node_modules/.bin/ts-node src",
 	"ext": "*"
 }
