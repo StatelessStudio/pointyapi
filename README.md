@@ -25,14 +25,14 @@ To run unit tests, `npm run test`
 
 ## Scripts
 
-You can write custom scripts in the `scripts/` directory. See `scripts/example.ts` as an example. You should also register your scripts in `package.json`:
+You can write custom scripts in the `script/` directory. See `script/example.ts` as an example. You should also register your scripts in `package.json`:
 
 ```json
 {
 	...
 	"scripts": {
 		...
-		"admin:example": "ts-node scripts/example"
+		"admin:example": "ts-node script/example"
 	}
 }
 ```
