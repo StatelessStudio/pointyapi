@@ -1,6 +1,6 @@
 import { log } from '../src/log';
 
-describe('Logger', () => {
+describe('Log', () => {
 	it('exports an instance', () => {
 		expect(log).toBeDefined();
 	});
