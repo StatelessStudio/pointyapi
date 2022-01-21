@@ -3,6 +3,7 @@
 ## [v2.0.0]
 
 ### Breaking Changes
+- [TSTEMPLATE-21] Upgrade to node v16
 
 ### Additions
 
