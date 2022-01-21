@@ -12,7 +12,7 @@ You should take care of any deprecation notices and fix any compilation errors. 
 
 ### Test spec files (*.spec.ts) have moved from `test/` to `test/spec/`
 
-If you have any test files, you should run the command `git mv test/*.spec.ts test/spec/`.
+If you have any test files, you should run the command `git mv test/*.spec.ts test/spec/`
 
 ### The `logger.ts` file has been replaced
 
