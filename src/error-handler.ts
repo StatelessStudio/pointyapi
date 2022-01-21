@@ -1,5 +1,5 @@
 import { setupErrorHandling } from 'ts-error-handler';
-import { logger } from './logger';
+import { log } from './log';
 
 /**
  * Global error handler for uncaught exceptions
@@ -7,7 +7,7 @@ import { logger } from './logger';
  * @param e
  */
 export function errorHandler(error: Error) {
-	logger.fatal(error);
+	log.fatal(error);
 }
 
 // Setup error handling
