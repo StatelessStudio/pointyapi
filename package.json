@@ -22,8 +22,8 @@
 		"coveralls": "cat ./coverage/lcov.info | coveralls"
 	},
 	"dependencies": {
-		"dotenv": "^8.6.0",
-		"source-map-support": "^0.5.20"
+		"source-map-support": "^0.5.20",
+		"ts-appconfig": "^1.0.0"
 	},
 	"devDependencies": {
 		"@istanbuljs/nyc-config-typescript": "^1.0.2",

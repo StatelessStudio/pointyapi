@@ -6,6 +6,7 @@
 - [TSTEMPLATE-21] Upgrade to node v16
 
 ### Additions
+- [TSTEMPLATE-22] Switch from dotenv to ts-appconfig
 
 ### Fixes
 - [TSTEMPLATE-20] Normalize project names

@@ -39,35 +39,4 @@ To generate a clean build (removes old artifacts and reruns pre&post process scr
 
 ### Environment Variables
 
-Environment variables should be set in .env
-
-To add additional environment variables, edit `src/environment.ts`:
-
-```typescript
-/**
- * Environment Variables Schema
- */
-export interface Environment {
-	APP_TITLE: string
-
-	// TODO: Add additional allowed variables
-}
-
-/**
- * Default Values
- */
-const defaults: Environment = {
-	APP_TITLE: 'MY_APP'
-
-	// TODO: Set default variables here
-};
-```
-
-You'll now have editor hints on environment variables:
-
-![Screenshot](doc/image/environment-1.png)
-
-and type-checking:
-
-![Screenshot](doc/image/environment-2.png)
-
+See `src/environment.ts` to see how to use this project's environment variables. Configure an environment in `.env` or with `process.env` (https://nodejs.org/dist/latest-v16.x/docs/api/process.html#processenv).
