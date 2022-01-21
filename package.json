@@ -20,7 +20,8 @@
 		"lint:prod": "eslint . --ext .ts --fix --config=.eslintrc.prod.json",
 		"coverage": "nyc npm run coverage-test",
 		"coverage-test": "jasmine --config=jasmine.json",
-		"coveralls": "cat ./coverage/lcov.info | coveralls"
+		"coveralls": "cat ./coverage/lcov.info | coveralls",
+		"admin:example": "ts-node script/example"
 	},
 	"dependencies": {
 		"ts-appconfig": "^1.0.0",

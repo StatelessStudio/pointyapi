@@ -7,6 +7,7 @@
 - [TSTEMPLATE-21] Upgrade to node v16
 
 ### Additions
+- [TSTEMPLATE-27] Add script directory
 - [TSTEMPLATE-24] Switch to ts-error-handler
 - [TSTEMPLATE-23] Switch to ts-async-bootstrap
 - [TSTEMPLATE-22] Switch from dotenv to ts-appconfig
