@@ -1,9 +1,9 @@
-# TypeScript Project Template
+# typescript-template
 
 ## Installation
 
 1. Fork this repo
-2. Replace MY_APP with the name of your app project-wide (**No Spaces or special characters!**)
+2. Replace "typescript-template" with the name of your app project-wide (**No Spaces or special characters except dash!**)
 3. `npm i`
 4. Update the documentation, changelog, etc
 
@@ -70,3 +70,4 @@ You'll now have editor hints on environment variables:
 and type-checking:
 
 ![Screenshot](doc/image/environment-2.png)
+

@@ -1,5 +1,5 @@
 {
-	"name": "MY_APP",
+	"name": "typescript-template",
 	"version": "1.0.0",
 	"ts-project-version": "1.2.4",
 	"scripts": {

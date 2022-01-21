@@ -1,4 +1,4 @@
-# Typescript Project Template
+# typescript-template
 
 ## [v2.0.0]
 
@@ -7,6 +7,7 @@
 ### Additions
 
 ### Fixes
+- [TSTEMPLATE-20] Normalize project names
 - [TSTEMPLATE-19] Add console warnings to dev lint settings, so that test logging doesn't stay until the end
 
 ## [v1.2.4]
