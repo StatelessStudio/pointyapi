@@ -37,7 +37,7 @@ You can write custom scripts in the `scripts/` directory. See `scripts/example.t
 }
 ```
 
-Run your script with `
+Run your script with `npm run admin:example`
 
 ## Compiling
 
