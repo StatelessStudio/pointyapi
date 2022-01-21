@@ -22,9 +22,9 @@
 		"coveralls": "cat ./coverage/lcov.info | coveralls"
 	},
 	"dependencies": {
-		"source-map-support": "^0.5.20",
 		"ts-appconfig": "^1.0.0",
-		"ts-async-bootstrap": "^1.0.0"
+		"ts-async-bootstrap": "^1.0.0",
+		"ts-error-handler": "^1.0.0"
 	},
 	"devDependencies": {
 		"@istanbuljs/nyc-config-typescript": "^1.0.2",

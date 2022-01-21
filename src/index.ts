@@ -6,6 +6,7 @@
  * 	avoid merge conflicts with the template.
  */
 import { bootstrap } from 'ts-async-bootstrap';
+import { errorHandler } from './error-handler';
 import { main } from './main';
 import { register } from './register';
 
@@ -15,5 +16,6 @@ import { register } from './register';
 bootstrap({
 	register: register,
 	run: main,
+	errorHandler: errorHandler,
 	shouldExit: true
 });
