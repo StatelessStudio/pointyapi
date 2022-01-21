@@ -3,6 +3,7 @@
 ## [v2.0.0]
 
 ### Breaking Changes
+- [TSTEMPLATE-28] Move test specs to test/spec
 - [TSTEMPLATE-25] Switch to ts-tiny-log
 - [TSTEMPLATE-21] Upgrade to node v16
 
