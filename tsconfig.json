@@ -18,7 +18,7 @@
 		"./dist/"
 	],
 	"include": [
-		"./example/",
+		"./script/",
 		"./src/",
 		"./test/"
 	]

@@ -18,6 +18,8 @@
 		}
 	],
 	"rules": {
+		"no-console": 1,
+		"no-debugger": 1,
 		"curly": 2,
 		"indent": [2, "tab"],
 		"max-len": [1, 80],

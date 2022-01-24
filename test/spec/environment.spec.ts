@@ -1,4 +1,4 @@
-import { env } from '../src/environment';
+import { env } from '../../src/environment';
 
 describe('Environment', () => {
 	it('can load', () => {

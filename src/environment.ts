@@ -1,15 +1,13 @@
-import * as dotenv from 'dotenv';
-const envfile = dotenv.config();
+import { AppConfig, configure } from 'ts-appconfig';
 
 /**
  * Environment Variables Schema
  */
-export class Environment {
-	APP_TITLE = 'MY_APP';
+export class Environment extends AppConfig {
+	readonly APP_TITLE = 'typescript-template';
 }
 
-// Export
-export const env: Environment = Object.assign(
-	new Environment(),
-	envfile.parsed
-);
+/**
+ * Load & export environment variables
+ */
+export const env: Environment = configure(Environment);

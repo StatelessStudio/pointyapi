@@ -1,4 +1,21 @@
-# Typescript Project Template
+# typescript-template
+
+## [v2.0.0]
+
+### Breaking Changes
+- [TSTEMPLATE-28] Move test specs to test/spec
+- [TSTEMPLATE-25] Switch to ts-tiny-log
+- [TSTEMPLATE-21] Upgrade to node v16
+
+### Additions
+- [TSTEMPLATE-27] Add script directory
+- [TSTEMPLATE-24] Switch to ts-error-handler
+- [TSTEMPLATE-23] Switch to ts-async-bootstrap
+- [TSTEMPLATE-22] Switch from dotenv to ts-appconfig
+
+### Fixes
+- [TSTEMPLATE-20] Normalize project names
+- [TSTEMPLATE-19] Add console warnings to dev lint settings, so that test logging doesn't stay until the end
 
 ## [v1.2.4]
 
