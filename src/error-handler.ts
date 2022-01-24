@@ -6,7 +6,7 @@ import { log } from './log';
  *
  * @param e
  */
-export function errorHandler(error: Error) {
+export function errorHandler(error: Error): void {
 	log.fatal(error);
 }
 
