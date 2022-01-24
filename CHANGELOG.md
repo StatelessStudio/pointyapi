@@ -9,6 +9,7 @@
 
 ### Additions
 - [TSTEMPLATE-27] Add script directory
+- [TSTEMPLATE-26] Setup nodemon watch
 - [TSTEMPLATE-24] Switch to ts-error-handler
 - [TSTEMPLATE-23] Switch to ts-async-bootstrap
 - [TSTEMPLATE-22] Switch from dotenv to ts-appconfig
