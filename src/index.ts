@@ -19,3 +19,9 @@ bootstrap({
 	errorHandler: errorHandler,
 	shouldExit: true
 });
+
+/**
+ * Documentation - Exported modules will appear in documentation
+ */
+export { Environment } from './environment';
+export { errorHandler } from './error-handler';

@@ -3,7 +3,7 @@
 ## [2.0.1]
 
 ### Fixes
-
+- [TSTEMPLATE-30] Docs build is broken after upgrade of typedoc
 
 ## [v2.0.0]
 
