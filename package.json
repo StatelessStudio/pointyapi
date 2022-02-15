@@ -25,7 +25,7 @@
 	},
 	"dependencies": {
 		"ts-appconfig": "^1.0.0",
-		"ts-async-bootstrap": "^1.0.0",
+		"ts-async-bootstrap": "^2.0.0",
 		"ts-error-handler": "^1.0.0",
 		"ts-tiny-log": "^1.0.2"
 	},
