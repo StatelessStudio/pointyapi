@@ -1,5 +1,10 @@
 # typescript-template
 
+## [2.0.1]
+
+### Fixes
+
+
 ## [v2.0.0]
 
 ### Breaking Changes
