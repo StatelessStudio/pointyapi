@@ -1,5 +1,11 @@
 # typescript-template
 
+## [2.0.1]
+
+### Fixes
+- [TSTEMPLATE-31] As a user, I should be able to reuse bootstrap options from scripts
+- [TSTEMPLATE-30] Docs build is broken after upgrade of typedoc
+
 ## [v2.0.0]
 
 ### Breaking Changes
