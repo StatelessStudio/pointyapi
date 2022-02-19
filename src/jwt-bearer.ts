@@ -29,7 +29,7 @@ export class JwtBearer {
 	 * Construct a JWT Bearer token
 	 * @param key Private key
 	 */
-	constructor(key: string = 'unset_key') {
+	constructor(key = 'unset_key') {
 		if (
 			key === 'unset_key' &&
 			'JWT_KEY' in process.env &&
@@ -46,7 +46,7 @@ export class JwtBearer {
 	 * Get expiration of the token
 	 * @return Returns the expiration epoch time
 	 */
-	public getExpiration(isRefresh: boolean = false): number {
+	public getExpiration(isRefresh = false): number {
 		return (
 			Date.now() +
 			parseInt(
@@ -64,7 +64,7 @@ export class JwtBearer {
 	 */
 	public sign(
 		user: BaseUser,
-		isRefresh: boolean = false,
+		isRefresh = false,
 		data: Object = {}
 	): string {
 		const payload = Object.assign(data, {
@@ -108,7 +108,8 @@ export class JwtBearer {
 	public dryVerify(token: string): any {
 		try {
 			return JWT.verify(atob(token), this.key);
-		} catch (ex) {
+		}
+		catch (ex) {
 			return false;
 		}
 	}

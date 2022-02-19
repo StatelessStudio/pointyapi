@@ -8,7 +8,7 @@ import { getRepository } from 'typeorm';
  * @param resource Parameters to create the resource by
  * @return Returns a Promise
  */
-export function addResource<T>(type: BaseModelInterface, resource: Partial<T>) {
+export async function addResource<T>(type: BaseModelInterface, resource: Partial<T>) {
 	return getRepository(type).save(resource).catch((error) => {
 		console.warn('[addResource] ', error.message);
 	});

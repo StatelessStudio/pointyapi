@@ -23,7 +23,7 @@ async function loader(request, response, next) {
 // Create
 router.post('/', loader, postFilter, postEndpoint);
 router.get('/', loader, getFilter, getEndpoint);
-router.patch(`/:id`, loader, onlySelf, patchFilter, patchEndpoint);
-router.delete(`/:id`, loader, onlySelf, deleteEndpoint);
+router.patch('/:id', loader, onlySelf, patchFilter, patchEndpoint);
+router.delete('/:id', loader, onlySelf, deleteEndpoint);
 
 export const userRouter: Router = router;

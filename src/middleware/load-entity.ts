@@ -21,7 +21,7 @@ export async function loadEntity(
 		if (value) {
 			const result = await request.repository
 				.findOne(value)
-				.catch(() => response.error(`Could not load entity`));
+				.catch(() => response.error('Could not load entity'));
 
 			if (result && result instanceof request.payloadType) {
 				request.payload = result;
@@ -33,7 +33,7 @@ export async function loadEntity(
 				return true;
 			}
 			else {
-				response.goneResponder(`Could not load entity`);
+				response.goneResponder('Could not load entity');
 				return false;
 			}
 		}

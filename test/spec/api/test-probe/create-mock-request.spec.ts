@@ -1,7 +1,7 @@
 import { createMockRequest } from '../../../../src/test-probe';
 import { ExampleUser } from '../../../../src/models';
 
-declare var fail;
+declare let fail;
 
 /**
  * createMockRequest()

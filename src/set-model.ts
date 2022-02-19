@@ -38,8 +38,8 @@ export async function setModel(
 	request: Request,
 	response: Response,
 	model: BaseModelInterface,
-	isAuth: boolean = false,
-	identifier: string = 'id'
+	isAuth = false,
+	identifier = 'id'
 ): Promise<any> {
 	request.identifier = identifier;
 	request.payloadType = model;

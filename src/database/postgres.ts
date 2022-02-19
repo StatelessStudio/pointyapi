@@ -14,7 +14,7 @@ export class PointyPostgres extends BaseDb {
 	 * 	a string to load from file, or pass the object directly). Database
 	 * 	will rely on `process.env.DATABASE_URL` if this is not set.
 	 */
-	public connect(options?: string | Object): Promise<Connection> {
+	public async connect(options?: string | Object): Promise<Connection> {
 		return new Promise(async (accept, reject) => {
 			let pgOptions: any;
 			let useSSL = false;
