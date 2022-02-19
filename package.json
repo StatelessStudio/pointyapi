@@ -8,7 +8,7 @@
 		"start": "npm run dev",
 		"dev": "npm run lint && ts-node src/index.ts",
 		"watch": "nodemon .",
-		"test": "npm run build && npm run coverage && npm run test-examples",
+		"test": "npm run build:dev && npm run coverage && npm run test-examples",
 		"clean": "rm -rf dist",
 		"build:dev": "npm run lint && npm run preprocess && npm run compile && npm run postprocess",
 		"build:dev:clean": "npm run clean && npm run build:dev",
