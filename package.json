@@ -27,7 +27,7 @@
 		"test:jasmine-chat": "npm run db:drop && jasmine --config=test/jasmine.chat.json",
 		"test:jasmine-terms": "npm run db:drop && jasmine --config=test/jasmine.terms.json",
 		"coverage": "nyc npm run coverage-test",
-		"coverage-test": "jasmine --config=jasmine.json",
+		"coverage-test": "jasmine --config=test/jasmine.api.json",
 		"coveralls": "cat ./coverage/lcov.info | coveralls",
 		"db:drop": "typeorm schema:drop -f orm-cli",
 		"admin:example": "ts-node script/example"
@@ -50,7 +50,6 @@
 		"pg-connection-string": "^2.5.0",
 		"reflect-metadata": "^0.1.13",
 		"request": "^2.88.2",
-		"sinon": "^7.5.0",
 		"ts-appconfig": "^1.0.0",
 		"ts-packager": "^1.0.1",
 		"typeorm": "^0.2.43",
