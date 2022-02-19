@@ -6,7 +6,7 @@
 	"private": true,
 	"scripts": {
 		"start": "npm run dev",
-		"dev": "npm run lint && ts-node src/index.ts",
+		"dev": "npm run lint && ts-node test/examples/basic/server",
 		"watch": "nodemon .",
 		"test": "npm run build:dev && npm run coverage && npm run test-examples",
 		"clean": "rm -rf dist",
