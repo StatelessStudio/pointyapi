@@ -4,7 +4,7 @@
 	"plugins": ["@typescript-eslint"],
 	"extends": ["./.eslintrc.json"],
 	"rules": {
-		"no-console": 2,
+		"no-console": 1,
 		"no-debugger": 2
 	}
 }

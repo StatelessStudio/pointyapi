@@ -7,14 +7,9 @@ import {
 } from './method-interface';
 import { Repository } from 'typeorm';
 
-// Setup defaults
-const sessionTTL = 15 * 60; // 15 minute JWT
-const refreshTTL = 7 * 24 * 60 * 60; // 7 day refresh JWT
-
-process.env['PORT'] = process.env.PORT || '8080';
-process.env['JWT_KEY'] = process.env.JWT_KEY || 'dev_key';
-process.env['JWT_TTL'] = process.env.JWT_TTL || `${sessionTTL}`;
-process.env['JWT_REFRESH_TTL'] = process.env.JWT_REFRESH_TTL || `${refreshTTL}`;
+// TODO: This is a shim during the upgrades so that the JWT variables
+//	are populated in process.env. This should be removed
+import './environment';
 
 // Extend Express
 declare global {

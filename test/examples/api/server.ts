@@ -21,4 +21,6 @@ pointy.before = async (app) => {
 };
 
 // Listen
-pointy.start();
+pointy.start()
+	.then(() => console.log('Complete'))
+	.catch(error => console.error('Error', error));

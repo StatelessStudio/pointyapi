@@ -201,7 +201,7 @@ export class HttpClient {
 	 * @param customOptions Additional request options
 	 * @return Returns a promise of HttpClientResponse
 	 */
-	public delete async (
+	public async delete (
 		path: string,
 		bearer: boolean | string = false,
 		expect: number[] = [ 200, 202, 204 ],
