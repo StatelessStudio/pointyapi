@@ -14,6 +14,7 @@ import { BaseUser } from './models/base-user';
 import * as JWT from 'jsonwebtoken';
 
 import { Request } from 'express';
+import { env } from './environment';
 
 const btoa = require('btoa');
 const atob = require('atob');
@@ -29,17 +30,17 @@ export class JwtBearer {
 	 * Construct a JWT Bearer token
 	 * @param key Private key
 	 */
-	constructor(key = 'unset_key') {
-		if (
-			key === 'unset_key' &&
-			'JWT_KEY' in process.env &&
-			process.env.JWT_KEY
-		) {
-			this.key = process.env.JWT_KEY;
-		}
-		else {
-			this.key = key;
-		}
+	constructor(key?: string) {
+		this.key = key ?? env.JWT_KEY;
+	}
+
+	/**
+	 * Get the configured TTL for JWTs
+	 * @param isRefresh
+	 * @returns Returns the TTL in seconds
+	 */
+	public getTTLSeconds(isRefresh = false): number {
+		return isRefresh ? env.JWT_REFRESH_TTL : env.JWT_ACCESS_TTL;
 	}
 
 	/**
@@ -49,11 +50,7 @@ export class JwtBearer {
 	public getExpiration(isRefresh = false): number {
 		return (
 			Date.now() +
-			parseInt(
-				isRefresh ? process.env.JWT_REFRESH_TTL : process.env.JWT_TTL,
-				10
-			) *
-				1000
+			(this.getTTLSeconds(isRefresh) * 1000)
 		);
 	}
 
@@ -72,16 +69,11 @@ export class JwtBearer {
 			isRefresh: isRefresh
 		});
 
-		return btoa(
-			JWT.sign(payload, this.key, {
-				expiresIn: parseInt(
-					isRefresh
-						? process.env.JWT_REFRESH_TTL
-						: process.env.JWT_TTL,
-					10
-				)
-			})
-		);
+		const jwt = JWT.sign(payload, this.key, {
+			expiresIn: this.getTTLSeconds(isRefresh)
+		});
+
+		return btoa(jwt);
 	}
 
 	/**

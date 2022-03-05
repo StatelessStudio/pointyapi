@@ -3,6 +3,7 @@ import { createConnection, ConnectionOptions, Connection } from 'typeorm';
 import * as path from 'path';
 
 import { BaseDb } from './base-db';
+import { env } from '../environment';
 
 /**
  * Postgres Database Handler
@@ -12,16 +13,16 @@ export class PointyPostgres extends BaseDb {
 	 * Connect to the database
 	 * @param options Database credentials (pass
 	 * 	a string to load from file, or pass the object directly). Database
-	 * 	will rely on `process.env.DATABASE_URL` if this is not set.
+	 * 	will rely on `env.DATABASE_URL` if this is not set.
 	 */
 	public async connect(options?: string | Object): Promise<Connection> {
 		let pgOptions: any;
 		let useSSL = false;
 
-		if (process.env.DATABASE_URL) {
+		if (env.DATABASE_URL) {
 			// Live
 			pgOptions = PostgressConnectionStringParser.parse(
-				process.env.DATABASE_URL
+				env.DATABASE_URL
 			);
 			pgOptions.type = 'postgres';
 			useSSL = true;
@@ -29,7 +30,7 @@ export class PointyPostgres extends BaseDb {
 			this.logger('Using production database');
 			this.logger(
 				'Using database driver',
-				process.env.TYPEORM_DRIVER_TYPE || pgOptions.type
+				pgOptions.type
 			);
 		}
 		else {
@@ -47,7 +48,7 @@ export class PointyPostgres extends BaseDb {
 			this.logger('Using development database');
 			this.logger(
 				'Using database driver',
-				process.env.TYPEORM_DRIVER_TYPE || pgOptions.type
+				pgOptions.type
 			);
 
 			this.shouldSync = true;
@@ -55,7 +56,7 @@ export class PointyPostgres extends BaseDb {
 
 		const connectionOptions: ConnectionOptions = {
 			name: this.connectionName,
-			type: process.env.TYPEORM_DRIVER_TYPE || pgOptions.type,
+			type: pgOptions.type,
 			host: pgOptions.host,
 			port: pgOptions.port,
 			username: pgOptions.user,
