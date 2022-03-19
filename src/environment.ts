@@ -2,8 +2,6 @@ import { AppConfig, configure } from 'ts-appconfig';
 
 /**
  * Environment Variables Schema
- *
- * TODO: Reference this instead of process.env throughout the codebase
  */
 export class PointyEnvironment extends AppConfig {
 	readonly APP_TITLE = 'pointyapi';

@@ -7,10 +7,6 @@ import {
 } from './method-interface';
 import { Repository } from 'typeorm';
 
-// TODO: This is a shim during the upgrades so that the JWT variables
-//	are populated in process.env. This should be removed
-import './environment';
-
 // Extend Express
 declare global {
 	namespace Express {
