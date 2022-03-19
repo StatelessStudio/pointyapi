@@ -51,7 +51,7 @@
 		"request": "^2.88.2",
 		"ts-appconfig": "^1.0.0",
 		"typeorm": "^0.2.43",
-		"validator": "^12.2.0"
+		"validator": "^13.7.0"
 	},
 	"devDependencies": {
 		"@istanbuljs/nyc-config-typescript": "^1.0.2",
