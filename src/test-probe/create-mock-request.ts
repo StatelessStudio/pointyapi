@@ -2,7 +2,7 @@ import { mockRequest, mockResponse } from 'mock-req-res';
 import { getRepository } from 'typeorm';
 import { ExampleUser } from '../models';
 
-declare let fail;
+declare var fail;
 
 /**
  * Create mock request/response objects
@@ -11,8 +11,8 @@ declare let fail;
  * @return Returns { request, response }
  */
 export function createMockRequest(
-	method = 'GET',
-	url = '/api/v1/user'
+	method: string = 'GET',
+	url: string = '/api/v1/user'
 ) {
 	// Create request
 	const request = mockRequest();

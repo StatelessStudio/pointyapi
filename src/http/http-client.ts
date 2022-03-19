@@ -12,7 +12,6 @@
  * HttpClient
  */
 
-import { env } from '../environment';
 import * as request from 'request';
 import { HttpClientResponse } from './http-client-response';
 
@@ -23,7 +22,7 @@ export class HttpClient {
 	public url = 'http://localhost';
 
 	// Server PORT
-	public port = env.PORT;
+	public port: number | string = process.env.PORT;
 
 	// Global headers
 	public headers?: Object;
@@ -37,7 +36,7 @@ export class HttpClient {
 	 * @param customOptions Additional request options
 	 * @return Returns a promise of HttpClientResponse
 	 */
-	public async post(
+	public post(
 		path: string,
 		data: object,
 		bearer: boolean | string = false,
@@ -54,7 +53,7 @@ export class HttpClient {
 		if (bearer) {
 			options['auth'] = { bearer: `${bearer}` };
 		}
-
+		
 		if (this.headers) {
 			options['headers'] = this.headers;
 		}
@@ -92,7 +91,7 @@ export class HttpClient {
 	 * @param customOptions Additional request options
 	 * @return Returns a promise of HttpClientResponse
 	 */
-	public async get(
+	public get(
 		path: string,
 		data: boolean | Object = false,
 		bearer: boolean | string = false,
@@ -110,7 +109,7 @@ export class HttpClient {
 			if (bearer) {
 				options['auth'] = { bearer: `${bearer}` };
 			}
-
+		
 			if (this.headers) {
 				options['headers'] = this.headers;
 			}
@@ -147,7 +146,7 @@ export class HttpClient {
 	 * @param customOptions Additional request options
 	 * @return Returns a promise of HttpClientResponse
 	 */
-	public async patch(
+	public patch(
 		path: string,
 		data: object,
 		bearer: boolean | string = false,
@@ -164,7 +163,7 @@ export class HttpClient {
 		if (bearer) {
 			options['auth'] = { bearer: `${bearer}` };
 		}
-
+		
 		if (this.headers) {
 			options['headers'] = this.headers;
 		}
@@ -202,7 +201,7 @@ export class HttpClient {
 	 * @param customOptions Additional request options
 	 * @return Returns a promise of HttpClientResponse
 	 */
-	public async delete (
+	public delete(
 		path: string,
 		bearer: boolean | string = false,
 		expect: number[] = [ 200, 202, 204 ],
@@ -217,7 +216,7 @@ export class HttpClient {
 			if (bearer) {
 				options['auth'] = { bearer: `${bearer}` };
 			}
-
+		
 			if (this.headers) {
 				options['headers'] = this.headers;
 			}

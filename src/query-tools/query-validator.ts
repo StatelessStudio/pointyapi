@@ -199,7 +199,7 @@ export function queryValidator(request: Request, response: Response): boolean {
 		}
 
 		// Is query type proper (array, object, etc)?
-		const value = requestQueryParams[type];
+		const value = requestQueryParams[type]
 		let queryTypeConstructor: string = typeof value;
 
 		if (

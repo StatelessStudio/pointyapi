@@ -30,7 +30,6 @@ import { bindResponders } from './utils/bind-responders';
 
 // Base Models
 import { BaseUserInterface, ExampleUser, BaseUser } from './models';
-import { env } from './environment';
 
 /**
  * PointyAPI App Instance
@@ -144,7 +143,7 @@ export class PointyApi {
 		// Ready check
 		if (this.readycheck()) {
 			// Server listen
-			this.listen(this.app, env.PORT, this.log);
+			this.listen(this.app, process.env.PORT, this.log);
 
 			// Send IPC notification
 			if ('send' in process && process.send) {

@@ -44,7 +44,7 @@ import { fork } from 'child_process';
  * @param serverFile File path to the server entry-point
  * @return Returns a Promise
  */
-export async function forkServer(
+export function forkServer(
 	serverFile: string,
 	args: string[] = [ 'testmode' ]
 ): Promise<any> {

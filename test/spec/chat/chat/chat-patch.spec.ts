@@ -156,7 +156,7 @@ describe('[Chat] Chat API Patch', () => {
 
 			const chat = await http
 				.get(
-					'/api/v1/chat',
+					`/api/v1/chat`,
 					{ id: result.body['id'] },
 					token.body.token
 				)

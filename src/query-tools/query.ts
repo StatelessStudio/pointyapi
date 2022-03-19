@@ -1,4 +1,5 @@
-export interface Query {
+export interface Query
+{
 	id?: number|string,
 	count?: boolean,
 	raw?: boolean,

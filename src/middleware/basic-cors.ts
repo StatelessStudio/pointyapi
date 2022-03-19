@@ -1,4 +1,3 @@
-import { env } from '../environment';
 import { Request, Response, NextFunction } from 'express';
 
 /**
@@ -10,17 +9,22 @@ import { Request, Response, NextFunction } from 'express';
 export function basicCors(
 	request: Request,
 	response: Response,
-	next: NextFunction,
-	allowedOrigins: string = env.ALLOW_ORIGIN,
+	next: NextFunction
 ): void {
 	// Set Access-Control-Allow-Origin
 	let origin = '*';
 
-	if (allowedOrigins) {
-		if (allowedOrigins.includes(', ')) {
+	// Backwards compatability
+	// TODO: Remove in v3.0.0
+	if (!('ALLOW_ORIGIN' in process.env) && 'CLIENT_URL' in process.env) {
+		process.env.ALLOW_ORIGIN = process.env.CLIENT_URL;
+	}
+
+	if ('ALLOW_ORIGIN' in process.env && process.env.ALLOW_ORIGIN) {
+		if (process.env.ALLOW_ORIGIN.includes(', ')) {
 			// Array of Client URLs
-			const host = request.headers.origin;
-			const clientUrls = allowedOrigins.split(', ');
+			let host = request.headers.origin;
+			const clientUrls = process.env.ALLOW_ORIGIN.split(', ');
 
 			if (clientUrls.includes(host)) {
 				origin = host;
@@ -29,9 +33,9 @@ export function basicCors(
 				origin = clientUrls[0];
 			}
 		}
-		else {
+		else if (typeof process.env.ALLOW_ORIGIN === 'string') {
 			// Single Client Url
-			origin = allowedOrigins;
+			origin = process.env.ALLOW_ORIGIN;
 		}
 	}
 	response.setHeader('Access-Control-Allow-Origin', origin);

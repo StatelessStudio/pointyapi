@@ -91,7 +91,7 @@ describe('[Guards] User API Update', () => {
 				.catch((error) => fail(JSON.stringify(error)));
 
 			const getResult = await http
-				.get('/api/v1/user', {
+				.get(`/api/v1/user`, {
 					id: user.body['id']
 				})
 				.catch((error) => fail(JSON.stringify(error)));
@@ -186,7 +186,7 @@ describe('[Guards] User API Update', () => {
 
 		const getResult = await http
 			.get(
-				'/api/v1/user',
+				`/api/v1/user`,
 				{
 					id: user.body.id
 				},

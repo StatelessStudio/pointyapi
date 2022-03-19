@@ -1,4 +1,3 @@
-import { env } from '../../../../src/environment';
 import { basicCors } from '../../../../src/middleware';
 import { createMockRequest } from '../../../../src/test-probe';
 
@@ -8,7 +7,7 @@ import { createMockRequest } from '../../../../src/test-probe';
  */
 describe('[Middleware] basicCors()', () => {
 	it('sets the headers', () => {
-		const allowed = null;
+		delete process.env.ALLOW_ORIGIN;
 		const headers = {};
 		const { request, response } = createMockRequest();
 
@@ -25,11 +24,11 @@ describe('[Middleware] basicCors()', () => {
 			expect(headers['Content-Type']).toEqual(
 				'application/json;charset=utf-8'
 			);
-		}, allowed);
+		});
 	});
 
 	it('accepts environment ALLOW_ORIGIN', () => {
-		const allowed = 'test.com';
+		process.env.ALLOW_ORIGIN = 'test.com';
 		const headers = {};
 		const { request, response } = createMockRequest();
 
@@ -39,13 +38,13 @@ describe('[Middleware] basicCors()', () => {
 
 		basicCors(request, response, () => {
 			expect(headers['Access-Control-Allow-Origin']).toEqual(
-				allowed
+				process.env.ALLOW_ORIGIN
 			);
-		}, allowed);
+		});
 	});
 
 	it('accepts environment ALLOW_ORIGIN as array', () => {
-		const allowed = 'test.com, localhost, test2.com';
+		process.env.ALLOW_ORIGIN = 'test.com, localhost, test2.com';
 		const headers = {};
 		const { request, response } = createMockRequest();
 
@@ -55,11 +54,11 @@ describe('[Middleware] basicCors()', () => {
 
 		basicCors(request, response, () => {
 			expect(headers['Access-Control-Allow-Origin']).toEqual('test.com');
-		}, allowed);
+		});
 	});
 
 	it('rejects environment ALLOW_ORIGIN as array without match', () => {
-		const allowed = 'test.com, test2.com';
+		process.env.ALLOW_ORIGIN = 'test.com, test2.com';
 		const headers = {};
 		const { request, response } = createMockRequest();
 
@@ -69,6 +68,6 @@ describe('[Middleware] basicCors()', () => {
 
 		basicCors(request, response, () => {
 			expect(headers['Access-Control-Allow-Origin']).toEqual('test.com');
-		}, allowed);
+		});
 	});
 });

@@ -4,7 +4,7 @@ export interface QueryColumnReferenceInterface {
 }
 
 export class QueryColumnReference implements QueryColumnReferenceInterface {
-	public isReference = false;
+	public isReference: boolean = false;
 	public column: string;
 	public table: string;
 
@@ -12,7 +12,7 @@ export class QueryColumnReference implements QueryColumnReferenceInterface {
 		if (val && typeof val === 'object' && 'column' in val) {
 			const ref = val as QueryColumnReferenceInterface;
 			this.column = ref.column;
-			this.table = ref.table ? ref.table : objKey;
+			this.table = ref.table ? ref.table : objKey
 			this.isReference = true;
 		}
 	}

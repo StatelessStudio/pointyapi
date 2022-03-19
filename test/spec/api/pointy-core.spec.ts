@@ -23,9 +23,9 @@ beforeAll(async () => {
 				HookTestClass
 			])
 			.connect(ROOT_PATH)
-			.catch((error) => {
-				throw new Error('Cannot start database' + JSON.stringify(error));
-			});
+			.catch((error) =>
+				fail('Cannot start database' + JSON.stringify(error))
+			);
 	};
 
 	// Intercept IPC messages
