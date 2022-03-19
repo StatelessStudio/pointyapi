@@ -1,3 +1,4 @@
+import { bootstrap } from 'ts-async-bootstrap';
 import { pointy } from '../../../src';
 import { basicCors, loadUser } from '../../../src/middleware';
 
@@ -32,6 +33,6 @@ pointy.before = async (app) => {
 };
 
 // Listen
-pointy.start()
-	.then(() => console.log('Complete'))
-	.catch(error => console.error('Error', error));
+bootstrap({ run: async () => {
+	await pointy.start();
+} });
