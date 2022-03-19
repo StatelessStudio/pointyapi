@@ -84,7 +84,7 @@ export async function getQuery(
 
 		// Search
 		// tslint:disable-next-line:prefer-const
-		let { queryString, queryParams } = createSearchQuery(
+		const { queryString, queryParams } = createSearchQuery(
 			request.payloadType,
 			requestQueryParams
 		);
@@ -184,7 +184,7 @@ export async function getQuery(
 			return query.getRawMany();
 		}
 		else if (groupByKeys.length) {
-			const prestring = `obj_`;
+			const prestring = 'obj_';
 
 			return query.getRawMany().then((result) => {
 				if (result instanceof Array && result.length) {

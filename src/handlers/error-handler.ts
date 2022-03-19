@@ -6,7 +6,7 @@ import { createTimestamp } from '../utils/create-timestamp';
  * 	database error object to check)
  * @param code Error response code to send. Default is 500
  */
-export function errorHandler(error: any, code: number = 500): void {
+export function errorHandler(error: any, code = 500): void {
 	// Check for known errors
 	if (error instanceof Object && 'code' in error && this.response) {
 		error.code = +error.code;

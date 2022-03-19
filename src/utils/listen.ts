@@ -1,3 +1,4 @@
+import { env } from '../environment';
 import { LogHandlerFunction } from '../method-interface';
 
 /**
@@ -10,7 +11,7 @@ import { LogHandlerFunction } from '../method-interface';
 /**
  * Start listening
  * @param app Express app to listen on
- * @param port Port number to listen to. Default is process.env.PORT or 8080
+ * @param port Port number to listen to. Default is env.PORT or 8080
  * @param logger Logger function to log to
  */
 export async function listen(
@@ -18,7 +19,7 @@ export async function listen(
 	port?: number,
 	logger?: LogHandlerFunction
 ) {
-	port = port || +process.env.PORT || 8080;
+	port = port || +env.PORT || 8080;
 
 	await app.listen(port, () => {
 		logger('Server started.');

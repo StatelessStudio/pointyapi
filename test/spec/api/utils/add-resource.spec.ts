@@ -50,7 +50,7 @@ describe('[Utils] addResource()', () => {
 			email: 'Drew@test.com',
 			role: UserRole.Member
 		});
-	})
+	});
 
 	it('can add an existing resource', async () => {
 		await addResource(ExampleUser, {

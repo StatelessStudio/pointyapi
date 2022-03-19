@@ -63,8 +63,9 @@ typings/
 # Build directory
 dist/
 
-# Config
+# Environment Variables
+.env
 local.config.json
 
-# Docs
-/docs/
+# Docs build
+docs/
