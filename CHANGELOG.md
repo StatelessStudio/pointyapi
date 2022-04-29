@@ -1,4 +1,4 @@
-# typescript-template#
+# typescript-template
 
 ## [2.1.0]
 
