@@ -2,34 +2,19 @@
  * This file bootstraps your application by running the register function
  * 	and setting up error handling.
  */
-import {
-	bootstrap as _bootstrap,
-	BootstrapFunction,
-	BootstrapOptions
-} from 'ts-async-bootstrap';
+import { Bootstrap as _Bootstrap, RunFunction } from 'ts-async-bootstrap';
 
 import { errorHandler } from './error-handler';
-import { register } from './register';
+import { register, teardown } from './register';
 
-/**
- * Default bootstrapping options
- */
-export const defaultBootstrapOptions: Partial<BootstrapOptions> = {
-	register: register,
-	errorHandler: errorHandler,
-	shouldExitOnError: true,
-};
+export class App extends _Bootstrap {
+	onError = errorHandler;
+	register = register;
+	teardown = teardown;
+}
 
-/**
- * Bootstrap a function
- */
-export function bootstrap(
-	run: BootstrapFunction,
-	options?: Partial<BootstrapOptions>
-): void {
-	_bootstrap({
-		...defaultBootstrapOptions,
-		...options,
-		run: run
-	});
+export const app = new App();
+
+export function bootstrap(run: RunFunction) {
+	app.boot(run);
 }

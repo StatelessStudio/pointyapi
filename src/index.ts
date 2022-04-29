@@ -12,6 +12,6 @@ bootstrap(main);
 /**
  * Documentation - Exported modules will appear in documentation
  */
-export { bootstrap } from './bootstrap';
+export { App, app, bootstrap } from './bootstrap';
 export { Environment } from './environment';
 export { errorHandler } from './error-handler';

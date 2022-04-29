@@ -1,4 +1,5 @@
 import { setupErrorHandling } from 'ts-error-handler';
+import { app } from './bootstrap';
 import { log } from './log';
 
 /**
@@ -8,6 +9,8 @@ import { log } from './log';
  */
 export function errorHandler(error: Error): void {
 	log.fatal(error);
+
+	app.exit();
 }
 
 // Setup error handling

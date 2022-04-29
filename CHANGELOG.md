@@ -3,6 +3,7 @@
 ## [2.1.0]
 
 ### Additions
+- [TSTEMPLATE-33] Add teardown function for graceful shutdown
 
 ### Fixes
 
