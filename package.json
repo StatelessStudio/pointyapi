@@ -1,7 +1,7 @@
 {
 	"name": "typescript-template",
 	"version": "1.0.0",
-	"ts-project-version": "2.0.1",
+	"ts-project-version": "2.1.0",
 	"scripts": {
 		"start": "npm run dev",
 		"dev": "npm run lint && ts-node src/index.ts",
@@ -24,9 +24,9 @@
 		"admin:example": "ts-node script/example"
 	},
 	"dependencies": {
-		"ts-appconfig": "^1.0.0",
-		"ts-async-bootstrap": "^2.0.0",
-		"ts-error-handler": "^1.0.0",
+		"ts-appconfig": "^1.2.0",
+		"ts-async-bootstrap": "^2.1.0",
+		"ts-error-handler": "^1.0.2",
 		"ts-tiny-log": "^1.0.2"
 	},
 	"devDependencies": {
