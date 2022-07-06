@@ -3,6 +3,7 @@
 ## [2.2.0]
 
 ### Additions
+- [TSTEMPLATE-35] Add vscode default build & debug tasks
 - [TSTEMPLATE-34] Add a test:prod script, so that the build doesn't run twice when using ts-packager
 
 ### Fixes
