@@ -2,10 +2,25 @@
 
 ## Installation
 
-1. Fork this repo
-2. Replace "typescript-template" with the name of your app project-wide (**No Spaces or special characters except dash!**)
-3. `npm i`
-4. Update the documentation, changelog, etc
+1. Create a new empty git repo
+	```bash
+	mkdir my-project
+	cd my-project
+	git init .
+	```
+2. Install the template (Copy this into git bash).
+   ```bash
+   git remote add template https://github.com/StatelessStudio/typescript-template/ && git pull template master --allow-unrelated-histories && git remote remove template
+   ```
+3. Replace "typescript-template" with the name of your app project-wide (**No Spaces or special characters except dash!**)
+4. `npm i`
+5. Update the documentation, changelog, etc
+
+## Pulling updates from typescript-template
+
+1. Run the install command in the installation instructions
+2. Resolve merge conflicts
+3. Test!
 
 ## Development
 

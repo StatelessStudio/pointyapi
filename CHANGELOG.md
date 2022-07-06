@@ -1,5 +1,16 @@
 # typescript-template
 
+## [2.2.0]
+
+### Additions
+- [TSTEMPLATE-38] Global error handler should log error .toString() for additional information
+- [TSTEMPLATE-35] Add vscode default build & debug tasks
+- [TSTEMPLATE-34] Add a test:prod script, so that the build doesn't run twice when using ts-packager
+
+### Fixes
+- [TSTEMPLATE-37] npm start / npm run dev can skip the lint
+- [TSTEMPLATE-36] Update instructions to use git pull instead of bitbucket fork
+
 ## [2.1.0]
 
 ### Additions
