@@ -1,7 +1,7 @@
 {
 	"name": "typescript-template",
 	"version": "1.0.0",
-	"ts-project-version": "2.1.0",
+	"ts-project-version": "2.2.0",
 	"scripts": {
 		"start": "npm run dev",
 		"dev": "npm run lint && ts-node src/index.ts",
