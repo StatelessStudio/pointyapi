@@ -3,6 +3,7 @@
 ## [2.2.0]
 
 ### Additions
+- [TSTEMPLATE-38] Global error handler should log error .toString() for additional information
 - [TSTEMPLATE-35] Add vscode default build & debug tasks
 - [TSTEMPLATE-34] Add a test:prod script, so that the build doesn't run twice when using ts-packager
 
