@@ -3,6 +3,7 @@
 ## [2.3.0]
 
 ### Additions
+- [Issue #41] Add additional debug configurations for TS Node
 - [Issue #40] Add additional non-source code file types to nodemon ignore
 
 ### Fixes

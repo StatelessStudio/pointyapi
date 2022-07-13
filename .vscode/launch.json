@@ -5,6 +5,34 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
+			"name": "ts-node (App)",
+			"type": "node",
+			"request": "launch",
+			"args": [
+				"src/index.ts"
+			],
+			"runtimeArgs": [
+				"-r",
+				"ts-node/register"
+			],
+			"cwd": "${workspaceRoot}",
+			"internalConsoleOptions": "openOnSessionStart"
+		},
+		{
+			"name": "ts-node (Current File)",
+			"type": "node",
+			"request": "launch",
+			"args": [
+				"${relativeFile}"
+			],
+			"runtimeArgs": [
+				"-r",
+				"ts-node/register"
+			],
+			"cwd": "${workspaceRoot}",
+			"internalConsoleOptions": "openOnSessionStart"
+		},
+		{
 			"type": "node",
 			"request": "launch",
 			"name": "Launch Program",
