@@ -1,5 +1,11 @@
 # typescript-template
 
+## [2.3.0]
+
+### Additions
+
+### Fixes
+
 ## [2.2.0]
 
 ### Additions
