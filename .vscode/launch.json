@@ -31,7 +31,8 @@
 				"ts-node/register"
 			],
 			"cwd": "${workspaceRoot}",
-			"internalConsoleOptions": "openOnSessionStart"
+			"internalConsoleOptions": "openOnSessionStart",
+			"outputCapture": "std"
 		},
 		{
 			"name": "ts-node (Current File)",
