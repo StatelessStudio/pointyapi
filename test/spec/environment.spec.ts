@@ -1,3 +1,4 @@
+import 'jasmine';
 import { env } from '../../src/environment';
 
 describe('Environment', () => {

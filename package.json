@@ -7,6 +7,8 @@
 		"dev": "ts-node src/index.ts",
 		"watch": "nodemon .",
 		"test": "npm run build:dev:clean && npm run coverage",
+		"test:typescript": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.dev.json",
+		"test:dev": "npm run lint && npm run test:typescript",
 		"test:prod": "npm run build:prod:clean && npm run coverage",
 		"clean": "rm -rf dist",
 		"build:dev": "npm run lint && npm run preprocess && npm run compile && npm run postprocess",
