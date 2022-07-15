@@ -1,5 +1,15 @@
 # typescript-template
 
+## [2.3.0]
+
+### Additions
+- [Issue #43] Add debug config for unit tests
+- [Issue #42] Jasmine should run on uncompiled source when developing
+- [Issue #41] Add additional debug configurations for TS Node
+- [Issue #40] Add additional non-source code file types to nodemon ignore
+
+### Fixes
+
 ## [2.2.0]
 
 ### Additions

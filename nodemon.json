@@ -4,7 +4,11 @@
 		"**/*.spec.ts",
 		".git",
 		"node_modules",
-		"dist"
+		"dist",
+		".md",
+		".txt",
+		".log",
+		".env.example"
 	],
 	"watch": [ "src/", "*.*", ".env" ],
 	"exec": "node_modules/.bin/ts-node src",

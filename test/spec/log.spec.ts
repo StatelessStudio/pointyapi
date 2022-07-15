@@ -1,3 +1,4 @@
+import 'jasmine';
 import { log } from '../../src/log';
 
 describe('Log', () => {
