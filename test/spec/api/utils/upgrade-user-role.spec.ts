@@ -1,3 +1,4 @@
+import 'jasmine';
 import { ExampleUser } from '../../../../src/models';
 import { UserRole } from '../../../../src/enums';
 import { upgradeUserRole } from '../../../../src/utils/upgrade-user-role';

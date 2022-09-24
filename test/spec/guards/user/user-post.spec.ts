@@ -1,3 +1,4 @@
+import 'jasmine';
 import { pointy } from '../../../../src';
 import { UserRole } from '../../../../src/enums/user-role';
 import { upgradeUserRole } from '../../../../src/utils/upgrade-user-role';

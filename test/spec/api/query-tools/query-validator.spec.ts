@@ -1,3 +1,4 @@
+import 'jasmine';
 import { queryValidator } from '../../../../src/query-tools/query-validator';
 import { createMockRequest } from '../../../../src/test-probe';
 import { ExampleUser } from '../../../../src/models';

@@ -1,3 +1,4 @@
+import 'jasmine';
 import { bindResponders } from '../../../../src/utils';
 import { createMockRequest } from '../../../../src/test-probe';
 import { PointyApi } from '../../../../src/pointy-core';

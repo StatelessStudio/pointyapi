@@ -1,3 +1,4 @@
+import 'jasmine';
 import { pointy } from '../../../../src';
 import { User } from '../../../examples/chat/models/user';
 

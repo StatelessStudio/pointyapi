@@ -1,3 +1,4 @@
+import 'jasmine';
 import { pointy } from '../../../../src';
 import { upgradeUserRole } from '../../../../src/utils/upgrade-user-role';
 import { User } from '../../../examples/chat/models/user';

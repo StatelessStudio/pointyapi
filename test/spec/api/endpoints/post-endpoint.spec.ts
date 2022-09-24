@@ -1,3 +1,4 @@
+import 'jasmine';
 import { setModel } from '../../../../src';
 import { ExampleUser } from '../../../../src/models';
 import { postEndpoint } from '../../../../src/endpoints';

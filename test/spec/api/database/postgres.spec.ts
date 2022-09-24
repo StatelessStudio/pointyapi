@@ -1,3 +1,4 @@
+import 'jasmine';
 import { PointyPostgres } from '../../../../src/database';
 import { ExampleUser } from '../../../../src/models';
 import * as path from 'path';

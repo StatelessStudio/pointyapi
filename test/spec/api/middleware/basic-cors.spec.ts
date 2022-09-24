@@ -1,3 +1,4 @@
+import 'jasmine';
 import { basicCors } from '../../../../src/middleware';
 import { createMockRequest } from '../../../../src/test-probe';
 

@@ -27,7 +27,7 @@ async function loader(request, response, next) {
 // Create
 router.post('/', loader, onlyAdmin, postFilter, postEndpoint);
 router.get('/', loader, getFilter, getEndpoint);
-router.patch(`/:id`, loader, onlyAdmin, patchFilter, patchEndpoint);
-router.delete(`/:id`, loader, onlyAdmin, deleteEndpoint);
+router.patch('/:id', loader, onlyAdmin, patchFilter, patchEndpoint);
+router.delete('/:id', loader, onlyAdmin, deleteEndpoint);
 
 export const termRouter: Router = router;

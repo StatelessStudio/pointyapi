@@ -1,3 +1,4 @@
+import 'jasmine';
 import { pointy } from '../../../../src';
 const http = pointy.http;
 
@@ -25,7 +26,7 @@ describe('User API Update', () => {
 			})
 			.then((result) => {
 				http
-					.get(`/api/v1/user`, {
+					.get('/api/v1/user', {
 						id: user1.body.id
 					})
 					.then((getResult) =>
@@ -61,7 +62,7 @@ describe('User API Update', () => {
 				)
 				.then((result) => {
 					http
-						.get(`/api/v1/user`, {
+						.get('/api/v1/user', {
 							id: user.body['id']
 						})
 						.then((getResult) =>
@@ -88,7 +89,7 @@ describe('User API Update', () => {
 			)
 			.then((result) => {
 				http
-					.get(`/api/v1/user`, {
+					.get('/api/v1/user', {
 						id: user1.body.id
 					})
 					.then((getResult) =>

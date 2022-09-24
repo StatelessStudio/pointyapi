@@ -1,3 +1,4 @@
+import 'jasmine';
 import { getRepository } from 'typeorm';
 import { ExampleUser } from '../../../../src/models';
 import { createMockRequest } from '../../../../src/test-probe';

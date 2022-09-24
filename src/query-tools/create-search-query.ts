@@ -13,7 +13,7 @@ import { QueryColumnReference } from './query-column-reference';
 export function createSearchQuery(
 	payloadType: BaseModelInterface,
 	query: Query,
-	objKey: string = 'obj'
+	objKey = 'obj'
 ): any {
 	let queryString = '';
 	const queryParams = {};
@@ -128,7 +128,7 @@ export function createSearchQuery(
 							queryString += ':' + key;
 							queryParams[key] = val;
 						}
-	
+
 						queryString += ' AND ';
 					}
 
@@ -165,7 +165,7 @@ export function createSearchQuery(
 				}
 				else {
 					const key = 'gt_' + column;
-	
+
 					queryString += `${objKey}.${column} > :${key} AND `;
 					queryParams[key] = `${val}`;
 				}
@@ -182,11 +182,11 @@ export function createSearchQuery(
 				}
 				else {
 					const key = 'lte_' + column;
-	
+
 					queryString +=
 						`${objKey}.${column} <= ` +
 						`:${key} AND `;
-	
+
 					queryParams[key] = `${val}`;
 				}
 			}
@@ -197,7 +197,7 @@ export function createSearchQuery(
 				const ref = new QueryColumnReference(val, objKey);
 
 				if (ref.isReference) {
-					queryString += 
+					queryString +=
 					`${objKey}.${column} >= ` +
 					`${ref.str()} AND `;
 				}

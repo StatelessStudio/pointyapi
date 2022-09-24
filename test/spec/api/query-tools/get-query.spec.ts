@@ -1,3 +1,4 @@
+import 'jasmine';
 import { getRepository } from 'typeorm';
 
 import { setModel } from '../../../../src';
