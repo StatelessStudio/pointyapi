@@ -1,3 +1,4 @@
+import 'jasmine';
 import { User } from '../../../examples/chat/models/user';
 import { ChatMessage } from '../../../examples/chat/models/chat-message';
 import {

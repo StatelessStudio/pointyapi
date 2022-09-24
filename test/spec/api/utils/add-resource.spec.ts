@@ -1,3 +1,4 @@
+import 'jasmine';
 import { hashSync } from 'bcryptjs';
 
 import { addResource } from '../../../../src/utils';
@@ -50,7 +51,7 @@ describe('[Utils] addResource()', () => {
 			email: 'Drew@test.com',
 			role: UserRole.Member
 		});
-	})
+	});
 
 	it('can add an existing resource', async () => {
 		await addResource(ExampleUser, {

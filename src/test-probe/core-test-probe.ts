@@ -14,7 +14,8 @@ let pkg = {
 // Try to load package.json
 try {
 	pkg = require(ROOT_PATH + '/node_modules/pointyapi/package.json');
-} catch (ex) {
+}
+catch (ex) {
 	pkg = require(ROOT_PATH + '/package.json');
 }
 

@@ -1,3 +1,4 @@
+import 'jasmine';
 import { pointy } from '../../../../src';
 import { User } from '../../../examples/terms/models/user';
 import { UserRole } from '../../../../src/enums/user-role';

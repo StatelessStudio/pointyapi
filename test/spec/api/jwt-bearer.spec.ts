@@ -1,3 +1,4 @@
+import 'jasmine';
 import { mockRequest } from 'mock-req-res';
 
 import { JwtBearer, jwtBearer } from '../../../src';

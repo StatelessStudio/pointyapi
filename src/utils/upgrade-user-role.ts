@@ -14,33 +14,31 @@ export async function upgradeUserRole(
 	userConstructor: BaseUserInterface,
 	role: UserRole = UserRole.Admin
 ): Promise<any> {
-	return new Promise(async (accept, reject) => {
-		// Get user
-		const user = await getRepository(userConstructor)
-			.find({
-				username: username
-			})
-			.catch((error) =>
-				reject('Could not upgrade user: ' + JSON.stringify(error))
-			);
+	// Get user
+	const user = await getRepository(userConstructor)
+		.find({
+			username: username
+		})
+		.catch((error) => {
+			throw new Error('Could not upgrade user: ' + JSON.stringify(error));
+		});
 
-		// Check result
-		if (user && user.length) {
-			// Upgrade
-			user[0]['role'] = role;
+	// Check result
+	if (user && user.length) {
+		// Upgrade
+		user[0]['role'] = role;
 
-			// Save
-			await getRepository(userConstructor)
-				.save(user)
-				.catch((error) =>
-					reject('Could not upgrade user: ' + JSON.stringify(error))
-				);
+		// Save
+		await getRepository(userConstructor)
+			.save(user)
+			.catch((error) => {
+				throw new Error('Could not upgrade user: ' + JSON.stringify(error));
+			});
 
-			accept(user);
-		}
-		else {
-			// Could not find user
-			reject('Could not find user during upgrade');
-		}
-	});
+		return user;
+	}
+	else {
+		// Could not find user
+		throw new Error('Could not find user during upgrade');
+	}
 }

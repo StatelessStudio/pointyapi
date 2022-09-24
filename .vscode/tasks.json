@@ -1,0 +1,25 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "compile",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [],
+			"label": "npm: compile"
+		},
+		{
+			"type": "npm",
+			"script": "db:drop",
+			"group": {
+				"kind": "none",
+				"isDefault": false
+			},
+			"problemMatcher": [],
+			"label": "npm: db:drop"
+		}
+	]
+}

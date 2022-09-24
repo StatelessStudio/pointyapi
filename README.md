@@ -165,7 +165,9 @@ npm i pointyapi
 	};
 
 	// Start the server!
-	pointy.start();
+	pointy.start()
+		.then((...results) => console.log('Complete', results))
+		.catch((...errors) => console.error('Error', errors));
 	```
 3. **Create a user route**
   

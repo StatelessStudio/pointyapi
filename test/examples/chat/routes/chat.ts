@@ -22,7 +22,7 @@ async function loader(request, response, next) {
 // Create
 router.post('/', loader, onlySelf, postFilter, postEndpoint);
 router.get('/', loader, onlySelf, getFilter, getEndpoint);
-router.patch(`/:id`, loader, onlySelf, patchFilter, patchEndpoint);
-router.delete(`/:id`, loader, onlySelf, deleteEndpoint);
+router.patch('/:id', loader, onlySelf, patchFilter, patchEndpoint);
+router.delete('/:id', loader, onlySelf, deleteEndpoint);
 
 export const chatRouter: Router = router;

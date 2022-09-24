@@ -1,3 +1,4 @@
+import 'jasmine';
 import { pointy } from '../../../../src';
 const http = pointy.http;
 

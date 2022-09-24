@@ -1,3 +1,4 @@
+import 'jasmine';
 import { pointy } from '../../../src/pointy-core';
 import { ExampleUser } from '../../../src/models';
 import { ExampleOwner } from '../../examples/api/models/example-owner';

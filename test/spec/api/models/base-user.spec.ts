@@ -1,3 +1,4 @@
+import 'jasmine';
 import { compareSync } from 'bcryptjs';
 
 import { BaseUser } from '../../../../src/models';

@@ -1,7 +1,7 @@
 {
 	"compileOnSave": false,
 	"compilerOptions": {
-		"baseUrl": "./",
+		"baseUrl": "./src/",
 		"outDir": "./dist",
 		"sourceMap": true,
 		"declaration": true,
@@ -9,20 +9,16 @@
 		"moduleResolution": "node",
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		"target": "es5",
+		"target": "es6",
 		"types": ["node"],
-		"typeRoots": ["node_modules/@types"],
-		"lib": ["es2017"]
+		"typeRoots": ["node_modules/@types", "./"],
+		"lib": ["es2020"]
 	},
 	"exclude": [
 		"./dist/"
 	],
-    "typedocOptions": {
-        "entryPoints": ["src"],
-		"entryPointStrategy": "expand",
-        "out": "docs"
-    },
 	"include": [
+		"./script/",
 		"./src/",
 		"./test/",
 		"./ts-package-config.ts"

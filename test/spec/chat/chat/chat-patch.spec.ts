@@ -1,3 +1,4 @@
+import 'jasmine';
 import { pointy } from '../../../../src';
 import { ChatStatus } from '../../../examples/chat/enums/chat-status';
 import { stringify } from 'querystring';
@@ -156,7 +157,7 @@ describe('[Chat] Chat API Patch', () => {
 
 			const chat = await http
 				.get(
-					`/api/v1/chat`,
+					'/api/v1/chat',
 					{ id: result.body['id'] },
 					token.body.token
 				)

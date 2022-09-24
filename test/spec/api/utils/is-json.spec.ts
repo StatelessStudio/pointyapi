@@ -1,3 +1,4 @@
+import 'jasmine';
 import { isJson } from '../../../../src/utils';
 
 /**

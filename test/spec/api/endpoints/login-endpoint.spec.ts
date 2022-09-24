@@ -1,3 +1,4 @@
+import 'jasmine';
 import { getConnection, getRepository } from 'typeorm';
 import { hashSync } from 'bcryptjs';
 
