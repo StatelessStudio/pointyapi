@@ -2,9 +2,12 @@
 
 ## What version do you have?
 > Choose the version you have before upgrading, and follow the guide to the bottom from there.
-- [Version 0.x.x](#version-0.x.x-->-1.x.x)
-- [Version 1.x.x](#version-1.x.x-->-2.x.x)
-- [Version 2.x.x](#version-2.x.x-->-3.x.x)
+- [Migration Guide](#migration-guide)
+	- [What version do you have?](#what-version-do-you-have)
+	- [Version 0.x.x -> 1.x.x](#version-0xx---1xx)
+	- [Version 1.x.x -> 2.x.x](#version-1xx---2xx)
+	- [Version 2.x.x -> 3.x.x](#version-2xx---3xx)
+	- [Version 3.x.x -> 4.x.x](#version-3xx---4xx)
 
 ## Version 0.x.x -> 1.x.x
 
@@ -137,3 +140,7 @@
 	CLIENT_URL=http://example.com/
 	ALLOW_ORIGINS=http://example.com/, http://cool-example.com/
 	```
+
+## Version 3.x.x -> 4.x.x
+
+1. Now using node v16 and npm v8. Update your project accordingly
