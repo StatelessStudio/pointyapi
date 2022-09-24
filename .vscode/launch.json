@@ -30,6 +30,7 @@
 				"-r",
 				"ts-node/register"
 			],
+			"preLaunchTask": "npm: db:drop",
 			"cwd": "${workspaceRoot}",
 			"internalConsoleOptions": "openOnSessionStart",
 			"outputCapture": "std"

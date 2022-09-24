@@ -10,6 +10,16 @@
 			},
 			"problemMatcher": [],
 			"label": "npm: compile"
+		},
+		{
+			"type": "npm",
+			"script": "db:drop",
+			"group": {
+				"kind": "none",
+				"isDefault": false
+			},
+			"problemMatcher": [],
+			"label": "npm: db:drop"
 		}
 	]
 }
