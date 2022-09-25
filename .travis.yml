@@ -3,7 +3,7 @@ node_js:
   - 16
 before_script:
   - psql -c 'create database testdb;' -U postgres
-  - cp local.config.travis.json local.config.json
+  - cp .env.travis .env
 install:
   - npm install --ignore-scripts
 services:

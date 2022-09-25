@@ -1,86 +1,76 @@
-import * as PostgressConnectionStringParser from 'pg-connection-string';
+import * as PgConnString from 'pg-connection-string';
 import { createConnection, ConnectionOptions, Connection } from 'typeorm';
-import * as path from 'path';
+import { env as _environmentVars, DatabaseConfig } from '../environment';
 
 import { BaseDb } from './base-db';
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 /**
  * Postgres Database Handler
  */
 export class PointyPostgres extends BaseDb {
-	/**
-	 * Connect to the database
-	 * @param options Database credentials (pass
-	 * 	a string to load from file, or pass the object directly). Database
-	 * 	will rely on `process.env.DATABASE_URL` if this is not set.
-	 */
-	public async connect(options?: string | Object): Promise<Connection> {
-		let pgOptions: any;
-		let useSSL = false;
+	public async connect(env?: DatabaseConfig): Promise<Connection> {
+		let pgOptions: PostgresConnectionOptions = {
+			type: 'postgres',
+		};
 
-		if (process.env.DATABASE_URL) {
-			// Live
-			pgOptions = PostgressConnectionStringParser.parse(
-				process.env.DATABASE_URL
-			);
-			pgOptions.type = 'postgres';
-			useSSL = true;
+		if (!env) {
+			env = _environmentVars;
+		}
 
-			this.logger('Using production database');
-			this.logger(
-				'Using database driver',
-				process.env.TYPEORM_DRIVER_TYPE || pgOptions.type
-			);
+		this.logger('Using database driver: postgres');
+
+		if (env.DATABASE_URL) {
+			this.logger('Using connection from DATABASE_URL');
+
+			const connstr = PgConnString.parse(env.DATABASE_URL);
+
+			pgOptions = {
+				...pgOptions,
+				host: connstr.host,
+				port: parseInt(connstr.port, 10),
+				database: connstr.database,
+				ssl: !!connstr.ssl,
+				username: connstr.user,
+				password: connstr.password,
+			};
 		}
 		else {
-			// Local
-			if (typeof options === 'string') {
-				pgOptions = require(path.join(
-					options.toString(),
-					'local.config.json'
-				));
-			}
-			else {
-				pgOptions = options;
-			}
+			this.logger('Using connection from env');
 
-			this.logger('Using development database');
-			this.logger(
-				'Using database driver',
-				process.env.TYPEORM_DRIVER_TYPE || pgOptions.type
-			);
+			pgOptions = {
+				...pgOptions,
+				host: env.POINTY_DB_HOST,
+				port: env.POINTY_DB_PORT,
+				database: env.POINTY_DB_NAME,
+				ssl: !!env.POINTY_DB_SSL,
+				username: env.POINTY_DB_USER,
+				password: env.POINTY_DB_PASS,
+			};
 
 			this.shouldSync = true;
 		}
 
-		options = {
+		const options: ConnectionOptions = {
 			name: this.connectionName,
-			type: process.env.TYPEORM_DRIVER_TYPE || pgOptions.type,
-			driver: process.env.TYPEORM_DRIVER_TYPE || pgOptions.type,
+			type: 'postgres',
 			host: pgOptions.host,
 			port: pgOptions.port,
-			username: pgOptions.user,
+			username: pgOptions.username,
 			password: pgOptions.password,
 			database: pgOptions.database,
 			entities: this.entities,
 			synchronize: this.shouldSync,
+			ssl: pgOptions.ssl ?
+				{ rejectUnauthorized: false } :
+				undefined,
 			uuidExtension: pgOptions.uuidExtension
 				? pgOptions.uuidExtension
 				: 'pgcrypto'
 		};
 
-		if (useSSL) {
-			options['ssl'] = {
-				rejectUnauthorized: false
-			};
-		}
-
 		// Create connection
-		const conn = await createConnection(<ConnectionOptions>options)
-			.catch(err => {
-				console.warn(err);
-				throw new Error('Could not create connection ' + JSON.stringify(err));
-			});
+		const conn = await createConnection(options);
 
 		if (conn && conn instanceof Connection) {
 			this.conn = conn;
@@ -91,3 +81,4 @@ export class PointyPostgres extends BaseDb {
 		}
 	}
 }
+9;

@@ -1,52 +1,68 @@
 import 'jasmine';
 import { PointyPostgres } from '../../../../src/database';
 import { ExampleUser } from '../../../../src/models';
-import * as path from 'path';
-const ROOT_PATH = require('app-root-path').toString();
+import { DatabaseConfig, env } from '../../../../src/environment';
+import { Connection } from 'typeorm';
 
 /**
  * PointyPostgres
  * pointyapi/database
  */
 describe('[Database: Postgres]', async () => {
-	let db;
-	let clog;
+	const newDb: (string) => PointyPostgres = (name) => {
+		const db = new PointyPostgres();
+		db.connectionName = 'testconn_' + name;
 
-	beforeAll(() => {
-		db = new PointyPostgres();
-		db.connectionName = 'testconn';
-		db.errorHandler = (error) => fail(error);
-		db.logger = () => {};
-	});
-
-	beforeEach(() => {
-		clog = console.log;
-	});
-
-	afterEach(() => {
-		console.log = clog;
-	});
+		return db;
+	};
 
 	it('can set entities', () => {
+		const db = newDb('setEntities');
 		db.setEntities([ ExampleUser ]);
+
+		expect(db.entities).toContain(ExampleUser);
 	});
 
 	it('can connect', async () => {
 		// Database
-		await db.connect(ROOT_PATH).catch((error) => fail(error));
+		const conn = await newDb('connect').connect()
+			.catch((error) => fail(error));
+
+		conn ? await conn.close() : null;
+	});
+
+	it('can connect with connection string', async () => {
+		const connectionString =
+			'postgres://' +
+			`${encodeURI(env.POINTY_DB_USER)}:` +
+			`${encodeURI(env.POINTY_DB_PASS)}@` +
+			`${env.POINTY_DB_HOST}:` +
+			`${env.POINTY_DB_PORT}/` +
+			`${encodeURI(env.POINTY_DB_NAME)}`;
+
+		const options: DatabaseConfig = <DatabaseConfig>{
+			DATABASE_URL: connectionString,
+		};
+
+		// Database
+		const conn = await newDb('connString').connect(options)
+			.catch((error) => fail(error));
+
+		expect(conn).toBeInstanceOf(Connection);
+
+		conn ? await conn.close() : null;
 	});
 
 	it('can connect with json options', async () => {
-		const db = new PointyPostgres();
-		db.connectionName = 'jsonconn';
-		db.logger = () => {};
-
 		// Database
-		const options: Object = Object.assign(
+		const options: any = Object.assign(
 			{},
-			require(path.join(ROOT_PATH, 'local.config.json'))
+			env
 		);
 
-		await db.connect(options).catch((error) => fail(error));
+		const conn = await newDb('jsonConn').connect(options)
+			.catch((error) => fail(error));
+
+		conn ? await conn.close() : null;
 	});
 });

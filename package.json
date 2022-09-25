@@ -31,7 +31,8 @@
 		"coverage": "nyc npm run coverage-test",
 		"coverage-test": "jasmine --config=jasmine.json",
 		"coveralls": "cat ./coverage/lcov.info | coveralls",
-		"db:drop": "typeorm schema:drop -f orm-cli",
+		"db:configure": "npx tsc dbconfig.ts --module nodenext && mv dbconfig.js orm-cli.js",
+		"db:drop": "npm run db:configure && typeorm schema:drop -f orm-cli",
 		"admin:example": "ts-node script/example"
 	},
 	"dependencies": {

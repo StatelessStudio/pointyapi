@@ -2,7 +2,6 @@ import 'jasmine';
 
 import { pointy } from '../../../src/';
 import { forkServer } from '../../../src/utils/fork-server';
-const ROOT_PATH = require('app-root-path').toString();
 
 const http = pointy.http;
 
@@ -13,7 +12,7 @@ beforeAll(async () => {
 
 	// Database
 	await pointy.db
-		.connect(ROOT_PATH)
+		.connect()
 		.catch((error) =>
 			fail('Cannot start database' + JSON.stringify(error))
 		);

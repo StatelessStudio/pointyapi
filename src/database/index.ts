@@ -6,7 +6,7 @@
  *
  * ## Using Default Database
  *
- * Create a database and copy `local.config.sample.json` to `local.config.json`.
+ * Create a database and copy `.env.example` to `.env`.
  * Update the username, password, and database details.
  *
  * ## Setting Entities
@@ -16,13 +16,12 @@
  * ```typescript
  * import { pointy } from 'pointyapi';
  * import { ExampleUser } from 'pointyapi/models';
- * const ROOT_PATH = require('app-root-path');
  *
  * // Database
  * pointy.before = async (app) => {
  * 		await pointy.db
  * 			.setEntities([ ExampleUser ])
- * 			.connect(ROOT_PATH)
+ * 			.connect()
  * 			.catch((error) => pointy.error(error));
  * });
  * ```
