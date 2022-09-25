@@ -11,7 +11,6 @@ describe('[User] API Read', () => {
 	let adminToken;
 	let term;
 
-
 	beforeAll(async () => {
 		userAdmin = await http
 			.post('/api/v1/user', {

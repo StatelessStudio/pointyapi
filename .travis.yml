@@ -5,8 +5,8 @@ before_script:
   - psql -c 'create database testdb;' -U postgres
   - cp .env.travis .env
 install:
-  - npm install --ignore-scripts
+	- npm install --ignore-scripts
 services:
-  - postgresql 
+	- postgresql
 after_success:
   - npm run coveralls
