@@ -20,6 +20,11 @@ export class Environment extends DatabaseConfig {
 	readonly DEBUG?: boolean;
 
 	readonly PORT = 8080;
+
+	readonly ALLOW_ORIGIN: string;
+	readonly JWT_KEY = 'dev_key';
+	readonly JWT_ACCESS_TTL_MIN = 15; // 15 minute access
+	readonly JWT_REFRESH_TTL_MIN = 7 * 24 * 60; // 7 day refresh
 }
 
 /**
