@@ -1,5 +1,4 @@
 import 'jasmine';
-import { forkServer } from '../../../../src/utils';
 
 import { pointy } from '../../../../src/';
 import { HttpClientResponse } from '../../../../src/http/http-client-response';
@@ -14,20 +13,6 @@ http.headers = {
  * pointyapi/http
  */
 describe('[HTTP] HTTP Client', () => {
-	let serverfork;
-
-	beforeAll(async () => {
-		serverfork = await forkServer(
-			'./dist/test/examples/basic/server.js'
-		);
-	});
-
-	afterAll(() => {
-		if (serverfork) {
-			serverfork.kill();
-		}
-	});
-
 	it('can get', async () => {
 		const result: void | HttpClientResponse = await http
 			.get('/', {}, 'Bearer: test', [ 404 ], {})
