@@ -6,7 +6,7 @@
 	"private": true,
 	"scripts": {
 		"start": "npm run dev",
-		"dev": "ts-node src/index.ts",
+		"dev": "ts-node test/examples/basic/server",
 		"watch": "nodemon .",
 		"test": "npm run db:drop && npm run test:prod",
 		"test:typescript": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.dev.json",
