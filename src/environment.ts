@@ -17,6 +17,8 @@ export class DatabaseConfig extends AppConfig {
  */
 export class Environment extends DatabaseConfig {
 	readonly APP_TITLE = 'typescript-template';
+
+	readonly PORT = 8080;
 }
 
 /**

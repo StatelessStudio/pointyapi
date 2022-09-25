@@ -1,4 +1,7 @@
+import { env } from '../environment';
 import { log } from '../log';
+
+export type ListenFunction = (app: any, port?: number) => Promise<void>;
 
 /**
  * # Start listening
@@ -12,14 +15,17 @@ import { log } from '../log';
  * @param app Express app to listen on
  * @param port Port number to listen to. Default is process.env.PORT or 8080
  */
-export async function listen(
+export const listen: ListenFunction = async (
 	app: any,
 	port?: number,
-) {
-	port = port || +process.env.PORT || 8080;
+) => {
+	return new Promise<void>((accept, reject) => {
+		port = port || env.PORT;
 
-	await app.listen(port, () => {
-		log.info('Server started.');
-		log.info(`Server listening on port ${port}`);
+		app.listen(port, () => {
+			log.info(`Server listening on port ${port}`);
+
+			accept();
+		});
 	});
-}
+};

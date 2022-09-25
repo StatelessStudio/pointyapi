@@ -6,17 +6,15 @@ import { listen } from '../../../../src/utils';
  * pointyapi/utils
  */
 describe('[Utils] listen()', async () => {
-	beforeAll(() => {});
-
 	it('calls app.listen', async () => {
+		let result = false;
+
 		const app = {
 			listen: (_, cb) => {
+				result = true;
 				cb();
 			}
 		};
-
-		let result = false;
-		app.listen = () => (result = true);
 
 		await listen(app, 80);
 

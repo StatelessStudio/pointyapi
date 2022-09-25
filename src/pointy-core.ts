@@ -4,7 +4,7 @@ import { Response, Request, NextFunction, Application } from 'express';
 import * as bodyParser from 'body-parser';
 
 // Pointy Core
-import { listen } from './utils/listen';
+import { ListenFunction, listen } from './utils/listen';
 import { BaseDb, PointyPostgres } from './database';
 import { HttpClient } from './http/http-client';
 import {
@@ -26,6 +26,7 @@ import {
 } from './responders';
 import { errorHandler } from './handlers';
 import { bindResponders } from './utils/bind-responders';
+import { env } from './environment';
 import { log } from './log';
 
 // Base Models
@@ -39,7 +40,7 @@ export class PointyApi {
 	public app: Application = express();
 
 	// Core
-	public listen: Function = listen;
+	public listen: ListenFunction = listen;
 	public db: BaseDb;
 	public http = new HttpClient();
 	public userType: BaseUserInterface = ExampleUser;
@@ -142,7 +143,7 @@ export class PointyApi {
 		// Ready check
 		if (this.readycheck()) {
 			// Server listen
-			this.listen(this.app, process.env.PORT);
+			await this.listen(this.app, env.PORT);
 
 			// Send IPC notification
 			if ('send' in process && process.send) {

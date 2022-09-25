@@ -12,6 +12,7 @@
 
 ### Fixes
 - Clean up logging
+- Listen function is now properly awaited
 
 
 ## [3.4.0]
