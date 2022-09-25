@@ -15,5 +15,10 @@ export function errorHandler(error: Error): void {
 
 // Setup error handling
 setupErrorHandling({
-	handler: errorHandler
+	handler: errorHandler,
+	// TODO: includeJsFiles and justMyCode options can be removed after
+	//	ts-error-handler#8 is closed
+	//	https://github.com/StatelessStudio/ts-error-handler/issues/8
+	includeJsFiles: true,
+	justMyCode: false,
 });
