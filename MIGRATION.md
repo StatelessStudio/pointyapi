@@ -144,3 +144,4 @@
 ## Version 3.x.x -> 4.x.x
 
 1. Now using node v16 and npm v8. Update your project accordingly
+2. Now using class-validator v13.2.0. Update your project accordingly

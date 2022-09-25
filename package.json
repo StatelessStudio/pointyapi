@@ -44,7 +44,7 @@
 		"atob": "^2.1.2",
 		"bcryptjs": "^2.4.3",
 		"btoa": "^1.2.1",
-		"class-validator": "^0.11.1",
+		"class-validator": "^0.13.2",
 		"express": "^4.17.1",
 		"jsonwebtoken": "^8.5.1",
 		"pg": "^8.8.0",
@@ -55,8 +55,7 @@
 		"ts-async-bootstrap": "^2.1.0",
 		"ts-error-handler": "^1.0.2",
 		"ts-tiny-log": "^1.0.2",
-		"typeorm": "0.2.38",
-		"validator": "^12.2.0"
+		"typeorm": "0.2.38"
 	},
 	"devDependencies": {
 		"@istanbuljs/nyc-config-typescript": "^1.0.2",

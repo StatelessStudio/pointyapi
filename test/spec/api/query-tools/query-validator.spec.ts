@@ -140,7 +140,7 @@ describe('[QueryTools] queryValidator()', () => {
 
 	it('can get by id', () => {
 		const { request, response } = createMockRequest();
-		request.query = { id: 1 };
+		request.query = { id: '1' };
 		request.payloadType = ExampleUser;
 		request.payload = new ExampleUser();
 

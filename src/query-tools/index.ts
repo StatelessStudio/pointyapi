@@ -9,8 +9,5 @@
  */
 export { createSearchQuery } from './create-search-query';
 export { getQuery } from './get-query';
-export {
-	getValidationConstraints
-} from './get-validation-constraints';
 export { queryTypes } from './query-types';
 export { queryValidator } from './query-validator';
