@@ -1,3 +1,4 @@
+import { bootstrap } from '../../../src/bootstrap';
 import { pointy } from '../../../src';
 import { basicCors, loadUser } from '../../../src/middleware';
 import { log } from '../../../src/log';
@@ -34,6 +35,4 @@ pointy.before = async (app) => {
 };
 
 // Listen
-pointy.start()
-	.then((...results) => log.debug('Terms Server complete', results))
-	.catch((...errors) => log.error('Error', errors));
+bootstrap(async () => await pointy.start());

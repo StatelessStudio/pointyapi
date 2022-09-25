@@ -36,6 +36,7 @@ export { NextFunction, Application } from 'express';
 
 // Export root files
 export { pointy, PointyApi } from './pointy-core';
+export { bootstrap } from './bootstrap';
 export { JwtBearer, jwtBearer } from './jwt-bearer';
 export { setModel } from './set-model';
 export { log } from './log';
