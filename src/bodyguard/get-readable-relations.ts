@@ -1,6 +1,7 @@
 import { getCanReadRelation } from '../bodyguard';
 import { BaseUser } from '../models';
 import { BodyguardOwner, UserRole } from '../enums';
+import { BaseModel } from '../models/base-model';
 
 /**
  * Get readable relations for a payload, given a User
@@ -11,7 +12,7 @@ import { BodyguardOwner, UserRole } from '../enums';
  * @return Returns an array of field names
  */
 export function getReadableRelations(
-	payload: Object,
+	payload: BaseModel,
 	user: BaseUser,
 	objAlias?: string
 ): string[] {

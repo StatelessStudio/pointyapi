@@ -1,3 +1,4 @@
+import { BaseModel, BaseModelInterface } from 'models';
 import { Connection } from 'typeorm';
 import { DatabaseConfig } from '../environment';
 import { ExampleUser } from '../models/example-user';
@@ -7,7 +8,7 @@ import { ExampleUser } from '../models/example-user';
  */
 export class BaseDb {
 	// Database entities
-	public entities: any[] = [ ExampleUser ];
+	public entities: BaseModelInterface[] = [ ExampleUser ];
 
 	// Connection name. Default is "default"
 	public connectionName = 'default';
@@ -27,7 +28,7 @@ export class BaseDb {
 	 * Set ORM entities
 	 * @param entities Array of entities
 	 */
-	public setEntities(entities: any[]) {
+	public setEntities(entities: BaseModelInterface[]) {
 		this.entities = entities;
 
 		return this;

@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from '../index';
 import { getRepository } from 'typeorm';
 
 import { jwtBearer } from '../jwt-bearer';

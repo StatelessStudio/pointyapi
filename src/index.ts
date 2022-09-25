@@ -6,6 +6,8 @@ import {
 } from './method-interface';
 import { Repository } from 'typeorm';
 
+import * as _express from 'express';
+
 // Setup defaults
 const sessionTTL = 15 * 60; // 15 minute JWT
 const refreshTTL = 7 * 24 * 60 * 60; // 7 day refresh JWT
@@ -16,33 +18,31 @@ process.env['JWT_TTL'] = process.env.JWT_TTL || `${sessionTTL}`;
 process.env['JWT_REFRESH_TTL'] = process.env.JWT_REFRESH_TTL || `${refreshTTL}`;
 
 // Extend Express
-declare global {
-	namespace Express {
-		export interface Request {
-			identifier?: string;
-			user?: any;
-			userType?: BaseUserInterface;
-			payload?: BaseModel | BaseModel[];
-			payloadType?: BaseModelInterface;
-			repository?: Repository<BaseModel>;
-			joinMembers?: string[];
-		}
-
-		export interface Response {
-			error: ErrorHandlerFunction;
-			log: (...args) => void;
-			conflictResponder: ResponderFunction;
-			forbiddenResponder: ResponderFunction;
-			goneResponder: ResponderFunction;
-			unauthorizedResponder: ResponderFunction;
-			validationResponder: ResponderFunction;
-			deleteResponder: ResponderFunction;
-			getResponder: ResponderFunction;
-			postResponder: ResponderFunction;
-			patchResponder: ResponderFunction;
-		}
-	}
+export interface Request extends _express.Request {
+	identifier?: string;
+	user?: any;
+	userType?: BaseUserInterface;
+	payload?: BaseModel | BaseModel[];
+	payloadType?: BaseModelInterface;
+	repository?: Repository<BaseModel>;
+	joinMembers?: string[];
 }
+
+export interface Response extends _express.Response {
+	error: ErrorHandlerFunction;
+	log: (...args) => void;
+	conflictResponder: ResponderFunction;
+	forbiddenResponder: ResponderFunction;
+	goneResponder: ResponderFunction;
+	unauthorizedResponder: ResponderFunction;
+	validationResponder: ResponderFunction;
+	deleteResponder: ResponderFunction;
+	getResponder: ResponderFunction;
+	postResponder: ResponderFunction;
+	patchResponder: ResponderFunction;
+}
+
+export { NextFunction, Application } from 'express';
 
 // Export root files
 export { pointy, PointyApi } from './pointy-core';

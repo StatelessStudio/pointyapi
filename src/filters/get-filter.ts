@@ -1,8 +1,8 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from '../index';
 
 import { getCanRead, readFilter } from '../bodyguard';
 import { isAdmin } from '../utils';
-import { queryTypeKeys } from '../query-tools/query-types';
+import { queryTypeKeys, QueryType } from '../query-tools/query-types';
 import { BodyguardOwner } from '../enums';
 
 /**
@@ -23,23 +23,23 @@ export function getFilter(
 		const isAdminResult = isAdmin(request.user);
 
 		// Loop through object members
-		let field: any;
-		for (field of queryTypeKeys) {
+		let queryType: QueryType;
+		for (queryType of queryTypeKeys) {
 			// Skip joins
-			if (field === 'join' || field === 'additionalParameters') {
+			if (queryType === 'join' || queryType === 'additionalParameters') {
 				continue;
 			}
 
-			field = request.query[field];
+			const value: unknown = request.query[queryType];
 
-			if (field instanceof Array) {
-				for (let member of field) {
+			if (value instanceof Array) {
+				for (let member of value) {
 					if (member.includes('.')) {
 						member = member.split('.')[0];
 					}
 
 					if (
-						!(field[member] instanceof Function) &&
+						!(value[member] instanceof Function) &&
 						member.indexOf('__') !== 0
 					) {
 						// Get read privileges for the field
@@ -62,14 +62,14 @@ export function getFilter(
 					}
 				}
 			}
-			else if (field instanceof Object) {
-				for (let member in field) {
+			else if (value instanceof Object) {
+				for (let member in value) {
 					if (member.includes('.')) {
 						member = member.split('.')[0];
 					}
 
 					if (
-						!(field[member] instanceof Function) &&
+						!(value[member] instanceof Function) &&
 						member.indexOf('__') !== 0
 					) {
 						// Get read privileges for the field

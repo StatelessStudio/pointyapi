@@ -49,7 +49,7 @@ class ExampleModel extends BaseModel {
 		who: BodyguardOwner.Anyone,
 		fields: [ 'id' ]
 	})
-	public canSearchRelation: Object = {};
+	public canSearchRelation: Record<string, unknown> = {};
 }
 const example = new ExampleModel();
 

@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response } from '../index';
 import { hashSync } from 'bcryptjs';
 
 // Models

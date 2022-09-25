@@ -1,6 +1,6 @@
 // Express
-const express = require('express');
-import { Response, Request, NextFunction, Application } from 'express';
+import * as express from 'express';
+import { Response, Request, NextFunction, Application } from './index';
 import * as bodyParser from 'body-parser';
 
 // Pointy Core
@@ -31,6 +31,8 @@ import { log } from './log';
 
 // Base Models
 import { BaseUserInterface, ExampleUser, BaseUser } from './models';
+
+export type ServerHookFunction = (app: Application) => void;
 
 /**
  * PointyAPI App Instance
@@ -64,8 +66,8 @@ export class PointyApi {
 	public patchResponder: ResponderFunction = patchResponder;
 
 	// Hooks
-	public before: Function = (app: any) => {};
-	public ready: Function = (app: any) => {};
+	public before: ServerHookFunction = (app: Express.Application) => {};
+	public ready: ServerHookFunction = (app: Express.Application) => {};
 
 	// Initialize
 	constructor() {

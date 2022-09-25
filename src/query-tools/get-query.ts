@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response } from '../index';
 import { getReadableFields, getBodyguardKeys } from '../bodyguard';
 
 import { createSearchQuery } from '../utils';

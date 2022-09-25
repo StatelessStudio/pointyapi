@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from '../index';
 import { getIdentifierValue } from '../utils/get-identifier-value';
 
 /**

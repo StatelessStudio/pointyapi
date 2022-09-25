@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response } from '../../../../src';
 import { BaseUser } from '../../../../src/models';
 import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 import { BodyguardKey, AnyoneCanRead } from '../../../../src/bodyguard';

@@ -147,3 +147,6 @@
 2. Now using class-validator v13.2.0. Update your project accordingly
 3. Loading configuration from local.config.json has been deprecated. See readme to configure your environment.
 4. Removed and replaced logging with ts-tiny-log. pointy.log and db.logger have been removed, and a global logger instance is used. See readme to use & configure logger.
+5. PointyAPI no longer "pollutes" express' namespaces to extend the Request and Response interfaces. Instead, they are extended. Change `import { Request, Response, ... } from 'express';` to `import { Request, Response, ... } from 'pointyapi`.
+   1. NOTE: PointyAPI doesn't export all members from express; so you may need to split imports if they import other than Request/Response/NextFunction/Application
+6. Many functions and members have been type "hardened". You may need to adjust/cast parameters and members if you see compilation errors.

@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from '../index';
 import { log } from '../log';
 const ROOT_PATH = require('app-root-path').toString();
 

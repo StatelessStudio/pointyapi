@@ -1,5 +1,5 @@
 import 'jasmine';
-import { Request, Response } from 'express';
+import { Request, Response } from '../../../../src';
 import { BaseModel } from '../../../../src/models';
 
 import { createMockRequest } from '../../../../src/test-probe';

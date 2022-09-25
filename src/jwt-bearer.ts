@@ -13,10 +13,10 @@
 import { BaseUser } from './models/base-user';
 import * as JWT from 'jsonwebtoken';
 
-import { Request } from 'express';
+import { Request } from './index';
 
-const btoa = require('btoa');
-const atob = require('atob');
+import btoa = require('btoa');
+import atob = require('atob');
 
 /**
  * JWT Bearer for authentication
@@ -65,7 +65,7 @@ export class JwtBearer {
 	public sign(
 		user: BaseUser,
 		isRefresh = false,
-		data: Object = {}
+		data: Record<string, unknown> = {}
 	): string {
 		const payload = Object.assign(data, {
 			id: user.id,

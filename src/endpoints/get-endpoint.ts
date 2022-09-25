@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response } from '../index';
 import { BaseModel } from '../models/base-model';
 import { runHook } from '../utils/run-hook';
 

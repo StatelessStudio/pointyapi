@@ -27,4 +27,5 @@ export const queryTypes = {
 /**
  * Specify allowed query-type keys
  */
-export const queryTypeKeys = Object.keys(queryTypes);
+export type QueryType = keyof typeof queryTypes;
+export const queryTypeKeys = <QueryType[]>Object.keys(queryTypes);

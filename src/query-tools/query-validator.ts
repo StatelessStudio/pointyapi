@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
+import { Request, Response } from '../index';
 import { isKeyInModel, isJson } from '../utils';
-import { queryTypes, queryTypeKeys } from './query-types';
+import { queryTypes, queryTypeKeys, QueryType } from './query-types';
 import { getReadableFields, getReadableRelations } from '../bodyguard';
 import { validateAllowingStrings } from '../validation';
 import { Query } from './query';
@@ -145,7 +145,7 @@ export function queryValidator(request: Request, response: Response): boolean {
 		}
 
 		// Is query type registered?
-		if (!queryTypeKeys.includes(type)) {
+		if (!queryTypeKeys.includes(<QueryType>type)) {
 			if (response) {
 				response.validationResponder(
 					'Query type "' + type + '" is not a valid query type.'

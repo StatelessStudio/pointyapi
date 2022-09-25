@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import { Response } from '../index';
 
 /**
  * Check if the key is in the model, and not a PointyAPI special

@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response } from '../index';
 import { BaseModel } from '../models';
 import { log } from '../log';
 

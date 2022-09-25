@@ -1,5 +1,5 @@
 import { getCanRead } from '../bodyguard';
-import { BaseUser } from '../models';
+import { BaseModel, BaseUser } from '../models';
 import { BodyguardOwner, UserRole } from '../enums';
 
 /**
@@ -11,7 +11,7 @@ import { BodyguardOwner, UserRole } from '../enums';
  * @return Returns an array of field names
  */
 export function getReadableFields(
-	payload: Object,
+	payload: BaseModel,
 	user: BaseUser,
 	objAlias?: string
 ): string[] {

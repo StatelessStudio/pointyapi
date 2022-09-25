@@ -1,4 +1,4 @@
-import { BaseUser } from '../models';
+import { BaseModel, BaseUser } from '../models';
 import { getCanWrite } from '../bodyguard';
 import { isSelf, isAdmin } from '../utils';
 import { BodyguardOwner } from '../enums';
@@ -19,7 +19,7 @@ export function writeFilter(
 	objType: any,
 	userType: any,
 	isSelfResult?: boolean
-): boolean | string {
+): true | string {
 	if (obj instanceof Array) {
 		// Recurse array of objects
 		for (let i = 0; i < obj.length; i++) {

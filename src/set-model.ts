@@ -14,7 +14,7 @@
 /**
  * Set Model
  */
-import { Request, Response } from 'express';
+import { Request, Response } from './index';
 import { BaseModelInterface } from './models';
 import { getRepository } from 'typeorm';
 import { getQuery, loadEntity } from './middleware';

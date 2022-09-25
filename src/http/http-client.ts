@@ -25,7 +25,7 @@ export class HttpClient {
 	public port: number | string = process.env.PORT;
 
 	// Global headers
-	public headers?: Object;
+	public headers?: Record<string, unknown>;
 
 	/**
 	 * Send a POST http request to the server
@@ -38,10 +38,10 @@ export class HttpClient {
 	 */
 	public async post(
 		path: string,
-		data: object,
+		data: any,
 		bearer: boolean | string = false,
 		expect: number[] = [ 200, 201, 202, 204 ],
-		customOptions?: object
+		customOptions?: Record<string, unknown>
 	): Promise<HttpClientResponse> {
 		let options = {
 			method: 'POST',
@@ -93,10 +93,10 @@ export class HttpClient {
 	 */
 	public async get(
 		path: string,
-		data: boolean | Object = false,
+		data: any = false,
 		bearer: boolean | string = false,
 		expect: number[] = [ 200, 202 ],
-		customOptions?: object
+		customOptions?: Record<string, unknown>
 	): Promise<HttpClientResponse> {
 		return new Promise<HttpClientResponse>((accept, reject) => {
 			let options = {
@@ -148,10 +148,10 @@ export class HttpClient {
 	 */
 	public async patch(
 		path: string,
-		data: object,
+		data: any,
 		bearer: boolean | string = false,
 		expect: number[] = [ 200, 201, 202, 204 ],
-		customOptions?: object
+		customOptions?: Record<string, unknown>
 	): Promise<HttpClientResponse> {
 		let options = {
 			method: 'PATCH',
@@ -205,7 +205,7 @@ export class HttpClient {
 		path: string,
 		bearer: boolean | string = false,
 		expect: number[] = [ 200, 202, 204 ],
-		customOptions?: object
+		customOptions?: Record<string, unknown>
 	): Promise<HttpClientResponse> {
 		return new Promise<HttpClientResponse>((accept, reject) => {
 			let options = {

@@ -19,7 +19,7 @@ class NobodyCanReadMember extends BaseModel {
 }
 
 class EntityWithJSONColumn extends BaseModel {
-	@AnyoneCanRead() public options: Object = undefined;
+	@AnyoneCanRead() public options: Record<string, unknown> = undefined;
 }
 
 /**
