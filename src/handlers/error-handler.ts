@@ -1,4 +1,4 @@
-import { createTimestamp } from '../utils/create-timestamp';
+import { log } from '../log';
 
 /**
  * Default error handler
@@ -38,7 +38,7 @@ export function errorHandler(error: any, code = 500): void {
 	}
 
 	// Unkown Errors
-	console.error('[SERVER] ERROR', createTimestamp(), error);
+	log.error('[Request Error]', error);
 
 	if (this.response) {
 		this.response.sendStatus(code);

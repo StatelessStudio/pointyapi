@@ -11,6 +11,7 @@
 ### Additions
 
 ### Fixes
+- Clean up logging
 
 
 ## [3.4.0]

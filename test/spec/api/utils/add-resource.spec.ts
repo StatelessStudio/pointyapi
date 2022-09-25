@@ -11,16 +11,6 @@ import { getRepository } from 'typeorm';
  * pointyapi/utils
  */
 describe('[Utils] addResource()', () => {
-	let cwarn;
-
-	beforeEach(() => {
-		cwarn = console.warn;
-	});
-
-	afterEach(() => {
-		console.warn = cwarn;
-	});
-
 	beforeAll(async () => {
 		await addResource(ExampleUser, {
 			fname: 'Drew',

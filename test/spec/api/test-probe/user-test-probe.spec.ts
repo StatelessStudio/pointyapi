@@ -17,6 +17,8 @@ describe('[Test Probe] userTestProbe()', () => {
 		setLog(new Log({
 			level: LogLevel.debug,
 		}));
+
+		log.setWriter(LogLevel.debug, (...args) => {});
 	});
 
 	afterAll(() => {

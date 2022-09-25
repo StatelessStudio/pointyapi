@@ -13,17 +13,6 @@ import { getRepository } from 'typeorm';
  * pointyapi/endpoints
  */
 describe('[Endpoints] Delete', () => {
-	let cwarn;
-
-	beforeEach(() => {
-		cwarn = console.warn;
-		console.warn = () => {};
-	});
-
-	afterEach(() => {
-		console.warn = cwarn;
-	});
-
 	it('can delete', async () => {
 		// Create mock request/response
 		const { request, response } = createMockRequest('DELETE');

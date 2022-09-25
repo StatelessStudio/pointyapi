@@ -12,17 +12,7 @@ import { jwtBearer } from '../../../../src/jwt-bearer';
  * pointyapi/endpoints
  */
 describe('[Endpoints] Refresh Token', async () => {
-	let cwarn;
 	let credentials;
-
-	beforeEach(() => {
-		cwarn = console.warn;
-		console.warn = () => {};
-	});
-
-	afterEach(() => {
-		console.warn = cwarn;
-	});
 
 	beforeAll(async () => {
 		// Create user

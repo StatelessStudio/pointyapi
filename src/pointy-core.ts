@@ -82,14 +82,14 @@ export class PointyApi {
 	public readycheck() {
 		// Check pointy.userType
 		if (!this.userType) {
-			console.warn('[PointyAPI] pointy.userType has not been set!');
+			log.warn('[PointyAPI] pointy.userType has not been set!');
 
 			return false;
 		}
 
 		// Check database connection
 		if (!this.db || !this.db.conn) {
-			console.warn(
+			log.warn(
 				'[PointyAPI] Database connection has not been established'
 			);
 
@@ -98,14 +98,14 @@ export class PointyApi {
 
 		// Check database entities
 		if (!this.db.entities || !this.db.entities.length) {
-			console.warn('[PointyAPI] Database does not contain any entities');
+			log.warn('[PointyAPI] Database does not contain any entities');
 
 			return false;
 		}
 
 		// Check for database entity of BaseUser
 		if (this.db.entities.includes(BaseUser)) {
-			console.warn('[PointyAPI] BaseUser is not a valid database entity');
+			log.warn('[PointyAPI] BaseUser is not a valid database entity');
 
 			return false;
 		}

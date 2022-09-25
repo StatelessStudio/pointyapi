@@ -11,25 +11,6 @@ import { ExampleRelation } from '../../../examples/api/models/example-relation';
  * pointyapi/handlers
  */
 describe('[Handlers] errorHandler', async () => {
-	let cerr;
-	let clog;
-
-	beforeAll(() => {
-		// Store console in buffer
-		cerr = console.error;
-		clog = console.log;
-
-		// Disable clog && cerr
-		console.log = () => {};
-		console.error = () => {};
-	});
-
-	afterAll(() => {
-		// Release console
-		console.error = cerr;
-		console.log = clog;
-	});
-
 	it('sends a 500 status code', async () => {
 		// Create mock request/response
 		const { request, response } = createMockRequest();

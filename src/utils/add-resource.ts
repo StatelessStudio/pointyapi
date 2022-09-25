@@ -1,5 +1,6 @@
 import { BaseModelInterface } from '../models/base-model';
 import { getRepository } from 'typeorm';
+import { log } from '../log';
 
 /**
  * Add a resource to the database. This is useful for filling out database with
@@ -10,6 +11,6 @@ import { getRepository } from 'typeorm';
  */
 export async function addResource<T>(type: BaseModelInterface, resource: Partial<T>) {
 	return getRepository(type).save(resource).catch((error) => {
-		console.warn('[addResource] ', error.message);
+		log.warn('[addResource] ', error.message);
 	});
 }
