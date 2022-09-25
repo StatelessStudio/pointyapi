@@ -65,16 +65,16 @@ export function createSearchQuery(
 			queryString += '(';
 
 			if (typeof query.search === 'string') {
-				const searchString = query.search as string;
+				const searchString = query.search
+					.replace(/[\s]+/, '%')
+					.toLowerCase();
 
 				searchableFields.forEach((column) => {
 					// Append searchable key to queryString
 					queryString += `LOWER(${objKey}.${column}) LIKE :search OR `;
 
 					// Append parameter to queryParams (with wildcards)
-					const value = searchString
-						.replace(/[\s]+/, '%')
-						.toLowerCase();
+					const value = searchString;
 					queryParams['search'] = `%${value}%`;
 				});
 
@@ -83,9 +83,7 @@ export function createSearchQuery(
 					queryString += `LOWER(${column}) LIKE :search OR `;
 
 					// Append parameter to queryParams (with wildcards)
-					const value = searchString
-						.replace(/[\s]+/, '%')
-						.toLowerCase();
+					const value = searchString;
 					queryParams['search'] = `%${value}%`;
 				});
 			}
