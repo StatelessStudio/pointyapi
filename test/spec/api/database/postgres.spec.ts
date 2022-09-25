@@ -31,6 +31,28 @@ describe('[Database: Postgres]', async () => {
 		conn ? await conn.close() : null;
 	});
 
+	it('can connect with connection string', async () => {
+		const connectionString =
+			'postgres://' +
+			`${encodeURI(env.POINTY_DB_USER)}:` +
+			`${encodeURI(env.POINTY_DB_PASS)}@` +
+			`${env.POINTY_DB_HOST}:` +
+			`${env.POINTY_DB_PORT}/` +
+			`${encodeURI(env.POINTY_DB_NAME)}`;
+
+		const options: DatabaseConfig = <DatabaseConfig>{
+			DATABASE_URL: connectionString,
+		};
+
+		// Database
+		const conn = await newDb('connString').connect(options)
+			.catch((error) => fail(error));
+
+		expect(conn).toBeInstanceOf(Connection);
+
+		conn ? await conn.close() : null;
+	});
+
 	it('can connect with json options', async () => {
 		// Database
 		const options: any = Object.assign(
