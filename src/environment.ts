@@ -16,7 +16,8 @@ export class DatabaseConfig extends AppConfig {
  * Environment Variables Schema
  */
 export class Environment extends DatabaseConfig {
-	readonly APP_TITLE = 'typescript-template';
+	readonly APP_TITLE = 'pointyapi';
+	readonly DEBUG?: boolean;
 
 	readonly PORT = 8080;
 }
