@@ -5,6 +5,8 @@ import { log, setLog } from '../../../../src/log';
 import { userTestProbe } from '../../../../src/test-probe';
 import { createMockRequest } from '../../../../src/test-probe';
 
+/* eslint-disable-rule no-console */
+
 /**
  * userTestProbe()
  * pointyapi/test-probe
