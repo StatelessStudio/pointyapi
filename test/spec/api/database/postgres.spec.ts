@@ -1,51 +1,46 @@
 import 'jasmine';
 import { PointyPostgres } from '../../../../src/database';
 import { ExampleUser } from '../../../../src/models';
-import { env } from '../../../../src/environment';
+import { DatabaseConfig, env } from '../../../../src/environment';
+import { Connection } from 'typeorm';
 
 /**
  * PointyPostgres
  * pointyapi/database
  */
 describe('[Database: Postgres]', async () => {
-	let db;
-	let clog;
+	const newDb: (string) => PointyPostgres = (name) => {
+		const db = new PointyPostgres();
+		db.connectionName = 'testconn_' + name;
 
-	beforeAll(() => {
-		db = new PointyPostgres();
-		db.connectionName = 'testconn';
-		db.errorHandler = (error) => fail(error);
-		db.logger = () => {};
-	});
-
-	beforeEach(() => {
-		clog = console.log;
-	});
-
-	afterEach(() => {
-		console.log = clog;
-	});
+		return db;
+	};
 
 	it('can set entities', () => {
+		const db = newDb('setEntities');
 		db.setEntities([ ExampleUser ]);
+
+		expect(db.entities).toContain(ExampleUser);
 	});
 
 	it('can connect', async () => {
 		// Database
-		await db.connect().catch((error) => fail(error));
+		const conn = await newDb('connect').connect()
+			.catch((error) => fail(error));
+
+		conn ? await conn.close() : null;
 	});
 
 	it('can connect with json options', async () => {
-		const db = new PointyPostgres();
-		db.connectionName = 'jsonconn';
-		db.logger = () => {};
-
 		// Database
 		const options: any = Object.assign(
 			{},
 			env
 		);
 
-		await db.connect(options).catch((error) => fail(error));
+		const conn = await newDb('jsonConn').connect(options)
+			.catch((error) => fail(error));
+
+		conn ? await conn.close() : null;
 	});
 });
