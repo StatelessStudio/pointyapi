@@ -37,11 +37,6 @@
 		"admin:example": "ts-node script/example"
 	},
 	"dependencies": {
-		"@types/atob": "^2.1.2",
-		"@types/btoa": "^1.2.3",
-		"@types/express": "^4.17.13",
-		"@types/jsonwebtoken": "^8.5.5",
-		"@types/node": "^12.20.36",
 		"@types/request": "^2.48.7",
 		"atob": "^2.1.2",
 		"bcryptjs": "^2.4.3",
@@ -61,8 +56,12 @@
 	},
 	"devDependencies": {
 		"@istanbuljs/nyc-config-typescript": "^1.0.2",
+		"@types/atob": "^2.1.2",
+		"@types/btoa": "^1.2.3",
+		"@types/express": "^4.17.14",
 		"@types/jasmine": "^3.10.6",
-		"@types/node": "^16.11.21",
+		"@types/jsonwebtoken": "^8.5.9",
+		"@types/node": "^16.11.25",
 		"@typescript-eslint/eslint-plugin": "^5.10.0",
 		"@typescript-eslint/parser": "^5.10.0",
 		"coveralls": "^3.1.1",
