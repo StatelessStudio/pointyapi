@@ -1,4 +1,5 @@
 import { Connection } from 'typeorm';
+import { DatabaseConfig } from '../environment';
 import { ExampleUser } from '../models/example-user';
 
 /**
@@ -17,13 +18,13 @@ export class BaseDb {
 	// Connection
 	public conn: Connection;
 
+	// Database logging function
+	public logger: Function = (message, body?) => console.log(message, body);
+
 	/**
 	 * Constructor
 	 */
 	constructor() {}
-
-	// Database logging function
-	public logger: Function = (message, body?) => console.log(message, body);
 
 	/**
 	 * Set ORM entities
@@ -35,8 +36,13 @@ export class BaseDb {
 		return this;
 	}
 
-	// Create database connection
-	public async connect(options: string | Object): Promise<any> {
+	/**
+	 * Connect to the database
+	 *
+	 * @param env Database environment configuration
+	 * @return Returns the connection
+	 */
+	public async connect(env?: DatabaseConfig): Promise<Connection> {
 		return new Promise((accept) => accept(null));
 	}
 }

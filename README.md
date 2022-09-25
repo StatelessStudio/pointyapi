@@ -136,7 +136,6 @@ npm i pointyapi
 
 	import { pointy } from 'pointyapi';
 	import { basicCors, loadUser } from 'pointyapi/middleware';
-	const ROOT_PATH = require('app-root-path').toString();
 
 	// Routes
 	// TODO: We will import routes here
@@ -160,7 +159,7 @@ npm i pointyapi
 					ExampleUser
 				]
 			)
-			.connect(ROOT_PATH)
+			.connect()
 			.catch((error) => pointy.error(error));
 	};
 
@@ -251,17 +250,15 @@ npm i pointyapi
 
 6. **Setup database**
 
-	Create a database, create a `local.config.json` file in the root folder of your app, and replace the values:
+	Create a database, create a `.env` file in the root folder of your app, and replace the values:
 
-	```json
-	{
-		"type": "postgres",
-		"host": "localhost",
-		"port": 5432,
-		"user": "MY_DATABASE_USERNAME",
-		"password": "MY_DATABASE_PASSWORD",
-		"database": "MY_DATABASE_NAME"
-	}
+	```env
+	POINTYAPI_DB_NAME=pointyapi
+	POINTYAPI_DB_TYPE=postgres
+	POINTYAPI_DB_HOST=localhost
+	POINTYAPI_DB_PORT=5432
+	POINTYAPI_DB_USER=pointyapi
+	POINTYAPI_DB_PASS=password1234
 	```
 
 7. **Start & Test**

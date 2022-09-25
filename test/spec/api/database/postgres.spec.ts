@@ -1,8 +1,7 @@
 import 'jasmine';
 import { PointyPostgres } from '../../../../src/database';
 import { ExampleUser } from '../../../../src/models';
-import * as path from 'path';
-const ROOT_PATH = require('app-root-path').toString();
+import { env } from '../../../../src/environment';
 
 /**
  * PointyPostgres
@@ -33,7 +32,7 @@ describe('[Database: Postgres]', async () => {
 
 	it('can connect', async () => {
 		// Database
-		await db.connect(ROOT_PATH).catch((error) => fail(error));
+		await db.connect().catch((error) => fail(error));
 	});
 
 	it('can connect with json options', async () => {
@@ -42,9 +41,9 @@ describe('[Database: Postgres]', async () => {
 		db.logger = () => {};
 
 		// Database
-		const options: Object = Object.assign(
+		const options: any = Object.assign(
 			{},
-			require(path.join(ROOT_PATH, 'local.config.json'))
+			env
 		);
 
 		await db.connect(options).catch((error) => fail(error));

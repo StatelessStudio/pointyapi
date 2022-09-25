@@ -5,8 +5,6 @@ import { ExampleOwner } from '../../examples/api/models/example-owner';
 import { ExampleRelation } from '../../examples/api/models/example-relation';
 import { HookTestClass } from '../../examples/api/models/hook-test-class';
 
-const ROOT_PATH = require('app-root-path').toString();
-
 let ipcMessage;
 let errorHandler;
 
@@ -23,10 +21,7 @@ beforeAll(async () => {
 				ExampleRelation,
 				HookTestClass
 			])
-			.connect(ROOT_PATH)
-			.catch((error) =>
-				fail('Cannot start database' + JSON.stringify(error))
-			);
+			.connect();
 	};
 
 	// Intercept IPC messages

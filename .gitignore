@@ -65,7 +65,10 @@ dist/
 
 # Environment Variables
 .env
-local.config.json
+
+# Orm-Cli build
+orm-cli.js
+src/environment.js
 
 # Docs build
 docs/
