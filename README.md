@@ -134,7 +134,7 @@ npm i pointyapi
 	```typescript
 	// src/index.ts
 
-	import { pointy } from 'pointyapi';
+	import { pointy, log } from 'pointyapi';
 	import { basicCors, loadUser } from 'pointyapi/middleware';
 
 	// Routes
@@ -165,8 +165,8 @@ npm i pointyapi
 
 	// Start the server!
 	pointy.start()
-		.then((...results) => console.log('Complete', results))
-		.catch((...errors) => console.error('Error', errors));
+		.then((...results) => log.info('Complete', results))
+		.catch((...errors) => log.error('Error', errors));
 	```
 3. **Create a user route**
   
@@ -404,6 +404,34 @@ Example:
 	@BodyguardKey() // Authentication - User must match this to be considered "self"
 	@AnyoneCanRead() // Authorization - Anyone is allowed to read this field
 	public id: string = undefined;
+```
+
+### Logger
+
+PointyAPI uses ts-tiny-logger.
+
+#### Using the Log
+
+```typescript
+import { log } from 'pointyapi';
+
+log.fatal('Oh no!', { someData: 'foo' });
+log.error('Error!', new Error());
+log.warn('Warning!', 1234);
+log.info('Information!', 'Hello!');
+log.debug('Debugging...', { someData: 'bar' });
+```
+
+#### Setting the Log
+
+```typescript
+import { setLog } from 'pointyapi/log';
+import { Log } from 'ts-tiny-log';
+import { LogLevel } from 'ts-tiny-log/levels';
+
+setLog(new Log({
+	level: LogLevel.info,
+}));
 ```
 
 ### Continued Reading

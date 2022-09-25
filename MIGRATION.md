@@ -146,3 +146,4 @@
 1. Now using node v16 and npm v8. Update your project accordingly
 2. Now using class-validator v13.2.0. Update your project accordingly
 3. Loading configuration from local.config.json has been deprecated. See readme to configure your environment.
+4. Removed and replaced logging with ts-tiny-log. pointy.log and db.logger have been removed, and a global logger instance is used. See readme to use & configure logger.

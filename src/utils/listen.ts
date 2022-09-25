@@ -1,4 +1,4 @@
-import { LogHandlerFunction } from '../method-interface';
+import { log } from '../log';
 
 /**
  * # Start listening
@@ -11,17 +11,15 @@ import { LogHandlerFunction } from '../method-interface';
  * Start listening
  * @param app Express app to listen on
  * @param port Port number to listen to. Default is process.env.PORT or 8080
- * @param logger Logger function to log to
  */
 export async function listen(
 	app: any,
 	port?: number,
-	logger?: LogHandlerFunction
 ) {
 	port = port || +process.env.PORT || 8080;
 
 	await app.listen(port, () => {
-		logger('Server started.');
-		logger(`Server listening on port ${port}`);
+		log.info('Server started.');
+		log.info(`Server listening on port ${port}`);
 	});
 }

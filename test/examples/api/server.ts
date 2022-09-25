@@ -1,6 +1,7 @@
 import { pointy } from '../../../src';
 import { basicCors, loadUser } from '../../../src/middleware';
 import { ExampleUser } from '../../../src/models/example-user';
+import { log } from '../../../src/log';
 
 pointy.userType = ExampleUser;
 
@@ -21,5 +22,5 @@ pointy.before = async (app) => {
 
 // Listen
 pointy.start()
-	.then((...results) => console.log('Complete', results))
-	.catch((...errors) => console.error('Error', errors));
+	.then((...results) => log.debug('API Server complete', results))
+	.catch((...errors) => log.error('Error', errors));

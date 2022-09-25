@@ -10,7 +10,6 @@ import { HttpClient } from './http/http-client';
 import {
 	ResponderFunction,
 	ErrorHandlerFunction,
-	LogHandlerFunction
 } from './method-interface';
 
 // Handlers
@@ -25,8 +24,9 @@ import {
 	postResponder,
 	patchResponder
 } from './responders';
-import { logHandler, errorHandler } from './handlers';
+import { errorHandler } from './handlers';
 import { bindResponders } from './utils/bind-responders';
+import { log } from './log';
 
 // Base Models
 import { BaseUserInterface, ExampleUser, BaseUser } from './models';
@@ -48,7 +48,7 @@ export class PointyApi {
 	// Middleware
 
 	// Handlers
-	public log: LogHandlerFunction = logHandler;
+	public log = log.debug;
 	public error: ErrorHandlerFunction = errorHandler;
 
 	// Responders
@@ -70,7 +70,6 @@ export class PointyApi {
 	constructor() {
 		// Default db
 		this.db = new PointyPostgres();
-		this.db.logger = this.log;
 
 		if (process.argv.includes('testmode')) {
 			this.testmode = true;
@@ -143,7 +142,7 @@ export class PointyApi {
 		// Ready check
 		if (this.readycheck()) {
 			// Server listen
-			this.listen(this.app, process.env.PORT, this.log);
+			this.listen(this.app, process.env.PORT);
 
 			// Send IPC notification
 			if ('send' in process && process.send) {

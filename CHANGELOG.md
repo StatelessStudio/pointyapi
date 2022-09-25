@@ -6,6 +6,7 @@
 - Upgrade to node v16 & npm v8
 - Upgrade to class validator
 - [Issue #202] Switch to .env from local.config.json
+- [Issue #218] Remove and replaced loggging with ts-tiny-log
 
 ### Additions
 

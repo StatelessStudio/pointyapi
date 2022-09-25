@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+import { log } from '../log';
 const ROOT_PATH = require('app-root-path').toString();
 
 // Package.json interface
@@ -27,13 +28,13 @@ export function coreTestProbe(
 	response: Response,
 	next: NextFunction
 ): void {
-	console.log('\n[DEBUG] [Core Test Probe]\n');
-	console.log('PointyAPI v', pkg.version);
-	console.log('TypeScript v', pkg.dependencies.typescript);
-	console.log('Express v', pkg.dependencies.express);
-	console.log('TypeORM v', pkg.dependencies.typeorm);
+	log.debug('[Core Test Probe]\n');
+	log.debug('PointyAPI v', pkg.version);
+	log.debug('TypeScript v', pkg.dependencies.typescript);
+	log.debug('Express v', pkg.dependencies.express);
+	log.debug('TypeORM v', pkg.dependencies.typeorm);
 
-	console.log(
+	log.debug(
 		'\n------------------------------------------------------------'
 	);
 

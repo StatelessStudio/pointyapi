@@ -18,9 +18,6 @@ export class BaseDb {
 	// Connection
 	public conn: Connection;
 
-	// Database logging function
-	public logger: Function = (message, body?) => console.log(message, body);
-
 	/**
 	 * Constructor
 	 */

@@ -1,5 +1,6 @@
 import { pointy } from '../../../src';
 import { basicCors, loadUser } from '../../../src/middleware';
+import { log } from '../../../src/log';
 
 // Routes
 import { userRouter } from './routes/user';
@@ -32,5 +33,5 @@ pointy.before = async (app) => {
 
 // Listen
 pointy.start()
-	.then((...results) => console.log('Complete', results))
-	.catch((...errors) => console.error('Error', errors));
+	.then((...results) => log.debug('Chat Server complete', results))
+	.catch((...errors) => log.error('Error', errors));

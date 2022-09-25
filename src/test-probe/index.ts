@@ -1,7 +1,8 @@
 /**
  * # Test Probes
  *
- * Test probes are middleware functions to help debug routes.
+ * Test probes are middleware functions to help debug routes. NOTE: Make sure
+ * 	you set the log level to debug to see test-probe output!
  *
  * ## Core Test Probe
  *

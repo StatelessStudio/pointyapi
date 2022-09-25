@@ -2,7 +2,6 @@
 import { BaseModel, BaseUserInterface, BaseModelInterface } from './models';
 import {
 	ErrorHandlerFunction,
-	LogHandlerFunction,
 	ResponderFunction
 } from './method-interface';
 import { Repository } from 'typeorm';
@@ -31,7 +30,7 @@ declare global {
 
 		export interface Response {
 			error: ErrorHandlerFunction;
-			log: LogHandlerFunction;
+			log: (...args) => void;
 			conflictResponder: ResponderFunction;
 			forbiddenResponder: ResponderFunction;
 			goneResponder: ResponderFunction;
@@ -49,3 +48,4 @@ declare global {
 export { pointy, PointyApi } from './pointy-core';
 export { JwtBearer, jwtBearer } from './jwt-bearer';
 export { setModel } from './set-model';
+export { log } from './log';

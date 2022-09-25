@@ -18,23 +18,7 @@ describe('[Utils] listen()', async () => {
 		let result = false;
 		app.listen = () => (result = true);
 
-		await listen(app, 80, () => {});
-
-		expect(result).toBe(true);
-	});
-
-	it('calls the logger function', async () => {
-		const app = {
-			listen: (_, cb) => {
-				cb();
-			}
-		};
-
-		let result = false;
-
-		await listen(app, 80, () => {
-			result = true;
-		});
+		await listen(app, 80);
 
 		expect(result).toBe(true);
 	});

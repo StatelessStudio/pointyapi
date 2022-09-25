@@ -1,6 +1,7 @@
 import * as PgConnString from 'pg-connection-string';
 import { createConnection, ConnectionOptions, Connection } from 'typeorm';
 import { env as _environmentVars, DatabaseConfig } from '../environment';
+import { log } from '../log';
 
 import { BaseDb } from './base-db';
 import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
@@ -18,10 +19,10 @@ export class PointyPostgres extends BaseDb {
 			env = _environmentVars;
 		}
 
-		this.logger('Using database driver: postgres');
+		log.debug('Using database driver: postgres');
 
 		if (env.DATABASE_URL) {
-			this.logger('Using connection from DATABASE_URL');
+			log.debug('Using connection from DATABASE_URL');
 
 			const connstr = PgConnString.parse(env.DATABASE_URL);
 
@@ -36,7 +37,7 @@ export class PointyPostgres extends BaseDb {
 			};
 		}
 		else {
-			this.logger('Using connection from env');
+			log.debug('Using connection from env');
 
 			pgOptions = {
 				...pgOptions,
@@ -81,4 +82,3 @@ export class PointyPostgres extends BaseDb {
 		}
 	}
 }
-9;
