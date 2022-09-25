@@ -39,6 +39,6 @@ export async function upgradeUserRole(
 	}
 	else {
 		// Could not find user
-		throw new Error('Could not find user during upgrade');
+		throw new Error(`Could not find user ${username} during upgrade`);
 	}
 }

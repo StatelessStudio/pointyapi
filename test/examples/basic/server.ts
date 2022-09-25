@@ -1,3 +1,4 @@
+import { bootstrap } from '../../../src/bootstrap';
 import { pointy } from '../../../src';
 import { basicCors, loadUser } from '../../../src/middleware';
 import { ExampleUser } from '../../../src/models/example-user';
@@ -27,7 +28,4 @@ pointy.before = async (app) => {
 };
 
 // Listen
-pointy.start()
-	.then((...results) => log.debug('Basic Server complete', results))
-	.catch((...errors) => log.error('Error', errors));
-
+bootstrap(async () => await pointy.start());

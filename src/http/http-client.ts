@@ -12,6 +12,7 @@
  * HttpClient
  */
 
+import { env } from '../environment';
 import * as request from 'request';
 import { HttpClientResponse } from './http-client-response';
 
@@ -22,7 +23,7 @@ export class HttpClient {
 	public url = 'http://localhost';
 
 	// Server PORT
-	public port: number | string = process.env.PORT;
+	public port = env.PORT;
 
 	// Global headers
 	public headers?: Record<string, unknown>;

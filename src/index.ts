@@ -5,17 +5,7 @@ import {
 	ResponderFunction
 } from './method-interface';
 import { Repository } from 'typeorm';
-
 import * as _express from 'express';
-
-// Setup defaults
-const sessionTTL = 15 * 60; // 15 minute JWT
-const refreshTTL = 7 * 24 * 60 * 60; // 7 day refresh JWT
-
-process.env['PORT'] = process.env.PORT || '8080';
-process.env['JWT_KEY'] = process.env.JWT_KEY || 'dev_key';
-process.env['JWT_TTL'] = process.env.JWT_TTL || `${sessionTTL}`;
-process.env['JWT_REFRESH_TTL'] = process.env.JWT_REFRESH_TTL || `${refreshTTL}`;
 
 // Extend Express
 export interface Request extends _express.Request {
@@ -46,6 +36,7 @@ export { NextFunction, Application } from 'express';
 
 // Export root files
 export { pointy, PointyApi } from './pointy-core';
+export { bootstrap } from './bootstrap';
 export { JwtBearer, jwtBearer } from './jwt-bearer';
 export { setModel } from './set-model';
 export { log } from './log';

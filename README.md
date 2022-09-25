@@ -134,7 +134,7 @@ npm i pointyapi
 	```typescript
 	// src/index.ts
 
-	import { pointy, log } from 'pointyapi';
+	import { pointy, bootstrap, log } from 'pointyapi';
 	import { basicCors, loadUser } from 'pointyapi/middleware';
 
 	// Routes
@@ -164,9 +164,7 @@ npm i pointyapi
 	};
 
 	// Start the server!
-	pointy.start()
-		.then((...results) => log.info('Complete', results))
-		.catch((...errors) => log.error('Error', errors));
+	bootstrap(async () => await pointy.start());
 	```
 3. **Create a user route**
   
