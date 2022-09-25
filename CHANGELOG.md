@@ -1,5 +1,16 @@
 # PointyApi Changelog
 
+## [4.0.0]
+
+### Breaking Changes (See migration.md)
+- Upgrade to node v16 & npm v8
+- Upgrade to class validator
+
+### Additions
+
+### Fixes
+
+
 ## [3.4.0]
 
 ### Additions
