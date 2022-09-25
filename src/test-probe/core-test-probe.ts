@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from '../index';
 import { log } from '../log';
-const ROOT_PATH = require('app-root-path').toString();
 
 // Package.json interface
 let pkg = {
@@ -14,10 +13,10 @@ let pkg = {
 
 // Try to load package.json
 try {
-	pkg = require(ROOT_PATH + '/node_modules/pointyapi/package.json');
+	pkg = require(process.cwd() + '/node_modules/pointyapi/package.json');
 }
 catch (ex) {
-	pkg = require(ROOT_PATH + '/package.json');
+	pkg = require(process.cwd() + '/package.json');
 }
 
 /**
