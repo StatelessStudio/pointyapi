@@ -73,8 +73,7 @@ describe('[Term] Patch API', async () => {
 					description: 'test'
 				},
 				adminToken.body.token
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 
 		if (term && adminToken) {
 			await http
@@ -84,8 +83,7 @@ describe('[Term] Patch API', async () => {
 						description: 'update'
 					},
 					adminToken.body.token
-				)
-				.catch((error) => fail(JSON.stringify(error)));
+				);
 		}
 		else {
 			fail();
@@ -101,8 +99,7 @@ describe('[Term] Patch API', async () => {
 					description: 'test2'
 				},
 				adminToken.body.token
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 
 		if (term && token) {
 			await http
@@ -113,8 +110,7 @@ describe('[Term] Patch API', async () => {
 					},
 					token.body.token,
 					[ 403 ]
-				)
-				.catch((error) => fail(JSON.stringify(error)));
+				);
 		}
 	});
 });

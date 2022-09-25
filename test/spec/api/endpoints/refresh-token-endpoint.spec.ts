@@ -34,8 +34,7 @@ describe('[Endpoints] Refresh Token', async () => {
 		user.email = 'refreshTokentest@example.com';
 
 		await getRepository(ExampleUser)
-			.save(user)
-			.catch((error) => fail(JSON.stringify(error)));
+			.save(user);
 
 		// Create mock request/response
 		const { request, response } = createMockRequest();

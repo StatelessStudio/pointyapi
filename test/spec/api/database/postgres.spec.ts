@@ -25,8 +25,7 @@ describe('[Database: Postgres]', async () => {
 
 	it('can connect', async () => {
 		// Database
-		const conn = await newDb('connect').connect()
-			.catch((error) => fail(error));
+		const conn = await newDb('connect').connect();
 
 		conn ? await conn.close() : null;
 	});
@@ -45,8 +44,7 @@ describe('[Database: Postgres]', async () => {
 		};
 
 		// Database
-		const conn = await newDb('connString').connect(options)
-			.catch((error) => fail(error));
+		const conn = await newDb('connString').connect(options);
 
 		expect(conn).toBeInstanceOf(Connection);
 
@@ -60,8 +58,7 @@ describe('[Database: Postgres]', async () => {
 			env
 		);
 
-		const conn = await newDb('jsonConn').connect(options)
-			.catch((error) => fail(error));
+		const conn = await newDb('jsonConn').connect(options);
 
 		conn ? await conn.close() : null;
 	});

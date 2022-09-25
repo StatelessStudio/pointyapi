@@ -34,8 +34,7 @@ describe('[Endpoints] Logout', async () => {
 		user.email = 'logouttest@example.com';
 
 		await getRepository(ExampleUser)
-			.save(user)
-			.catch((error) => fail(JSON.stringify(error)));
+			.save(user);
 	});
 
 	it('can logout', async () => {

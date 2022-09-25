@@ -41,8 +41,7 @@ describe('User API Create', () => {
 				},
 				undefined,
 				[ 409 ]
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 	});
 
 	it('cannot create duplicate emails', async () => {
@@ -58,8 +57,7 @@ describe('User API Create', () => {
 				},
 				undefined,
 				[ 409 ]
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 	});
 
 	it('requires a username', async () => {
@@ -74,8 +72,7 @@ describe('User API Create', () => {
 				},
 				undefined,
 				[ 400 ]
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 	});
 
 	it('requires a password', async () => {
@@ -90,8 +87,7 @@ describe('User API Create', () => {
 				},
 				undefined,
 				[ 400 ]
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 	});
 
 	it('cannot accept a nonsense username', async () => {
@@ -107,8 +103,7 @@ describe('User API Create', () => {
 				},
 				undefined,
 				[ 400 ]
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 	});
 
 	it('cannot accept a nonsense email', async () => {
@@ -124,8 +119,7 @@ describe('User API Create', () => {
 				},
 				undefined,
 				[ 400 ]
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 	});
 
 	it('responds with 400 if member does not exist', async () => {
@@ -142,8 +136,7 @@ describe('User API Create', () => {
 				},
 				undefined,
 				[ 400 ]
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 	});
 
 	it('removes undefined members', async () => {
@@ -155,7 +148,6 @@ describe('User API Create', () => {
 				password: 'password123',
 				email: 'basicPost400@test.com',
 				biography: undefined
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 });

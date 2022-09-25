@@ -157,7 +157,7 @@ describe('[Handlers] errorHandler', async () => {
 
 		// Save user && test error handler
 		const repo = getRepository(ExampleUser);
-		await repo.save(user1).catch((error) => fail(error));
+		await repo.save(user1);
 
 		await repo
 			.save(user2)

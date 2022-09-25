@@ -64,8 +64,7 @@ describe('[Chat] Chat API Patch', () => {
 					body: 'test'
 				},
 				token.body.token
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 
 		if (result) {
 			await http
@@ -75,8 +74,7 @@ describe('[Chat] Chat API Patch', () => {
 						fromStatus: ChatStatus.Read
 					},
 					token.body.token
-				)
-				.catch((error) => fail(JSON.stringify(error)));
+				);
 		}
 	});
 
@@ -124,8 +122,7 @@ describe('[Chat] Chat API Patch', () => {
 					},
 					wrongToken.body['token'],
 					[ 403 ]
-				)
-				.catch((error) => fail(JSON.stringify(error)));
+				);
 		}
 		else {
 			fail('Could not authenticate user');
@@ -141,8 +138,7 @@ describe('[Chat] Chat API Patch', () => {
 					body: 'test'
 				},
 				token.body.token
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 
 		if (result) {
 			await http
@@ -152,16 +148,14 @@ describe('[Chat] Chat API Patch', () => {
 						booleanTest: true
 					},
 					token.body.token
-				)
-				.catch((error) => fail(JSON.stringify(error)));
+				);
 
 			const chat = await http
 				.get(
 					'/api/v1/chat',
 					{ id: result.body['id'] },
 					token.body.token
-				)
-				.catch((error) => fail(JSON.stringify(error)));
+				);
 
 			expect(chat['body']['booleanTest']).toBe(true);
 		}

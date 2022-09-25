@@ -22,8 +22,7 @@ describe('[Middleware] loadEntity()', async () => {
 
 		// Save user
 		await getRepository(ExampleUser)
-			.save(user)
-			.catch(() => fail('Could not save user.'));
+			.save(user);
 	});
 
 	it('can load the entity', async () => {

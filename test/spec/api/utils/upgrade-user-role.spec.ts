@@ -23,8 +23,7 @@ describe('upgradeUserRole()', () => {
 
 		// Save user
 		user = await getRepository(ExampleUser)
-			.save(user)
-			.catch((error) => fail(JSON.stringify(error)));
+			.save(user);
 	});
 
 	it('can upgrade user', async () => {
@@ -39,8 +38,7 @@ describe('upgradeUserRole()', () => {
 
 		// Pull user back from database
 		user = await getRepository(ExampleUser)
-			.findOne(user.id)
-			.catch((error) => fail(JSON.stringify(error)));
+			.findOne(user.id);
 
 		// Check value
 		expect(user.role).toEqual(UserRole.Admin);

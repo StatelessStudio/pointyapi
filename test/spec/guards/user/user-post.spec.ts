@@ -34,8 +34,7 @@ describe('[Guards] User API Create', () => {
 			.post('/api/v1/auth', {
 				__user: 'adminGuardPost1',
 				password: 'password123'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('works', () => {
@@ -56,8 +55,7 @@ describe('[Guards] User API Create', () => {
 				},
 				undefined,
 				[ 403 ]
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 	});
 
 	it('can write underscored keys', async () => {
@@ -70,8 +68,7 @@ describe('[Guards] User API Create', () => {
 				email: 'postUser1@test.com',
 				__ignore: 'test',
 				___ignore: 'test'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('cannot reveal sensitve fields', async () => {
@@ -97,7 +94,6 @@ describe('[Guards] User API Create', () => {
 				) {
 					fail();
 				}
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 });

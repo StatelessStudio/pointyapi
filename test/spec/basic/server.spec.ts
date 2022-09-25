@@ -27,14 +27,12 @@ afterAll(() => {
 describe('API Server', () => {
 	it('is running', async () => {
 		await http
-			.get('/', {}, undefined, [ 200, 404 ])
-			.catch((error) => fail(JSON.stringify(error)));
+			.get('/', {}, undefined, [ 200, 404 ]);
 	});
 
 	it('sends proper headers', async () => {
 		const result = await http
-			.get('/', {}, undefined, [ 200, 404 ])
-			.catch((error) => fail(JSON.stringify(error)));
+			.get('/', {}, undefined, [ 200, 404 ]);
 
 		if (result) {
 			expect(

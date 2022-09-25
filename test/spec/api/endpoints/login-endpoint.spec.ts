@@ -34,8 +34,7 @@ describe('[Endpoints] Login', async () => {
 		user.email = 'logintest@example.com';
 
 		await getRepository(ExampleUser)
-			.save(user)
-			.catch((error) => fail(JSON.stringify(error)));
+			.save(user);
 	});
 
 	it('can create a login token', async () => {
@@ -135,9 +134,7 @@ describe('[Endpoints] Login', async () => {
 			password: 'password123'
 		});
 
-		await loginEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await loginEndpoint(request, response);
 
 		expect(result).toBe('login');
 	});

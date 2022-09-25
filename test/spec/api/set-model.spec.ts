@@ -33,8 +33,7 @@ describe('setModel', () => {
 		user.email = 'setmodel@example.com';
 
 		await getRepository(ExampleUser)
-			.save(user)
-			.catch((error) => fail(JSON.stringify(error)));
+			.save(user);
 	});
 
 	it('sets the payload', async () => {

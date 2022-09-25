@@ -22,8 +22,7 @@ describe('[Guards] postFilter', async () => {
 		user.password = 'password123';
 
 		user = await getRepository(ExampleUser)
-			.save(user)
-			.catch((error) => fail(error));
+			.save(user);
 	});
 
 	it('allows valid request', async () => {

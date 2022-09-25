@@ -49,9 +49,7 @@ describe('[Endpoints] Post', () => {
 			result = true;
 		};
 
-		await postEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await postEndpoint(request, response);
 
 		expect(result).toBe(true);
 	});
@@ -82,9 +80,7 @@ describe('[Endpoints] Post', () => {
 			result = true;
 		};
 
-		await postEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await postEndpoint(request, response);
 
 		expect(result).toBe(true);
 	});
@@ -122,9 +118,7 @@ describe('[Endpoints] Post', () => {
 			result = true;
 		};
 
-		await postEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await postEndpoint(request, response);
 
 		expect(result).toBe(true);
 	});
@@ -162,9 +156,7 @@ describe('[Endpoints] Post', () => {
 			result = true;
 		};
 
-		await postEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await postEndpoint(request, response);
 
 		expect(result).toBe(true);
 	});

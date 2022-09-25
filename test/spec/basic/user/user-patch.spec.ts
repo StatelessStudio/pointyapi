@@ -23,18 +23,15 @@ describe('User API Update', () => {
 		await http
 			.patch(`/api/v1/user/${user1.body.id}`, {
 				lname: 'testLast'
+			});
+
+		await http
+			.get('/api/v1/user', {
+				id: user1.body.id
 			})
-			.then((result) => {
-				http
-					.get('/api/v1/user', {
-						id: user1.body.id
-					})
-					.then((getResult) =>
-						expect(getResult.body['lname']).toEqual('testLast')
-					)
-					.catch((error) => fail(JSON.stringify(error)));
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			.then((getResult) =>
+				expect(getResult.body['lname']).toEqual('testLast')
+			);
 	});
 
 	it('can clear a field that has already been set', async () => {
@@ -59,18 +56,15 @@ describe('User API Update', () => {
 					},
 					undefined,
 					[ 204 ]
-				)
-				.then((result) => {
-					http
-						.get('/api/v1/user', {
-							id: user.body['id']
-						})
-						.then((getResult) =>
-							expect(getResult.body['email']).toEqual(null)
-						)
-						.catch((error) => fail(JSON.stringify(error)));
+				);
+
+			await http
+				.get('/api/v1/user', {
+					id: user.body['id']
 				})
-				.catch((error) => fail(JSON.stringify(error)));
+				.then((getResult) =>
+					expect(getResult.body['email']).toEqual(null)
+				);
 		}
 		else {
 			fail('Could not create base user');
@@ -86,20 +80,17 @@ describe('User API Update', () => {
 				},
 				undefined,
 				[ 204 ]
-			)
-			.then((result) => {
-				http
-					.get('/api/v1/user', {
-						id: user1.body.id
-					})
-					.then((getResult) =>
-						expect(getResult.body['email']).toEqual(
-							'basicUserPatch1@test.com'
-						)
-					)
-					.catch((error) => fail(JSON.stringify(error)));
+			);
+
+		await http
+			.get('/api/v1/user', {
+				id: user1.body.id
 			})
-			.catch((error) => fail(JSON.stringify(error)));
+			.then((getResult) =>
+				expect(getResult.body['email']).toEqual(
+					'basicUserPatch1@test.com'
+				)
+			);
 	});
 
 	it('cannot accept a nonsense username', async () => {
@@ -111,8 +102,7 @@ describe('User API Update', () => {
 				},
 				undefined,
 				[ 400 ]
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 	});
 
 	it('cannot accept a nonsense email', async () => {
@@ -124,15 +114,13 @@ describe('User API Update', () => {
 				},
 				undefined,
 				[ 400 ]
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 	});
 
 	it('removes undefined members', async () => {
 		await http
 			.patch(`/api/v1/user/${user1.body.id}`, {
 				biography: undefined
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 });

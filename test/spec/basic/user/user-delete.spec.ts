@@ -11,13 +11,11 @@ describe('User API Delete', () => {
 				username: 'DeleteUser12345',
 				password: 'password123',
 				email: 'UserDelete1@test.com'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 
 		if (result) {
 			await http
-				.delete(`/api/v1/user/${result.body['id']}`)
-				.catch((error) => fail(JSON.stringify(error)));
+				.delete(`/api/v1/user/${result.body['id']}`);
 		}
 	});
 });

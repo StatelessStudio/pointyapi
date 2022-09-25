@@ -63,9 +63,7 @@ describe('[Endpoints] Get', () => {
 		};
 
 		// Run request
-		await getEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await getEndpoint(request, response);
 	});
 
 	it('can return a count request', async () => {
@@ -88,9 +86,7 @@ describe('[Endpoints] Get', () => {
 		};
 
 		// Run request
-		await getEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await getEndpoint(request, response);
 	});
 
 	it('can return a single resource request', async () => {
@@ -112,9 +108,7 @@ describe('[Endpoints] Get', () => {
 		};
 
 		// Run request
-		await getEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await getEndpoint(request, response);
 	});
 
 	it('calls response.goneResponder() if object not found', async () => {

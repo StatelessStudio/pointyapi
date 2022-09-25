@@ -37,8 +37,7 @@ describe('[Endpoints] Patch', () => {
 
 		// Create repo
 		await request.repository
-			.save(user)
-			.catch((error) => fail(JSON.stringify(error)));
+			.save(user);
 
 		// Create request
 		request.body = user;
@@ -58,9 +57,7 @@ describe('[Endpoints] Patch', () => {
 			result = true;
 		};
 
-		await patchEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await patchEndpoint(request, response);
 
 		expect(result).toBe(true);
 		expect(request.payload.lname).toEqual(null);
@@ -80,8 +77,7 @@ describe('[Endpoints] Patch', () => {
 
 		// Create repo
 		await request.repository
-			.save(user)
-			.catch((error) => fail(JSON.stringify(error)));
+			.save(user);
 
 		// Create request
 		request.body = user;
@@ -99,9 +95,7 @@ describe('[Endpoints] Patch', () => {
 			result = true;
 		};
 
-		await patchEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await patchEndpoint(request, response);
 
 		expect(result).toBe(true);
 	});

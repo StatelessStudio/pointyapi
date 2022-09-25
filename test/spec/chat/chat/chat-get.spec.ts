@@ -94,8 +94,7 @@ describe('[Chat] Chat API Get', async () => {
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Object));
 				expect(result.body['body']).toEqual('test');
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('allows a user to view their message (received)', async () => {
@@ -110,8 +109,7 @@ describe('[Chat] Chat API Get', async () => {
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Object));
 				expect(result.body['body']).toEqual('test2');
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('cannot view chat without a token', async () => {
@@ -158,8 +156,7 @@ describe('[Chat] Chat API Get', async () => {
 					{ id: chat.body['id'] },
 					wrongToken.body['token'],
 					[ 403 ]
-				)
-				.catch((error) => fail(JSON.stringify(error)));
+				);
 		}
 		else {
 			fail('Could not authenticate user');
@@ -186,8 +183,7 @@ describe('[Chat] Chat API Get', async () => {
 				expect(result.body[0].id).toBeGreaterThanOrEqual(1);
 				expect(result.body[0].from).toEqual(jasmine.any(Object));
 				expect(result.body[0].from.id).toBeGreaterThanOrEqual(1);
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can join members', async () => {
@@ -207,8 +203,7 @@ describe('[Chat] Chat API Get', async () => {
 				expect(result.body[0].inbox).toEqual(jasmine.any(Array));
 				expect(result.body[0].inbox.length).toBe(1);
 				expect(result.body[0].inbox[0].id).toBeGreaterThanOrEqual(1);
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can search by to or from', async () => {
@@ -230,8 +225,7 @@ describe('[Chat] Chat API Get', async () => {
 				expect(result.body[0].id).toBeGreaterThanOrEqual(1);
 				expect(result.body[0].from).toEqual(jasmine.any(Object));
 				expect(result.body[0].from.id).toBeGreaterThanOrEqual(1);
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('filters nested objects', async () => {
@@ -259,8 +253,7 @@ describe('[Chat] Chat API Get', async () => {
 					expect(result.body[i].to.id).toBeGreaterThanOrEqual(1);
 					expect(result.body[i].to.password).toBeUndefined();
 				}
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('does not return chats the user does not own', async () => {
@@ -299,8 +292,7 @@ describe('[Chat] Chat API Get', async () => {
 				)
 				.then((result) => {
 					expect(result.body['length']).toBe(0);
-				})
-				.catch((error) => fail(JSON.stringify(error)));
+				});
 		}
 	});
 
@@ -319,8 +311,7 @@ describe('[Chat] Chat API Get', async () => {
 			)
 			.then((result) => {
 				expect(result.body['count']).toBeGreaterThanOrEqual(2);
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can search by nested objects', async () => {
@@ -382,8 +373,7 @@ describe('[Chat] Chat API Get', async () => {
 					else {
 						fail('Result is not an array.');
 					}
-				})
-				.catch((error) => fail(JSON.stringify(error)));
+				});
 		}
 		else {
 			fail('Could not create base user =and/or chat');
@@ -422,8 +412,7 @@ describe('[Chat] Chat API Get', async () => {
 				else {
 					fail('Result is not an array');
 				}
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can sort by member when a join column is included', async () => {
@@ -445,7 +434,6 @@ describe('[Chat] Chat API Get', async () => {
 				else {
 					fail('Result is not an array');
 				}
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 });

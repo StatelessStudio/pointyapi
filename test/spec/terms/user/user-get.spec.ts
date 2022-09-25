@@ -55,8 +55,7 @@ describe('[User] API Read', () => {
 				expect(result.body['title']).toEqual('User Term');
 
 				return result;
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can get one', async () => {
