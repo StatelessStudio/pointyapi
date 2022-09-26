@@ -6,6 +6,7 @@
 - Upgrade to node v16 & npm v8
 - Upgrade to class validator
 - [Issue #202] Switch to .env from local.config.json
+- [Issue #206] Request/Response should be imported from child interfaces
 - [Issue #218] Remove and replaced loggging with ts-tiny-log
 - Hardened types to replace many `any` members and parameters
 

@@ -1,6 +1,6 @@
 {
 	"name": "pointyapi",
-	"version": "3.4.0",
+	"version": "4.0.0",
 	"ts-project-version": "2.3.0",
 	"description": "*\"Stop writing endpoints\"*",
 	"private": true,
