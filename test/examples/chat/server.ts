@@ -1,5 +1,7 @@
+import { bootstrap } from '../../../src/bootstrap';
 import { pointy } from '../../../src';
 import { basicCors, loadUser } from '../../../src/middleware';
+import { log } from '../../../src/log';
 
 // Routes
 import { userRouter } from './routes/user';
@@ -8,7 +10,6 @@ import { chatRouter } from './routes/chat';
 import { ChatMessage } from './models/chat-message';
 import { User } from './models/user';
 
-const ROOT_PATH = require('app-root-path').toString();
 pointy.userType = User;
 
 // Setup
@@ -27,9 +28,9 @@ pointy.before = async (app) => {
 	// Database
 	await pointy.db
 		.setEntities([ User, ChatMessage ])
-		.connect(ROOT_PATH)
+		.connect()
 		.catch((error) => pointy.error(error));
 };
 
 // Listen
-pointy.start();
+bootstrap(async () => await pointy.start());

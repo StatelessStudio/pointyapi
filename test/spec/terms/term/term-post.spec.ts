@@ -1,3 +1,4 @@
+import 'jasmine';
 import { pointy } from '../../../../src';
 import { User } from '../../../examples/terms/models/user';
 import { UserRole } from '../../../../src/enums/user-role';
@@ -77,8 +78,7 @@ describe('[Term] Post API', async () => {
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Object));
 				expect(result.body['title']).toEqual('Social Studies');
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 		*/
 	});
 
@@ -92,7 +92,6 @@ describe('[Term] Post API', async () => {
 				},
 				token.body.token,
 				[ 403 ]
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 	});
 });

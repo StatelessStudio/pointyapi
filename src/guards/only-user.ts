@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from '../index';
 import { BaseUser } from '../models/base-user';
 
 /**

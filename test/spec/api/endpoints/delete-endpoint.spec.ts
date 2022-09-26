@@ -1,3 +1,4 @@
+import 'jasmine';
 import { setModel } from '../../../../src';
 import { ExampleUser } from '../../../../src/models';
 import { deleteEndpoint } from '../../../../src/endpoints';
@@ -7,24 +8,11 @@ import { HookTestClass } from '../../../examples/api/models/hook-test-class';
 import { addResource } from '../../../../src/utils';
 import { getRepository } from 'typeorm';
 
-const errorHandler = (error) => fail(JSON.stringify(error));
-
 /**
  * deleteEndpoint()
  * pointyapi/endpoints
  */
 describe('[Endpoints] Delete', () => {
-	let cwarn;
-
-	beforeEach(() => {
-		cwarn = console.warn;
-		console.warn = () => {};
-	});
-
-	afterEach(() => {
-		console.warn = cwarn;
-	});
-
 	it('can delete', async () => {
 		// Create mock request/response
 		const { request, response } = createMockRequest('DELETE');
@@ -38,7 +26,7 @@ describe('[Endpoints] Delete', () => {
 		user.email = 'delete@example.com';
 
 		// Get user repo
-		const result = await request.repository.save(user).catch(errorHandler);
+		const result = await request.repository.save(user);
 
 		// Setup request
 		request.identifier = 'id';
@@ -51,7 +39,7 @@ describe('[Endpoints] Delete', () => {
 
 		// Test delete responder
 		response.deleteResponder = () => {};
-		await deleteEndpoint(request, response).catch(errorHandler);
+		await deleteEndpoint(request, response);
 	});
 
 	it('calls response.goneResponder() if object not found', async () => {

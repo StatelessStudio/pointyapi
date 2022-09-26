@@ -13,10 +13,11 @@
 import { BaseUser } from './models/base-user';
 import * as JWT from 'jsonwebtoken';
 
-import { Request } from 'express';
+import { Request } from './index';
+import { env } from './environment';
 
-const btoa = require('btoa');
-const atob = require('atob');
+import btoa = require('btoa');
+import atob = require('atob');
 
 /**
  * JWT Bearer for authentication
@@ -29,31 +30,31 @@ export class JwtBearer {
 	 * Construct a JWT Bearer token
 	 * @param key Private key
 	 */
-	constructor(key: string = 'unset_key') {
-		if (
-			key === 'unset_key' &&
-			'JWT_KEY' in process.env &&
-			process.env.JWT_KEY
-		) {
-			this.key = process.env.JWT_KEY;
-		}
-		else {
-			this.key = key;
-		}
+	constructor(key?: string) {
+		this.key = key ?? env.JWT_KEY;
+	}
+
+	/**
+	 * Get the configured TTL for JWTs
+	 * @param isRefresh
+	 * @returns Returns the TTL in seconds
+	 */
+	public getTTLSeconds(isRefresh = false): number {
+		const ttlMin = isRefresh ?
+			env.JWT_REFRESH_TTL_MIN :
+			env.JWT_ACCESS_TTL_MIN;
+
+		return ttlMin * 60;
 	}
 
 	/**
 	 * Get expiration of the token
 	 * @return Returns the expiration epoch time
 	 */
-	public getExpiration(isRefresh: boolean = false): number {
+	public getExpiration(isRefresh = false): number {
 		return (
 			Date.now() +
-			parseInt(
-				isRefresh ? process.env.JWT_REFRESH_TTL : process.env.JWT_TTL,
-				10
-			) *
-				1000
+			(this.getTTLSeconds(isRefresh) * 1000)
 		);
 	}
 
@@ -64,24 +65,19 @@ export class JwtBearer {
 	 */
 	public sign(
 		user: BaseUser,
-		isRefresh: boolean = false,
-		data: Object = {}
+		isRefresh = false,
+		data: Record<string, unknown> = {}
 	): string {
 		const payload = Object.assign(data, {
 			id: user.id,
 			isRefresh: isRefresh
 		});
 
-		return btoa(
-			JWT.sign(payload, this.key, {
-				expiresIn: parseInt(
-					isRefresh
-						? process.env.JWT_REFRESH_TTL
-						: process.env.JWT_TTL,
-					10
-				)
-			})
-		);
+		const jwt = JWT.sign(payload, this.key, {
+			expiresIn: this.getTTLSeconds(isRefresh)
+		});
+
+		return btoa(jwt);
 	}
 
 	/**
@@ -108,7 +104,8 @@ export class JwtBearer {
 	public dryVerify(token: string): any {
 		try {
 			return JWT.verify(atob(token), this.key);
-		} catch (ex) {
+		}
+		catch (ex) {
 			return false;
 		}
 	}

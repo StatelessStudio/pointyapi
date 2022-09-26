@@ -1,3 +1,4 @@
+import 'jasmine';
 import { setModel } from '../../../../src';
 import { ExampleUser } from '../../../../src/models';
 import { getEndpoint } from '../../../../src/endpoints';
@@ -12,18 +13,8 @@ import { getRepository } from 'typeorm';
  * pointyapi/endpoints
  */
 describe('[Endpoints] Get', () => {
-	let cwarn;
 	let user1;
 	let user2;
-
-	beforeEach(() => {
-		cwarn = console.warn;
-		console.warn = () => {};
-	});
-
-	afterEach(() => {
-		console.warn = cwarn;
-	});
 
 	beforeAll(() => {
 		// Create users
@@ -62,9 +53,7 @@ describe('[Endpoints] Get', () => {
 		};
 
 		// Run request
-		await getEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await getEndpoint(request, response);
 	});
 
 	it('can return a count request', async () => {
@@ -87,9 +76,7 @@ describe('[Endpoints] Get', () => {
 		};
 
 		// Run request
-		await getEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await getEndpoint(request, response);
 	});
 
 	it('can return a single resource request', async () => {
@@ -111,9 +98,7 @@ describe('[Endpoints] Get', () => {
 		};
 
 		// Run request
-		await getEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await getEndpoint(request, response);
 	});
 
 	it('calls response.goneResponder() if object not found', async () => {

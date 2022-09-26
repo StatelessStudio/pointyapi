@@ -1,3 +1,4 @@
+import 'jasmine';
 import { pointy } from '../../../../src';
 import { User } from '../../../examples/terms/models/user';
 import { UserRole } from '../../../../src/enums/user-role';
@@ -77,8 +78,7 @@ describe('[Term] Delete API', async () => {
 				.delete(
 					`/api/v1/term/${term.body['id']}`,
 					adminToken.body.token
-				)
-				.catch((error) => fail(JSON.stringify(error)));
+				);
 		}
 		else {
 			fail();
@@ -105,8 +105,7 @@ describe('[Term] Delete API', async () => {
 					`/api/v1/term/${term.body['id']}`,
 					token.body.token,
 					[ 403 ]
-				)
-				.catch((error) => fail(JSON.stringify(error)));
+				);
 		}
 		else {
 			fail();

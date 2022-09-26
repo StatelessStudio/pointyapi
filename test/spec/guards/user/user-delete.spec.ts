@@ -1,3 +1,4 @@
+import 'jasmine';
 import { pointy } from '../../../../src';
 import { upgradeUserRole } from '../../../../src/utils/upgrade-user-role';
 import { ExampleUser } from '../../../../src/models';
@@ -64,8 +65,7 @@ describe('[Guards] User API Delete', () => {
 
 		if (user && token) {
 			await http
-				.delete(`/api/v1/user/${user.body['id']}`, token.body['token'])
-				.catch((error) => fail(JSON.stringify(error)));
+				.delete(`/api/v1/user/${user.body['id']}`, token.body['token']);
 		}
 		else {
 			fail();
@@ -80,13 +80,11 @@ describe('[Guards] User API Delete', () => {
 				username: 'guardUserDel2',
 				password: 'password123',
 				email: 'guardUserDel2@test.com'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 
 		if (result) {
 			await http
-				.delete(`/api/v1/user/${result.body['id']}`, undefined, [ 401 ])
-				.catch((error) => fail(JSON.stringify(error)));
+				.delete(`/api/v1/user/${result.body['id']}`, undefined, [ 401 ]);
 		}
 	});
 
@@ -130,8 +128,7 @@ describe('[Guards] User API Delete', () => {
 					`/api/v1/user/${user.body['id']}`,
 					token.body['token'],
 					[ 403 ]
-				)
-				.catch((error) => fail(JSON.stringify(error)));
+				);
 		}
 		else {
 			fail();
@@ -146,16 +143,14 @@ describe('[Guards] User API Delete', () => {
 				username: 'guardUserDel5',
 				password: 'password123',
 				email: 'guardUserDel5@test.com'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 
 		if (result) {
 			await http
 				.delete(
 					`/api/v1/user/${result.body['id']}`,
 					adminToken.body.token
-				)
-				.catch((error) => fail(JSON.stringify(error)));
+				);
 		}
 	});
 });

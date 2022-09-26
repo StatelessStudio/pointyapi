@@ -12,6 +12,7 @@
  * HttpClient
  */
 
+import { env } from '../environment';
 import * as request from 'request';
 import { HttpClientResponse } from './http-client-response';
 
@@ -22,10 +23,10 @@ export class HttpClient {
 	public url = 'http://localhost';
 
 	// Server PORT
-	public port: number | string = process.env.PORT;
+	public port = env.PORT;
 
 	// Global headers
-	public headers?: Object;
+	public headers?: Record<string, unknown>;
 
 	/**
 	 * Send a POST http request to the server
@@ -36,12 +37,12 @@ export class HttpClient {
 	 * @param customOptions Additional request options
 	 * @return Returns a promise of HttpClientResponse
 	 */
-	public post(
+	public async post(
 		path: string,
-		data: object,
+		data: any,
 		bearer: boolean | string = false,
 		expect: number[] = [ 200, 201, 202, 204 ],
-		customOptions?: object
+		customOptions?: Record<string, unknown>
 	): Promise<HttpClientResponse> {
 		let options = {
 			method: 'POST',
@@ -53,7 +54,7 @@ export class HttpClient {
 		if (bearer) {
 			options['auth'] = { bearer: `${bearer}` };
 		}
-		
+
 		if (this.headers) {
 			options['headers'] = this.headers;
 		}
@@ -91,12 +92,12 @@ export class HttpClient {
 	 * @param customOptions Additional request options
 	 * @return Returns a promise of HttpClientResponse
 	 */
-	public get(
+	public async get(
 		path: string,
-		data: boolean | Object = false,
+		data: any = false,
 		bearer: boolean | string = false,
 		expect: number[] = [ 200, 202 ],
-		customOptions?: object
+		customOptions?: Record<string, unknown>
 	): Promise<HttpClientResponse> {
 		return new Promise<HttpClientResponse>((accept, reject) => {
 			let options = {
@@ -109,7 +110,7 @@ export class HttpClient {
 			if (bearer) {
 				options['auth'] = { bearer: `${bearer}` };
 			}
-		
+
 			if (this.headers) {
 				options['headers'] = this.headers;
 			}
@@ -146,12 +147,12 @@ export class HttpClient {
 	 * @param customOptions Additional request options
 	 * @return Returns a promise of HttpClientResponse
 	 */
-	public patch(
+	public async patch(
 		path: string,
-		data: object,
+		data: any,
 		bearer: boolean | string = false,
 		expect: number[] = [ 200, 201, 202, 204 ],
-		customOptions?: object
+		customOptions?: Record<string, unknown>
 	): Promise<HttpClientResponse> {
 		let options = {
 			method: 'PATCH',
@@ -163,7 +164,7 @@ export class HttpClient {
 		if (bearer) {
 			options['auth'] = { bearer: `${bearer}` };
 		}
-		
+
 		if (this.headers) {
 			options['headers'] = this.headers;
 		}
@@ -201,11 +202,11 @@ export class HttpClient {
 	 * @param customOptions Additional request options
 	 * @return Returns a promise of HttpClientResponse
 	 */
-	public delete(
+	public async delete (
 		path: string,
 		bearer: boolean | string = false,
 		expect: number[] = [ 200, 202, 204 ],
-		customOptions?: object
+		customOptions?: Record<string, unknown>
 	): Promise<HttpClientResponse> {
 		return new Promise<HttpClientResponse>((accept, reject) => {
 			let options = {
@@ -216,7 +217,7 @@ export class HttpClient {
 			if (bearer) {
 				options['auth'] = { bearer: `${bearer}` };
 			}
-		
+
 			if (this.headers) {
 				options['headers'] = this.headers;
 			}

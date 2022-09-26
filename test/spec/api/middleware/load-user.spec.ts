@@ -1,8 +1,10 @@
+import 'jasmine';
 import { getRepository } from 'typeorm';
 import { ExampleUser } from '../../../../src/models';
 import { createMockRequest } from '../../../../src/test-probe';
 import { loadUser } from '../../../../src/middleware';
 import { jwtBearer } from '../../../../src/jwt-bearer';
+import { log } from '../../../../src/log';
 
 /**
  * loadUser()
@@ -119,7 +121,7 @@ describe('[Middleware] loadUser()', async () => {
 		// Load user
 		const returnValue = await loadUser(request, response, () => {
 			fail('Loaded non-saved user.');
-			console.warn('user', request.user);
+			log.warn('user', request.user);
 		});
 
 		expect(returnValue).toBe(false);

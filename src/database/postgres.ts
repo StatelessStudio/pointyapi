@@ -1,91 +1,84 @@
-import * as PostgressConnectionStringParser from 'pg-connection-string';
+import * as PgConnString from 'pg-connection-string';
 import { createConnection, ConnectionOptions, Connection } from 'typeorm';
-import * as path from 'path';
+import { env as _environmentVars, DatabaseConfig } from '../environment';
+import { log } from '../log';
 
 import { BaseDb } from './base-db';
+import { PostgresConnectionOptions } from 'typeorm/driver/postgres/PostgresConnectionOptions';
 
 /**
  * Postgres Database Handler
  */
 export class PointyPostgres extends BaseDb {
-	/**
-	 * Connect to the database
-	 * @param options Database credentials (pass
-	 * 	a string to load from file, or pass the object directly). Database
-	 * 	will rely on `process.env.DATABASE_URL` if this is not set.
-	 */
-	public connect(options?: string | Object): Promise<Connection> {
-		return new Promise(async (accept, reject) => {
-			let pgOptions: any;
-			let useSSL = false;
+	public async connect(env?: DatabaseConfig): Promise<Connection> {
+		let pgOptions: PostgresConnectionOptions = {
+			type: 'postgres',
+		};
 
-			if (process.env.DATABASE_URL) {
-				// Live
-				pgOptions = PostgressConnectionStringParser.parse(
-					process.env.DATABASE_URL
-				);
-				pgOptions.type = 'postgres';
-				useSSL = true;
+		if (!env) {
+			env = _environmentVars;
+		}
 
-				this.logger('Using production database');
-				this.logger(
-					'Using database driver',
-					process.env.TYPEORM_DRIVER_TYPE || pgOptions.type
-				);
-			}
-			else {
-				// Local
-				if (typeof options === 'string') {
-					pgOptions = require(path.join(
-						options.toString(),
-						'local.config.json'
-					));
-				}
-				else {
-					pgOptions = options;
-				}
+		log.debug('Using database driver: postgres');
 
-				this.logger('Using development database');
-				this.logger(
-					'Using database driver',
-					process.env.TYPEORM_DRIVER_TYPE || pgOptions.type
-				);
+		if (env.DATABASE_URL) {
+			log.debug('Using connection from DATABASE_URL');
 
-				this.shouldSync = true;
-			}
+			const connstr = PgConnString.parse(env.DATABASE_URL);
 
-			options = {
-				name: this.connectionName,
-				type: process.env.TYPEORM_DRIVER_TYPE || pgOptions.type,
-				driver: process.env.TYPEORM_DRIVER_TYPE || pgOptions.type,
-				host: pgOptions.host,
-				port: pgOptions.port,
-				username: pgOptions.user,
-				password: pgOptions.password,
-				database: pgOptions.database,
-				entities: this.entities,
-				synchronize: this.shouldSync,
-				uuidExtension: pgOptions.uuidExtension
-					? pgOptions.uuidExtension
-					: 'pgcrypto'
+			pgOptions = {
+				...pgOptions,
+				host: connstr.host,
+				port: parseInt(connstr.port, 10),
+				database: connstr.database,
+				ssl: !!connstr.ssl,
+				username: connstr.user,
+				password: connstr.password,
+			};
+		}
+		else {
+			log.debug('Using connection from env');
+
+			pgOptions = {
+				...pgOptions,
+				host: env.POINTY_DB_HOST,
+				port: env.POINTY_DB_PORT,
+				database: env.POINTY_DB_NAME,
+				ssl: !!env.POINTY_DB_SSL,
+				username: env.POINTY_DB_USER,
+				password: env.POINTY_DB_PASS,
 			};
 
-			if (useSSL) {
-				options['ssl'] = {
-					rejectUnauthorized: false
-				};
-			}
+			this.shouldSync = true;
+		}
 
-			// Create connection
-			const conn = await createConnection(<ConnectionOptions>options).catch((error) => {
-				reject(error);
-				return false;
-			});
+		const options: ConnectionOptions = {
+			name: this.connectionName,
+			type: 'postgres',
+			host: pgOptions.host,
+			port: pgOptions.port,
+			username: pgOptions.username,
+			password: pgOptions.password,
+			database: pgOptions.database,
+			entities: this.entities,
+			synchronize: this.shouldSync,
+			ssl: pgOptions.ssl ?
+				{ rejectUnauthorized: false } :
+				undefined,
+			uuidExtension: pgOptions.uuidExtension
+				? pgOptions.uuidExtension
+				: 'pgcrypto'
+		};
 
-			if (conn && conn instanceof Connection) {
-				this.conn = conn;
-				accept(this.conn);
-			}
-		});
+		// Create connection
+		const conn = await createConnection(options);
+
+		if (conn && conn instanceof Connection) {
+			this.conn = conn;
+			return this.conn;
+		}
+		else {
+			throw new Error('Could not create connection');
+		}
 	}
 }

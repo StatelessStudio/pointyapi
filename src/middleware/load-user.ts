@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from '../index';
 import { getRepository } from 'typeorm';
 
 import { jwtBearer } from '../jwt-bearer';
@@ -31,7 +31,7 @@ export async function loadUser(
 		// Verify
 		const result = await getRepository(request.userType)
 			.findOne({ id: token.id })
-			.catch(() => response.error(`Could not load user`));
+			.catch(() => response.error('Could not load user'));
 
 		if (result && result instanceof BaseUser) {
 			request.user = result;
@@ -40,7 +40,7 @@ export async function loadUser(
 			return true;
 		}
 		else {
-			response.unauthorizedResponder(`Could not load user`);
+			response.unauthorizedResponder('Could not load user');
 
 			return false;
 		}

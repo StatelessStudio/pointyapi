@@ -1,3 +1,4 @@
+import 'jasmine';
 import { setModel } from '../../../../src';
 import { ExampleUser } from '../../../../src/models';
 import { postEndpoint } from '../../../../src/endpoints';
@@ -11,17 +12,6 @@ import { getRepository } from 'typeorm';
  * pointyapi/endpoints
  */
 describe('[Endpoints] Post', () => {
-	let cwarn;
-
-	beforeEach(() => {
-		cwarn = console.warn;
-		console.warn = () => {};
-	});
-
-	afterEach(() => {
-		console.warn = cwarn;
-	});
-
 	it('can post (single)', async () => {
 		// Create mock request/response
 		const { request, response } = createMockRequest('POST');
@@ -48,9 +38,7 @@ describe('[Endpoints] Post', () => {
 			result = true;
 		};
 
-		await postEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await postEndpoint(request, response);
 
 		expect(result).toBe(true);
 	});
@@ -81,9 +69,7 @@ describe('[Endpoints] Post', () => {
 			result = true;
 		};
 
-		await postEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await postEndpoint(request, response);
 
 		expect(result).toBe(true);
 	});
@@ -121,9 +107,7 @@ describe('[Endpoints] Post', () => {
 			result = true;
 		};
 
-		await postEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await postEndpoint(request, response);
 
 		expect(result).toBe(true);
 	});
@@ -161,9 +145,7 @@ describe('[Endpoints] Post', () => {
 			result = true;
 		};
 
-		await postEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await postEndpoint(request, response);
 
 		expect(result).toBe(true);
 	});

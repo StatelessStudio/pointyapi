@@ -1,3 +1,4 @@
+import 'jasmine';
 import { pointy } from '../../../../src';
 const http = pointy.http;
 
@@ -13,8 +14,7 @@ describe('User API Read', () => {
 				username: 'basicGetUser1',
 				password: 'password123',
 				email: 'basicGetUser1@get.com'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 
 		user2 = await http
 			.post('/api/v1/user', {
@@ -23,15 +23,13 @@ describe('User API Read', () => {
 				username: 'basicGetUser2',
 				password: 'password123',
 				email: 'basicGetUser2@get.com'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can read all', async () => {
 		await http
 			.get('/api/v1/user', {})
-			.then((result) => expect(result.body).toEqual(jasmine.any(Array)))
-			.catch((error) => fail(JSON.stringify(error)));
+			.then((result) => expect(result.body).toEqual(jasmine.any(Array)));
 	});
 
 	it('can read many', async () => {
@@ -44,8 +42,7 @@ describe('User API Read', () => {
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Array));
 				expect(result.body['length']).toBeGreaterThanOrEqual(2);
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can read one', async () => {
@@ -56,8 +53,7 @@ describe('User API Read', () => {
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Object));
 				expect(result.body['fname']).toEqual('getUser1');
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('returns 410 for a not found user', async () => {
@@ -69,8 +65,7 @@ describe('User API Read', () => {
 				},
 				undefined,
 				[ 410 ]
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 	});
 
 	it('can search', async () => {
@@ -81,8 +76,7 @@ describe('User API Read', () => {
 				username: 'searchTester',
 				password: 'password123',
 				email: 'searchTester@get.com'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 
 		await http
 			.get('/api/v1/user', {
@@ -91,8 +85,7 @@ describe('User API Read', () => {
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Array));
 				expect(result.body['length']).toEqual(1);
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can get raw data', async () => {
@@ -103,8 +96,7 @@ describe('User API Read', () => {
 			})
 			.then((result) => {
 				expect(result.body[0].obj_lname).toEqual(jasmine.any(String));
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can select keys', async () => {
@@ -115,8 +107,7 @@ describe('User API Read', () => {
 			.then((result) => {
 				expect(result.body[0].lname).toEqual(jasmine.any(String));
 				expect(result.body[0].fname).toEqual(undefined);
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('cannot select private keys', async () => {
@@ -128,8 +119,7 @@ describe('User API Read', () => {
 				},
 				undefined,
 				[ 403 ]
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 	});
 
 	it('can count', async () => {
@@ -139,8 +129,7 @@ describe('User API Read', () => {
 			})
 			.then((result) => {
 				expect(result.body['count']).toBeGreaterThanOrEqual(2);
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 
 		await http
 			.get('/api/v1/user', {
@@ -149,8 +138,7 @@ describe('User API Read', () => {
 			})
 			.then((result) => {
 				expect(result.body['count']).toEqual(1);
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 
 		await http
 			.get('/api/v1/user', {
@@ -161,8 +149,7 @@ describe('User API Read', () => {
 			})
 			.then((result) => {
 				expect(result.body['count']).toEqual(1);
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can group by', async () => {
@@ -174,8 +161,7 @@ describe('User API Read', () => {
 				username: 'groupTester1',
 				password: 'password123',
 				email: 'groupTester1@get.com'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 
 		await http
 			.post('/api/v1/user', {
@@ -184,8 +170,7 @@ describe('User API Read', () => {
 				username: 'groupTester2',
 				password: 'password123',
 				email: 'groupTester2@get.com'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 
 		// Get results
 		await http
@@ -208,8 +193,7 @@ describe('User API Read', () => {
 				else {
 					fail('Result is not an array');
 				}
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can order by', async () => {
@@ -220,8 +204,7 @@ describe('User API Read', () => {
 				username: 'orderTester1',
 				password: 'password123',
 				email: 'orderTester1@get.com'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 		await http
 			.post('/api/v1/user', {
 				fname: 'orderTester',
@@ -229,8 +212,7 @@ describe('User API Read', () => {
 				username: 'orderTester2',
 				password: 'password123',
 				email: 'orderTester2@get.com'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 
 		await http
 			.get('/api/v1/user', {
@@ -240,8 +222,7 @@ describe('User API Read', () => {
 			})
 			.then((result) => {
 				expect(result.body[0].lname).toEqual('zorderBy');
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can order rand', async () => {
@@ -251,8 +232,7 @@ describe('User API Read', () => {
 			})
 			.then((result) => {
 				expect(result.body[0].lname).toBeTruthy();
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can limit', async () => {
@@ -262,8 +242,7 @@ describe('User API Read', () => {
 			})
 			.then((result) => {
 				expect(result.body['length']).toBe(1);
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can offset', async () => {
@@ -274,8 +253,7 @@ describe('User API Read', () => {
 				username: 'offsetTest',
 				password: 'password123',
 				email: 'offsetTest@get.com'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 
 		await http
 			.get('/api/v1/user', {
@@ -283,8 +261,7 @@ describe('User API Read', () => {
 			})
 			.then((result) => {
 				expect(result.body[0].id).toBeGreaterThanOrEqual(3);
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can search by range', async () => {
@@ -295,8 +272,7 @@ describe('User API Read', () => {
 				username: 'rangeTest',
 				password: 'password123',
 				email: 'rangeTest@get.com'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 
 		if (user) {
 			await http
@@ -307,8 +283,7 @@ describe('User API Read', () => {
 				})
 				.then((result) => {
 					expect(result.body[0].lname).toEqual('rangeTest');
-				})
-				.catch((error) => fail(JSON.stringify(error)));
+				});
 		}
 	});
 
@@ -320,8 +295,7 @@ describe('User API Read', () => {
 				username: 'lessThanTest',
 				password: 'password123',
 				email: 'lessThanTest@get.com'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 
 		await http
 			.get('/api/v1/user', {
@@ -331,8 +305,7 @@ describe('User API Read', () => {
 			})
 			.then((result) => {
 				expect(result.body['length']).toBe(0);
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can search by greater than', async () => {
@@ -343,8 +316,7 @@ describe('User API Read', () => {
 				username: 'greaterThanTest',
 				password: 'password123',
 				email: 'greaterThanTest@get.com'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 
 		await http
 			.get('/api/v1/user', {
@@ -354,8 +326,7 @@ describe('User API Read', () => {
 			})
 			.then((result) => {
 				expect(result.body['length']).toBeGreaterThanOrEqual(1);
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can search by greater than another column', async () => {
@@ -366,8 +337,7 @@ describe('User API Read', () => {
 				username: 'greaterThanCTest',
 				password: 'password123',
 				email: 'greaterThanCTest@get.com'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 
 		await http
 			.get('/api/v1/user', {
@@ -379,8 +349,7 @@ describe('User API Read', () => {
 			})
 			.then((result) => {
 				expect(result.body['length']).toBeGreaterThanOrEqual(1);
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can search by less than or equal to', async () => {
@@ -391,8 +360,7 @@ describe('User API Read', () => {
 				username: 'lessThanOrEqual',
 				password: 'password123',
 				email: 'lessThanOrEqual@get.com'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 
 		await http
 			.get('/api/v1/user', {
@@ -402,8 +370,7 @@ describe('User API Read', () => {
 			})
 			.then((result) => {
 				expect(result.body['length']).toBeLessThanOrEqual(1);
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can search by less than or equal to', async () => {
@@ -414,8 +381,7 @@ describe('User API Read', () => {
 				username: 'greaterOrEqual',
 				password: 'password123',
 				email: 'greaterThanOrEqual@get.com'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 
 		await http
 			.get('/api/v1/user', {
@@ -425,8 +391,7 @@ describe('User API Read', () => {
 			})
 			.then((result) => {
 				expect(result.body['length']).toBeGreaterThanOrEqual(1);
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can search by not', async () => {
@@ -437,8 +402,7 @@ describe('User API Read', () => {
 				username: 'searchNot',
 				password: 'password123',
 				email: 'searchNot@get.com'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 
 		if (user) {
 			await http
@@ -456,8 +420,7 @@ describe('User API Read', () => {
 					else {
 						fail('Result is not an array');
 					}
-				})
-				.catch((error) => fail(JSON.stringify(error)));
+				});
 
 			await http
 				.get('/api/v1/user', {
@@ -474,8 +437,7 @@ describe('User API Read', () => {
 					else {
 						fail('Result is not an array');
 					}
-				})
-				.catch((error) => fail(JSON.stringify(error)));
+				});
 		}
 	});
 });

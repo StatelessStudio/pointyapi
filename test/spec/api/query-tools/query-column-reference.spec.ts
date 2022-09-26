@@ -1,3 +1,4 @@
+import 'jasmine';
 import { QueryColumnReference } from '../../../../src/query-tools/query-column-reference';
 
 /**

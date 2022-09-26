@@ -1,11 +1,14 @@
-import { getValidationConstraints } from '../../../../src/query-tools';
+import {
+	getValidationConstraints,
+	getValidationConstraintsByKey
+} from '../../../../src/query-tools';
 import { User } from '../../../examples/terms/models/user';
 
 /**
  * getValidationConstraints()
  * pointyapi/query-tools
  */
-describe('[QueryTools] getValidationConstraints()', () => {
+describe('[QueryTools] getValidationConstraints', () => {
 	it('returns a map of constraints for model', () => {
 		const constraints = getValidationConstraints(User);
 
@@ -15,15 +18,15 @@ describe('[QueryTools] getValidationConstraints()', () => {
 	});
 
 	it('returns constraint for specific key', () => {
-		const constraints = getValidationConstraints(User, 'username');
+		const constraints = getValidationConstraintsByKey(User, 'username');
 
 		expect(constraints).toEqual(jasmine.any(Object));
 		expect(constraints.isAlphanumeric).toBe(true);
 	});
 
-	it('returns false if key has no constraints', () => {
-		const constraints = getValidationConstraints(User, 'id');
+	it('returns an empty object if key has no constraints', () => {
+		const constraints = getValidationConstraintsByKey(User, 'id');
 
-		expect(constraints).toBe(false);
+		expect(constraints).toEqual({});
 	});
 });

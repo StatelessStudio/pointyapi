@@ -13,7 +13,7 @@ import { QueryColumnReference } from './query-column-reference';
 export function createSearchQuery(
 	payloadType: BaseModelInterface,
 	query: Query,
-	objKey: string = 'obj'
+	objKey = 'obj'
 ): any {
 	let queryString = '';
 	const queryParams = {};
@@ -65,16 +65,16 @@ export function createSearchQuery(
 			queryString += '(';
 
 			if (typeof query.search === 'string') {
-				const searchString = query.search as string;
+				const searchString = query.search
+					.replace(/[\s]+/, '%')
+					.toLowerCase();
 
 				searchableFields.forEach((column) => {
 					// Append searchable key to queryString
 					queryString += `LOWER(${objKey}.${column}) LIKE :search OR `;
 
 					// Append parameter to queryParams (with wildcards)
-					const value = searchString
-						.replace(/[\s]+/, '%')
-						.toLowerCase();
+					const value = searchString;
 					queryParams['search'] = `%${value}%`;
 				});
 
@@ -83,9 +83,7 @@ export function createSearchQuery(
 					queryString += `LOWER(${column}) LIKE :search OR `;
 
 					// Append parameter to queryParams (with wildcards)
-					const value = searchString
-						.replace(/[\s]+/, '%')
-						.toLowerCase();
+					const value = searchString;
 					queryParams['search'] = `%${value}%`;
 				});
 			}
@@ -128,7 +126,7 @@ export function createSearchQuery(
 							queryString += ':' + key;
 							queryParams[key] = val;
 						}
-	
+
 						queryString += ' AND ';
 					}
 
@@ -165,7 +163,7 @@ export function createSearchQuery(
 				}
 				else {
 					const key = 'gt_' + column;
-	
+
 					queryString += `${objKey}.${column} > :${key} AND `;
 					queryParams[key] = `${val}`;
 				}
@@ -182,11 +180,11 @@ export function createSearchQuery(
 				}
 				else {
 					const key = 'lte_' + column;
-	
+
 					queryString +=
 						`${objKey}.${column} <= ` +
 						`:${key} AND `;
-	
+
 					queryParams[key] = `${val}`;
 				}
 			}
@@ -197,7 +195,7 @@ export function createSearchQuery(
 				const ref = new QueryColumnReference(val, objKey);
 
 				if (ref.isReference) {
-					queryString += 
+					queryString +=
 					`${objKey}.${column} >= ` +
 					`${ref.str()} AND `;
 				}

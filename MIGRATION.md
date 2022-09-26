@@ -2,9 +2,12 @@
 
 ## What version do you have?
 > Choose the version you have before upgrading, and follow the guide to the bottom from there.
-- [Version 0.x.x](#version-0.x.x-->-1.x.x)
-- [Version 1.x.x](#version-1.x.x-->-2.x.x)
-- [Version 2.x.x](#version-2.x.x-->-3.x.x)
+- [Migration Guide](#migration-guide)
+	- [What version do you have?](#what-version-do-you-have)
+	- [Version 0.x.x -> 1.x.x](#version-0xx---1xx)
+	- [Version 1.x.x -> 2.x.x](#version-1xx---2xx)
+	- [Version 2.x.x -> 3.x.x](#version-2xx---3xx)
+	- [Version 3.x.x -> 4.x.x](#version-3xx---4xx)
 
 ## Version 0.x.x -> 1.x.x
 
@@ -137,3 +140,19 @@
 	CLIENT_URL=http://example.com/
 	ALLOW_ORIGINS=http://example.com/, http://cool-example.com/
 	```
+
+## Version 3.x.x -> 4.x.x
+
+1. Now using node v16 and npm v8. Update your project accordingly
+2. Now using class-validator v13.2.0. Update your project accordingly
+3. Loading configuration from local.config.json has been deprecated. See readme to configure your environment.
+4. Removed and replaced logging with ts-tiny-log. pointy.log and db.logger have been removed, and a global logger instance is used. See readme to use & configure logger.
+5. PointyAPI no longer "pollutes" express' namespaces to extend the Request and Response interfaces. Instead, they are extended. Change `import { Request, Response, ... } from 'express';` to `import { Request, Response, ... } from 'pointyapi`.
+   1. NOTE: PointyAPI doesn't export all members from express; so you may need to split imports if they import other than Request/Response/NextFunction/Application
+6. Many functions and members have been type "hardened". You may need to adjust/cast parameters and members if you see compilation errors.
+7. `ALLOW_ORIGIN` is no longer optional in environment config. Previously, this would revert to CLIENT_URL if unset (for development); but this could be insecure if forgotten about.
+8. `getValidationConstraints` has several breaking changes, if you are using that in your application:
+   1. No longer accepts a key parameter. Instead, use `getValidationConstraintsByKey()`
+   2. No longer returns false if no keys exist, in favor of an empty object `{}`
+   3. No longer returns implicit any
+   4. The underlying implementation of getValidationConstraints has been rewritten due to changes in class-validator. Return values may have unknown side-effects from this change

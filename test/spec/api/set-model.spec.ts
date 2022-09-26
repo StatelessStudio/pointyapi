@@ -1,3 +1,4 @@
+import 'jasmine';
 import { createMockRequest } from '../../../src/test-probe';
 import { setModel } from '../../../src';
 import { ExampleUser } from '../../../src/models';
@@ -10,17 +11,7 @@ import { addResource } from '../../../src/utils';
  * pointyapi/
  */
 describe('setModel', () => {
-	let cwarn;
 	let user;
-
-	beforeEach(() => {
-		cwarn = console.warn;
-		console.warn = () => {};
-	});
-
-	afterEach(() => {
-		console.warn = cwarn;
-	});
 
 	beforeAll(async () => {
 		// Create user
@@ -32,8 +23,7 @@ describe('setModel', () => {
 		user.email = 'setmodel@example.com';
 
 		await getRepository(ExampleUser)
-			.save(user)
-			.catch((error) => fail(JSON.stringify(error)));
+			.save(user);
 	});
 
 	it('sets the payload', async () => {

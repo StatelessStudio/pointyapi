@@ -1,4 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from '../index';
+import { log } from '../log';
 
 /**
  * Request Test Probe: Log data about the current request
@@ -8,18 +9,18 @@ export function requestTestProbe(
 	response: Response,
 	next: NextFunction
 ): void {
-	console.log('\n[DEBUG] [Request Test Probe]\n');
-	console.log('payload\n', request.payload);
+	log.debug('[Request Test Probe]\n');
+	log.debug('payload\n', request.payload);
 
 	if (request.query instanceof Object) {
-		console.log('query\n', request.query);
+		log.debug('query\n', request.query);
 	}
 
 	if (request.body instanceof Object) {
-		console.log('body\n', request.body);
+		log.debug('body\n', request.body);
 	}
 
-	console.log(
+	log.debug(
 		'\n------------------------------------------------------------'
 	);
 

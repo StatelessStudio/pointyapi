@@ -1,10 +1,12 @@
+import 'jasmine';
 import { pointy } from '../../../src/pointy-core';
 import { ExampleUser } from '../../../src/models';
 import { ExampleOwner } from '../../examples/api/models/example-owner';
 import { ExampleRelation } from '../../examples/api/models/example-relation';
 import { HookTestClass } from '../../examples/api/models/hook-test-class';
-
-const ROOT_PATH = require('app-root-path').toString();
+import { setLog } from '../../../src/log';
+import { Log } from 'ts-tiny-log';
+import { LogLevel } from 'ts-tiny-log/levels';
 
 let ipcMessage;
 let errorHandler;
@@ -22,10 +24,7 @@ beforeAll(async () => {
 				ExampleRelation,
 				HookTestClass
 			])
-			.connect(ROOT_PATH)
-			.catch((error) =>
-				fail('Cannot start database' + JSON.stringify(error))
-			);
+			.connect();
 	};
 
 	// Intercept IPC messages
@@ -40,6 +39,9 @@ beforeAll(async () => {
 
 	jasmine.DEFAULT_TIMEOUT_INTERVAL = 15000;
 	process.env.PORT = '8081';
+
+	// Disable logging
+	setLog(new Log({ level: LogLevel.none }));
 });
 
 describe('Pointy Core', () => {

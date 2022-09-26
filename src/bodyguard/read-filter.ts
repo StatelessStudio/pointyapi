@@ -1,4 +1,9 @@
-import { BaseUser } from '../models';
+import {
+	BaseModel,
+	BaseModelInterface,
+	BaseUser,
+	BaseUserInterface,
+} from '../models';
 import { getCanRead } from '../bodyguard';
 import { isSelf, isAdmin } from '../utils';
 import { BodyguardOwner } from '../enums';
@@ -12,15 +17,15 @@ import { BodyguardOwner } from '../enums';
  * @param userType Type of User to check
  * @return Returns the filtered obj
  */
-export function readFilter(
-	obj: any,
+export function readFilter<T extends BaseModel | BaseModel[]>(
+	obj: T,
 	user: BaseUser,
-	objType: any,
-	userType: any
-): any {
+	objType: BaseModelInterface,
+	userType: BaseUserInterface,
+): T {
 	if (obj instanceof Array) {
 		for (let i = 0; i < obj.length; i++) {
-			const subObjType = obj[i].constructor;
+			const subObjType = <BaseModelInterface>obj[i].constructor;
 			obj[i] = readFilter(obj[i], user, subObjType, userType);
 		}
 	}
@@ -42,7 +47,7 @@ export function readFilter(
 						obj[member] = readFilter(
 							obj[member],
 							user,
-							subObjType,
+							<BaseModelInterface>subObjType,
 							userType
 						);
 					}

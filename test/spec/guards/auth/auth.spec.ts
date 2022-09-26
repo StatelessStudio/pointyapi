@@ -1,3 +1,4 @@
+import 'jasmine';
 import { pointy } from '../../../../src';
 const http = pointy.http;
 
@@ -22,8 +23,7 @@ describe('[Guards] User Api Login/Logout', () => {
 			.post('/api/v1/auth', {
 				__user: 'userAuth1',
 				password: 'password123'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('should log in', () => {
@@ -43,19 +43,16 @@ describe('[Guards] User Api Login/Logout', () => {
 				},
 				undefined,
 				[ 401 ]
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 	});
 
 	it('can log out', async () => {
 		await http
-			.delete('/api/v1/auth', token.body.token)
-			.catch((error) => fail(JSON.stringify(error)));
+			.delete('/api/v1/auth', token.body.token);
 	});
 
 	it('cannot log out without a token', async () => {
 		await http
-			.delete('/api/v1/auth', undefined, [ 401 ])
-			.catch((error) => fail(JSON.stringify(error)));
+			.delete('/api/v1/auth', undefined, [ 401 ]);
 	});
 });

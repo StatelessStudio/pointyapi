@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response } from '../index';
 import { validate } from 'class-validator';
 import { runHook } from '../utils/run-hook';
 import { readFilter } from '../bodyguard/read-filter';

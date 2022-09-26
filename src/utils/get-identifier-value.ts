@@ -7,7 +7,7 @@
 /**
  * getIdentifierValue()
  */
-import { Request } from 'express';
+import { Request } from '../index';
 
 /**
  * Get parameter ID from URL

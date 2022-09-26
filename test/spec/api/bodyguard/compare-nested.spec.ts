@@ -1,3 +1,4 @@
+import 'jasmine';
 import { BaseModel, ExampleUser } from '../../../../src/models';
 import {
 	getBodyguardKeys,

@@ -1,4 +1,4 @@
-import { createTimestamp } from '../utils/create-timestamp';
+import { log } from '../log';
 
 /**
  * Default error handler
@@ -6,7 +6,7 @@ import { createTimestamp } from '../utils/create-timestamp';
  * 	database error object to check)
  * @param code Error response code to send. Default is 500
  */
-export function errorHandler(error: any, code: number = 500): void {
+export function errorHandler(error: any, code = 500): void {
 	// Check for known errors
 	if (error instanceof Object && 'code' in error && this.response) {
 		error.code = +error.code;
@@ -38,9 +38,12 @@ export function errorHandler(error: any, code: number = 500): void {
 	}
 
 	// Unkown Errors
-	console.error('[SERVER] ERROR', createTimestamp(), error);
+	log.error('[Request Error]', error);
 
 	if (this.response) {
 		this.response.sendStatus(code);
+	}
+	else {
+		throw error;
 	}
 }

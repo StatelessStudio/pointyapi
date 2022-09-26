@@ -1,5 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
-const ROOT_PATH = require('app-root-path').toString();
+import { Request, Response, NextFunction } from '../index';
+import { log } from '../log';
 
 // Package.json interface
 let pkg = {
@@ -13,9 +13,10 @@ let pkg = {
 
 // Try to load package.json
 try {
-	pkg = require(ROOT_PATH + '/node_modules/pointyapi/package.json');
-} catch (ex) {
-	pkg = require(ROOT_PATH + '/package.json');
+	pkg = require(process.cwd() + '/node_modules/pointyapi/package.json');
+}
+catch (ex) {
+	pkg = require(process.cwd() + '/package.json');
 }
 
 /**
@@ -26,13 +27,13 @@ export function coreTestProbe(
 	response: Response,
 	next: NextFunction
 ): void {
-	console.log('\n[DEBUG] [Core Test Probe]\n');
-	console.log('PointyAPI v', pkg.version);
-	console.log('TypeScript v', pkg.dependencies.typescript);
-	console.log('Express v', pkg.dependencies.express);
-	console.log('TypeORM v', pkg.dependencies.typeorm);
+	log.debug('[Core Test Probe]\n');
+	log.debug('PointyAPI v', pkg.version);
+	log.debug('TypeScript v', pkg.dependencies.typescript);
+	log.debug('Express v', pkg.dependencies.express);
+	log.debug('TypeORM v', pkg.dependencies.typeorm);
 
-	console.log(
+	log.debug(
 		'\n------------------------------------------------------------'
 	);
 

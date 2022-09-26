@@ -1,3 +1,4 @@
+import 'jasmine';
 import { ExampleUser } from '../../../../src/models';
 import { getSearchableFields } from '../../../../src/bodyguard';
 

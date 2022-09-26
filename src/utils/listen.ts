@@ -1,4 +1,7 @@
-import { LogHandlerFunction } from '../method-interface';
+import { env } from '../environment';
+import { log } from '../log';
+
+export type ListenFunction = (app: any, port?: number) => Promise<void>;
 
 /**
  * # Start listening
@@ -11,17 +14,18 @@ import { LogHandlerFunction } from '../method-interface';
  * Start listening
  * @param app Express app to listen on
  * @param port Port number to listen to. Default is process.env.PORT or 8080
- * @param logger Logger function to log to
  */
-export async function listen(
+export const listen: ListenFunction = async (
 	app: any,
 	port?: number,
-	logger?: LogHandlerFunction
-) {
-	port = port || +process.env.PORT || 8080;
+) => {
+	return new Promise<void>((accept, reject) => {
+		port = port || env.PORT;
 
-	await app.listen(port, () => {
-		logger('Server started.');
-		logger(`Server listening on port ${port}`);
+		app.listen(port, () => {
+			log.info(`Server listening on port ${port}`);
+
+			accept();
+		});
 	});
-}
+};

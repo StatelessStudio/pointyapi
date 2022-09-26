@@ -63,8 +63,12 @@ typings/
 # Build directory
 dist/
 
-# Config
-local.config.json
+# Environment Variables
+.env
 
-# Docs
-/docs/
+# Orm-Cli build
+orm-cli.js
+src/environment.js
+
+# Docs build
+docs/

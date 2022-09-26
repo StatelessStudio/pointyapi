@@ -1,3 +1,4 @@
+import 'jasmine';
 import { pointy } from '../../../../src';
 import { upgradeUserRole } from '../../../../src/utils/upgrade-user-role';
 import { User } from '../../../examples/chat/models/user';
@@ -104,8 +105,7 @@ describe('[Chat] Chat API Delete', () => {
 				.delete(
 					`/api/v1/chat/${chat.body['id']}`,
 					token.body.token
-				)
-				.catch((error) => fail(JSON.stringify(error)));
+				);
 		}
 		else {
 			fail('Could not authenticate user');
@@ -121,13 +121,11 @@ describe('[Chat] Chat API Delete', () => {
 					body: 'test'
 				},
 				token.body.token
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 
 		if (result) {
 			await http
-				.delete(`/api/v1/chat/${result.body['id']}`, undefined, [ 401 ])
-				.catch((error) => fail(JSON.stringify(error)));
+				.delete(`/api/v1/chat/${result.body['id']}`, undefined, [ 401 ]);
 		}
 	});
 
@@ -176,8 +174,7 @@ describe('[Chat] Chat API Delete', () => {
 					`/api/v1/chat/${chat.body['id']}`,
 					wrongToken.body['token'],
 					[ 403 ]
-				)
-				.catch((error) => fail(JSON.stringify(error)));
+				);
 		}
 		else {
 			fail('Could not authenticate user');
@@ -193,16 +190,14 @@ describe('[Chat] Chat API Delete', () => {
 					body: 'test'
 				},
 				token.body.token
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 
 		if (result) {
 			await http
 				.delete(
 					`/api/v1/chat/${result.body['id']}`,
 					adminToken.body.token
-				)
-				.catch((error) => fail(JSON.stringify(error)));
+				);
 		}
 	});
 });

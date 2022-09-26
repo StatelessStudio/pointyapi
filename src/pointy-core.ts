@@ -1,16 +1,15 @@
 // Express
-const express = require('express');
-import { Response, Request, NextFunction, Application } from 'express';
+import * as express from 'express';
+import { Response, Request, NextFunction, Application } from './index';
 import * as bodyParser from 'body-parser';
 
 // Pointy Core
-import { listen } from './utils/listen';
+import { ListenFunction, listen } from './utils/listen';
 import { BaseDb, PointyPostgres } from './database';
 import { HttpClient } from './http/http-client';
 import {
 	ResponderFunction,
 	ErrorHandlerFunction,
-	LogHandlerFunction
 } from './method-interface';
 
 // Handlers
@@ -25,11 +24,15 @@ import {
 	postResponder,
 	patchResponder
 } from './responders';
-import { logHandler, errorHandler } from './handlers';
+import { errorHandler } from './handlers';
 import { bindResponders } from './utils/bind-responders';
+import { env } from './environment';
+import { log } from './log';
 
 // Base Models
 import { BaseUserInterface, ExampleUser, BaseUser } from './models';
+
+export type ServerHookFunction = (app: Application) => void;
 
 /**
  * PointyAPI App Instance
@@ -39,7 +42,7 @@ export class PointyApi {
 	public app: Application = express();
 
 	// Core
-	public listen: Function = listen;
+	public listen: ListenFunction = listen;
 	public db: BaseDb;
 	public http = new HttpClient();
 	public userType: BaseUserInterface = ExampleUser;
@@ -48,7 +51,7 @@ export class PointyApi {
 	// Middleware
 
 	// Handlers
-	public log: LogHandlerFunction = logHandler;
+	public log = log.debug;
 	public error: ErrorHandlerFunction = errorHandler;
 
 	// Responders
@@ -63,14 +66,13 @@ export class PointyApi {
 	public patchResponder: ResponderFunction = patchResponder;
 
 	// Hooks
-	public before: Function = (app: any) => {};
-	public ready: Function = (app: any) => {};
+	public before: ServerHookFunction = (app: Express.Application) => {};
+	public ready: ServerHookFunction = (app: Express.Application) => {};
 
 	// Initialize
 	constructor() {
 		// Default db
 		this.db = new PointyPostgres();
-		this.db.logger = this.log;
 
 		if (process.argv.includes('testmode')) {
 			this.testmode = true;
@@ -83,14 +85,14 @@ export class PointyApi {
 	public readycheck() {
 		// Check pointy.userType
 		if (!this.userType) {
-			console.warn('[PointyAPI] pointy.userType has not been set!');
+			log.warn('[PointyAPI] pointy.userType has not been set!');
 
 			return false;
 		}
 
 		// Check database connection
 		if (!this.db || !this.db.conn) {
-			console.warn(
+			log.warn(
 				'[PointyAPI] Database connection has not been established'
 			);
 
@@ -99,14 +101,14 @@ export class PointyApi {
 
 		// Check database entities
 		if (!this.db.entities || !this.db.entities.length) {
-			console.warn('[PointyAPI] Database does not contain any entities');
+			log.warn('[PointyAPI] Database does not contain any entities');
 
 			return false;
 		}
 
 		// Check for database entity of BaseUser
 		if (this.db.entities.includes(BaseUser)) {
-			console.warn('[PointyAPI] BaseUser is not a valid database entity');
+			log.warn('[PointyAPI] BaseUser is not a valid database entity');
 
 			return false;
 		}
@@ -143,7 +145,7 @@ export class PointyApi {
 		// Ready check
 		if (this.readycheck()) {
 			// Server listen
-			this.listen(this.app, process.env.PORT, this.log);
+			await this.listen(this.app, env.PORT);
 
 			// Send IPC notification
 			if ('send' in process && process.send) {

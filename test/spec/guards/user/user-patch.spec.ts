@@ -1,3 +1,4 @@
+import 'jasmine';
 import { pointy } from '../../../../src';
 import { UserRole } from '../../../../src/enums/user-role';
 import { upgradeUserRole } from '../../../../src/utils/upgrade-user-role';
@@ -87,14 +88,12 @@ describe('[Guards] User API Update', () => {
 						fname: 'updatedName'
 					},
 					token.body['token']
-				)
-				.catch((error) => fail(JSON.stringify(error)));
+				);
 
 			const getResult = await http
-				.get(`/api/v1/user`, {
+				.get('/api/v1/user', {
 					id: user.body['id']
-				})
-				.catch((error) => fail(JSON.stringify(error)));
+				});
 
 			if (result && getResult) {
 				expect(getResult.body['fname']).toEqual('updatedName');
@@ -113,8 +112,7 @@ describe('[Guards] User API Update', () => {
 				username: 'userPatch2',
 				password: 'password123',
 				email: 'userPatch2@test.com'
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 
 		if (result) {
 			await http
@@ -125,8 +123,7 @@ describe('[Guards] User API Update', () => {
 					},
 					undefined,
 					[ 401 ]
-				)
-				.catch((error) => fail(JSON.stringify(error)));
+				);
 		}
 	});
 
@@ -152,8 +149,7 @@ describe('[Guards] User API Update', () => {
 					},
 					token.body.token,
 					[ 403 ]
-				)
-				.catch((error) => fail(JSON.stringify(error)));
+				);
 		}
 		else {
 			fail();
@@ -169,8 +165,7 @@ describe('[Guards] User API Update', () => {
 				},
 				token.body.token,
 				[ 403 ]
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 	});
 
 	it('allows for admin to update users', async () => {
@@ -181,18 +176,16 @@ describe('[Guards] User API Update', () => {
 					fname: 'adminUpdate'
 				},
 				adminToken.body.token
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 
 		const getResult = await http
 			.get(
-				`/api/v1/user`,
+				'/api/v1/user',
 				{
 					id: user.body.id
 				},
 				token.body.token
-			)
-			.catch((error) => fail(JSON.stringify(error)));
+			);
 
 		if (result && getResult) {
 			expect(getResult.body['fname']).toEqual('adminUpdate');

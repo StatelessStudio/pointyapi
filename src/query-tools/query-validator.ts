@@ -1,9 +1,8 @@
-import { Request, Response } from 'express';
+import { Request, Response } from '../index';
 import { isKeyInModel, isJson } from '../utils';
-import { queryTypes, queryTypeKeys } from './query-types';
+import { queryTypes, queryTypeKeys, QueryType } from './query-types';
 import { getReadableFields, getReadableRelations } from '../bodyguard';
-import { validateSync } from 'class-validator';
-import { getValidationConstraints } from './get-validation-constraints';
+import { validateAllowingStrings } from '../validation';
 import { Query } from './query';
 
 /**
@@ -60,8 +59,6 @@ function queryFieldValidator(
 			}
 		}
 		else if (requestQueryParams[type] instanceof Object) {
-			const validators = getValidationConstraints(request.payloadType);
-
 			for (const key in requestQueryParams[type]) {
 				const value = requestQueryParams[type][key];
 
@@ -87,30 +84,6 @@ function queryFieldValidator(
 
 					return false;
 				}
-
-				// Cast to int if need be
-				if (
-					key in validators &&
-					'isInt' in validators[key] &&
-					validators[key]['isInt'] === true
-				) {
-					if (Array.isArray(value)) {
-						for (let i = 0; i < value.length; i++) {
-							const asInt = parseInt(value[i], 10);
-
-							if (!isNaN(asInt)) {
-								value[i] = asInt;
-							}
-						}
-					}
-					else {
-						const asInt = parseInt(value, 10);
-
-						if (!isNaN(asInt)) {
-							requestQueryParams[type][key] = asInt;
-						}
-					}
-				}
 			}
 
 			if (
@@ -127,9 +100,8 @@ function queryFieldValidator(
 					requestQueryParams[type]
 				);
 
-				const validationErrors = validateSync(testObject, {
-					skipMissingProperties: true
-				});
+				const validationErrors = validateAllowingStrings(testObject);
+
 				if (validationErrors && validationErrors.length) {
 					response.validationResponder(validationErrors);
 
@@ -138,26 +110,11 @@ function queryFieldValidator(
 			}
 		}
 		else if (type === 'id') {
-			const validator = getValidationConstraints(
-				request.payloadType,
-				'id'
-			);
-
-			if (validator && 'isInt' in validator && validator.isInt === true) {
-				const asInt = parseInt(`${requestQueryParams.id}`, 10);
-
-				if (!isNaN(asInt)) {
-					requestQueryParams.id = asInt;
-				}
-			}
-
 			const testObject = Object.assign(new request.payloadType(), {
 				id: requestQueryParams[type]
 			});
 
-			const validationErrors = validateSync(testObject, {
-				skipMissingProperties: true
-			});
+			const validationErrors = validateAllowingStrings(testObject);
 
 			if (validationErrors && validationErrors.length) {
 				response.validationResponder(validationErrors);
@@ -188,7 +145,7 @@ export function queryValidator(request: Request, response: Response): boolean {
 		}
 
 		// Is query type registered?
-		if (!queryTypeKeys.includes(type)) {
+		if (!queryTypeKeys.includes(<QueryType>type)) {
 			if (response) {
 				response.validationResponder(
 					'Query type "' + type + '" is not a valid query type.'
@@ -199,7 +156,7 @@ export function queryValidator(request: Request, response: Response): boolean {
 		}
 
 		// Is query type proper (array, object, etc)?
-		const value = requestQueryParams[type]
+		const value = requestQueryParams[type];
 		let queryTypeConstructor: string = typeof value;
 
 		if (

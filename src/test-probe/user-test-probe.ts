@@ -1,4 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response, NextFunction } from '../index';
+import { log } from '../log';
 
 /**
  * User Test Probe: Log data about the current authenticated user
@@ -8,11 +9,11 @@ export function userTestProbe(
 	response: Response,
 	next: NextFunction
 ): void {
-	console.log('\n[DEBUG] [User Test Probe]\n');
-	console.log('user\n', request.user);
-	console.log('userType\n', request.userType);
+	log.debug('[User Test Probe]\n');
+	log.debug('user\n', request.user);
+	log.debug('userType\n', request.userType);
 
-	console.log(
+	log.debug(
 		'\n------------------------------------------------------------'
 	);
 

@@ -1,4 +1,4 @@
-import { forkServer } from '../../../../src/utils';
+import 'jasmine';
 
 import { pointy } from '../../../../src/';
 import { HttpClientResponse } from '../../../../src/http/http-client-response';
@@ -13,24 +13,9 @@ http.headers = {
  * pointyapi/http
  */
 describe('[HTTP] HTTP Client', () => {
-	let serverfork;
-
-	beforeAll(async () => {
-		serverfork = await forkServer(
-			'./dist/test/examples/basic/server.js'
-		);
-	});
-
-	afterAll(() => {
-		if (serverfork) {
-			serverfork.kill();
-		}
-	});
-
 	it('can get', async () => {
 		const result: void | HttpClientResponse = await http
-			.get('/', {}, 'Bearer: test', [ 404 ], {})
-			.catch((error) => fail(JSON.stringify(error)));
+			.get('/', {}, 'Bearer: test', [ 404 ], {});
 
 		if (result) {
 			expect(result.statusCode).toBe(404);
@@ -52,8 +37,7 @@ describe('[HTTP] HTTP Client', () => {
 
 	it('can post', async () => {
 		const result: void | HttpClientResponse = await http
-			.post('/', {}, 'Bearer: test', [ 404 ], {})
-			.catch((error) => fail(JSON.stringify(error)));
+			.post('/', {}, 'Bearer: test', [ 404 ], {});
 
 		if (result) {
 			expect(result.statusCode).toBe(404);
@@ -75,8 +59,7 @@ describe('[HTTP] HTTP Client', () => {
 
 	it('can patch', async () => {
 		const result: void | HttpClientResponse = await http
-			.patch('/', {}, 'Bearer: test', [ 404 ], {})
-			.catch((error) => fail(JSON.stringify(error)));
+			.patch('/', {}, 'Bearer: test', [ 404 ], {});
 
 		if (result) {
 			expect(result.statusCode).toBe(404);
@@ -98,8 +81,7 @@ describe('[HTTP] HTTP Client', () => {
 
 	it('can delete', async () => {
 		const result: void | HttpClientResponse = await http
-			.delete('/', 'Bearer: test', [ 404 ], {})
-			.catch((error) => fail(JSON.stringify(error)));
+			.delete('/', 'Bearer: test', [ 404 ], {});
 
 		if (result) {
 			expect(result.statusCode).toBe(404);

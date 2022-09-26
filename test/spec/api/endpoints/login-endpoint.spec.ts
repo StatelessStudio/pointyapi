@@ -1,3 +1,4 @@
+import 'jasmine';
 import { getConnection, getRepository } from 'typeorm';
 import { hashSync } from 'bcryptjs';
 
@@ -12,17 +13,6 @@ import { addResource } from '../../../../src/utils';
  * pointyapi/endpoints
  */
 describe('[Endpoints] Login', async () => {
-	let cwarn;
-
-	beforeEach(() => {
-		cwarn = console.warn;
-		console.warn = () => {};
-	});
-
-	afterEach(() => {
-		console.warn = cwarn;
-	});
-
 	beforeAll(async () => {
 		// Create user
 		const user = new ExampleUser();
@@ -33,8 +23,7 @@ describe('[Endpoints] Login', async () => {
 		user.email = 'logintest@example.com';
 
 		await getRepository(ExampleUser)
-			.save(user)
-			.catch((error) => fail(JSON.stringify(error)));
+			.save(user);
 	});
 
 	it('can create a login token', async () => {
@@ -134,9 +123,7 @@ describe('[Endpoints] Login', async () => {
 			password: 'password123'
 		});
 
-		await loginEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await loginEndpoint(request, response);
 
 		expect(result).toBe('login');
 	});

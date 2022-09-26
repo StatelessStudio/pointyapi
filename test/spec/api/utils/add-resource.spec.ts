@@ -1,3 +1,4 @@
+import 'jasmine';
 import { hashSync } from 'bcryptjs';
 
 import { addResource } from '../../../../src/utils';
@@ -10,16 +11,6 @@ import { getRepository } from 'typeorm';
  * pointyapi/utils
  */
 describe('[Utils] addResource()', () => {
-	let cwarn;
-
-	beforeEach(() => {
-		cwarn = console.warn;
-	});
-
-	afterEach(() => {
-		console.warn = cwarn;
-	});
-
 	beforeAll(async () => {
 		await addResource(ExampleUser, {
 			fname: 'Drew',
@@ -50,7 +41,7 @@ describe('[Utils] addResource()', () => {
 			email: 'Drew@test.com',
 			role: UserRole.Member
 		});
-	})
+	});
 
 	it('can add an existing resource', async () => {
 		await addResource(ExampleUser, {

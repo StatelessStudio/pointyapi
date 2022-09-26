@@ -1,3 +1,4 @@
+import 'jasmine';
 import { queryValidator } from '../../../../src/query-tools/query-validator';
 import { createMockRequest } from '../../../../src/test-probe';
 import { ExampleUser } from '../../../../src/models';
@@ -139,7 +140,7 @@ describe('[QueryTools] queryValidator()', () => {
 
 	it('can get by id', () => {
 		const { request, response } = createMockRequest();
-		request.query = { id: 1 };
+		request.query = { id: '1' };
 		request.payloadType = ExampleUser;
 		request.payload = new ExampleUser();
 

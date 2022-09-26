@@ -1,3 +1,4 @@
+import 'jasmine';
 import { forkServer } from '../../../../src/utils';
 
 /**
@@ -5,6 +6,9 @@ import { forkServer } from '../../../../src/utils';
  * pointyapi/utils
  */
 describe('[Utils] forkServer()', async () => {
+	/**
+	 * API Tests should not fork a server; dist may not be built
+	 *
 	it('starts a server', async () => {
 		const serverfork = await forkServer(
 			'./dist/test/examples/api/server.js'
@@ -18,6 +22,7 @@ describe('[Utils] forkServer()', async () => {
 			serverfork.kill();
 		}
 	});
+	*/
 
 	it('rejects if the server is not a valid file', async () => {
 		let result = false;

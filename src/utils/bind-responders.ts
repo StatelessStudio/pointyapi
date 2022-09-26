@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response } from '../index';
 
 /**
  * Bind the request and response to the handler & responder functions

@@ -1,3 +1,4 @@
+import 'jasmine';
 import { getRepository, Entity } from 'typeorm';
 
 import { createMockRequest } from '../../../../src/test-probe';
@@ -18,7 +19,7 @@ class NobodyCanReadMember extends BaseModel {
 }
 
 class EntityWithJSONColumn extends BaseModel {
-	@AnyoneCanRead() public options: Object = undefined;
+	@AnyoneCanRead() public options: Record<string, unknown> = undefined;
 }
 
 /**
@@ -38,8 +39,7 @@ describe('[Guards] getFilter', async () => {
 		user.password = 'password123';
 
 		await getRepository(ExampleUser)
-			.save(user)
-			.catch((error) => fail(error));
+			.save(user);
 	});
 
 	it('filters the payload', async () => {

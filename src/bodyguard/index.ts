@@ -132,6 +132,7 @@
 /**
  * # Bodyguard Decorators
  */
+import { BaseModel } from '../models';
 import 'reflect-metadata';
 import { BodyguardOwner, UserRole } from '../enums';
 
@@ -155,7 +156,7 @@ const CanReadRelationSymbol = Symbol('CanReadRelationSymbol');
  * 			function will ignore. Use getCanRead() instead for authorization.
  * @param target Object to test
  */
-export function getCanReadAll(target: any): string {
+export function getCanReadAll(target: BaseModel): string {
 	return Reflect.getMetadata(CanReadAllSymbol, target.constructor);
 }
 
@@ -166,7 +167,7 @@ export function getCanReadAll(target: any): string {
  * 			function will ignore. Use getCanWrite() instead for authorization.
  * @param target Object to test
  */
-export function getCanWriteAll(target: any): string {
+export function getCanWriteAll(target: BaseModel): string {
 	return Reflect.getMetadata(CanWriteAllSymbol, target.constructor);
 }
 
@@ -199,7 +200,7 @@ export function CanWriteAll(
  * @param target Object to test
  * @param propertyKey Key to check
  */
-export function isBodyguardKey(target: any, propertyKey: string): boolean {
+export function isBodyguardKey(target: BaseModel, propertyKey: string): boolean {
 	return Reflect.getMetadata(BodyguardKeySymbol, target, propertyKey);
 }
 
@@ -208,7 +209,7 @@ export function isBodyguardKey(target: any, propertyKey: string): boolean {
  * @param target Object to test
  * @param propertyKey Key to check
  */
-export function getCanRead(target: any, propertyKey: string): string {
+export function getCanRead(target: BaseModel, propertyKey: string): string {
 	return (
 		Reflect.getMetadata(CanReadSymbol, target, propertyKey) ||
 		getCanReadAll(target)
@@ -220,7 +221,7 @@ export function getCanRead(target: any, propertyKey: string): string {
  * @param target Object to test
  * @param propertyKey Key to check
  */
-export function getCanWrite(target: any, propertyKey: string): string {
+export function getCanWrite(target: BaseModel, propertyKey: string): string {
 	return (
 		Reflect.getMetadata(CanWriteSymbol, target, propertyKey) ||
 		getCanWriteAll(target)
@@ -232,7 +233,7 @@ export function getCanWrite(target: any, propertyKey: string): string {
  * @param target Object to test
  * @param propertyKey Key to check
  */
-export function getCanSearch(target: any, propertyKey: string): string {
+export function getCanSearch(target: BaseModel, propertyKey: string): string {
 	return Reflect.getMetadata(CanSearchSymbol, target, propertyKey);
 }
 
@@ -241,7 +242,7 @@ export function getCanSearch(target: any, propertyKey: string): string {
  * @param target Object to test
  * @param propertyKey Key to check
  */
-export function getCanSearchRelation(target: any, propertyKey: string): any {
+export function getCanSearchRelation(target: BaseModel, propertyKey: string): any {
 	return Reflect.getMetadata(CanSearchRelationSymbol, target, propertyKey);
 }
 
@@ -250,7 +251,7 @@ export function getCanSearchRelation(target: any, propertyKey: string): any {
  * @param target Object to test
  * @param propertyKey Key to check
  */
-export function getCanReadRelation(target: any, propertyKey: string): any {
+export function getCanReadRelation(target: BaseModel, propertyKey: string): any {
 	return Reflect.getMetadata(CanReadRelationSymbol, target, propertyKey);
 }
 
@@ -341,7 +342,7 @@ export function CanSearch(
  * 		fields: [ 'username', 'fname', 'lname' ]
  * }
  */
-export function CanSearchRelation(params: object) {
+export function CanSearchRelation(params: Record<string, unknown>) {
 	return Reflect.metadata(CanSearchRelationSymbol, params);
 }
 

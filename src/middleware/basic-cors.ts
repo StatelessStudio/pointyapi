@@ -1,4 +1,5 @@
-import { Request, Response, NextFunction } from 'express';
+import { env } from '../environment';
+import { Request, Response, NextFunction } from '../index';
 
 /**
  * Basic CORS Middleware
@@ -9,22 +10,17 @@ import { Request, Response, NextFunction } from 'express';
 export function basicCors(
 	request: Request,
 	response: Response,
-	next: NextFunction
+	next: NextFunction,
+	allowedOrigins: string = env.ALLOW_ORIGIN,
 ): void {
 	// Set Access-Control-Allow-Origin
 	let origin = '*';
 
-	// Backwards compatability
-	// TODO: Remove in v3.0.0
-	if (!('ALLOW_ORIGIN' in process.env) && 'CLIENT_URL' in process.env) {
-		process.env.ALLOW_ORIGIN = process.env.CLIENT_URL;
-	}
-
-	if ('ALLOW_ORIGIN' in process.env && process.env.ALLOW_ORIGIN) {
-		if (process.env.ALLOW_ORIGIN.includes(', ')) {
+	if (allowedOrigins) {
+		if (allowedOrigins.includes(', ')) {
 			// Array of Client URLs
-			let host = request.headers.origin;
-			const clientUrls = process.env.ALLOW_ORIGIN.split(', ');
+			const host = request.headers.origin;
+			const clientUrls = allowedOrigins.split(', ');
 
 			if (clientUrls.includes(host)) {
 				origin = host;
@@ -33,9 +29,9 @@ export function basicCors(
 				origin = clientUrls[0];
 			}
 		}
-		else if (typeof process.env.ALLOW_ORIGIN === 'string') {
+		else {
 			// Single Client Url
-			origin = process.env.ALLOW_ORIGIN;
+			origin = allowedOrigins;
 		}
 	}
 	response.setHeader('Access-Control-Allow-Origin', origin);

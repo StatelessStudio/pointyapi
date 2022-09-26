@@ -1,3 +1,4 @@
+import 'jasmine';
 import { setModel } from '../../../../src';
 import { ExampleUser } from '../../../../src/models';
 import { patchEndpoint } from '../../../../src/endpoints';
@@ -11,17 +12,6 @@ import { getRepository } from 'typeorm';
  * pointyapi/endpoints
  */
 describe('[Endpoints] Patch', () => {
-	let cwarn;
-
-	beforeEach(() => {
-		cwarn = console.warn;
-		console.warn = () => {};
-	});
-
-	afterEach(() => {
-		console.warn = cwarn;
-	});
-
 	it('can patch', async () => {
 		// Create mock request/response
 		const { request, response } = createMockRequest('PATCH');
@@ -36,8 +26,7 @@ describe('[Endpoints] Patch', () => {
 
 		// Create repo
 		await request.repository
-			.save(user)
-			.catch((error) => fail(JSON.stringify(error)));
+			.save(user);
 
 		// Create request
 		request.body = user;
@@ -57,9 +46,7 @@ describe('[Endpoints] Patch', () => {
 			result = true;
 		};
 
-		await patchEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await patchEndpoint(request, response);
 
 		expect(result).toBe(true);
 		expect(request.payload.lname).toEqual(null);
@@ -79,8 +66,7 @@ describe('[Endpoints] Patch', () => {
 
 		// Create repo
 		await request.repository
-			.save(user)
-			.catch((error) => fail(JSON.stringify(error)));
+			.save(user);
 
 		// Create request
 		request.body = user;
@@ -98,9 +84,7 @@ describe('[Endpoints] Patch', () => {
 			result = true;
 		};
 
-		await patchEndpoint(request, response).catch((error) =>
-			fail(JSON.stringify(error))
-		);
+		await patchEndpoint(request, response);
 
 		expect(result).toBe(true);
 	});

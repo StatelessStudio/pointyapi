@@ -1,7 +1,7 @@
+import { bootstrap } from '../../../src/bootstrap';
 import { pointy } from '../../../src';
 import { basicCors, loadUser } from '../../../src/middleware';
-
-const ROOT_PATH = require('app-root-path').toString();
+import { log } from '../../../src/log';
 
 // Models
 import { User } from './models/user';
@@ -30,9 +30,9 @@ pointy.before = async (app) => {
 	// Database
 	await pointy.db
 		.setEntities([ User, Term ])
-		.connect(ROOT_PATH)
+		.connect()
 		.catch((error) => pointy.error(error));
 };
 
 // Listen
-pointy.start();
+bootstrap(async () => await pointy.start());

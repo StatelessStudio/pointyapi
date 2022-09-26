@@ -1,3 +1,4 @@
+import 'jasmine';
 import { pointy } from '../../../../src';
 
 const http = pointy.http;
@@ -64,8 +65,7 @@ describe('[Chat] Chat API Post', () => {
 			.then((result) => {
 				expect(result.body).toEqual(jasmine.any(Object));
 				expect(result.body['body']).toEqual('test');
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('can post an array of chat messages', async () => {
@@ -88,8 +88,7 @@ describe('[Chat] Chat API Post', () => {
 				expect(result.body).toEqual(jasmine.any(Array));
 				expect(result.body[0]['body']).toEqual('test array 1');
 				expect(result.body[0]['to']['password']).toBeUndefined();
-			})
-			.catch((error) => fail(JSON.stringify(error)));
+			});
 	});
 
 	it('cannot post without a token', async () => {

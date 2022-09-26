@@ -1,3 +1,4 @@
+import 'jasmine';
 import { BodyguardOwner } from '../../../../src/enums';
 
 /**

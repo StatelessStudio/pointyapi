@@ -1,3 +1,4 @@
+import 'jasmine';
 import { pointy } from '../../../../src';
 import { User } from '../../../examples/terms/models/user';
 import { UserRole } from '../../../../src/enums/user-role';
@@ -57,7 +58,6 @@ describe('[Term] API Read', async () => {
 	it('allows anyone to read the term', async () => {
 		await http
 			.get('/api/v1/term', {})
-			.then((result) => expect(result.body).toEqual(jasmine.any(Array)))
-			.catch((error) => fail(JSON.stringify(error)));
+			.then((result) => expect(result.body).toEqual(jasmine.any(Array)));
 	});
 });

@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response } from '../index';
 
 import { jwtBearer } from '../jwt-bearer';
 import { runHook } from '../utils/run-hook';

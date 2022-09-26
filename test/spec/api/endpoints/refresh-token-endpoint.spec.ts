@@ -1,3 +1,4 @@
+import 'jasmine';
 import { getRepository } from 'typeorm';
 import { hashSync } from 'bcryptjs';
 
@@ -11,17 +12,7 @@ import { jwtBearer } from '../../../../src/jwt-bearer';
  * pointyapi/endpoints
  */
 describe('[Endpoints] Refresh Token', async () => {
-	let cwarn;
 	let credentials;
-
-	beforeEach(() => {
-		cwarn = console.warn;
-		console.warn = () => {};
-	});
-
-	afterEach(() => {
-		console.warn = cwarn;
-	});
 
 	beforeAll(async () => {
 		// Create user
@@ -33,8 +24,7 @@ describe('[Endpoints] Refresh Token', async () => {
 		user.email = 'refreshTokentest@example.com';
 
 		await getRepository(ExampleUser)
-			.save(user)
-			.catch((error) => fail(JSON.stringify(error)));
+			.save(user);
 
 		// Create mock request/response
 		const { request, response } = createMockRequest();

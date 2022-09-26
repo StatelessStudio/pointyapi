@@ -134,9 +134,8 @@ npm i pointyapi
 	```typescript
 	// src/index.ts
 
-	import { pointy } from 'pointyapi';
+	import { pointy, bootstrap, log } from 'pointyapi';
 	import { basicCors, loadUser } from 'pointyapi/middleware';
-	const ROOT_PATH = require('app-root-path').toString();
 
 	// Routes
 	// TODO: We will import routes here
@@ -160,12 +159,12 @@ npm i pointyapi
 					ExampleUser
 				]
 			)
-			.connect(ROOT_PATH)
+			.connect()
 			.catch((error) => pointy.error(error));
 	};
 
 	// Start the server!
-	pointy.start();
+	bootstrap(async () => await pointy.start());
 	```
 3. **Create a user route**
   
@@ -249,17 +248,15 @@ npm i pointyapi
 
 6. **Setup database**
 
-	Create a database, create a `local.config.json` file in the root folder of your app, and replace the values:
+	Create a database, create a `.env` file in the root folder of your app, and replace the values:
 
-	```json
-	{
-		"type": "postgres",
-		"host": "localhost",
-		"port": 5432,
-		"user": "MY_DATABASE_USERNAME",
-		"password": "MY_DATABASE_PASSWORD",
-		"database": "MY_DATABASE_NAME"
-	}
+	```env
+	POINTYAPI_DB_NAME=pointyapi
+	POINTYAPI_DB_TYPE=postgres
+	POINTYAPI_DB_HOST=localhost
+	POINTYAPI_DB_PORT=5432
+	POINTYAPI_DB_USER=pointyapi
+	POINTYAPI_DB_PASS=password1234
 	```
 
 7. **Start & Test**
@@ -405,6 +402,34 @@ Example:
 	@BodyguardKey() // Authentication - User must match this to be considered "self"
 	@AnyoneCanRead() // Authorization - Anyone is allowed to read this field
 	public id: string = undefined;
+```
+
+### Logger
+
+PointyAPI uses ts-tiny-logger.
+
+#### Using the Log
+
+```typescript
+import { log } from 'pointyapi';
+
+log.fatal('Oh no!', { someData: 'foo' });
+log.error('Error!', new Error());
+log.warn('Warning!', 1234);
+log.info('Information!', 'Hello!');
+log.debug('Debugging...', { someData: 'bar' });
+```
+
+#### Setting the Log
+
+```typescript
+import { setLog } from 'pointyapi/log';
+import { Log } from 'ts-tiny-log';
+import { LogLevel } from 'ts-tiny-log/levels';
+
+setLog(new Log({
+	level: LogLevel.info,
+}));
 ```
 
 ### Continued Reading

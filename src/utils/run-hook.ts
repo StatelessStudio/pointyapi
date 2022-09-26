@@ -1,5 +1,6 @@
-import { Request, Response } from 'express';
+import { Request, Response } from '../index';
 import { BaseModel } from '../models';
+import { log } from '../log';
 
 /**
  * Run specified hook in the model
@@ -46,7 +47,7 @@ export async function runHook(
 		})
 		.catch((error) => {
 			hookResult = false;
-			console.error(error);
+			log.error(error);
 		});
 
 	if (!hookResult) {
@@ -56,7 +57,7 @@ export async function runHook(
 			response.error('Could not complete hook');
 		}
 
-		console.warn('Could not complete hook "' + name + '" on object: ', obj);
+		log.warn('Could not complete hook "' + name + '" on object: ', obj);
 	}
 
 	return hookResult ? resultset : false;

@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response } from '../index';
 import { compareSync } from 'bcryptjs';
 
 import { jwtBearer } from '../jwt-bearer';

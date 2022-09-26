@@ -1,3 +1,4 @@
+import 'jasmine';
 import { getRepository } from 'typeorm';
 import { hashSync } from 'bcryptjs';
 
@@ -12,17 +13,6 @@ import { addResource } from '../../../../src/utils';
  * pointyapi/endpoints
  */
 describe('[Endpoints] Logout', async () => {
-	let cwarn;
-
-	beforeEach(() => {
-		cwarn = console.warn;
-		console.warn = () => {};
-	});
-
-	afterEach(() => {
-		console.warn = cwarn;
-	});
-
 	beforeAll(async () => {
 		// Create user
 		const user = new ExampleUser();
@@ -33,8 +23,7 @@ describe('[Endpoints] Logout', async () => {
 		user.email = 'logouttest@example.com';
 
 		await getRepository(ExampleUser)
-			.save(user)
-			.catch((error) => fail(JSON.stringify(error)));
+			.save(user);
 	});
 
 	it('can logout', async () => {

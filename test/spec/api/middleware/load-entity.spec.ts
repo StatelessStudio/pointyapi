@@ -1,3 +1,4 @@
+import 'jasmine';
 import { getRepository } from 'typeorm';
 import { ExampleUser } from '../../../../src/models';
 import { createMockRequest } from '../../../../src/test-probe';
@@ -21,8 +22,7 @@ describe('[Middleware] loadEntity()', async () => {
 
 		// Save user
 		await getRepository(ExampleUser)
-			.save(user)
-			.catch(() => fail('Could not save user.'));
+			.save(user);
 	});
 
 	it('can load the entity', async () => {

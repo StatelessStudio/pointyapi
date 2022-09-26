@@ -1,3 +1,4 @@
+import 'jasmine';
 import { isSelf } from '../../../../src/utils';
 import { ExampleUser } from '../../../../src/models';
 
