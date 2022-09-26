@@ -8,7 +8,7 @@
 		"start": "npm run dev",
 		"dev": "ts-node test/examples/basic/server",
 		"watch": "nodemon .",
-		"test": "npm run test:prod && npm test:examples",
+		"test": "npm run test:prod && npm run test:examples",
 		"test:typescript": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.dev.json",
 		"test:dev": "npm run lint && npm run db:drop && npm run test:typescript",
 		"test:prod": "npm run build:prod:clean && npm run db:drop && npm run coverage",
