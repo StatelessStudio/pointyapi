@@ -43,4 +43,7 @@ export function errorHandler(error: any, code = 500): void {
 	if (this.response) {
 		this.response.sendStatus(code);
 	}
+	else {
+		throw error;
+	}
 }
