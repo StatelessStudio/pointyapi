@@ -9,6 +9,7 @@
 - [Issue #206] Request/Response should be imported from child interfaces
 - [Issue #218] Remove and replaced loggging with ts-tiny-log
 - Hardened types to replace many `any` members and parameters
+- ALLOW_ORIGIN is no longer optional
 
 ### Additions
 

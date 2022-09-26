@@ -150,7 +150,8 @@
 5. PointyAPI no longer "pollutes" express' namespaces to extend the Request and Response interfaces. Instead, they are extended. Change `import { Request, Response, ... } from 'express';` to `import { Request, Response, ... } from 'pointyapi`.
    1. NOTE: PointyAPI doesn't export all members from express; so you may need to split imports if they import other than Request/Response/NextFunction/Application
 6. Many functions and members have been type "hardened". You may need to adjust/cast parameters and members if you see compilation errors.
-7. `getValidationConstraints` has several breaking changes, if you are using that in your application:
+7. `ALLOW_ORIGIN` is no longer optional in environment config. Previously, this would revert to CLIENT_URL if unset (for development); but this could be insecure if forgotten about.
+8. `getValidationConstraints` has several breaking changes, if you are using that in your application:
    1. No longer accepts a key parameter. Instead, use `getValidationConstraintsByKey()`
    2. No longer returns false if no keys exist, in favor of an empty object `{}`
    3. No longer returns implicit any
