@@ -36,7 +36,6 @@
 		"admin:example": "ts-node script/example"
 	},
 	"dependencies": {
-		"@types/request": "^2.48.7",
 		"atob": "^2.1.2",
 		"bcryptjs": "^2.4.3",
 		"btoa": "^1.2.1",
@@ -61,6 +60,7 @@
 		"@types/jasmine": "^3.10.6",
 		"@types/jsonwebtoken": "^8.5.9",
 		"@types/node": "^16.11.25",
+		"@types/request": "^2.48.8",
 		"@typescript-eslint/eslint-plugin": "^5.10.0",
 		"@typescript-eslint/parser": "^5.10.0",
 		"coveralls": "^3.1.1",
@@ -69,7 +69,7 @@
 		"mock-req-res": "^1.2.1",
 		"nodemon": "^2.0.15",
 		"nyc": "^15.1.0",
-		"ts-node": "^10.4.0",
+		"ts-node": "^10.9.1",
 		"ts-packager": "^1.1.0",
 		"typedoc": "^0.22.11",
 		"typescript": "^4.5.4"
