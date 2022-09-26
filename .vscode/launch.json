@@ -53,7 +53,7 @@
 			"type": "node",
 			"request": "launch",
 			"name": "Launch Program",
-			"program": "${workspaceFolder}/src/index.ts",
+			"program": "${workspaceFolder}/script/example.ts",
 			"preLaunchTask": "npm: compile",
 			"outFiles": ["${workspaceFolder}/dist/**/*.js"]
 		},

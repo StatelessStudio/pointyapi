@@ -8,12 +8,11 @@
 		"start": "npm run dev",
 		"dev": "ts-node test/examples/basic/server",
 		"watch": "nodemon .",
-		"test": "npm run db:drop && npm run test:prod",
+		"test": "npm run test:prod && npm test:examples",
 		"test:typescript": "ts-node node_modules/jasmine/bin/jasmine --config=jasmine.dev.json",
-		"test:dev": "npm run lint && npm run test:typescript",
-		"test:prod": "npm run build:prod:clean && npm run coverage && npm run test:examples",
+		"test:dev": "npm run lint && npm run db:drop && npm run test:typescript",
+		"test:prod": "npm run build:prod:clean && npm run db:drop && npm run coverage",
 		"test:examples": "npm run test:jasmine-basic && npm run test:jasmine-guards && npm run test:jasmine-chat && npm run test:jasmine-terms",
-		"test:jasmine-api": "npm run db:drop && jasmine --config=test/jasmine.api.json",
 		"test:jasmine-basic": "npm run db:drop && jasmine --config=test/jasmine.basic.json",
 		"test:jasmine-guards": "npm run db:drop && jasmine --config=test/jasmine.guards.json",
 		"test:jasmine-chat": "npm run db:drop && jasmine --config=test/jasmine.chat.json",
@@ -52,7 +51,7 @@
 		"ts-async-bootstrap": "^2.1.0",
 		"ts-error-handler": "^1.0.2",
 		"ts-tiny-log": "^1.0.2",
-		"typeorm": "0.2.38"
+		"typeorm": "0.2.45"
 	},
 	"devDependencies": {
 		"@istanbuljs/nyc-config-typescript": "^1.0.2",
@@ -74,6 +73,9 @@
 		"ts-packager": "^1.1.0",
 		"typedoc": "^0.22.11",
 		"typescript": "^4.5.4"
+	},
+	"peerDependencies": {
+		"typeorm": "0.2.45"
 	},
 	"repository": {
 		"type": "git",
