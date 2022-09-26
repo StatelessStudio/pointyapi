@@ -52,7 +52,7 @@
 		"ts-async-bootstrap": "^2.1.0",
 		"ts-error-handler": "^1.0.2",
 		"ts-tiny-log": "^1.0.2",
-		"typeorm": "0.2.38"
+		"typeorm": "0.2.45"
 	},
 	"devDependencies": {
 		"@istanbuljs/nyc-config-typescript": "^1.0.2",
@@ -74,6 +74,9 @@
 		"ts-packager": "^1.1.0",
 		"typedoc": "^0.22.11",
 		"typescript": "^4.5.4"
+	},
+	"peerDependencies": {
+		"typeorm": "0.2.45"
 	},
 	"repository": {
 		"type": "git",
