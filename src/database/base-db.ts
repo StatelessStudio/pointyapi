@@ -1,4 +1,4 @@
-import { BaseModel, BaseModelInterface } from 'models';
+import { BaseModel, BaseModelInterface } from '../models';
 import { Connection } from 'typeorm';
 import { DatabaseConfig } from '../environment';
 import { ExampleUser } from '../models/example-user';

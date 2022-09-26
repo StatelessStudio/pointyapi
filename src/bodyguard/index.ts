@@ -132,7 +132,7 @@
 /**
  * # Bodyguard Decorators
  */
-import { BaseModel } from 'models';
+import { BaseModel } from '../models';
 import 'reflect-metadata';
 import { BodyguardOwner, UserRole } from '../enums';
 
